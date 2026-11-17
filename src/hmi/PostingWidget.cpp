@@ -161,7 +161,7 @@ bool PostingWidget::_applyFix(PostChecker::Code code)
         _hmi->showServersPage();
         return false;
     case Code::NoGroup:
-        _hmi->showSettingsPage();
+        _hmi->showSettingsPage(MainWindow::CAT_POST);
         return false;
     case Code::FoldersNoCompress:
         _ui->compressCB->setChecked(true);

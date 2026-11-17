@@ -1910,6 +1910,22 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>History and queue</source>
         <translation>历史与队列</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add a server, the place where your files are uploaded (the data of your Usenet provider).</source>
+        <translation>&lt;b&gt;第一次发布之前：&lt;/b&gt;请添加服务器，即上传文件的地方（您的 Usenet 提供商的数据）。</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add at least one newsgroup, the place where your files are posted.</source>
+        <translation>&lt;b&gt;第一次发布之前：&lt;/b&gt;请至少添加一个新闻组，即发布文件的地方。</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>打开服务器</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>打开设置</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

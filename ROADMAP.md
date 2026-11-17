@@ -51,6 +51,7 @@ Goal: the program should be simple for someone who opens it for the first time, 
 | Done | NFO file generator for a post: written next to the nzb, optionally posted with the files, optional password and free text (Settings, card NFO file; `--gen_nfo`). The options will move into the shared options card of Quick Post and Auto Posting |
 | Done | Media information in the NFO file with MediaInfo (duration, video, audio, subtitles of up to 20 files; on by default, `--no_nfo_media`, `--mediainfo_path`). MediaInfo is shipped in the Windows installer and the Docker image |
 | Done | **Notifications** when the posts are done or fail: system notification (GUI), Discord, Telegram and a generic webhook; one message when all the posts are done (default) or after each post; the addresses and tokens are treated like passwords |
+| Done | **First start help**: until a server and a newsgroup are set, a bar on Quick Post and Auto Posting says what is missing, with a button to the right page (the "Open Settings" fix of the checks now opens the right category) |
 
 ## Version 1.4 - Verification and control (first thoughts)
 

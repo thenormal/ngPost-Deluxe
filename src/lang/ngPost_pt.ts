@@ -1909,6 +1909,22 @@ Decidir depois: permanecem na fila e serão oferecidos novamente na próxima ini
         <source>History and queue</source>
         <translation>Histórico e fila</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add a server, the place where your files are uploaded (the data of your Usenet provider).</source>
+        <translation>&lt;b&gt;Antes da primeira publicação:&lt;/b&gt; adicione um servidor, o local para onde os ficheiros são enviados (os dados do seu fornecedor Usenet).</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add at least one newsgroup, the place where your files are posted.</source>
+        <translation>&lt;b&gt;Antes da primeira publicação:&lt;/b&gt; adicione pelo menos um newsgroup, o local onde os ficheiros são publicados.</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>Abrir Servidores</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>Abrir Definições</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

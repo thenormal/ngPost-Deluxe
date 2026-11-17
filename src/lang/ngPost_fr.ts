@@ -1900,6 +1900,22 @@ Décider plus tard : ils restent dans la file et seront proposés de nouveau au 
         <source>History and queue</source>
         <translation>Historique et file d&apos;attente</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add a server, the place where your files are uploaded (the data of your Usenet provider).</source>
+        <translation>&lt;b&gt;Avant votre premier envoi :&lt;/b&gt; ajoutez un serveur, l&apos;endroit où vos fichiers sont envoyés (les données de votre fournisseur Usenet).</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add at least one newsgroup, the place where your files are posted.</source>
+        <translation>&lt;b&gt;Avant votre premier envoi :&lt;/b&gt; ajoutez au moins un newsgroup, l&apos;endroit où vos fichiers sont publiés.</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>Ouvrir Serveurs</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>Ouvrir Paramètres</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

@@ -10,6 +10,8 @@ This page takes you from a fresh installation to your first post.
 
 ## Your first post
 
+Until a server and a newsgroup are set, a blue bar at the top of Quick Post and Auto Posting tells you what is missing, with a button that opens the right page. It disappears by itself.
+
 1. Open **Servers**, add your provider and press **Test connection**. See [Servers and connections](02-servers.md).
 2. Open **Settings**, category **Posts**, card **Newsgroups**, and add at least one newsgroup. See [Newsgroups](03-newsgroups.md).
 3. Open **Quick Post**, press **Select Files** (or drag files and folders into the window).

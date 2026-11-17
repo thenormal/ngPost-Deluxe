@@ -1910,6 +1910,22 @@ Später entscheiden: Sie bleiben in der Warteschlange und werden beim nächsten 
         <source>History and queue</source>
         <translation>Verlauf und Warteschlange</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add a server, the place where your files are uploaded (the data of your Usenet provider).</source>
+        <translation>&lt;b&gt;Vor dem ersten Post:&lt;/b&gt; Fügen Sie einen Server hinzu, auf den Ihre Dateien hochgeladen werden (die Daten Ihres Usenet-Anbieters).</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add at least one newsgroup, the place where your files are posted.</source>
+        <translation>&lt;b&gt;Vor dem ersten Post:&lt;/b&gt; Fügen Sie mindestens eine Newsgroup hinzu, in der Ihre Dateien veröffentlicht werden.</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>Server öffnen</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>Einstellungen öffnen</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

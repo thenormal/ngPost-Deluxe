@@ -1910,6 +1910,22 @@ Decidi dopo: restano in coda e verranno riproposti al prossimo avvio.</translati
         <source>History and queue</source>
         <translation>Cronologia e coda</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add a server, the place where your files are uploaded (the data of your Usenet provider).</source>
+        <translation>&lt;b&gt;Prima del primo post:&lt;/b&gt; aggiungi un server, il luogo dove vengono caricati i file (i dati del tuo provider Usenet).</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add at least one newsgroup, the place where your files are posted.</source>
+        <translation>&lt;b&gt;Prima del primo post:&lt;/b&gt; aggiungi almeno un newsgroup, il luogo dove vengono pubblicati i file.</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>Apri Server</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>Apri Impostazioni</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

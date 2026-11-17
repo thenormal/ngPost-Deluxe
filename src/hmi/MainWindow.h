@@ -93,6 +93,10 @@ private:
     QComboBox      *_notifyWhenCB = nullptr;
     QPushButton    *_settingsCats[5] = {nullptr, nullptr, nullptr, nullptr, nullptr}; //!< categories of the Settings page
     QStackedWidget *_settingsStack = nullptr;
+    QFrame         *_firstSteps = nullptr;       //!< banner of the posts page: what to do before the first post
+    QLabel         *_firstStepsText = nullptr;
+    QPushButton    *_firstStepsButton = nullptr;
+    int             _firstStepsAction = -1;      //!< 0: open Servers, 1: open the newsgroups of Settings
     QLabel         *_notifyWhenLbl = nullptr;
     QLabel         *_notifyWhatLbl = nullptr, *_notifyWhereLbl = nullptr; //!< the two groups of the card: what is notified, where
     QLabel         *_notifyDiscordLbl = nullptr, *_notifyTgTokenLbl = nullptr, *_notifyTgChatLbl = nullptr, *_notifyWebhookLbl = nullptr;
@@ -134,7 +138,9 @@ public:
     QStringList invalidGroups() const;  //!< the newsgroups that are not valid
     bool hasGroups() const;
     void showServersPage();
-    void showSettingsPage();
+    enum SettingsCategory { CAT_GENERAL, CAT_POST, CAT_NZB, CAT_NOTIFY, CAT_HISTORY, NB_CATS };
+    void showSettingsPage(int category = -1); //!< -1: the category that was open
+    void updateFirstSteps();                  //!< shows what is missing before a first post (server, newsgroup), hides it when done
     bool checkGroups(); //!< false (and a message in the log) if the newsgroups can't be used to post
     void updateParams();
     void updateAutoPostingParams();
