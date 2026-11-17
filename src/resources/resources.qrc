@@ -151,5 +151,18 @@
         <file>help/nl/11-glossary.md</file>
         <file>help/nl/12-problems.md</file>
         <file>help/nl/13-warnings.md</file>
+        <file>help/zh/01-first-steps.md</file>
+        <file>help/zh/02-servers.md</file>
+        <file>help/zh/03-newsgroups.md</file>
+        <file>help/zh/04-quick-post.md</file>
+        <file>help/zh/05-queue.md</file>
+        <file>help/zh/06-progress-and-log.md</file>
+        <file>help/zh/07-failed-articles.md</file>
+        <file>help/zh/08-auto-posting.md</file>
+        <file>help/zh/09-nzb-files.md</file>
+        <file>help/zh/10-command-line.md</file>
+        <file>help/zh/11-glossary.md</file>
+        <file>help/zh/12-problems.md</file>
+        <file>help/zh/13-warnings.md</file>
     </qresource>
 </RCC>
