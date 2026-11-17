@@ -79,6 +79,10 @@ public:
     QString sendTest(const QString &appName);
     //! number of messages being sent
     int pending() const { return _pending; }
+    //! for the diagnostic report (never the addresses or the tokens): messages sent, failed, and the last failure ("Discord: ... (12:30:05)")
+    int nbSent() const { return _nbSent; }
+    int nbFailed() const { return _nbFailed; }
+    const QString &lastFailure() const { return _lastFailure; }
 
     static QString message(const QList<Result> &results, const QString &appName, QString *title = nullptr);
     static QJsonObject discordBody(const QString &text);
@@ -100,6 +104,8 @@ private:
     QNetworkAccessManager  *_net;
     QList<Result>           _waiting;  //!< results kept until all the posts are done
     int                     _pending = 0;
+    int                     _nbSent = 0, _nbFailed = 0;
+    QString                 _lastFailure;
     QString                 _appName;
 };
 

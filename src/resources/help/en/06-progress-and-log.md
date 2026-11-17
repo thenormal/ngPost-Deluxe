@@ -23,7 +23,7 @@ At the end of a post the log also shows the **latency**: the median time of a ro
 
 ## Diagnostic report
 
-If something does not work, the **Diagnostic report** button, below the log in Quick Post, saves a report of what the program did, with a **Latency** section for each server (connection, SSL, login, round trip: minimum, median, 95th percentile and maximum). It is a text file you can attach when you ask for help. Check it before sharing: it should not contain your password.
+If something does not work, the **Diagnostic report** button, below the log in Quick Post, saves a report of what the program did, with a **Latency** section for each server (connection, SSL, login, round trip: minimum, median, 95th percentile and maximum) and a **Notifications** section (what is notified, whether the system notification is on and available, which channels are set, and the last failure; the addresses and tokens are never written). It is a text file you can attach when you ask for help. Check it before sharing: it should not contain your password.
 
 ## Notifications
 
