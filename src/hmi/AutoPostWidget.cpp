@@ -26,6 +26,7 @@
 #include "MainWindow.h"
 #include "NgPost.h"
 #include "FoldersMonitorForNewFiles.h"
+#include <QScrollArea>
 #include <QFileDialog>
 #include <QDebug>
 #include <QMessageBox>
@@ -866,7 +867,8 @@ void AutoPostWidget::_buildLayout()
     head->addWidget(_ui->removeAllButton);
     head->addWidget(_ui->closeTabsButton);
     root->addLayout(head);
-    _ui->filesList->setMinimumHeight(150);
+    _ui->filesList->setMinimumHeight(115); // small windows: the list shrinks before the page has to scroll
+    _ui->filesList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
     root->addWidget(_ui->filesList, 1);
     _summary = new QLabel(page);
     _summary->setObjectName("hint");
@@ -1008,7 +1010,14 @@ void AutoPostWidget::_buildLayout()
     delete layout();
     QVBoxLayout *outer = new QVBoxLayout(this);
     outer->setContentsMargins(0, 0, 0, 0);
-    outer->addWidget(page);
+    // a window that is not tall enough scrolls the page instead of squeezing the cards on top of each other
+    QScrollArea *scroll = new QScrollArea(this);
+    scroll->setWidgetResizable(true);
+    scroll->setFrameShape(QFrame::NoFrame);
+    scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    page->setObjectName("pageContent");
+    scroll->setWidget(page);
+    outer->addWidget(scroll);
 
     _retranslateLayout();
 }
