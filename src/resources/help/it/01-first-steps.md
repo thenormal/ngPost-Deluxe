@@ -10,7 +10,7 @@ Questa pagina ti accompagna dall'installazione al tuo primo post.
 
 ## Il tuo primo post
 
-Finché non sono impostati un server e un newsgroup, una barra blu in alto in Quick Post e in Auto Posting ti dice cosa manca, con un pulsante che apre la pagina giusta. Scompare da sola.
+Finché non sono impostati un server e un newsgroup, una barra blu in alto in Quick Post e in Post automatico ti dice cosa manca, con un pulsante che apre la pagina giusta. Scompare da sola.
 
 1. Apri **Server**, aggiungi il tuo provider e premi **Prova connessione**. Vedi [Server e connessioni](02-servers.md).
 2. Apri **Impostazioni**, categoria **Post**, scheda **Newsgroup**, e aggiungi almeno un newsgroup. Vedi [Newsgroup](03-newsgroups.md).
@@ -23,7 +23,7 @@ Il file NZB è la "mappa" del tuo post: senza di esso nessuno può trovare gli a
 ## Dove si trovano le cose
 
 - **Quick Post**: posta subito file e cartelle.
-- **Auto Posting**: analizza o monitora le cartelle.
+- **Post automatico**: analizza o monitora le cartelle.
 - **Server**: i tuoi provider Usenet.
 - **Impostazioni**: le opzioni predefinite del programma, in cinque categorie (Generale, Post, File NZB, Notifiche, Cronologia e coda).
 - **Cronologia**: tutto ciò che hai postato.

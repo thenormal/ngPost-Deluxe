@@ -22,11 +22,11 @@ La pagina **Cronologia** elenca i tuoi upload passati (data, nome, dimensione, v
 
 ### Post già presenti nella cronologia
 
-Prima che un post parta, ngPost cerca nella cronologia un post riuscito con lo stesso nome NZB e la stessa dimensione totale dei file. In **Quick Post** una finestra chiede se postarlo di nuovo (**Pubblica comunque** o **Annulla**). In **Auto Posting** e da riga di comando il post viene saltato e una riga nel log lo segnala. Per postarlo comunque, usa l'opzione `--allow_repost` oppure disattiva l'avviso in **Impostazioni**, categoria **Cronologia e coda** (scheda Cronologia degli upload). Il controllo richiede che la cronologia sia attiva e guarda solo il nome e la dimensione: una cartella rinominata non viene riconosciuta.
+Prima che un post parta, ngPost cerca nella cronologia un post riuscito con lo stesso nome NZB e la stessa dimensione totale dei file. In **Quick Post** una finestra chiede se postarlo di nuovo (**Pubblica comunque** o **Annulla**). In **Post automatico** e da riga di comando il post viene saltato e una riga nel log lo segnala. Per postarlo comunque, usa l'opzione `--allow_repost` oppure disattiva l'avviso in **Impostazioni**, categoria **Cronologia e coda** (scheda Cronologia degli upload). Il controllo richiede che la cronologia sia attiva e guarda solo il nome e la dimensione: una cartella rinominata non viene riconosciuta.
 
 ## File NFO
 
-Un NFO è un piccolo file di testo che descrive il post: il nome, la data, i file con le loro dimensioni, come è stato preparato (archivio e par2) e un testo tuo. Attivalo nella scheda **File NFO** di Quick Post o di Auto Posting (è la stessa scheda: le impostazioni sono condivise).
+Un NFO è un piccolo file di testo che descrive il post: il nome, la data, i file con le loro dimensioni, come è stato preparato (archivio e par2) e un testo tuo. Attivalo nella scheda **File NFO** di Quick Post o di Post automatico (è la stessa scheda: le impostazioni sono condivise).
 
 - **Scrivi un file NFO accanto all'nzb**: `nome.nfo` viene salvato nella stessa cartella di `nome.nzb`.
 - **Posta il file NFO insieme ai file**: viene caricato con il post e compare nell'NZB.

@@ -34,7 +34,7 @@ ngPost può avvisarti quando i tuoi post sono finiti, così non devi guardare la
 - **Telegram**: il token del tuo bot e l'id della chat che riceve i messaggi.
 - **Altro webhook**: qualsiasi indirizzo che accetti un POST JSON con un `title` e un `text` (strumenti tipo Slack, ntfy, Home Assistant).
 
-Scegli cosa viene notificato (terminati, errori o fallimenti) e come: **un messaggio quando tutti i post sono finiti** (predefinito, ideale per Auto Posting) oppure **un messaggio dopo ogni post**. Il pulsante **Invia un messaggio di prova** mostra subito se funziona.
+Scegli cosa viene notificato (terminati, errori o fallimenti) e come: **un messaggio quando tutti i post sono finiti** (predefinito, ideale per Post automatico) oppure **un messaggio dopo ogni post**. Il pulsante **Invia un messaggio di prova** mostra subito se funziona.
 
 Il messaggio contiene il nome del post, il risultato, la dimensione, il tempo e la velocità. Non contiene mai la password né i nomi dei file. Gli indirizzi e il token sono salvati in chiaro nel file di configurazione, come le altre password: tienilo privato. Se un messaggio non può essere inviato, una riga nel log lo segnala e il post non ne risente.
 

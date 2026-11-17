@@ -31,4 +31,4 @@ Controlla una cartella e sposta i file in una cartella "Posted" una volta postat
 - `--notify_discord URL`, `--notify_telegram_token T` con `--notify_telegram_chat ID`, `--notify_webhook URL` e `--notify_when each|all_done`: notifiche alla fine dei post (vedi [Avanzamento e log](06-progress-and-log.md))
 - `--help` l'elenco completo
 
-Vedi [Auto Posting](08-auto-posting.md).
+Vedi [Post automatico](08-auto-posting.md).

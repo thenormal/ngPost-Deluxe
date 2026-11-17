@@ -1,6 +1,6 @@
-# Auto Posting
+# Post automatico
 
-Auto Posting posta tanti file e cartelle senza preparare ciascuno a mano. Scegli uno dei tre pulsanti in alto nella pagina; vengono mostrate solo le impostazioni che servono.
+Post automatico posta tanti file e cartelle senza preparare ciascuno a mano. Scegli uno dei tre pulsanti in alto nella pagina; vengono mostrate solo le impostazioni che servono.
 
 ## Posta ciò che scelgo
 
