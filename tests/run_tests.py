@@ -717,6 +717,12 @@ def test_help_pages(work):
             check(text.lstrip().startswith("# "), "%s/%s has no title" % (lang, f))
             if lang != "en":
                 check(f in en, "%s/%s has no English page" % (lang, f))
+            if lang != "en" and f in en:
+                # a translation has the same structure as the English page: same sections, same links, same code blocks
+                src = open(os.path.join(help_dir, "en", f), encoding="utf-8").read()
+                check(len(re.findall(r"^#{1,3} ", text, re.M)) == len(re.findall(r"^#{1,3} ", src, re.M)), "%s/%s has not the same headings as the English page" % (lang, f))
+                check(re.findall(r"\]\(([^)]+)\)", text) == re.findall(r"\]\(([^)]+)\)", src), "%s/%s has not the same links as the English page" % (lang, f))
+                check(re.findall(r"^    \S.*$", text, re.M) == re.findall(r"^    \S.*$", src, re.M), "%s/%s has not the same command examples as the English page" % (lang, f))
             for link in re.findall(r"\]\(([^)]+)\)", text):
                 if not link.startswith("http"):
                     check(link in en, "%s/%s links to a missing page: %s" % (lang, f, link))
