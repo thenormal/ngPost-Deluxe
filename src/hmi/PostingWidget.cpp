@@ -18,6 +18,7 @@
 //========================================================================
 
 #include "PostingWidget.h"
+#include <QScrollArea>
 #include <QDialog>
 #include <QDirIterator>
 #include <QStorageInfo>
@@ -987,6 +988,8 @@ void PostingWidget::_buildLayout()
     head->addWidget(_ui->selectFolderButton);
     head->addWidget(_ui->clearFilesButton);
     root->addLayout(head);
+    _ui->filesList->setMinimumHeight(115); // small windows: the list gets smaller before the page has to scroll
+    _ui->filesList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
     root->addWidget(_ui->filesList, 1);
 
     // reminder: everything in the list is one release
@@ -1100,7 +1103,14 @@ void PostingWidget::_buildLayout()
     delete layout(); // the old layout of the .ui (the widgets have been moved in the new one)
     QVBoxLayout *outer = new QVBoxLayout(this);
     outer->setContentsMargins(0, 0, 0, 0);
-    outer->addWidget(page);
+    // a window that is not tall enough scrolls the page instead of squeezing the cards on top of each other
+    QScrollArea *scroll = new QScrollArea(this);
+    scroll->setWidgetResizable(true);
+    scroll->setFrameShape(QFrame::NoFrame);
+    scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    page->setObjectName("pageContent");
+    scroll->setWidget(page);
+    outer->addWidget(scroll);
 
     // a change made by hand: the profile is now "Custom"
     for (QAbstractButton *b : {static_cast<QAbstractButton*>(_ui->compressCB), static_cast<QAbstractButton*>(_ui->par2CB),
