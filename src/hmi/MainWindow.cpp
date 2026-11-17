@@ -999,6 +999,23 @@ QString MainWindow::_diagnosticReport() const
     folder("TMP_DIR", _ngPost->_tmpPath);
     folder("nzbPath", _ngPost->_nzbPath);
 
+    title("Notifications");
+    {
+        const Notifier::Settings &ns = _ngPost->_notifier.settings();
+        auto setOrNot = [](bool b){ return b ? "set" : "not set"; };
+        out << "notify when a post is OK: " << yesNo(ns.onSuccess) << ", with errors or stopped: " << yesNo(ns.onErrors)
+            << ", " << (ns.allDone ? "one message when all the posts are done" : "one message after each post") << "\n"
+            << "system notification: " << yesNo(ns.tray) << " (system tray available: " << yesNo(QSystemTrayIcon::isSystemTrayAvailable())
+            << ", shown this session: " << _trayShown << ")\n"
+            << "Discord: " << setOrNot(!ns.discord.isEmpty())
+            << ", Telegram: " << setOrNot(!ns.telegramToken.isEmpty() && !ns.telegramChat.isEmpty())
+            << ", webhook: " << setOrNot(!ns.webhook.isEmpty()) << " (the addresses and tokens are never written here)\n"
+            << "messages sent to the addresses this session: " << _ngPost->_notifier.nbSent() << ", failed: " << _ngPost->_notifier.nbFailed() << "\n"
+            << "last failure: " << (_ngPost->_notifier.lastFailure().isEmpty() ? "none" : _ngPost->_notifier.lastFailure()) << "\n";
+        if (!ns.isActive())
+            out << "WARNING: no notification channel is active, nothing will be notified\n";
+    }
+
     title("Latency (this session)");
     out << LatencyStats::instance().report();
 
@@ -2142,6 +2159,7 @@ void MainWindow::_showTrayMessage(const QString &title, const QString &text)
 {
     if (!QSystemTrayIcon::isSystemTrayAvailable())
         return;
+    ++_trayShown;
     if (!_tray)
     {
         _tray = new QSystemTrayIcon(QIcon(":/icons/ngPost.png"), this);

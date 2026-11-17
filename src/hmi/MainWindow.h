@@ -99,6 +99,7 @@ private:
     QPushButton    *_updateButton = nullptr;     //!< "Version X available", at the bottom of the sidebar
     QCheckBox      *_updateCheckCB = nullptr;    //!< Settings, General: look for new versions at the start
     QString         _updateVersion, _updateUrl;
+    int             _trayShown = 0;              //!< system notifications shown this session (diagnostic report)
     int             _firstStepsAction = -1;      //!< 0: open Servers, 1: open the newsgroups of Settings
     QLabel         *_notifyWhenLbl = nullptr;
     QLabel         *_notifyWhatLbl = nullptr, *_notifyWhereLbl = nullptr; //!< the two groups of the card: what is notified, where

@@ -23,6 +23,7 @@
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QTimer>
+#include <QTime>
 #include <QStringList>
 #include <QUrl>
 
@@ -174,6 +175,8 @@ void Notifier::_post(const QString &channel, const QUrl &url, const QByteArray &
     if (!url.isValid() || (url.scheme() != "https" && url.scheme() != "http"))
     {
         emit log(tr("Notification (%1) not sent: the address is not valid").arg(channel));
+        ++_nbFailed;
+        _lastFailure = QString("%1: the address is not valid (%2)").arg(channel, QTime::currentTime().toString("HH:mm:ss"));
         return;
     }
     QNetworkRequest req(url);
@@ -181,6 +184,7 @@ void Notifier::_post(const QString &channel, const QUrl &url, const QByteArray &
     QNetworkReply *reply = _net->post(req, json);
     reply->setProperty("channel", channel);
     ++_pending;
+    ++_nbSent;
     connect(reply, &QNetworkReply::finished, this, &Notifier::_onReplyFinished);
     QTimer::singleShot(10000, reply, [reply](){ if (reply->isRunning()) reply->abort(); }); // never wait more than 10 s
 }
@@ -193,6 +197,9 @@ void Notifier::_onReplyFinished()
     // the address and the token are secrets: only the kind of error is written, never reply->errorString() (it has the address)
     if (reply->error() != QNetworkReply::NoError)
     {
+        ++_nbFailed;
+        _lastFailure = QString("%1: %2 (%3)").arg(channel, status ? QString("the server answered %1").arg(status) : QString("no answer from the server"),
+                                                  QTime::currentTime().toString("HH:mm:ss"));
         if (status)
             emit log(tr("Notification (%1) failed: the server answered %2").arg(channel).arg(status));
         else
