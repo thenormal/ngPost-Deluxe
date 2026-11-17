@@ -17,5 +17,5 @@ The resumed posts appear as Quick Post tabs.
 ## Good to know
 
 - The pause is not remembered after a restart.
-- The saved queue also contains the password of each archive, in clear text, like the History. You can turn it off in **Settings**, section **Queue of the posts**: this also deletes the saved queue.
+- The saved queue also contains the password of each archive, in clear text, like the History. You can turn it off in **Settings**, category **History and queue**, card **Queue of the posts**: this also deletes the saved queue.
 - On the command line use `--resume_queue`.

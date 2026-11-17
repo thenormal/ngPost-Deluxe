@@ -91,6 +91,8 @@ private:
     QCheckBox      *_notifyErrCB = nullptr;
     QCheckBox      *_notifyTrayCB = nullptr;
     QComboBox      *_notifyWhenCB = nullptr;
+    QPushButton    *_settingsCats[5] = {nullptr, nullptr, nullptr, nullptr, nullptr}; //!< categories of the Settings page
+    QStackedWidget *_settingsStack = nullptr;
     QLabel         *_notifyWhenLbl = nullptr;
     QLabel         *_notifyWhatLbl = nullptr, *_notifyWhereLbl = nullptr; //!< the two groups of the card: what is notified, where
     QLabel         *_notifyDiscordLbl = nullptr, *_notifyTgTokenLbl = nullptr, *_notifyTgChatLbl = nullptr, *_notifyWebhookLbl = nullptr;

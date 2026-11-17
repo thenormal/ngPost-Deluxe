@@ -1879,6 +1879,18 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Where to send the messages</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>History and queue</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

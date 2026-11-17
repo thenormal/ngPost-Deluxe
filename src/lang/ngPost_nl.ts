@@ -1900,6 +1900,18 @@ Later beslissen: ze blijven in de wachtrij en worden bij de volgende start opnie
         <source>Where to send the messages</source>
         <translation>Waarheen de berichten gaan</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Algemeen</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Posts</translation>
+    </message>
+    <message>
+        <source>History and queue</source>
+        <translation>Geschiedenis en wachtrij</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

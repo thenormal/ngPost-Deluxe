@@ -1897,6 +1897,18 @@ Decidir más tarde: permanecen en la cola y se ofrecerán de nuevo en el próxim
         <source>Where to send the messages</source>
         <translation>Dónde enviar los mensajes</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>General</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Publicaciones</translation>
+    </message>
+    <message>
+        <source>History and queue</source>
+        <translation>Historial y cola</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

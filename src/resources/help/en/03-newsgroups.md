@@ -1,6 +1,6 @@
 # Newsgroups
 
-The newsgroups are the places on Usenet where your articles are posted. They are set in **Settings**, section **Newsgroups**.
+The newsgroups are the places on Usenet where your articles are posted. They are set in **Settings**, category **Posts**, card **Newsgroups**.
 
 ## The groups box
 
