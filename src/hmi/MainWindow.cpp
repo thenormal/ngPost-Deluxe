@@ -1574,21 +1574,32 @@ QWidget *MainWindow::_buildSettingsPage()
     _notifyTestButton = new QPushButton(notif);
     _notifyHint = newLabel("hint", notif);
     _notifyHint->setWordWrap(true);
-    g->addWidget(_notifyOkCB, 0, 0, 1, 2);
-    g->addWidget(_notifyErrCB, 1, 0, 1, 2);
-    g->addWidget(_notifyTrayCB, 2, 0, 1, 2);
+    _notifyWhatLbl  = new QLabel(notif);
+    _notifyWhereLbl = new QLabel(notif);
+    for (QLabel *l : {_notifyWhatLbl, _notifyWhereLbl})
+    {
+        QFont f = l->font();
+        f.setBold(true);
+        l->setFont(f);
+    }
+    // what is notified, then where the message goes
+    g->addWidget(_notifyWhatLbl, 0, 0, 1, 2);
+    g->addWidget(_notifyOkCB, 1, 0, 1, 2);
+    g->addWidget(_notifyErrCB, 2, 0, 1, 2);
     g->addWidget(_notifyWhenLbl, 3, 0);
     g->addWidget(_notifyWhenCB, 3, 1);
-    g->addWidget(_notifyDiscordLbl, 4, 0);
-    g->addWidget(_notifyDiscordEdit, 4, 1);
-    g->addWidget(_notifyTgTokenLbl, 5, 0);
-    g->addWidget(_notifyTgTokenEdit, 5, 1);
-    g->addWidget(_notifyTgChatLbl, 6, 0);
-    g->addWidget(_notifyTgChatEdit, 6, 1);
-    g->addWidget(_notifyWebhookLbl, 7, 0);
-    g->addWidget(_notifyWebhookEdit, 7, 1);
-    g->addWidget(_notifyTestButton, 8, 0, 1, 2);
-    g->addWidget(_notifyHint, 9, 0, 1, 2);
+    g->addWidget(_notifyWhereLbl, 4, 0, 1, 2);
+    g->addWidget(_notifyTrayCB, 5, 0, 1, 2);
+    g->addWidget(_notifyDiscordLbl, 6, 0);
+    g->addWidget(_notifyDiscordEdit, 6, 1);
+    g->addWidget(_notifyTgTokenLbl, 7, 0);
+    g->addWidget(_notifyTgTokenEdit, 7, 1);
+    g->addWidget(_notifyTgChatLbl, 8, 0);
+    g->addWidget(_notifyTgChatEdit, 8, 1);
+    g->addWidget(_notifyWebhookLbl, 9, 0);
+    g->addWidget(_notifyWebhookEdit, 9, 1);
+    g->addWidget(_notifyTestButton, 10, 0, 1, 2);
+    g->addWidget(_notifyHint, 11, 0, 1, 2);
     g->setColumnStretch(1, 1);
     left->insertWidget(left->count() - 1, notif);
 
@@ -1666,6 +1677,8 @@ void MainWindow::_retranslateShell()
     _cardTitles["interface"]->setText(tr("Interface"));
     _cardTitles["history"]->setText(tr("History of the uploads"));
     _cardTitles["notify"]->setText(tr("Notifications"));
+    _notifyWhatLbl->setText(tr("What to notify"));
+    _notifyWhereLbl->setText(tr("Where to send the messages"));
     _notifyOkCB->setText(tr("Notify when a post is finished"));
     _notifyErrCB->setText(tr("Notify when a post has errors or fails"));
     _notifyTrayCB->setText(tr("System notification (icon in the notification area)"));

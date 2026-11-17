@@ -1871,6 +1871,14 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Include media information (MediaInfo)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>What to notify</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Where to send the messages</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

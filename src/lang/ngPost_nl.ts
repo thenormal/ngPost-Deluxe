@@ -1892,6 +1892,14 @@ Later beslissen: ze blijven in de wachtrij en worden bij de volgende start opnie
         <source>Include media information (MediaInfo)</source>
         <translation>Media-informatie (MediaInfo) opnemen</translation>
     </message>
+    <message>
+        <source>What to notify</source>
+        <translation>Wat wordt gemeld</translation>
+    </message>
+    <message>
+        <source>Where to send the messages</source>
+        <translation>Waarheen de berichten gaan</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

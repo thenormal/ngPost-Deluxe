@@ -27,9 +27,9 @@ If something does not work, the **Diagnostic report** button, below the log in Q
 
 ## Notifications
 
-ngPost can tell you when your posts are done, so you do not have to watch the window. Turn it on in **Settings**, card **Notifications**.
+ngPost can tell you when your posts are done, so you do not have to watch the window. It is set in **Settings**, card **Notifications**, in two parts: **what to notify** (a post finished, a post with errors or failed, one message at the end or one for each post) and **where to send the messages**. In the program with a window the system notification is on from the start; the other channels need an address.
 
-- **System notification**: a message from the icon in the notification area (desktop version only).
+- **System notification**: a message from the icon in the notification area (desktop version only; on by default, you can turn it off). On Windows it appears like any other notification and stays in the notification center; if you do not see it, check that the notifications and the focus assist ("Do not disturb") of Windows do not hide it.
 - **Discord**: paste the address of a Discord webhook.
 - **Telegram**: the token of your bot and the id of the chat that receives the messages.
 - **Other webhook**: any address that accepts a JSON POST with a `title` and a `text` (Slack-like tools, ntfy, Home Assistant).

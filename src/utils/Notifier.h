@@ -42,7 +42,11 @@ public:
     struct Settings {
         bool    onSuccess  = true;
         bool    onErrors   = true;
-        bool    tray       = false;
+#ifdef __USE_HMI__
+        bool    tray       = true;   //!< the program with a window shows a system notification, unless the user turns it off
+#else
+        bool    tray       = false;  //!< command line / Docker: no system notification, only the addresses that are set
+#endif
         bool    allDone    = true;  //!< one message when all the posts are done (false: one after each post)
         QString discord;            //!< webhook address of Discord
         QString telegramToken;

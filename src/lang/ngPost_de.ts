@@ -1890,6 +1890,14 @@ Später entscheiden: Sie bleiben in der Warteschlange und werden beim nächsten 
         <source>Include media information (MediaInfo)</source>
         <translation>Medieninformationen (MediaInfo) einfügen</translation>
     </message>
+    <message>
+        <source>What to notify</source>
+        <translation>Was gemeldet wird</translation>
+    </message>
+    <message>
+        <source>Where to send the messages</source>
+        <translation>Wohin die Nachrichten gehen</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

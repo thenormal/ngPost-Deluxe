@@ -1890,6 +1890,14 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Include media information (MediaInfo)</source>
         <translation>包含媒体信息 (MediaInfo)</translation>
     </message>
+    <message>
+        <source>What to notify</source>
+        <translation>通知内容</translation>
+    </message>
+    <message>
+        <source>Where to send the messages</source>
+        <translation>消息发送到哪里</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

@@ -1880,6 +1880,14 @@ Décider plus tard : ils restent dans la file et seront proposés de nouveau au 
         <source>Include media information (MediaInfo)</source>
         <translation>Inclure les informations média (MediaInfo)</translation>
     </message>
+    <message>
+        <source>What to notify</source>
+        <translation>Quoi notifier</translation>
+    </message>
+    <message>
+        <source>Where to send the messages</source>
+        <translation>Où envoyer les messages</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

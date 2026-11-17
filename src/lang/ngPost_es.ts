@@ -1889,6 +1889,14 @@ Decidir más tarde: permanecen en la cola y se ofrecerán de nuevo en el próxim
         <source>Include media information (MediaInfo)</source>
         <translation>Incluir la información de los medios (MediaInfo)</translation>
     </message>
+    <message>
+        <source>What to notify</source>
+        <translation>Qué notificar</translation>
+    </message>
+    <message>
+        <source>Where to send the messages</source>
+        <translation>Dónde enviar los mensajes</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
