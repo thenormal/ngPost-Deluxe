@@ -1297,8 +1297,10 @@ bool AutoPostWidget::_applyFix(PostChecker::Code code)
         _hmi->showServersPage();
         return false;
     case Code::NoGroup:
+        _hmi->showSettingsPage(MainWindow::CAT_POST);
+        return false;
     case Code::NzbFolderNotWritable:
-        _hmi->showSettingsPage();
+        _hmi->showSettingsPage(MainWindow::CAT_NZB);
         return false;
     case Code::FoldersNoCompress:
         _ui->compressCB->setChecked(true);

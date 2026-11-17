@@ -199,12 +199,12 @@ QPushButton#linkButton {
 QPushButton#linkButton:hover {
     text-decoration: underline;
 }
-QFrame#watchBar {
+QFrame#watchBar, QFrame#firstSteps {
     background: @alt@;
     border: 1px solid @accent@;
     border-radius: 6px;
 }
-QFrame#watchBar QLabel {
+QFrame#watchBar QLabel, QFrame#firstSteps QLabel {
     background: transparent;
     font-weight: 600;
 }

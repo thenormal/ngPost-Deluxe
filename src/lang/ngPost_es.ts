@@ -1909,6 +1909,22 @@ Decidir más tarde: permanecen en la cola y se ofrecerán de nuevo en el próxim
         <source>History and queue</source>
         <translation>Historial y cola</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add a server, the place where your files are uploaded (the data of your Usenet provider).</source>
+        <translation>&lt;b&gt;Antes de tu primera publicación:&lt;/b&gt; añade un servidor, el lugar donde se suben tus archivos (los datos de tu proveedor de Usenet).</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add at least one newsgroup, the place where your files are posted.</source>
+        <translation>&lt;b&gt;Antes de tu primera publicación:&lt;/b&gt; añade al menos un grupo de noticias, el lugar donde se publican tus archivos.</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>Abrir Servidores</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>Abrir Ajustes</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

@@ -1912,6 +1912,22 @@ Later beslissen: ze blijven in de wachtrij en worden bij de volgende start opnie
         <source>History and queue</source>
         <translation>Geschiedenis en wachtrij</translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add a server, the place where your files are uploaded (the data of your Usenet provider).</source>
+        <translation>&lt;b&gt;Voor je eerste post:&lt;/b&gt; voeg een server toe, de plek waar je bestanden worden geüpload (de gegevens van je Usenet-provider).</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Before your first post:&lt;/b&gt; add at least one newsgroup, the place where your files are posted.</source>
+        <translation>&lt;b&gt;Voor je eerste post:&lt;/b&gt; voeg minstens één newsgroup toe, de plek waar je bestanden worden geplaatst.</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>Servers openen</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>Instellingen openen</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

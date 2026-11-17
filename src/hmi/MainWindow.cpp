@@ -541,6 +541,7 @@ void MainWindow::_initServerBox()
         servers << srv;
     _servers->setServers(servers);
     connect(_servers, &ServersWidget::changed, this, &MainWindow::scheduleAutoSave);
+    connect(_servers, &ServersWidget::changed, this, &MainWindow::updateFirstSteps);
 }
 
 
@@ -1358,6 +1359,26 @@ void MainWindow::_buildShell()
     postsLayout->setSpacing(10);
     _postsTitle = newLabel("pageTitle", postsPage);
     postsLayout->addWidget(_postsTitle);
+    // what is missing before a first post: shown on both Quick Post and Auto Posting, hidden when a server and a newsgroup are set
+    _firstSteps = new QFrame(postsPage);
+    _firstSteps->setObjectName("firstSteps");
+    QHBoxLayout *fsl = new QHBoxLayout(_firstSteps);
+    fsl->setContentsMargins(12, 8, 12, 8);
+    _firstStepsText = new QLabel(_firstSteps);
+    _firstStepsText->setWordWrap(true);
+    _firstStepsText->setTextFormat(Qt::RichText);
+    _firstStepsButton = new QPushButton(_firstSteps);
+    _firstStepsButton->setCursor(Qt::PointingHandCursor);
+    fsl->addWidget(_firstStepsText, 1);
+    fsl->addWidget(_firstStepsButton);
+    _firstSteps->hide();
+    connect(_firstStepsButton, &QAbstractButton::clicked, this, [this](){
+        if (_firstStepsAction == 0)
+            showServersPage();
+        else if (_firstStepsAction == 1)
+            showSettingsPage(CAT_POST);
+    });
+    postsLayout->addWidget(_firstSteps);
     _ui->fileBox->setTitle(QString());
     _ui->fileBox->setObjectName("plainBox"); // the cards are inside the posts
     _ui->fileBox->layout()->setContentsMargins(0, 0, 0, 0);
@@ -1445,7 +1466,6 @@ QWidget *MainWindow::_buildSettingsPage()
     page->addSpacing(10);
 
     // the settings are in categories: the list of the categories on the left, one page for each on the right
-    enum { CAT_GENERAL, CAT_POST, CAT_NZB, CAT_NOTIFY, CAT_HISTORY, NB_CATS };
     QHBoxLayout *body = new QHBoxLayout();
     body->setSpacing(20);
     QVBoxLayout *catCol = new QVBoxLayout();
@@ -1531,6 +1551,7 @@ QWidget *MainWindow::_buildSettingsPage()
     g->addWidget(_groupPolicyCB, 1, 0);
     _retranslateGroups();
     connect(_groupsEdit,    &GroupsEdit::changed, this, &MainWindow::scheduleAutoSave);
+    connect(_groupsEdit,    &GroupsEdit::changed, this, &MainWindow::updateFirstSteps);
     connect(_groupPolicyCB, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::scheduleAutoSave);
     put(CAT_POST, groups);
 
@@ -1703,6 +1724,7 @@ void MainWindow::_retranslateShell()
     _settingsCats[2]->setText(tr("NZB files"));
     _settingsCats[3]->setText(tr("Notifications"));
     _settingsCats[4]->setText(tr("History and queue"));
+    updateFirstSteps();
 
     _cardTitles["poster"]->setText(tr("Poster"));
     _cardTitles["archives"]->setText(tr("Archives and password"));
@@ -1776,7 +1798,40 @@ void MainWindow::_retranslateGroups()
 QStringList MainWindow::invalidGroups() const { return _groupsEdit->invalidGroups(); }
 bool MainWindow::hasGroups() const { return !_groupsEdit->groups().isEmpty(); }
 void MainWindow::showServersPage()  { _navButtons[NAV_SERVERS]->click(); }
-void MainWindow::showSettingsPage() { _navButtons[NAV_SETTINGS]->click(); }
+void MainWindow::showSettingsPage(int category)
+{
+    _navButtons[NAV_SETTINGS]->click();
+    if (category >= 0 && category < NB_CATS && _settingsStack)
+    {
+        _settingsCats[category]->setChecked(true);
+        _settingsStack->setCurrentIndex(category);
+    }
+}
+
+void MainWindow::updateFirstSteps()
+{
+    if (!_firstSteps || !_servers || !_groupsEdit)
+        return;
+    int nbEnabled = 0;
+    for (const NntpServerParams &srv : _servers->servers())
+        if (srv.enabled)
+            ++nbEnabled;
+    if (nbEnabled == 0)
+    {
+        _firstStepsAction = 0;
+        _firstStepsText->setText(tr("<b>Before your first post:</b> add a server, the place where your files are uploaded (the data of your Usenet provider)."));
+        _firstStepsButton->setText(tr("Open Servers"));
+    }
+    else if (!hasGroups())
+    {
+        _firstStepsAction = 1;
+        _firstStepsText->setText(tr("<b>Before your first post:</b> add at least one newsgroup, the place where your files are posted."));
+        _firstStepsButton->setText(tr("Open Settings"));
+    }
+    else
+        _firstStepsAction = -1;
+    _firstSteps->setVisible(_firstStepsAction >= 0);
+}
 
 bool MainWindow::checkGroups()
 {
