@@ -32,11 +32,13 @@ Es ist ein Fork von [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, Li
 Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Deluxe`, dann sind deine Server und Einstellungen da.
 
 ### Screenshots
-| Quick Post (helles Design) | Verlauf |
+| Quick Post (helles Design) | Auto Posting (helles Design) |
 |---|---|
-| ![Quick Post (helles Design)](docs/screenshots/quick-post.png) | ![Verlauf](docs/screenshots/history.png) |
-| **Einstellungen (dunkles Design)** | **Server (dunkles Design)** |
-| ![Einstellungen (dunkles Design)](docs/screenshots/settings-dark.png) | ![Server (dunkles Design)](docs/screenshots/servers-dark.png) |
+| ![Quick Post (helles Design)](docs/screenshots/quick-post.png) | ![Auto Posting (helles Design)](docs/screenshots/auto-posting.png) |
+| **Verlauf** | **Einstellungen (dunkles Design)** |
+| ![Verlauf](docs/screenshots/history.png) | ![Einstellungen (dunkles Design)](docs/screenshots/settings-dark.png) |
+| **Server (dunkles Design)** |  |
+| ![Server (dunkles Design)](docs/screenshots/servers-dark.png) |  |
 
 ### Was in diesem Fork anders ist
 
@@ -64,7 +66,20 @@ Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Delu
 -   **Warteschlange**: nicht beendete Posts werden gespeichert und beim nächsten Start wieder angeboten (`--resume_queue` in der Kommandozeile)
 -   **Fortschritt und Log**: Fortschrittsbalken mit Phase, Restzeit und Farben; farbiges Log mit der Dauer jeder Phase; Latenzmessungen im Diagnosebericht
 -   **Newsgroups**: ein Feld mit „Chips“, Vorschlägen und Prüfungen sowie ein Menü, um bei mehreren Gruppen zu wählen, wohin die Posts gehen
--   **Hilfe**-Seite im Programm (auf Englisch), Anleitung für Docker hinter einem VPN (gluetun) und automatische Tests des Postings in der CI
+-   **Hilfe**-Seite im Programm, Anleitung für Docker hinter einem VPN (gluetun) und automatische Tests des Postings in der CI
+
+**Einfacher zu bedienen (v1.3)**
+-   **Auto Posting, neu gestaltet**: drei klare Möglichkeiten (posten, was ich auswähle; einen Ordner einmal durchsuchen; einen Ordner überwachen und posten, was ankommt), Vorschau dessen, was gepostet wird, mit den Größen, der Zustand der Ordnerüberwachung immer sichtbar (Ordner, Posts des Tages, Pause-Schaltfläche) und die Wahl, was danach mit den Dateien geschieht: nichts (Standard), in einen Ordner "Posted" verschieben oder löschen
+-   **Profile**: ein fertiges Profil "Empfohlen" (Komprimierung, zufälliger Name und Passwort, par2 10 %) und eigene Profile, gespeichert über das Menü von Quick Post und Auto Posting
+-   **Prüfungen vor dem Posten**: ein Fenster in einfachen Worten mit Korrektur per Klick (kein Server oder keine Gruppe, Ordner ohne Komprimierung, rar / 7z oder par2 nicht gefunden, leeres Passwort, NZB-Ordner nicht beschreibbar...)
+-   **Schon gepostet?** Eine Warnung listet die Einträge auf, die schon im Verlauf stehen, mit einem Kästchen "Erneut posten", statt einer Frage pro Post
+-   **NFO-Datei** neben der NZB-Datei (auf Wunsch mit den Dateien gepostet, auf Wunsch mit Passwort) und Medieninformationen mit MediaInfo: Dauer, Video, Audio und Untertitel
+-   **Benachrichtigungen**, wenn Posts fertig sind oder fehlschlagen: Systembenachrichtigung, Discord, Telegram oder ein Webhook, eine Nachricht am Ende oder eine pro Post
+-   **Hilfe beim ersten Start**: eine Leiste sagt, was fehlt (Server, Newsgroup), mit einer Schaltfläche zur richtigen Seite; die **Einstellungen** sind jetzt in fünf Kategorien
+-   **Hinweis auf neue Version**: einmal am Tag fragt das Programm GitHub nach der neuesten Version und zeigt in der Seitenleiste eine Schaltfläche "Version X verfügbar" (es wird nichts heruntergeladen; in den Einstellungen abschaltbar)
+-   **Hilfe in 8 Sprachen**, eine **Feedback**-Schaltfläche im Über-Fenster (öffnet ein neues, schon ausgefülltes GitHub-Issue) und die Benachrichtigungen im Diagnosebericht
+-   **Kleine Fenster**: Quick Post und Auto Posting scrollen, statt die Karten aufeinanderzudrücken
+-   Das Deinstallationsprogramm fragt, ob auch Ihre Einstellungen und der Verlauf gelöscht werden sollen (Standard: behalten)
 
 **Sicherheit und Korrekturen**
 -   **Sicherheitskorrektur**: möglicher Heap-Überlauf im yEnc-Kodierungspuffer (die Ausgabe konnte bei bestimmten Daten größer als der Puffer sein)
@@ -103,6 +118,8 @@ Die Konfigurationsdatei funktioniert wie im Originalprojekt (Standard: **~/.ngPo
 - **PAR2_ARGS**: um den par2-Befehl anzupassen, besonders wenn du ein anderes Programm als das Standard-par2cmdline wählst
 - **theme**: Design der Oberfläche, `AUTO` (wie Windows), `LIGHT` oder `DARK`
 - **history**: `ON` (Standard) oder `OFF`, Verlauf der Uploads auf der Seite Verlauf. Ohne **POST_HISTORY** ist die Datei `ngPost_history.csv` neben der Konfiguration. Am Ende jeder Zeile kommen neue Spalten hinzu: Status, Anzahl der Dateien, Dauer und NZB-Datei
+- **check_updates**: `ON` (Standard) oder `OFF`, einmal am Tag sucht die Oberfläche auf GitHub nach einer neuen Version (Kommandozeile und Docker tun das nie)
+- **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** und **notify_when** (`all_done` oder `each`): Benachrichtigungen, wenn die Posts fertig sind. Behandeln Sie die Adressen und das Token wie Passwörter
 
 ### Kompilieren
 #### Linux

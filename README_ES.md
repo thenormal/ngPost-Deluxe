@@ -32,11 +32,13 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 ¿Ya usas ngPost? Copia tu `ngPost.conf` en `%APPDATA%\ngPost Deluxe` y tendrás tus servidores y ajustes.
 
 ### Capturas de pantalla
-| Quick Post (tema claro) | Historial |
+| Quick Post (tema claro) | Publicación Automática (tema claro) |
 |---|---|
-| ![Quick Post (tema claro)](docs/screenshots/quick-post.png) | ![Historial](docs/screenshots/history.png) |
-| **Ajustes (tema oscuro)** | **Servidores (tema oscuro)** |
-| ![Ajustes (tema oscuro)](docs/screenshots/settings-dark.png) | ![Servidores (tema oscuro)](docs/screenshots/servers-dark.png) |
+| ![Quick Post (tema claro)](docs/screenshots/quick-post.png) | ![Publicación Automática (tema claro)](docs/screenshots/auto-posting.png) |
+| **Historial** | **Ajustes (tema oscuro)** |
+| ![Historial](docs/screenshots/history.png) | ![Ajustes (tema oscuro)](docs/screenshots/settings-dark.png) |
+| **Servidores (tema oscuro)** |  |
+| ![Servidores (tema oscuro)](docs/screenshots/servers-dark.png) |  |
 
 ### Qué cambia en este fork
 
@@ -64,7 +66,20 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 -   **Cola**: las publicaciones sin terminar se guardan y se ofrecen de nuevo en el siguiente inicio (`--resume_queue` en línea de comandos)
 -   **Progreso y registro**: barra de progreso con la fase, el tiempo restante y colores; registro en colores con la duración de cada fase; mediciones de latencia en el informe de diagnóstico
 -   **Grupos de noticias**: un cuadro con «chips», sugerencias y comprobaciones, y un menú para elegir adónde van las publicaciones cuando hay varios grupos
--   Página de **Ayuda** en el programa (en inglés), guía para Docker detrás de una VPN (gluetun) y pruebas automáticas de la publicación en CI
+-   Página de **Ayuda** en el programa, guía para Docker detrás de una VPN (gluetun) y pruebas automáticas de la publicación en CI
+
+**Más fácil de usar (v1.3)**
+-   **Publicación Automática, rediseñada**: tres opciones claras (publicar lo que elijo, escanear una carpeta una vez, vigilar una carpeta y publicar lo que llega), vista previa de lo que se publicará con los tamaños, estado de la vigilancia de la carpeta siempre visible (carpeta, publicaciones de hoy, botón de pausa) y elección de qué pasa con los archivos después: nada (por defecto), moverlos a una carpeta «Posted» o borrarlos
+-   **Perfiles**: un perfil «Recomendado» ya listo (compresión, nombre y contraseña aleatorios, par2 10 %) y tus propios perfiles, guardados desde el menú de Quick Post y Publicación Automática
+-   **Comprobaciones antes de publicar**: una ventana en palabras sencillas con la corrección en un clic (sin servidor o grupo, carpetas sin compresión, rar / 7z o par2 no encontrados, contraseña vacía, carpeta NZB no escribible...)
+-   **¿Ya publicado?** Un aviso lista los elementos que ya están en el historial, con una casilla «Publicar de nuevo», en lugar de una pregunta por cada publicación
+-   **Archivo NFO** escrito junto al NZB (se puede publicar con los archivos, con la contraseña si quieres) e información del vídeo con MediaInfo: duración, vídeo, audio y subtítulos
+-   **Notificaciones** cuando las publicaciones terminan o fallan: notificación del sistema, Discord, Telegram o un webhook, un mensaje al final o uno por cada publicación
+-   **Ayuda en el primer inicio**: una barra dice qué falta (servidor, newsgroup) con un botón a la página correcta; los **Ajustes** ahora están en cinco categorías
+-   **Aviso de nueva versión**: una vez al día el programa pregunta a GitHub por la última versión y muestra un botón «Versión X disponible» en la barra lateral (no descarga nada; se desactiva en los Ajustes)
+-   **Ayuda en 8 idiomas**, un botón **Feedback** en la ventana Acerca de (abre una nueva incidencia de GitHub ya rellenada) y las notificaciones en el informe de diagnóstico
+-   **Ventanas pequeñas**: Quick Post y Publicación Automática se desplazan en lugar de aplastar las tarjetas unas contra otras
+-   El desinstalador pregunta si también hay que borrar tus ajustes y el historial (por defecto: conservarlos)
 
 **Seguridad y correcciones**
 -   **Corrección de seguridad**: posible desbordamiento de memoria en el búfer de codificación yEnc (con ciertos datos la salida podía ser mayor que el búfer)
@@ -103,6 +118,8 @@ El archivo de configuración funciona como en el proyecto original (por defecto:
 - **PAR2_ARGS**: para personalizar el comando par2, sobre todo si eliges otro programa distinto del par2cmdline por defecto
 - **theme**: tema de la interfaz, `AUTO` (como Windows), `LIGHT` o `DARK`
 - **history**: `ON` (por defecto) u `OFF`, historial de subidas mostrado en la página Historial. Sin **POST_HISTORY** el archivo es `ngPost_history.csv` junto a la configuración. Se añaden nuevas columnas al final de cada línea: estado, número de archivos, duración y archivo NZB
+- **check_updates**: `ON` (por defecto) o `OFF`, una vez al día la interfaz busca una versión nueva en GitHub (la línea de comandos y Docker nunca lo hacen)
+- **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** y **notify_when** (`all_done` o `each`): notificaciones cuando las publicaciones terminan. Trata las direcciones y el token como contraseñas
 
 ### Cómo compilar
 #### Linux
