@@ -8,7 +8,11 @@
 Compress, add par2, obfuscate and post your files from a clean interface (light and dark themes) or from the command line.
 
 [![Latest release](https://img.shields.io/github/v/release/thenormal/ngPost-Deluxe)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
-[![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions)
+[![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml)
+[![Tests](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml)
+[![Docker](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml)
+![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20Docker-lightgrey)
+![Languages](https://img.shields.io/badge/interface-8%20languages-informational)
 [![Licence: GPL v3](https://img.shields.io/badge/licence-GPL%20v3-blue)](LICENSE)
 
 [![Download](https://img.shields.io/badge/Download-latest%20release-2ea44f?style=for-the-badge)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
@@ -26,7 +30,7 @@ It is a fork of [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licenc
 ### Quick start
 1. Install and start ngPost Deluxe.
 2. Open **Servers**, add your Usenet server and press **Test connection**.
-3. Open **Quick Post** and drag your files or folders into the window.
+3. Open **Quick Post** and drag your files or folders into the window. To post one release for each file or folder, use **Auto Posting**. The **Recommended** profile is a good start (compression, random name and password, par2 10 %).
 4. Press **Post Files**. The NZB file is written in the folder chosen in the Settings, and every upload is listed in **History**.
 
 Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and your servers and settings are there.
@@ -104,6 +108,7 @@ The Windows installers and portable packages and the Docker image are in the [Re
 -   **obfuscates the Article headers**: random poster and UUID subject, the post can only be found with the nzb file
 -   **generates the nzb file** and writes a csv **history of the posts** (archive name and password included)
 -   can **delete files once posted**, **run a command or script** after each post (NZB_POST_CMD) and **switch off the computer**
+-   **profiles** of options, an **NFO file** with the media information (MediaInfo), **checks before posting**, a warning for what is already in the history and **notifications** (system, Discord, Telegram, webhook)
 -   translated in **Chinese, Dutch, English, French, German, Italian, Portuguese and Spanish**
 
 ### Configuration keywords changed in this fork
@@ -115,6 +120,10 @@ The configuration file works as in the original project (default: **~/.ngPost** 
 - **PAR2_ARGS**: to customise the par2 command, especially if you choose a program different from the default one. It now respects double quotes.
 - **theme**: interface theme, `AUTO` (like Windows), `LIGHT` or `DARK`
 - **history**: `ON` (default) or `OFF`, history of the uploads shown in the History page. Without **POST_HISTORY** the file is `ngPost_history.csv` next to the configuration. New columns are added at the end of each line: status, number of files, duration and NZB file
+- **move_posted**: folder where Auto Posting moves each file or folder once it is posted (a name like `Posted` is created next to each item, a full path is used as it is); also `--move_posted`
+- **warn_duplicates**: `ON` (default) or `OFF`, warns (GUI) or skips (command line) what is already in the history; `--allow_repost` posts it anyway
+- **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** and **nfo_text**: NFO file written next to the NZB, posted with the files, with the password, with the MediaInfo information; path of MediaInfo; free text added at the end
+- **profile**: the profiles of options saved from the GUI, one line for each (better managed from the menu of Quick Post and Auto Posting than by hand)
 - **check_updates**: `ON` (default) or `OFF`, once a day the GUI looks for a new version on GitHub (the command line and Docker never do)
 - **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** and **notify_when** (`all_done` or `each`): notifications when the posts are done. Treat the addresses and the token like passwords
 

@@ -8,7 +8,11 @@
 通过简洁的界面（浅色和深色主题）或命令行，压缩、添加 par2、混淆并发布你的文件。
 
 [![Latest release](https://img.shields.io/github/v/release/thenormal/ngPost-Deluxe)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
-[![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions)
+[![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml)
+[![Tests](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml)
+[![Docker](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml)
+![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20Docker-lightgrey)
+![Languages](https://img.shields.io/badge/interface-8%20languages-informational)
 [![Licence: GPL v3](https://img.shields.io/badge/licence-GPL%20v3-blue)](LICENSE)
 
 [![Download](https://img.shields.io/badge/Download-latest%20release-2ea44f?style=for-the-badge)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
@@ -26,7 +30,7 @@
 ### 快速开始
 1. 安装并启动 ngPost Deluxe。
 2. 打开 **Servers**，添加你的 Usenet 服务器并点击 **Test connection**。
-3. 打开 **Quick Post**，把文件或文件夹拖进窗口。
+3. 打开 **Quick Post**，把文件或文件夹拖进窗口。 如果想为每个文件或文件夹分别发布一个 release，请使用**自动发布**。**推荐**方案是个不错的起点（压缩、随机名称和密码、par2 10 %）。
 4. 点击 **Post Files**。NZB 文件会写入在设置中选择的文件夹，每次上传都会显示在 **History** 中。
 
 已经在使用 ngPost？把你的 `ngPost.conf` 复制到 `%APPDATA%\ngPost Deluxe`，你的服务器和设置就都在了。
@@ -107,6 +111,7 @@ Windows 安装程序、便携包和 Docker 镜像在 [Releases](https://github.c
 -   它可以在**发布后自动删除文件/文件夹**（仅限图形界面的监视模式，以及命令行中同时使用 --auto 和 --monitor）
 -   它可以在每次发布后**执行命令或脚本**（见配置文件中的 NZB_POST_CMD）
 -   它可以在所有帖子完成后**关闭计算机**
+-   选项**配置方案**、带媒体信息（MediaInfo）的 **NFO 文件**、**发布前检查**、对历史记录中已有内容的警告，以及**通知**（系统、Discord、Telegram、webhook）
 -   它已**翻译为中文、荷兰语、英语、法语、德语、意大利语、葡萄牙语和西班牙语**。
 
 ### 本分支中修改过的配置关键字
@@ -118,6 +123,10 @@ Windows 安装程序、便携包和 Docker 镜像在 [Releases](https://github.c
 - **PAR2_ARGS**：用于自定义 par2 命令，特别是在选择了不同于默认 par2cmdline 的程序时
 - **theme**：界面主题，`AUTO`（跟随 Windows）、`LIGHT` 或 `DARK`
 - **history**：`ON`（默认）或 `OFF`，上传历史记录显示在历史记录页面。未设置 **POST_HISTORY** 时，文件为配置文件旁边的 `ngPost_history.csv`。每行末尾新增列：状态、文件数、耗时和 NZB 文件
+- **move_posted**：自动发布在发布完成后移动每个文件或文件夹的目标文件夹（会在每个项目旁创建名称如 `Posted` 的文件夹，完整路径则原样使用）；也可用 `--move_posted`
+- **warn_duplicates**：`ON`（默认）或 `OFF`，对历史记录中已有的内容发出警告（图形界面）或跳过（命令行）；`--allow_repost` 则照常发布
+- **gen_nfo**、**nfo_in_post**、**nfo_password**、**nfo_media**（`ON` / `OFF`）、**mediainfo_path** 和 **nfo_text**：在 NZB 旁写入 NFO 文件，随文件一起发布，包含密码，包含 MediaInfo 信息；MediaInfo 的路径；添加在末尾的自由文本
+- **profile**：从图形界面保存的选项配置方案，每个方案一行（最好通过 Quick Post 和自动发布的菜单管理，而不是手动编辑）
 - **check_updates**：`ON`（默认）或 `OFF`，图形界面每天在 GitHub 上查找一次新版本（命令行和 Docker 从不检查）
 - **notify_discord**、**notify_telegram_token**、**notify_telegram_chat**、**notify_webhook** 和 **notify_when**（`all_done` 或 `each`）：发布完成时的通知。请像对待密码一样对待这些地址和令牌
 

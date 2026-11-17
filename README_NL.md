@@ -8,7 +8,11 @@
 Comprimeer, voeg par2 toe, versluier en post je bestanden via een overzichtelijke interface (licht en donker thema) of via de opdrachtregel.
 
 [![Latest release](https://img.shields.io/github/v/release/thenormal/ngPost-Deluxe)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
-[![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions)
+[![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml)
+[![Tests](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml)
+[![Docker](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml)
+![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20Docker-lightgrey)
+![Languages](https://img.shields.io/badge/interface-8%20languages-informational)
 [![Licence: GPL v3](https://img.shields.io/badge/licence-GPL%20v3-blue)](LICENSE)
 
 [![Download](https://img.shields.io/badge/Download-latest%20release-2ea44f?style=for-the-badge)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
@@ -26,7 +30,7 @@ Het is een fork van [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, li
 ### Snelstart
 1. Installeer ngPost Deluxe en start het.
 2. Open **Servers**, voeg je Usenet-server toe en druk op **Test connection**.
-3. Open **Quick Post** en sleep je bestanden of mappen in het venster.
+3. Open **Quick Post** en sleep je bestanden of mappen in het venster. Om voor elk bestand of elke map een aparte release te posten, gebruik je **Auto Posting**. Het profiel **Aanbevolen** is een goed begin (compressie, willekeurige naam en wachtwoord, par2 10 %).
 4. Druk op **Post Files**. Het NZB-bestand wordt weggeschreven in de map die je in de instellingen koos, en elke upload staat in **History**.
 
 Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en je servers en instellingen zijn er weer.
@@ -107,6 +111,7 @@ De Windows-installatieprogramma's, de draagbare pakketten en de Docker-image sta
 -   hij kan **bestanden/mappen automatisch verwijderen na het posten** (alleen bij bewaking in de GUI en met --auto en --monitor samen in de opdrachtregel)
 -   hij kan na elke post **een COMMANDO of script uitvoeren** (zie NZB_POST_CMD in het configuratiebestand)
 -   hij kan **de computer uitschakelen** als alle posts klaar zijn
+-   **profielen** met opties, **NFO-bestand** met de media-informatie (MediaInfo), **controles voor het posten**, een waarschuwing voor wat al in de geschiedenis staat en **meldingen** (systeem, Discord, Telegram, webhook)
 -   hij is **vertaald in het Chinees, Nederlands, Engels, Frans, Duits, Italiaans, Portugees en Spaans**.
 
 ### In deze fork gewijzigde configuratiesleutelwoorden
@@ -118,6 +123,10 @@ Het configuratiebestand werkt zoals in het oorspronkelijke project (standaard: *
 - **PAR2_ARGS**: om het par2-commando aan te passen, vooral als je een ander programma kiest dan de standaard par2cmdline
 - **theme**: thema van de interface, `AUTO` (zoals Windows), `LIGHT` of `DARK`
 - **history**: `ON` (standaard) of `OFF`, geschiedenis van de uploads op de pagina Geschiedenis. Zonder **POST_HISTORY** is het bestand `ngPost_history.csv` naast de configuratie. Aan het einde van elke regel komen nieuwe kolommen: status, aantal bestanden, duur en NZB-bestand
+- **move_posted**: map waarheen Auto Posting elk bestand of elke map verplaatst na het posten (naast elk item wordt een map met een naam als `Posted` gemaakt, een volledig pad wordt ongewijzigd gebruikt); ook `--move_posted`
+- **warn_duplicates**: `ON` (standaard) of `OFF`, waarschuwt (GUI) of slaat over (opdrachtregel) wat al in de geschiedenis staat; `--allow_repost` post het toch
+- **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** en **nfo_text**: NFO-bestand naast het NZB-bestand, mee gepost met de bestanden, met het wachtwoord, met de MediaInfo-informatie; pad van MediaInfo; vrije tekst aan het eind
+- **profile**: de in de GUI opgeslagen profielen met opties, één regel per profiel (beheer ze liever via het menu van Quick Post en Auto Posting dan met de hand)
 - **check_updates**: `ON` (standaard) of `OFF`, één keer per dag zoekt de interface op GitHub naar een nieuwe versie (de opdrachtregel en Docker doen dat nooit)
 - **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** en **notify_when** (`all_done` of `each`): meldingen wanneer de posts klaar zijn. Behandel de adressen en het token als wachtwoorden
 

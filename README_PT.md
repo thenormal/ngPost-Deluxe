@@ -8,7 +8,11 @@
 Comprima, adicione par2, ofusque e publique os seus ficheiros a partir de uma interface limpa (temas claro e escuro) ou da linha de comandos.
 
 [![Latest release](https://img.shields.io/github/v/release/thenormal/ngPost-Deluxe)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
-[![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions)
+[![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml)
+[![Tests](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml)
+[![Docker](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml)
+![Platforms](https://img.shields.io/badge/platforms-Windows%20%7C%20Linux%20%7C%20Docker-lightgrey)
+![Languages](https://img.shields.io/badge/interface-8%20languages-informational)
 [![Licence: GPL v3](https://img.shields.io/badge/licence-GPL%20v3-blue)](LICENSE)
 
 [![Download](https://img.shields.io/badge/Download-latest%20release-2ea44f?style=for-the-badge)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
@@ -26,7 +30,7 @@ Comprima, adicione par2, ofusque e publique os seus ficheiros a partir de uma in
 ### Início rápido
 1. Instale e inicie o ngPost Deluxe.
 2. Abra **Servers**, adicione o seu servidor Usenet e prima **Test connection**.
-3. Abra **Quick Post** e arraste os seus ficheiros ou pastas para a janela.
+3. Abra **Quick Post** e arraste os seus ficheiros ou pastas para a janela. Para postar uma release por cada ficheiro ou pasta, use **Postagem Automática**. O perfil **Recomendado** é um bom ponto de partida (compressão, nome e palavra-passe aleatórios, par2 10 %).
 4. Prima **Post Files**. O ficheiro NZB é escrito na pasta escolhida nas definições e cada envio aparece em **History**.
 
 Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os seus servidores e definições ficam lá.
@@ -107,6 +111,7 @@ Os instaladores e pacotes portáteis para Windows e a imagem Docker estão em [R
 -   pode **apagar automaticamente arquivos/pastas após o post** (apenas no monitoramento da GUI e com --auto e --monitor juntos na linha de comando)
 -   pode **executar um COMANDO ou script** depois de cada post (veja NZB_POST_CMD no arquivo de configuração)
 -   pode **desligar o computador** quando todos os posts terminarem
+-   **perfis** de opções, **ficheiro NFO** com as informações do vídeo (MediaInfo), **verificações antes de postar**, aviso do que já está no histórico e **notificações** (sistema, Discord, Telegram, webhook)
 -   está **traduzido para chinês, holandês, inglês, francês, alemão, italiano, português e espanhol**.
 
 ### Palavras-chave de configuração alteradas neste fork
@@ -118,6 +123,10 @@ O arquivo de configuração funciona como no projeto original (padrão: **~/.ngP
 - **PAR2_ARGS**: para personalizar o comando par2, sobretudo se escolher um programa diferente do par2cmdline padrão
 - **theme**: tema da interface, `AUTO` (como o Windows), `LIGHT` ou `DARK`
 - **history**: `ON` (predefinido) ou `OFF`, histórico dos uploads mostrado na página Histórico. Sem **POST_HISTORY** o ficheiro é `ngPost_history.csv` ao lado da configuração. São adicionadas novas colunas no fim de cada linha: estado, número de ficheiros, duração e ficheiro NZB
+- **move_posted**: pasta para onde a Postagem Automática move cada ficheiro ou pasta depois de postado (junto a cada item é criada uma pasta com um nome como `Posted`, um caminho completo é usado tal como está); também `--move_posted`
+- **warn_duplicates**: `ON` (por defeito) ou `OFF`, avisa (GUI) ou ignora (linha de comandos) o que já está no histórico; `--allow_repost` posta na mesma
+- **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** e **nfo_text**: ficheiro NFO escrito junto ao NZB, postado com os ficheiros, com a palavra-passe, com as informações do MediaInfo; caminho do MediaInfo; texto livre acrescentado no fim
+- **profile**: os perfis de opções guardados a partir da GUI, uma linha por perfil (é melhor geri-los pelo menu de Quick Post e Postagem Automática do que à mão)
 - **check_updates**: `ON` (por defeito) ou `OFF`, uma vez por dia a interface procura uma versão nova no GitHub (a linha de comandos e o Docker nunca o fazem)
 - **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** e **notify_when** (`all_done` ou `each`): notificações quando os posts terminam. Trate os endereços e o token como palavras-passe
 
