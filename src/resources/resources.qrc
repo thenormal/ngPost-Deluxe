@@ -73,5 +73,18 @@
         <file>help/en/11-glossary.md</file>
         <file>help/en/12-problems.md</file>
         <file>help/en/13-warnings.md</file>
+        <file>help/it/01-first-steps.md</file>
+        <file>help/it/02-servers.md</file>
+        <file>help/it/03-newsgroups.md</file>
+        <file>help/it/04-quick-post.md</file>
+        <file>help/it/05-queue.md</file>
+        <file>help/it/06-progress-and-log.md</file>
+        <file>help/it/07-failed-articles.md</file>
+        <file>help/it/08-auto-posting.md</file>
+        <file>help/it/09-nzb-files.md</file>
+        <file>help/it/10-command-line.md</file>
+        <file>help/it/11-glossary.md</file>
+        <file>help/it/12-problems.md</file>
+        <file>help/it/13-warnings.md</file>
     </qresource>
 </RCC>
