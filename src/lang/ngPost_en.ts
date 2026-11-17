@@ -1907,6 +1907,22 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Open Settings</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Version %1 available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A new version of ngPost Deluxe is available: %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Look for a new version when the program starts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once a day, asks GitHub (it only sees your IP address) whether a newer release exists, and tells you. Nothing is downloaded or installed.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3446,6 +3462,10 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     </message>
     <message>
         <source>Watching resumed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>## New versions: the GUI looks once a day for a newer release on GitHub and only tells you (nothing is downloaded)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

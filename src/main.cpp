@@ -71,8 +71,6 @@ int main(int argc, char *argv[])
                                       QThread::idealThreadCount()).arg(qVersion(), PostingJob::sslSupportInfo(),
                                                                          argc > 1 ? "command line" : "GUI"));
 
-    app->checkForNewVersion();
-
     int exitCode = 0;
 #ifdef __USE_HMI__
     if (app->useHMI())

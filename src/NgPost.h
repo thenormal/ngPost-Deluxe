@@ -37,6 +37,7 @@
 #include <QProcess>
 #include <QNetworkAccessManager>
 #include "utils/Notifier.h"
+#include "utils/UpdateChecker.h"
 #include "utils/PostProfile.h"
 #include <functional>
 #include <QNetworkProxy>
@@ -211,6 +212,9 @@ private:
     bool        _queueEnabled = true;  //!< key "queue" of the config
     bool        _resumeQueue  = false; //!< command line: post again the unfinished posts (--resume_queue or key "resume_queue")
     Notifier    _notifier;             //!< notifications at the end of the posts (keys notify_*)
+    UpdateChecker _updateChecker;      //!< looks for a newer release on GitHub (GUI only, once a day)
+    bool        _checkUpdates = true;  //!< key check_updates
+    QString     _updateLastCheck;      //!< key update_last_check (day of the last valid answer)
     bool        _genNfo       = false; //!< write an NFO file next to the nzb (key "gen_nfo", --gen_nfo)
     bool        _nfoInPost    = false; //!< and post it with the files (key "nfo_in_post", --nfo_in_post)
     bool        _nfoPassword  = false; //!< write the password of the archive in it (key "nfo_password", --nfo_password)
@@ -293,7 +297,6 @@ private:
     static const char *sAppName;
     static const QString sVersion;
     static const QString sStage;   //!< release stage (beta...)
-    static const QString sProFileURL;
     static const QString sSupportURL; //!< page to support the project (Ko-fi)
 
     static const QList<QCommandLineOption> sCmdOptions;
@@ -370,7 +373,6 @@ public:
     bool parseCommandLine(int argc, char *argv[]) override;
     inline const char * appName() override;
 
-    void checkForNewVersion() override;
     bool checkSupportSSL();
 #ifdef __USE_HMI__
     int startHMI() override;
@@ -502,7 +504,6 @@ signals:
     void nfoOptionsChanged(); //!< the options of the NFO were changed (the cards of the GUI follow)
 
 public slots:
-    void onCheckForNewVersion();
 #ifdef __USE_HMI__
     void onAboutClicked();
 #endif
@@ -571,7 +572,6 @@ public:
     inline static qint64 articleSize();
     inline static const std::string &aticleSignature();
 
-    inline static const QString & proFileUrl();
     inline static const QString & supportUrl();
     inline static QString versionLabel();
     inline static const QString & asciiArt();
@@ -664,7 +664,6 @@ QString NgPost::nzbPath() const
 bool NgPost::removeNntpServer(NntpServerParams *server){ return _nntpServers.removeOne(server); }
 
 QString NgPost::versionLabel() { return sStage.isEmpty() ? sVersion : QString("%1 %2").arg(sVersion, sStage); }
-const QString &NgPost::proFileUrl() { return sProFileURL; }
 const QString &NgPost::supportUrl() { return sSupportURL; }
 const QString &NgPost::asciiArt()   { return sNgPostASCII; }
 

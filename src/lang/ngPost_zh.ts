@@ -1926,6 +1926,22 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Open Settings</source>
         <translation>打开设置</translation>
     </message>
+    <message>
+        <source>Version %1 available</source>
+        <translation>有新版本 %1</translation>
+    </message>
+    <message>
+        <source>A new version of ngPost Deluxe is available: %1 (%2)</source>
+        <translation>ngPost Deluxe 有新版本: %1 (%2)</translation>
+    </message>
+    <message>
+        <source>Look for a new version when the program starts</source>
+        <translation>程序启动时检查新版本</translation>
+    </message>
+    <message>
+        <source>Once a day, asks GitHub (it only sees your IP address) whether a newer release exists, and tells you. Nothing is downloaded or installed.</source>
+        <translation>每天向 GitHub 询问一次是否有更新的版本(GitHub 只能看到您的 IP 地址), 并通知您. 不会下载或安装任何内容.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3476,6 +3492,10 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     <message>
         <source>Watching resumed</source>
         <translation>监视已继续</translation>
+    </message>
+    <message>
+        <source>## New versions: the GUI looks once a day for a newer release on GitHub and only tells you (nothing is downloaded)</source>
+        <translation>## 新版本: 图形界面每天在 GitHub 上查找一次更新的版本, 只做提示(不会下载任何内容)</translation>
     </message>
 </context>
 <context>
