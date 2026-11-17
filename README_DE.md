@@ -26,7 +26,7 @@ Es ist ein Fork von [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, Li
 ### Schnellstart
 1. Installiere ngPost Deluxe und starte es.
 2. Öffne **Servers**, füge deinen Usenet-Server hinzu und drücke **Test connection**.
-3. Öffne **Quick Post** und ziehe deine Dateien oder Ordner ins Fenster.
+3. Öffne **Quick Post** und ziehe deine Dateien oder Ordner ins Fenster. Um für jede Datei oder jeden Ordner ein eigenes Release zu posten, nutzen Sie **Auto Posting**. Das Profil **Empfohlen** ist ein guter Anfang (Komprimierung, zufälliger Name und Passwort, par2 10 %).
 4. Drücke **Post Files**. Die NZB-Datei wird in den in den Einstellungen gewählten Ordner geschrieben, und jeder Upload erscheint in **History**.
 
 Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Deluxe`, dann sind deine Server und Einstellungen da.
@@ -107,6 +107,7 @@ Die Windows-Installer, die portablen Pakete und das Docker-Image findest du unte
 -   er kann **Dateien/Ordner nach dem Posten automatisch löschen** (nur beim Überwachen in der GUI und mit --auto und --monitor in der Kommandozeile)
 -   er kann nach jedem Post **einen BEFEHL oder ein Skript ausführen** (siehe NZB_POST_CMD in der Konfigurationsdatei)
 -   er kann **den Computer ausschalten**, wenn alle Posts fertig sind
+-   **Profile** mit Optionen, **NFO-Datei** mit den Medieninformationen (MediaInfo), **Prüfungen vor dem Posten**, Warnung für das, was schon im Verlauf steht, und **Benachrichtigungen** (System, Discord, Telegram, Webhook)
 -   er ist **übersetzt in Chinesisch, Niederländisch, Englisch, Französisch, Deutsch, Italienisch, Portugiesisch und Spanisch**.
 
 ### In diesem Fork geänderte Konfigurations-Schlüsselwörter
@@ -118,6 +119,10 @@ Die Konfigurationsdatei funktioniert wie im Originalprojekt (Standard: **~/.ngPo
 - **PAR2_ARGS**: um den par2-Befehl anzupassen, besonders wenn du ein anderes Programm als das Standard-par2cmdline wählst
 - **theme**: Design der Oberfläche, `AUTO` (wie Windows), `LIGHT` oder `DARK`
 - **history**: `ON` (Standard) oder `OFF`, Verlauf der Uploads auf der Seite Verlauf. Ohne **POST_HISTORY** ist die Datei `ngPost_history.csv` neben der Konfiguration. Am Ende jeder Zeile kommen neue Spalten hinzu: Status, Anzahl der Dateien, Dauer und NZB-Datei
+- **move_posted**: Ordner, in den Auto Posting jede Datei oder jeden Ordner nach dem Posten verschiebt (neben jedem Eintrag wird ein Ordner mit einem Namen wie `Posted` angelegt, ein vollständiger Pfad wird unverändert benutzt); auch `--move_posted`
+- **warn_duplicates**: `ON` (Standard) oder `OFF`, warnt (GUI) oder überspringt (Kommandozeile), was schon im Verlauf steht; `--allow_repost` postet es trotzdem
+- **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** und **nfo_text**: NFO-Datei neben der NZB-Datei, mit den Dateien gepostet, mit dem Passwort, mit den MediaInfo-Informationen; Pfad von MediaInfo; freier Text am Ende
+- **profile**: die in der GUI gespeicherten Options-Profile, eine Zeile pro Profil (besser über das Menü von Quick Post und Auto Posting verwalten als von Hand)
 - **check_updates**: `ON` (Standard) oder `OFF`, einmal am Tag sucht die Oberfläche auf GitHub nach einer neuen Version (Kommandozeile und Docker tun das nie)
 - **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** und **notify_when** (`all_done` oder `each`): Benachrichtigungen, wenn die Posts fertig sind. Behandeln Sie die Adressen und das Token wie Passwörter
 
