@@ -32,11 +32,13 @@
 已经在使用 ngPost？把你的 `ngPost.conf` 复制到 `%APPDATA%\ngPost Deluxe`，你的服务器和设置就都在了。
 
 ### 截图
-| Quick Post（浅色主题） | 历史记录 |
+| Quick Post（浅色主题） | 自动发布（浅色主题） |
 |---|---|
-| ![Quick Post（浅色主题）](docs/screenshots/quick-post.png) | ![历史记录](docs/screenshots/history.png) |
-| **设置（深色主题）** | **服务器（深色主题）** |
-| ![设置（深色主题）](docs/screenshots/settings-dark.png) | ![服务器（深色主题）](docs/screenshots/servers-dark.png) |
+| ![Quick Post（浅色主题）](docs/screenshots/quick-post.png) | ![自动发布（浅色主题）](docs/screenshots/auto-posting.png) |
+| **历史记录** | **设置（深色主题）** |
+| ![历史记录](docs/screenshots/history.png) | ![设置（深色主题）](docs/screenshots/settings-dark.png) |
+| **服务器（深色主题）** |  |
+| ![服务器（深色主题）](docs/screenshots/servers-dark.png) |  |
 
 ### 本分支的不同之处
 
@@ -64,7 +66,20 @@
 -   **队列**: 未完成的发布会被保存, 并在下次启动时再次提供 (命令行使用 `--resume_queue`)
 -   **进度和日志**: 带有阶段, 剩余时间和颜色的进度条; 带颜色并显示每个阶段用时的日志; 诊断报告中的延迟测量
 -   **新闻组**: 带有 "chips", 建议和检查的输入框, 以及在有多个新闻组时选择发布位置的菜单
--   程序内的**帮助**页面 (英文), VPN (gluetun) 后运行 Docker 的指南, 以及 CI 中对发布的自动测试
+-   程序内的**帮助**页面, VPN (gluetun) 后运行 Docker 的指南, 以及 CI 中对发布的自动测试
+
+**更易使用 (v1.3)**
+-   **重新设计的自动发布**：三个清晰的选择（发布我选的、扫描一次文件夹、监视文件夹并发布新到的文件），发布前预览内容和大小，文件夹监视状态始终可见（文件夹、今日发布数、暂停按钮），并可选择发布后如何处理文件：不处理（默认）、移动到“Posted”文件夹或删除
+-   **配置方案**：现成的“推荐”方案（压缩、随机名称和密码、par2 10 %），以及你自己的方案，可从 Quick Post 和自动发布的菜单中保存
+-   **发布前检查**：用简明文字显示的窗口，一键修复（没有服务器或群组、文件夹未压缩、找不到 rar / 7z 或 par2、密码为空、NZB 文件夹不可写...）
+-   **已发布过？** 警告会列出历史记录中已有的项目，并提供“再次发布”复选框，而不是每个发布问一次
+-   **NFO 文件**写在 NZB 旁边（可与文件一起发布，也可按需包含密码），以及用 MediaInfo 获取的媒体信息：时长、视频、音频和字幕
+-   **通知**：发布完成或失败时发送：系统通知、Discord、Telegram 或 webhook，可在全部完成时发一条，或每个发布发一条
+-   **首次启动帮助**：一个提示条会说明缺少什么（服务器、新闻组）并提供前往相应页面的按钮；**设置**现在分为五个类别
+-   **新版本提示**：程序每天向 GitHub 询问一次最新版本，并在侧边栏显示“有新版本 X”按钮（不会下载任何内容；可在设置中关闭）
+-   **8 种语言的帮助**，关于窗口中的**反馈**按钮（打开已填好的 GitHub 新 issue），以及诊断报告中的通知信息
+-   **小窗口**：Quick Post 和自动发布会出现滚动条，而不是把卡片挤在一起
+-   卸载程序会询问是否同时删除你的设置和历史记录（默认：保留）
 
 **安全与修复**
 -   **安全修复**：修复 yEnc 编码缓冲区中可能的堆溢出（对于某些数据，输出可能超出缓冲区大小）
@@ -103,6 +118,8 @@ Windows 安装程序、便携包和 Docker 镜像在 [Releases](https://github.c
 - **PAR2_ARGS**：用于自定义 par2 命令，特别是在选择了不同于默认 par2cmdline 的程序时
 - **theme**：界面主题，`AUTO`（跟随 Windows）、`LIGHT` 或 `DARK`
 - **history**：`ON`（默认）或 `OFF`，上传历史记录显示在历史记录页面。未设置 **POST_HISTORY** 时，文件为配置文件旁边的 `ngPost_history.csv`。每行末尾新增列：状态、文件数、耗时和 NZB 文件
+- **check_updates**：`ON`（默认）或 `OFF`，图形界面每天在 GitHub 上查找一次新版本（命令行和 Docker 从不检查）
+- **notify_discord**、**notify_telegram_token**、**notify_telegram_chat**、**notify_webhook** 和 **notify_when**（`all_done` 或 `each`）：发布完成时的通知。请像对待密码一样对待这些地址和令牌
 
 ### 编译
 #### Linux

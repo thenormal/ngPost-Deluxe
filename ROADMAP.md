@@ -21,7 +21,7 @@ Goal: a post should not be lost because of a bad connection, a crash or a restar
 | Done | Guide for Docker / Unraid behind a VPN container (gluetun) |
 | Done | Latency measures in the diagnostic report |
 
-## Version 1.3 - Easier to use
+## Version 1.3 - Easier to use (released)
 
 Goal: the program should be simple for someone who opens it for the first time, especially the Auto Posting page, and it should tell you what happens.
 
@@ -53,17 +53,21 @@ Goal: the program should be simple for someone who opens it for the first time, 
 | Done | **Notifications** when the posts are done or fail: system notification (GUI), Discord, Telegram and a generic webhook; one message when all the posts are done (default) or after each post; the addresses and tokens are treated like passwords |
 | Done | **First start help**: until a server and a newsgroup are set, a bar on Quick Post and Auto Posting says what is missing, with a button to the right page (the "Open Settings" fix of the checks now opens the right category) |
 | Done | **New version notice**: once a day the GUI asks GitHub for the latest release and shows a "Version X available" button in the sidebar that opens the release page (nothing is downloaded; release candidates are ignored; Settings, General, Interface turns it off; command line and Docker never check; key `check_updates`) |
+| Done | **Help in 8 languages**: the 13 pages of the Help section are translated (Chinese, Dutch, English, French, German, Italian, Portuguese, Spanish); a page that is missing falls back to English. A test checks that every translated page has the same headings, links and command examples as the English one |
+| Done | **Settings in five categories** (General, Posts, NZB files, Notifications, History and queue), saved automatically |
+| Done | **Small windows**: Quick Post and Auto Posting scroll instead of squeezing the cards on top of each other; the files list shrinks first |
+| Done | Fix: the translations compiled in the program (`.qm`) were out of date, so some new texts were never shown translated; a test now checks them |
 | Done | **Notifications in the diagnostic report**: what is notified, system notification on/available and shown, which channels are set (yes/no only, never the addresses or tokens), messages sent and failed this session, last failure |
 
 ## Version 1.4 - Verification and control (first thoughts)
 
-These are directions, not a list of promises. The points will be decided when 1.3 is done.
+These are directions, not a list of promises. Version 1.3 is released; the points below will be decided now.
 
 - **One list of the posts** (state, progress, size, NZB, password) instead of one tab for each post: it changes how the whole interface handles the posts, so it was moved here from 1.3
 - **A post is finished when it is verified**: check that the Articles are on the server (button, optional automatic), show the result in the history, and post again by itself what is missing
 - A post that stops **continues from the last Article sent** instead of starting again
 - **Bandwidth limit** and time slots for the upload
-- Posting profiles saved by the user, newsgroups per post and favorites, maybe the list of groups from the server
+- Newsgroups per post and favorites, maybe the list of groups from the server
 
 ## Ideas, not committed
 
@@ -71,7 +75,7 @@ No order, no version. Some of them will probably be done, some will be dropped.
 
 **Control**
 - VPN guard: pause the posts when the VPN connection drops (the real kill-switch stays in the firewall or in the VPN application)
-- Check for updates and update from inside the program (with a checksum, and asking before anything is installed)
+- Update from inside the program (the check for a new version exists since 1.3; this would download it, with a checksum, and ask before anything is installed)
 - Temporary files in RAM: easier on Windows, and chosen automatically when there is room
 - Web panel for Docker and NAS: queue, progress, history and pause from a browser (access with password, local network only by default)
 - Automatic tuning of the number of connections and of the Article size, from the measures of the latency

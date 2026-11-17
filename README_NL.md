@@ -32,11 +32,13 @@ Het is een fork van [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, li
 Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en je servers en instellingen zijn er weer.
 
 ### Schermafbeeldingen
-| Quick Post (licht thema) | Geschiedenis |
+| Quick Post (licht thema) | Auto Posting (licht thema) |
 |---|---|
-| ![Quick Post (licht thema)](docs/screenshots/quick-post.png) | ![Geschiedenis](docs/screenshots/history.png) |
-| **Instellingen (donker thema)** | **Servers (donker thema)** |
-| ![Instellingen (donker thema)](docs/screenshots/settings-dark.png) | ![Servers (donker thema)](docs/screenshots/servers-dark.png) |
+| ![Quick Post (licht thema)](docs/screenshots/quick-post.png) | ![Auto Posting (licht thema)](docs/screenshots/auto-posting.png) |
+| **Geschiedenis** | **Instellingen (donker thema)** |
+| ![Geschiedenis](docs/screenshots/history.png) | ![Instellingen (donker thema)](docs/screenshots/settings-dark.png) |
+| **Servers (donker thema)** |  |
+| ![Servers (donker thema)](docs/screenshots/servers-dark.png) |  |
 
 ### Wat is er anders in deze fork
 
@@ -64,7 +66,20 @@ Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en
 -   **Wachtrij**: posts die niet klaar zijn worden bewaard en bij de volgende start opnieuw aangeboden (`--resume_queue` op de opdrachtregel)
 -   **Voortgang en log**: voortgangsbalk met de fase, de resterende tijd en kleuren; gekleurd log met de duur van elke fase; latentiemetingen in het diagnoserapport
 -   **Newsgroups**: een vak met "chips", suggesties en controles, en een menu om te kiezen waar de posts heen gaan als er meerdere groepen zijn
--   **Help**-pagina in het programma (in het Engels), handleiding voor Docker achter een VPN (gluetun) en automatische tests van het posten in de CI
+-   **Help**-pagina in het programma, handleiding voor Docker achter een VPN (gluetun) en automatische tests van het posten in de CI
+
+**Makkelijker te gebruiken (v1.3)**
+-   **Auto Posting, opnieuw ontworpen**: drie duidelijke keuzes (post wat ik kies, scan een map eenmalig, bewaak een map en post wat binnenkomt), voorbeeld van wat gepost wordt met de groottes, de status van het bewaken van de map altijd zichtbaar (map, posts van vandaag, pauzeknop) en de keuze wat er daarna met de bestanden gebeurt: niets (standaard), verplaatsen naar een map "Posted" of verwijderen
+-   **Profielen**: een kant-en-klaar profiel "Aanbevolen" (compressie, willekeurige naam en wachtwoord, par2 10 %) en je eigen profielen, opgeslagen via het menu van Quick Post en Auto Posting
+-   **Controles voor het posten**: een venster in gewone woorden met een oplossing met één klik (geen server of groep, mappen zonder compressie, rar / 7z of par2 niet gevonden, leeg wachtwoord, NZB-map niet beschrijfbaar...)
+-   **Al gepost?** Een waarschuwing toont de items die al in de geschiedenis staan, met een vakje "Opnieuw posten", in plaats van één vraag per post
+-   **NFO-bestand** naast het NZB-bestand (desgewenst mee gepost met de bestanden, desgewenst met het wachtwoord) en media-informatie met MediaInfo: duur, video, audio en ondertitels
+-   **Meldingen** wanneer de posts klaar zijn of mislukken: systeemmelding, Discord, Telegram of een webhook, één bericht aan het eind of één per post
+-   **Hulp bij de eerste start**: een balk zegt wat er ontbreekt (server, newsgroup) met een knop naar de juiste pagina; de **Instellingen** zijn nu in vijf categorieën
+-   **Melding van een nieuwe versie**: één keer per dag vraagt het programma GitHub om de nieuwste versie en toont een knop "Versie X beschikbaar" in de zijbalk (er wordt niets gedownload; uit te zetten in de Instellingen)
+-   **Help in 8 talen**, een knop **Feedback** in het Over-venster (opent een nieuw, al ingevuld GitHub-issue) en de meldingen in het diagnoserapport
+-   **Kleine vensters**: Quick Post en Auto Posting scrollen in plaats van de kaarten op elkaar te drukken
+-   Het verwijderprogramma vraagt of ook je instellingen en geschiedenis verwijderd moeten worden (standaard: bewaren)
 
 **Beveiliging en correcties**
 -   **Beveiligingsfix**: mogelijke heap-overflow in de yEnc-codeerbuffer (bij bepaalde gegevens kon de uitvoer groter zijn dan de buffer)
@@ -103,6 +118,8 @@ Het configuratiebestand werkt zoals in het oorspronkelijke project (standaard: *
 - **PAR2_ARGS**: om het par2-commando aan te passen, vooral als je een ander programma kiest dan de standaard par2cmdline
 - **theme**: thema van de interface, `AUTO` (zoals Windows), `LIGHT` of `DARK`
 - **history**: `ON` (standaard) of `OFF`, geschiedenis van de uploads op de pagina Geschiedenis. Zonder **POST_HISTORY** is het bestand `ngPost_history.csv` naast de configuratie. Aan het einde van elke regel komen nieuwe kolommen: status, aantal bestanden, duur en NZB-bestand
+- **check_updates**: `ON` (standaard) of `OFF`, één keer per dag zoekt de interface op GitHub naar een nieuwe versie (de opdrachtregel en Docker doen dat nooit)
+- **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** en **notify_when** (`all_done` of `each`): meldingen wanneer de posts klaar zijn. Behandel de adressen en het token als wachtwoorden
 
 ### Compileren
 #### Linux

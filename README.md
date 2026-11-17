@@ -32,11 +32,13 @@ It is a fork of [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licenc
 Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and your servers and settings are there.
 
 ### Screenshots
-| Quick Post (light theme) | History |
+| Quick Post (light theme) | Auto Posting (light theme) |
 |---|---|
-| ![Quick Post (light theme)](docs/screenshots/quick-post.png) | ![History](docs/screenshots/history.png) |
-| **Settings (dark theme)** | **Servers (dark theme)** |
-| ![Settings (dark theme)](docs/screenshots/settings-dark.png) | ![Servers (dark theme)](docs/screenshots/servers-dark.png) |
+| ![Quick Post (light theme)](docs/screenshots/quick-post.png) | ![Auto Posting (light theme)](docs/screenshots/auto-posting.png) |
+| **History** | **Settings (dark theme)** |
+| ![History](docs/screenshots/history.png) | ![Settings (dark theme)](docs/screenshots/settings-dark.png) |
+| **Servers (dark theme)** |  |
+| ![Servers (dark theme)](docs/screenshots/servers-dark.png) |  |
 
 ### What is different in this fork
 
@@ -64,7 +66,20 @@ Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and
 -   **Queue**: the posts that are not finished are saved and offered again at the next start (`--resume_queue` on the command line)
 -   **Progress and log**: progress bar with the phase, the remaining time and colors; colored log with the duration of each phase; latency measures in the diagnostic report
 -   **Newsgroups**: a box with "chips", suggestions and checks, and a menu to choose where the posts go when there are several groups
--   **Help** page in the program (in English), guide for Docker behind a VPN (gluetun), and automatic tests of the posting in CI
+-   **Help** page in the program, guide for Docker behind a VPN (gluetun), and automatic tests of the posting in CI
+
+**Easier to use (v1.3)**
+-   **Auto Posting, redesigned**: three clear choices (post what I choose, scan a folder once, watch a folder and post what arrives), a preview of what will be posted with the sizes, the state of the folder watching always visible (folder, posts of the day, pause button), and the choice of what happens to the files afterwards: nothing (default), move them to a "Posted" folder or delete them
+-   **Profiles**: a ready "Recommended" profile (compression, random name and password, par2 10 %) and your own profiles, saved from the menu of Quick Post and Auto Posting
+-   **Checks before posting**: a window in plain words with a one-click fix (no server or group, folders without compression, rar / 7z or par2 not found, empty password, NZB folder not writable...)
+-   **Already posted?** A warning lists the items that are already in the history, with a "Post again" box, instead of one question for each post
+-   **NFO file** written next to the NZB (optionally posted with the files, with the password if you want) and the media information from MediaInfo: duration, video, audio and subtitles
+-   **Notifications** when the posts are done or fail: system notification, Discord, Telegram or a webhook, one message at the end or one for each post
+-   **First start help**: a bar tells what is missing (server, newsgroup) with a button to the right page; the **Settings** are now in five categories
+-   **New version notice**: once a day the program asks GitHub for the latest release and shows a "Version X available" button in the side bar (nothing is downloaded; it can be turned off in the Settings)
+-   **Help in 8 languages**, a **Feedback** button in the About window (opens a new GitHub issue already filled in) and the notifications in the diagnostic report
+-   **Small windows**: Quick Post and Auto Posting scroll instead of squeezing the cards on top of each other
+-   The uninstaller asks whether to also delete your settings and history (default: keep them)
 
 **Security and fixes**
 -   **Security fix**: possible heap overflow in the yEnc encoding buffer (the output could be bigger than the buffer with specific data)
@@ -100,6 +115,8 @@ The configuration file works as in the original project (default: **~/.ngPost** 
 - **PAR2_ARGS**: to customise the par2 command, especially if you choose a program different from the default one. It now respects double quotes.
 - **theme**: interface theme, `AUTO` (like Windows), `LIGHT` or `DARK`
 - **history**: `ON` (default) or `OFF`, history of the uploads shown in the History page. Without **POST_HISTORY** the file is `ngPost_history.csv` next to the configuration. New columns are added at the end of each line: status, number of files, duration and NZB file
+- **check_updates**: `ON` (default) or `OFF`, once a day the GUI looks for a new version on GitHub (the command line and Docker never do)
+- **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** and **notify_when** (`all_done` or `each`): notifications when the posts are done. Treat the addresses and the token like passwords
 
 ### How to build
 #### Linux

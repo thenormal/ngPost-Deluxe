@@ -32,11 +32,13 @@ C'est un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licen
 Vous utilisez déjà ngPost ? Copiez votre `ngPost.conf` dans `%APPDATA%\ngPost Deluxe` et vos serveurs et réglages sont repris.
 
 ### Captures d'écran
-| Quick Post (thème clair) | Historique |
+| Quick Post (thème clair) | Post Auto (thème clair) |
 |---|---|
-| ![Quick Post (thème clair)](docs/screenshots/quick-post.png) | ![Historique](docs/screenshots/history.png) |
-| **Paramètres (thème sombre)** | **Serveurs (thème sombre)** |
-| ![Paramètres (thème sombre)](docs/screenshots/settings-dark.png) | ![Serveurs (thème sombre)](docs/screenshots/servers-dark.png) |
+| ![Quick Post (thème clair)](docs/screenshots/quick-post.png) | ![Post Auto (thème clair)](docs/screenshots/auto-posting.png) |
+| **Historique** | **Paramètres (thème sombre)** |
+| ![Historique](docs/screenshots/history.png) | ![Paramètres (thème sombre)](docs/screenshots/settings-dark.png) |
+| **Serveurs (thème sombre)** |  |
+| ![Serveurs (thème sombre)](docs/screenshots/servers-dark.png) |  |
 
 ### Ce qui change dans ce fork
 
@@ -64,7 +66,20 @@ Vous utilisez déjà ngPost ? Copiez votre `ngPost.conf` dans `%APPDATA%\ngPost 
 -   **File d'attente** : les envois non terminés sont enregistrés et proposés à nouveau au prochain démarrage (`--resume_queue` en ligne de commande)
 -   **Progression et journal** : barre de progression avec la phase, le temps restant et des couleurs ; journal en couleurs avec la durée de chaque phase ; mesures de latence dans le rapport de diagnostic
 -   **Newsgroups** : une zone avec des « chips », des suggestions et des vérifications, et un menu pour choisir où vont les envois quand il y a plusieurs groupes
--   Page d'**Aide** dans le programme (en anglais), guide pour Docker derrière un VPN (gluetun) et tests automatiques de l'envoi dans la CI
+-   Page d'**Aide** dans le programme, guide pour Docker derrière un VPN (gluetun) et tests automatiques de l'envoi dans la CI
+
+**Plus facile à utiliser (v1.3)**
+-   **Post Auto, redessiné** : trois choix clairs (poster ce que je choisis, scanner un dossier une fois, surveiller un dossier et poster ce qui arrive), aperçu de ce qui sera posté avec les tailles, état de la surveillance du dossier toujours visible (dossier, posts du jour, bouton pause) et choix de ce qui arrive aux fichiers ensuite : rien (par défaut), les déplacer dans un dossier « Posted » ou les supprimer
+-   **Profils** : un profil « Recommandé » prêt à l'emploi (compression, nom et mot de passe aléatoires, par2 10 %) et vos propres profils, enregistrés depuis le menu de Quick Post et de Post Auto
+-   **Vérifications avant d'envoyer** : une fenêtre en mots simples avec la correction en un clic (aucun serveur ou groupe, dossiers sans compression, rar / 7z ou par2 introuvables, mot de passe vide, dossier NZB non modifiable...)
+-   **Déjà posté ?** Un avertissement liste les éléments déjà présents dans l'historique, avec une case « Reposter », au lieu d'une question par post
+-   **Fichier NFO** écrit à côté du NZB (posté avec les fichiers si vous le voulez, avec le mot de passe si vous le voulez) et informations sur la vidéo avec MediaInfo : durée, vidéo, audio et sous-titres
+-   **Notifications** quand les posts sont terminés ou échouent : notification système, Discord, Telegram ou un webhook, un message à la fin ou un pour chaque post
+-   **Aide au premier démarrage** : une barre indique ce qui manque (serveur, newsgroup) avec un bouton vers la bonne page ; les **Paramètres** sont maintenant en cinq catégories
+-   **Avis de nouvelle version** : une fois par jour, le programme demande à GitHub la dernière version et affiche un bouton « Version X disponible » dans la barre latérale (rien n'est téléchargé ; désactivable dans les Paramètres)
+-   **Aide en 8 langues**, un bouton **Feedback** dans la fenêtre À propos (ouvre un nouveau ticket GitHub déjà rempli) et les notifications dans le rapport de diagnostic
+-   **Petites fenêtres** : Quick Post et Post Auto défilent au lieu d'écraser les cartes les unes sur les autres
+-   Le désinstalleur demande s'il faut aussi supprimer vos paramètres et l'historique (par défaut : les garder)
 
 **Sécurité et correctifs**
 -   **Correctif de sécurité**: dépassement de mémoire possible dans le tampon d'encodage yEnc (la sortie pouvait être plus grande que le tampon avec certaines données)
@@ -100,6 +115,8 @@ Le fichier de configuration fonctionne comme dans le projet original (par défau
 - **PAR2_ARGS**: pour personnaliser la commande par2, surtout si vous choisissez un programme différent de celui par défaut. Respecte maintenant les guillemets.
 - **theme** : thème de l'interface, `AUTO` (comme Windows), `LIGHT` ou `DARK`
 - **history** : `ON` (par défaut) ou `OFF`, historique des uploads affiché dans la page Historique. Sans **POST_HISTORY** le fichier est `ngPost_history.csv` à côté de la configuration. De nouvelles colonnes sont ajoutées à la fin de chaque ligne : statut, nombre de fichiers, durée et fichier NZB
+- **check_updates** : `ON` (par défaut) ou `OFF`, une fois par jour l'interface cherche une nouvelle version sur GitHub (la ligne de commande et Docker ne le font jamais)
+- **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** et **notify_when** (`all_done` ou `each`) : notifications quand les posts sont terminés. Traitez les adresses et le token comme des mots de passe
 
 ### Comment compiler ngPost
 #### Linux

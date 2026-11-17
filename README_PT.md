@@ -32,11 +32,13 @@ Comprima, adicione par2, ofusque e publique os seus ficheiros a partir de uma in
 Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os seus servidores e definições ficam lá.
 
 ### Capturas de ecrã
-| Quick Post (tema claro) | Histórico |
+| Quick Post (tema claro) | Postagem Automática (tema claro) |
 |---|---|
-| ![Quick Post (tema claro)](docs/screenshots/quick-post.png) | ![Histórico](docs/screenshots/history.png) |
-| **Definições (tema escuro)** | **Servidores (tema escuro)** |
-| ![Definições (tema escuro)](docs/screenshots/settings-dark.png) | ![Servidores (tema escuro)](docs/screenshots/servers-dark.png) |
+| ![Quick Post (tema claro)](docs/screenshots/quick-post.png) | ![Postagem Automática (tema claro)](docs/screenshots/auto-posting.png) |
+| **Histórico** | **Definições (tema escuro)** |
+| ![Histórico](docs/screenshots/history.png) | ![Definições (tema escuro)](docs/screenshots/settings-dark.png) |
+| **Servidores (tema escuro)** |  |
+| ![Servidores (tema escuro)](docs/screenshots/servers-dark.png) |  |
 
 ### O que muda neste fork
 
@@ -64,7 +66,20 @@ Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os 
 -   **Fila**: os posts que não terminaram são guardados e oferecidos de novo no próximo início (`--resume_queue` na linha de comandos)
 -   **Progresso e log**: barra de progresso com a fase, o tempo restante e cores; log colorido com a duração de cada fase; medições de latência no relatório de diagnóstico
 -   **Newsgroups**: uma caixa com "chips", sugestões e verificações, e um menu para escolher para onde vão os posts quando há vários grupos
--   Página de **Ajuda** no programa (em inglês), guia para Docker atrás de uma VPN (gluetun) e testes automáticos do post na CI
+-   Página de **Ajuda** no programa, guia para Docker atrás de uma VPN (gluetun) e testes automáticos do post na CI
+
+**Mais fácil de usar (v1.3)**
+-   **Postagem Automática, redesenhada**: três escolhas claras (postar o que escolho, analisar uma pasta uma vez, vigiar uma pasta e postar o que chega), pré-visualização do que será postado com os tamanhos, estado da vigilância da pasta sempre visível (pasta, posts do dia, botão de pausa) e escolha do que acontece aos ficheiros depois: nada (por defeito), movê-los para uma pasta "Posted" ou apagá-los
+-   **Perfis**: um perfil "Recomendado" já pronto (compressão, nome e palavra-passe aleatórios, par2 10 %) e os seus próprios perfis, guardados a partir do menu de Quick Post e Postagem Automática
+-   **Verificações antes de postar**: uma janela em palavras simples com a correção num clique (nenhum servidor ou grupo, pastas sem compressão, rar / 7z ou par2 não encontrados, palavra-passe vazia, pasta NZB sem permissão de escrita...)
+-   **Já postado?** Um aviso lista os itens que já estão no histórico, com uma caixa "Postar de novo", em vez de uma pergunta por cada post
+-   **Ficheiro NFO** escrito junto ao NZB (pode ser postado com os ficheiros, com a palavra-passe se quiser) e informações do vídeo com MediaInfo: duração, vídeo, áudio e legendas
+-   **Notificações** quando os posts terminam ou falham: notificação do sistema, Discord, Telegram ou um webhook, uma mensagem no fim ou uma por cada post
+-   **Ajuda no primeiro arranque**: uma barra diz o que falta (servidor, newsgroup) com um botão para a página certa; as **Definições** estão agora em cinco categorias
+-   **Aviso de nova versão**: uma vez por dia o programa pergunta ao GitHub pela última versão e mostra um botão "Versão X disponível" na barra lateral (não descarrega nada; pode ser desativado nas Definições)
+-   **Ajuda em 8 idiomas**, um botão **Feedback** na janela Sobre (abre um novo problema no GitHub já preenchido) e as notificações no relatório de diagnóstico
+-   **Janelas pequenas**: Quick Post e Postagem Automática deslocam-se em vez de esmagar os cartões uns contra os outros
+-   O desinstalador pergunta se também deve apagar as suas definições e o histórico (por defeito: mantê-los)
 
 **Segurança e correções**
 -   **Correção de segurança**: possível estouro de heap no buffer de codificação yEnc (com certos dados, a saída podia exceder o buffer)
@@ -103,6 +118,8 @@ O arquivo de configuração funciona como no projeto original (padrão: **~/.ngP
 - **PAR2_ARGS**: para personalizar o comando par2, sobretudo se escolher um programa diferente do par2cmdline padrão
 - **theme**: tema da interface, `AUTO` (como o Windows), `LIGHT` ou `DARK`
 - **history**: `ON` (predefinido) ou `OFF`, histórico dos uploads mostrado na página Histórico. Sem **POST_HISTORY** o ficheiro é `ngPost_history.csv` ao lado da configuração. São adicionadas novas colunas no fim de cada linha: estado, número de ficheiros, duração e ficheiro NZB
+- **check_updates**: `ON` (por defeito) ou `OFF`, uma vez por dia a interface procura uma versão nova no GitHub (a linha de comandos e o Docker nunca o fazem)
+- **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** e **notify_when** (`all_done` ou `each`): notificações quando os posts terminam. Trate os endereços e o token como palavras-passe
 
 ### Compilar
 #### Linux
