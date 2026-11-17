@@ -1101,6 +1101,24 @@ def test_version_number_unit(work):
     check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
 
 
+def test_translations_compiled(work):
+    # the .qm files (what the program really uses) must contain the translations of the .ts files:
+    # after editing a .ts, run: lrelease src/lang/ngPost_xx.ts -qm src/resources/lang/ngPost_xx.qm
+    import xml.etree.ElementTree as ET
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    for lang in ["de", "es", "fr", "it", "nl", "pt", "zh"]:
+        qm = open(os.path.join(root, "src", "resources", "lang", "ngPost_%s.qm" % lang), "rb").read()
+        missing = []
+        for msg in ET.parse(os.path.join(root, "src", "lang", "ngPost_%s.ts" % lang)).getroot().iter("message"):
+            tr = msg.find("translation")
+            text = tr.text if tr is not None else None
+            if not text or tr.get("type") in ("unfinished", "obsolete", "vanished") or len(text) > 80 or "\n" in text:
+                continue
+            if text.encode("utf-16-be") not in qm:
+                missing.append(text)
+        check(not missing, "ngPost_%s.qm is out of date (%d translations missing, for example: %s). Run lrelease." % (lang, len(missing), missing[:2]))
+
+
 class HttpSink:
     """small HTTP server that keeps the POST requests it receives (for the notifications)"""
     def __init__(self):
@@ -1227,7 +1245,7 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_help_pages, test_latency_is_measured, test_feedback_forms,
          test_duplicate_is_skipped, test_nfo_file, test_nfo_media_info, test_profiles_and_par2_default, test_post_checker_unit, test_move_posted, test_move_posted_never_overwrites,
          test_move_posted_kept_when_articles_failed, test_move_posted_options, test_posted_mover_unit, test_notifications,
-         test_notification_when_all_done, test_version_number_unit]
+         test_notification_when_all_done, test_version_number_unit, test_translations_compiled]
 
 
 def main():
