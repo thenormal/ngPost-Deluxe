@@ -99,6 +99,7 @@ SOURCES += \
         utils/PostedMover.cpp \
         utils/NfoWriter.cpp \
         utils/Notifier.cpp \
+        utils/UpdateChecker.cpp \
         utils/Yenc.cpp
 
 
@@ -133,6 +134,8 @@ HEADERS += \
     utils/PostedMover.h \
     utils/NfoWriter.h \
     utils/Notifier.h \
+    utils/UpdateChecker.h \
+    utils/VersionNumber.h \
     utils/Macros.h \
     utils/PureStaticClass.h \
     utils/Yenc.h

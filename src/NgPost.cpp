@@ -69,7 +69,6 @@
 const char *NgPost::sAppName          = "ngPost Deluxe";
 const QString NgPost::sVersion        = QString(QT_STRINGIFY(APP_VERSION)).remove('"');
 const QString NgPost::sStage          = "";
-const QString NgPost::sProFileURL     = "https://raw.githubusercontent.com/thenormal/ngPost-Deluxe/master/src/ngPost.pri";
 const QString NgPost::sSupportURL     = "https://ko-fi.com/thenormal";
 
 const QString NgPost::sMainThreadName     = "MainThread";
@@ -863,16 +862,6 @@ void NgPost::changeLanguage(const QString &lang)
         _app->installTranslator(_translators[_lang]);
 }
 
-void NgPost::checkForNewVersion()
-{
-    QUrl proFileURL(NgPost::proFileUrl());
-    QNetworkRequest req(proFileURL);
-    req.setRawHeader( "User-Agent" , "ngPost C++ app" );
-
-    QNetworkReply *reply = _netMgr.get(req);
-    QObject::connect(reply, &QNetworkReply::finished, this, &NgPost::onCheckForNewVersion);
-}
-
 bool NgPost::checkSupportSSL()
 {
     if (!PostingJob::supportsSsl())
@@ -1051,52 +1040,6 @@ void NgPost::_post(const QFileInfo &fileInfo, const QString &monitorFolder)
 }
 
 
-
-void NgPost::onCheckForNewVersion()
-{
-    QNetworkReply      *reply = static_cast<QNetworkReply*>(sender());
-    QRegularExpression appVersionRegExp("^DEFINES \\+= \"APP_VERSION=\\\\\"((\\d+)\\.(\\d+))\\\\\"\"$");
-    QStringList v = sVersion.split(".");
-    if (v.size() < 2)
-    {
-        reply->deleteLater();
-        return;
-    }
-    int currentMajor = v.at(0).toInt(), currentMinor = v.at(1).toInt();
-    while (!reply->atEnd())
-    {
-        QString line = reply->readLine().trimmed();
-        QRegularExpressionMatch match = appVersionRegExp.match(line);
-        if (match.hasMatch())
-        {
-            QString lastRealease = match.captured(1);
-            int lastMajor = match.captured(2).toInt(), lastMinor = match.captured(3).toInt();
-            qDebug() << "lastMajor: " << lastMajor << ", lastMinor: " << lastMinor
-                     << " (currentMajor: " << currentMajor << ", currentMinor: " << currentMinor << ")";
-
-            if (lastMajor > currentMajor ||
-                    (lastMajor == currentMajor && lastMinor > currentMinor) )
-            {
-#ifdef __USE_HMI__
-                if (_hmi)
-                {
-                    QString msg = tr("<center><h3>New version available on GitHUB</h3></center>");
-                    msg += tr("<br/>The last release is now <b>v%1</b>").arg(lastRealease);
-                    msg += tr("<br/><br/>You can download it from the <a href='https://github.com/thenormal/ngPost-Deluxe/releases'>release directory</a>");
-
-                    QMessageBox::information(_hmi, tr("New version available"), msg);
-                }
-                else
-#endif
-                    qCritical() << "There is a new version available on GitHUB: v" << lastRealease
-                                << " (visit https://github.com/thenormal/ngPost-Deluxe/releases to get it)";
-            }
-
-            break; // no need to continue to parse the page
-        }
-    }
-    reply->deleteLater();
-}
 
 #ifdef __USE_HMI__
 #include <QDesktopServices>
@@ -2594,6 +2537,13 @@ QString NgPost::_parseConfig(const QString &configPath)
                         bool on = (val == "on" || val == "true" || val == "1" || val == "yes");
                         (opt == "notify_ok" ? _notifier.settings().onSuccess : opt == "notify_errors" ? _notifier.settings().onErrors : _notifier.settings().tray) = on;
                     }
+                    else if (opt == "check_updates")
+                    {
+                        val = val.toLower();
+                        _checkUpdates = !(val == "off" || val == "false" || val == "0" || val == "no");
+                    }
+                    else if (opt == "update_last_check")
+                        _updateLastCheck = val.trimmed();
                     else if (opt == "notify_when")
                         _notifier.settings().allDone = (val.trimmed().toLower() != "each");
                     else if (opt == "notify_discord")
@@ -3237,6 +3187,10 @@ void NgPost::saveConfig(bool quiet)
                << (_notifier.settings().telegramToken.isEmpty() ? "#" : "") << "notify_telegram_token = " << _notifier.settings().telegramToken << "\n"
                << (_notifier.settings().telegramChat.isEmpty() ? "#" : "") << "notify_telegram_chat = " << _notifier.settings().telegramChat << "\n"
                << (_notifier.settings().webhook.isEmpty() ? "#" : "") << "notify_webhook = " << _notifier.settings().webhook << "\n"
+               << "\n"
+               << tr("## New versions: the GUI looks once a day for a newer release on GitHub and only tells you (nothing is downloaded)") << "\n"
+               << "check_updates = " << (_checkUpdates ? "ON" : "OFF") << "\n"
+               << (_updateLastCheck.isEmpty() ? "#" : "") << "update_last_check = " << _updateLastCheck << "\n"
                << "\n"
                << tr("## Auto Posting: last mode used (choose, scan or watch) and the folder where the posted files are moved") << "\n"
                << tr("## (a name like Posted is created next to each file/folder, a full path is used as it is; without it nothing is moved)") << "\n"

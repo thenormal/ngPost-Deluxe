@@ -29,4 +29,10 @@ The NZB file is the "map" of your post: without it nobody can find the articles,
 - **History**: everything you posted.
 - **Help**: this section.
 
+## New versions
+
+Once a day, when the program starts, ngPost Deluxe asks GitHub whether a newer release exists (GitHub only sees your IP address). If there is one, a **Version X available** button appears at the bottom of the left bar: click it to open the release page. Nothing is downloaded or installed by itself, and release candidates are never announced.
+
+To turn it off, clear **Look for a new version when the program starts** in **Settings**, category **General**, card **Interface**. The command line version and the Docker image never check.
+
 Next: [Servers and connections](02-servers.md).

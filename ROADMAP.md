@@ -52,6 +52,7 @@ Goal: the program should be simple for someone who opens it for the first time, 
 | Done | Media information in the NFO file with MediaInfo (duration, video, audio, subtitles of up to 20 files; on by default, `--no_nfo_media`, `--mediainfo_path`). MediaInfo is shipped in the Windows installer and the Docker image |
 | Done | **Notifications** when the posts are done or fail: system notification (GUI), Discord, Telegram and a generic webhook; one message when all the posts are done (default) or after each post; the addresses and tokens are treated like passwords |
 | Done | **First start help**: until a server and a newsgroup are set, a bar on Quick Post and Auto Posting says what is missing, with a button to the right page (the "Open Settings" fix of the checks now opens the right category) |
+| Done | **New version notice**: once a day the GUI asks GitHub for the latest release and shows a "Version X available" button in the sidebar that opens the release page (nothing is downloaded; release candidates are ignored; Settings, General, Interface turns it off; command line and Docker never check; key `check_updates`) |
 
 ## Version 1.4 - Verification and control (first thoughts)
 

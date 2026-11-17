@@ -1928,6 +1928,22 @@ Later beslissen: ze blijven in de wachtrij en worden bij de volgende start opnie
         <source>Open Settings</source>
         <translation>Instellingen openen</translation>
     </message>
+    <message>
+        <source>Version %1 available</source>
+        <translation>Versie %1 beschikbaar</translation>
+    </message>
+    <message>
+        <source>A new version of ngPost Deluxe is available: %1 (%2)</source>
+        <translation>Er is een nieuwe versie van ngPost Deluxe beschikbaar: %1 (%2)</translation>
+    </message>
+    <message>
+        <source>Look for a new version when the program starts</source>
+        <translation>Bij het starten naar een nieuwe versie zoeken</translation>
+    </message>
+    <message>
+        <source>Once a day, asks GitHub (it only sees your IP address) whether a newer release exists, and tells you. Nothing is downloaded or installed.</source>
+        <translation>Eén keer per dag wordt GitHub gevraagd (het ziet alleen uw IP-adres) of er een nieuwere versie bestaat, en u krijgt een melding. Er wordt niets gedownload of geïnstalleerd.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3481,6 +3497,10 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
     <message>
         <source>Watching resumed</source>
         <translation>Bewaking hervat</translation>
+    </message>
+    <message>
+        <source>## New versions: the GUI looks once a day for a newer release on GitHub and only tells you (nothing is downloaded)</source>
+        <translation>## Nieuwe versies: de GUI zoekt één keer per dag op GitHub naar een nieuwere versie en meldt dit alleen (er wordt niets gedownload)</translation>
     </message>
 </context>
 <context>

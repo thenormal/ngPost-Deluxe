@@ -96,6 +96,9 @@ private:
     QFrame         *_firstSteps = nullptr;       //!< banner of the posts page: what to do before the first post
     QLabel         *_firstStepsText = nullptr;
     QPushButton    *_firstStepsButton = nullptr;
+    QPushButton    *_updateButton = nullptr;     //!< "Version X available", at the bottom of the sidebar
+    QCheckBox      *_updateCheckCB = nullptr;    //!< Settings, General: look for new versions at the start
+    QString         _updateVersion, _updateUrl;
     int             _firstStepsAction = -1;      //!< 0: open Servers, 1: open the newsgroups of Settings
     QLabel         *_notifyWhenLbl = nullptr;
     QLabel         *_notifyWhatLbl = nullptr, *_notifyWhereLbl = nullptr; //!< the two groups of the card: what is notified, where
@@ -206,6 +209,7 @@ private slots:
     void onThemeButtonClicked();
     void onHistoryToggled(bool checked);
     void onQueueToggled(bool checked);
+    void _startUpdateCheck();   //!< once a day, if the user did not turn it off: is there a newer release?
     void _offerQueue();   //!< at the start: the posts that were not finished (Resume / Discard / Decide later)
     void onHistoryPathClicked();
     void onAutoSave();

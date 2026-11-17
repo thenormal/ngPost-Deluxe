@@ -1925,6 +1925,22 @@ Decidir más tarde: permanecen en la cola y se ofrecerán de nuevo en el próxim
         <source>Open Settings</source>
         <translation>Abrir Ajustes</translation>
     </message>
+    <message>
+        <source>Version %1 available</source>
+        <translation>Versión %1 disponible</translation>
+    </message>
+    <message>
+        <source>A new version of ngPost Deluxe is available: %1 (%2)</source>
+        <translation>Hay una nueva versión de ngPost Deluxe disponible: %1 (%2)</translation>
+    </message>
+    <message>
+        <source>Look for a new version when the program starts</source>
+        <translation>Buscar una nueva versión al iniciar el programa</translation>
+    </message>
+    <message>
+        <source>Once a day, asks GitHub (it only sees your IP address) whether a newer release exists, and tells you. Nothing is downloaded or installed.</source>
+        <translation>Una vez al día pregunta a GitHub (solo ve tu dirección IP) si existe una versión más reciente y te avisa. No se descarga ni se instala nada.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3476,6 +3492,10 @@ O bien usa --par2_pct o establece PAR2_PCT o PAR2_ARGS en el fichero de configur
     <message>
         <source>Watching resumed</source>
         <translation>Vigilancia reanudada</translation>
+    </message>
+    <message>
+        <source>## New versions: the GUI looks once a day for a newer release on GitHub and only tells you (nothing is downloaded)</source>
+        <translation>## Nuevas versiones: la GUI busca una vez al día en GitHub una versión más reciente y solo avisa (no se descarga nada)</translation>
     </message>
 </context>
 <context>

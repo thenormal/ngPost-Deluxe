@@ -240,6 +240,21 @@ void MainWindow::init(NgPost *ngPost)
     _queueCB->setChecked(_ngPost->_queueEnabled);
     connect(_queueCB,           &QAbstractButton::toggled, this, &MainWindow::onQueueToggled);
     QTimer::singleShot(1500, this, &MainWindow::_offerQueue); // after the windows of the start
+    // new versions: only an announcement (button in the sidebar), once a day
+    _updateCheckCB->setChecked(_ngPost->_checkUpdates);
+    connect(_updateCheckCB, &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_checkUpdates = on; scheduleAutoSave(); });
+    connect(&_ngPost->_updateChecker, &UpdateChecker::answered, this, [this](){
+        _ngPost->_updateLastCheck = QDate::currentDate().toString(Qt::ISODate);
+        scheduleAutoSave();
+    });
+    connect(&_ngPost->_updateChecker, &UpdateChecker::newerVersion, this, [this](const QString &version, const QString &url){
+        _updateVersion = version;
+        _updateUrl     = url;
+        _updateButton->setText(tr("Version %1 available").arg(version));
+        _updateButton->show();
+        _ngPost->_log(tr("A new version of ngPost Deluxe is available: %1 (%2)").arg(version, url));
+    });
+    QTimer::singleShot(4000, this, &MainWindow::_startUpdateCheck); // after the start, never in the way
     connect(_historyPathButton, &QAbstractButton::clicked, this, &MainWindow::onHistoryPathClicked);
     if (_ngPost->_historyEnabled && !_ngPost->_historyKeyInConfig)
     {
@@ -1325,6 +1340,14 @@ void MainWindow::_buildShell()
 
     side->addStretch();
 
+    _updateButton = new QPushButton(sideBar);
+    _updateButton->setObjectName("updateLink");
+    _updateButton->setCursor(Qt::PointingHandCursor);
+    _updateButton->setMinimumHeight(34);
+    _updateButton->hide();
+    connect(_updateButton, &QAbstractButton::clicked, this, [this](){ QDesktopServices::openUrl(QUrl(_updateUrl)); });
+    side->addWidget(_updateButton);
+
     _themeButton = new QPushButton(sideBar);
     _themeButton->setObjectName("navButton");
     _themeButton->setCursor(Qt::PointingHandCursor);
@@ -1679,6 +1702,8 @@ QWidget *MainWindow::_buildSettingsPage()
     g->addWidget(_ui->langCB, 0, 1);
     g->addWidget(_themeLbl, 1, 0);
     g->addWidget(_themeCB, 1, 1);
+    _updateCheckCB = new QCheckBox(gui);
+    g->addWidget(_updateCheckCB, 2, 0, 1, 3);
     g->setColumnStretch(2, 1);
     _autoSaveHint->setParent(content);
     _autoSaveHint->setMaximumWidth(190);
@@ -1724,6 +1749,11 @@ void MainWindow::_retranslateShell()
     _settingsCats[2]->setText(tr("NZB files"));
     _settingsCats[3]->setText(tr("Notifications"));
     _settingsCats[4]->setText(tr("History and queue"));
+    _updateCheckCB->setText(tr("Look for a new version when the program starts"));
+    _updateCheckCB->setToolTip(tr("Once a day, asks GitHub (it only sees your IP address) whether a newer release exists, and tells you. "
+                                  "Nothing is downloaded or installed."));
+    if (_updateButton && !_updateVersion.isEmpty())
+        _updateButton->setText(tr("Version %1 available").arg(_updateVersion));
     updateFirstSteps();
 
     _cardTitles["poster"]->setText(tr("Poster"));
@@ -1806,6 +1836,13 @@ void MainWindow::showSettingsPage(int category)
         _settingsCats[category]->setChecked(true);
         _settingsStack->setCurrentIndex(category);
     }
+}
+
+void MainWindow::_startUpdateCheck()
+{
+    if (!_ngPost->_checkUpdates || _ngPost->_updateLastCheck == QDate::currentDate().toString(Qt::ISODate))
+        return;
+    _ngPost->_updateChecker.check(NgPost::sVersion);
 }
 
 void MainWindow::updateFirstSteps()
