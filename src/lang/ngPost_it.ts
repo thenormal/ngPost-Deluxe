@@ -1890,6 +1890,14 @@ Decidi dopo: restano in coda e verranno riproposti al prossimo avvio.</translati
         <source>Include media information (MediaInfo)</source>
         <translation>Includi le informazioni sui media (MediaInfo)</translation>
     </message>
+    <message>
+        <source>What to notify</source>
+        <translation>Cosa notificare</translation>
+    </message>
+    <message>
+        <source>Where to send the messages</source>
+        <translation>Dove inviare i messaggi</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

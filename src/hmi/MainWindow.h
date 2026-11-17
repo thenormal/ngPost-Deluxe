@@ -92,6 +92,7 @@ private:
     QCheckBox      *_notifyTrayCB = nullptr;
     QComboBox      *_notifyWhenCB = nullptr;
     QLabel         *_notifyWhenLbl = nullptr;
+    QLabel         *_notifyWhatLbl = nullptr, *_notifyWhereLbl = nullptr; //!< the two groups of the card: what is notified, where
     QLabel         *_notifyDiscordLbl = nullptr, *_notifyTgTokenLbl = nullptr, *_notifyTgChatLbl = nullptr, *_notifyWebhookLbl = nullptr;
     QLineEdit      *_notifyDiscordEdit = nullptr, *_notifyTgTokenEdit = nullptr, *_notifyTgChatEdit = nullptr, *_notifyWebhookEdit = nullptr;
     QPushButton    *_notifyTestButton = nullptr;
