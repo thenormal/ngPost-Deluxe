@@ -1897,6 +1897,18 @@ Decidir depois: permanecem na fila e serão oferecidos novamente na próxima ini
         <source>Where to send the messages</source>
         <translation>Para onde enviar as mensagens</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Geral</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Publicações</translation>
+    </message>
+    <message>
+        <source>History and queue</source>
+        <translation>Histórico e fila</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

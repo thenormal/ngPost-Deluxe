@@ -1898,6 +1898,18 @@ Decidi dopo: restano in coda e verranno riproposti al prossimo avvio.</translati
         <source>Where to send the messages</source>
         <translation>Dove inviare i messaggi</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Generale</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Post</translation>
+    </message>
+    <message>
+        <source>History and queue</source>
+        <translation>Cronologia e coda</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

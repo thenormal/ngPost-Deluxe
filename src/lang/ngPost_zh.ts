@@ -1898,6 +1898,18 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Where to send the messages</source>
         <translation>消息发送到哪里</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>常规</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>发布</translation>
+    </message>
+    <message>
+        <source>History and queue</source>
+        <translation>历史与队列</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

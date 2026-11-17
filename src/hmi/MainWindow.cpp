@@ -1432,12 +1432,8 @@ QFrame *MainWindow::_card(const QString &key, QGridLayout *&grid)
 
 QWidget *MainWindow::_buildSettingsPage()
 {
-    QScrollArea *scroll = new QScrollArea();
-    scroll->setWidgetResizable(true);
-    scroll->setFrameShape(QFrame::NoFrame);
     QWidget *content = new QWidget();
     content->setObjectName("pageContent");
-    scroll->setWidget(content);
 
     QVBoxLayout *page = new QVBoxLayout(content);
     page->setContentsMargins(24, 18, 24, 18);
@@ -1448,16 +1444,51 @@ QWidget *MainWindow::_buildSettingsPage()
     page->addWidget(_settingsSubtitle);
     page->addSpacing(10);
 
-    QHBoxLayout *columns = new QHBoxLayout();
-    columns->setSpacing(16);
-    QVBoxLayout *left  = new QVBoxLayout();
-    QVBoxLayout *right = new QVBoxLayout();
-    left->setSpacing(16);
-    right->setSpacing(16);
-    columns->addLayout(left, 1);
-    columns->addLayout(right, 1);
-    page->addLayout(columns);
-    page->addStretch();
+    // the settings are in categories: the list of the categories on the left, one page for each on the right
+    enum { CAT_GENERAL, CAT_POST, CAT_NZB, CAT_NOTIFY, CAT_HISTORY, NB_CATS };
+    QHBoxLayout *body = new QHBoxLayout();
+    body->setSpacing(20);
+    QVBoxLayout *catCol = new QVBoxLayout();
+    catCol->setSpacing(2);
+    QButtonGroup *catGroup = new QButtonGroup(this);
+    _settingsStack = new QStackedWidget(content);
+    QVBoxLayout *pages[NB_CATS];
+    for (int i = 0; i < NB_CATS; ++i)
+    {
+        _settingsCats[i] = new QPushButton(content);
+        _settingsCats[i]->setObjectName("settingsCat");
+        _settingsCats[i]->setCheckable(true);
+        _settingsCats[i]->setCursor(Qt::PointingHandCursor);
+        _settingsCats[i]->setFixedWidth(190);
+        catGroup->addButton(_settingsCats[i], i);
+        catCol->addWidget(_settingsCats[i]);
+
+        QScrollArea *scroll = new QScrollArea();
+        scroll->setWidgetResizable(true);
+        scroll->setFrameShape(QFrame::NoFrame);
+        QWidget *inner = new QWidget();
+        inner->setObjectName("pageContent");
+        QHBoxLayout *wrap = new QHBoxLayout(inner);   // the cards are not wider than 760 px, whatever the size of the window
+        wrap->setContentsMargins(0, 0, 8, 0);
+        QWidget *column = new QWidget(inner);
+        column->setMaximumWidth(760);
+        pages[i] = new QVBoxLayout(column);
+        pages[i]->setContentsMargins(0, 0, 0, 0);
+        pages[i]->setSpacing(16);
+        pages[i]->addStretch();
+        wrap->addWidget(column, 100);
+        wrap->addStretch(1);
+        scroll->setWidget(inner);
+        _settingsStack->addWidget(scroll);
+    }
+    _settingsCats[CAT_GENERAL]->setChecked(true);
+    connect(catGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this, [this](int idx){ _settingsStack->setCurrentIndex(idx); });
+    catCol->addStretch();
+    body->addLayout(catCol);
+    body->addWidget(_settingsStack, 1);
+    page->addLayout(body, 1);
+    // a card goes at the end of the page of its category (before the stretch)
+    auto put = [&pages](int cat, QWidget *card) { pages[cat]->insertWidget(pages[cat]->count() - 1, card); };
 
     QGridLayout *g = nullptr;
     auto hbox = [](std::initializer_list<QWidget*> widgets, bool stretch = true) {
@@ -1476,7 +1507,7 @@ QWidget *MainWindow::_buildSettingsPage()
     g->addLayout(hbox({_ui->fromEdit, _ui->genPoster}, false), 0, 1);
     g->addLayout(hbox({_ui->saveFromCB, _ui->uniqueFromCB}), 1, 1);
     g->setColumnStretch(1, 1);
-    left->addWidget(poster);
+    put(CAT_POST, poster);
 
     // archives
     QFrame *archives = _card("archives", g);
@@ -1484,7 +1515,7 @@ QWidget *MainWindow::_buildSettingsPage()
     g->addLayout(hbox({_ui->rarPassEdit, _ui->rarLengthSB, _ui->genPass}, false), 0, 1);
     g->addWidget(_ui->autoCompressCB, 1, 0, 1, 2);
     g->setColumnStretch(1, 1);
-    left->addWidget(archives);
+    put(CAT_POST, archives);
 
     // newsgroups
     QFrame *groups = _card("groups", g);
@@ -1501,8 +1532,7 @@ QWidget *MainWindow::_buildSettingsPage()
     _retranslateGroups();
     connect(_groupsEdit,    &GroupsEdit::changed, this, &MainWindow::scheduleAutoSave);
     connect(_groupPolicyCB, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &MainWindow::scheduleAutoSave);
-    left->addWidget(groups);
-    left->addStretch();
+    put(CAT_POST, groups);
 
     // upload
     QFrame *upload = _card("upload", g);
@@ -1518,7 +1548,7 @@ QWidget *MainWindow::_buildSettingsPage()
     _ui->nbRetrySB->setMinimumWidth(80);
     _ui->threadSB->setMinimumWidth(80);
     g->setColumnStretch(2, 1);
-    right->addWidget(upload);
+    put(CAT_POST, upload);
 
     // nzb
     QFrame *nzb = _card("nzb", g);
@@ -1526,13 +1556,13 @@ QWidget *MainWindow::_buildSettingsPage()
     g->addLayout(hbox({_ui->nzbPathEdit, _ui->nzbPathButton}, false), 0, 1);
     g->setColumnStretch(1, 1);
     _ui->nzbPathEdit->setMaximumWidth(QWIDGETSIZE_MAX);
-    right->addWidget(nzb);
+    put(CAT_NZB, nzb);
 
     // privacy
     QFrame *privacy = _card("privacy", g);
     g->addWidget(_ui->obfuscateMsgIdCB, 0, 0);
     g->addWidget(_ui->obfuscateFileNameCB, 1, 0);
-    right->addWidget(privacy);
+    put(CAT_POST, privacy);
 
     // history of the uploads
     QFrame *history = _card("history", g);
@@ -1551,7 +1581,7 @@ QWidget *MainWindow::_buildSettingsPage()
     _duplicatesCB->setObjectName("duplicatesCB");
     g->addWidget(_duplicatesCB, 3, 0, 1, 2);
     g->setColumnStretch(1, 1);
-    left->insertWidget(left->count() - 1, history); // before the stretch of the left column
+    put(CAT_HISTORY, history);
 
 
     // notifications
@@ -1601,7 +1631,7 @@ QWidget *MainWindow::_buildSettingsPage()
     g->addWidget(_notifyTestButton, 10, 0, 1, 2);
     g->addWidget(_notifyHint, 11, 0, 1, 2);
     g->setColumnStretch(1, 1);
-    left->insertWidget(left->count() - 1, notif);
+    put(CAT_NOTIFY, notif);
 
     // queue of the posts
     QFrame *queue = _card("queue", g);
@@ -1612,7 +1642,7 @@ QWidget *MainWindow::_buildSettingsPage()
     g->addWidget(_queueCB, 0, 0);
     g->addWidget(_queueHint, 1, 0);
     g->setColumnStretch(0, 1);
-    left->insertWidget(left->count() - 1, queue);
+    put(CAT_HISTORY, queue);
 
     // interface
     QFrame *gui = _card("interface", g);
@@ -1628,10 +1658,13 @@ QWidget *MainWindow::_buildSettingsPage()
     g->addWidget(_ui->langCB, 0, 1);
     g->addWidget(_themeLbl, 1, 0);
     g->addWidget(_themeCB, 1, 1);
-    g->addWidget(_autoSaveHint, 2, 0, 1, 3);
-    g->addLayout(hbox({_ui->saveButton}), 3, 0, 1, 3);
     g->setColumnStretch(2, 1);
-    right->addWidget(gui);
+    _autoSaveHint->setParent(content);
+    _autoSaveHint->setMaximumWidth(190);
+    catCol->insertSpacing(catCol->count() - 1, 16);
+    catCol->insertWidget(catCol->count() - 1, _autoSaveHint);
+    catCol->insertLayout(catCol->count() - 1, hbox({_ui->saveButton}));
+    put(CAT_GENERAL, gui);
 
     // support of the project (Ko-fi page opened in the browser)
     QFrame *support = _card("support", g);
@@ -1643,10 +1676,9 @@ QWidget *MainWindow::_buildSettingsPage()
     connect(_supportButton, &QAbstractButton::clicked, this, [](){ QDesktopServices::openUrl(QUrl(NgPost::supportUrl())); });
     g->addWidget(_supportHint, 0, 0, 1, 2);
     g->addLayout(hbox({_supportButton}), 1, 0, 1, 2);
-    left->insertWidget(left->count() - 1, support); // before the stretch of the left column
-    right->addStretch();
+    put(CAT_GENERAL, support);
 
-    return scroll;
+    return content;
 }
 
 void MainWindow::_retranslateShell()
@@ -1666,6 +1698,11 @@ void MainWindow::_retranslateShell()
     _serversSubtitle->setText(tr("The posts are uploaded on all the enabled servers. Test a server before using it."));
     _settingsTitle->setText(tr("Settings"));
     _settingsSubtitle->setText(tr("Default parameters of the posts and of the application."));
+    _settingsCats[0]->setText(tr("General"));
+    _settingsCats[1]->setText(tr("Posts"));
+    _settingsCats[2]->setText(tr("NZB files"));
+    _settingsCats[3]->setText(tr("Notifications"));
+    _settingsCats[4]->setText(tr("History and queue"));
 
     _cardTitles["poster"]->setText(tr("Poster"));
     _cardTitles["archives"]->setText(tr("Archives and password"));

@@ -1888,6 +1888,18 @@ Décider plus tard : ils restent dans la file et seront proposés de nouveau au 
         <source>Where to send the messages</source>
         <translation>Où envoyer les messages</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Général</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Envois</translation>
+    </message>
+    <message>
+        <source>History and queue</source>
+        <translation>Historique et file d&apos;attente</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

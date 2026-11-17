@@ -1898,6 +1898,18 @@ Später entscheiden: Sie bleiben in der Warteschlange und werden beim nächsten 
         <source>Where to send the messages</source>
         <translation>Wohin die Nachrichten gehen</translation>
     </message>
+    <message>
+        <source>General</source>
+        <translation>Allgemein</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Posts</translation>
+    </message>
+    <message>
+        <source>History and queue</source>
+        <translation>Verlauf und Warteschlange</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>

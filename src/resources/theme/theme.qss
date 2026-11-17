@@ -45,6 +45,23 @@ QPushButton#navButton {
     text-align: left;
     font-size: 13px;
 }
+QPushButton#settingsCat {
+    background: transparent;
+    color: @text@;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    text-align: left;
+}
+QPushButton#settingsCat:hover {
+    background: @navHover@;
+}
+QPushButton#settingsCat:checked {
+    background: @navChecked@;
+    font-weight: 600;
+    border-left: 3px solid @accent@;
+    padding-left: 9px;
+}
 QPushButton#navButton:hover {
     background: @navHover@;
 }

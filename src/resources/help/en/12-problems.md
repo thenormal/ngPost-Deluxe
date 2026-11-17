@@ -10,7 +10,7 @@ Raise the number of connections, up to the limit of your provider. Check that SS
 
 ## "There is no newsgroup" or "newsgroups are not valid"
 
-Open **Settings**, section **Newsgroups**, and add valid names. See [Newsgroups](03-newsgroups.md).
+Open **Settings**, category **Posts**, card **Newsgroups**, and add valid names. See [Newsgroups](03-newsgroups.md).
 
 ## The NZB file already exists
 
