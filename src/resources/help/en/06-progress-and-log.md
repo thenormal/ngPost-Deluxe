@@ -13,6 +13,8 @@ The color tells the state: blue while working, gray when paused, green when comp
 
 The ETA is an estimate based on the recent speed: it changes when the speed changes.
 
+If you set a speed limit (**Settings**, category **Posts**, card **Upload**), the speed is followed by the limit, for example *(max 2.5 MB/s)*.
+
 ## The log
 
 The log colors the lines: phases, success, warnings and errors are easy to tell apart. At the end of a post it shows a summary with the time of each phase (compression, par2, upload) and the total.

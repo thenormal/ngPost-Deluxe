@@ -6,7 +6,7 @@ Vérifiez le nom d'utilisateur et le mot de passe, l'hôte et le port, et le ré
 
 ## Le téléversement est lent
 
-Augmentez le nombre de connexions, jusqu'à la limite de votre fournisseur. Vérifiez que SSL ne ralentit pas un vieil ordinateur et que rien d'autre n'utilise votre ligne.
+Augmentez le nombre de connexions, jusqu'à la limite de votre fournisseur. Vérifiez que SSL ne ralentit pas un vieil ordinateur et que rien d'autre n'utilise votre ligne. Si la vitesse est plus basse que prévu, vérifiez que la limite de vitesse n'est pas activée dans les **Paramètres**, catégorie **Envois**, carte **Upload**.
 
 ## « Il n'y a aucun newsgroup » ou « les newsgroups ne sont pas valides »
 

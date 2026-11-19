@@ -6,7 +6,7 @@ Prüfen Sie Benutzername und Passwort, Host und Port und die SSL-Einstellung. Ve
 
 ## Der Upload ist langsam
 
-Erhöhen Sie die Anzahl der Verbindungen, bis zum Limit Ihres Anbieters. Prüfen Sie, dass SSL einen alten Computer nicht ausbremst und dass nichts anderes Ihre Leitung nutzt.
+Erhöhen Sie die Anzahl der Verbindungen, bis zum Limit Ihres Anbieters. Prüfen Sie, dass SSL einen alten Computer nicht ausbremst und dass nichts anderes Ihre Leitung nutzt. Ist die Geschwindigkeit niedriger als erwartet, prüfen Sie, dass die Geschwindigkeitsbegrenzung in den **Einstellungen**, Kategorie **Posts**, Karte **Upload**, nicht eingeschaltet ist.
 
 ## „Es gibt keine Newsgroup“ oder „Newsgroups sind nicht gültig“
 

@@ -90,6 +90,7 @@ Vous utilisez déjà ngPost ? Copiez votre `ngPost.conf` dans `%APPDATA%\ngPost 
 -   **Statistiques** (page Historique, bascule Liste / Statistiques) : totaux et graphiques pour la période choisie (aujourd'hui, 7 jours, 30 jours, 12 mois, tout) : données postées, vitesse, résultats, jours et heures les plus actifs, newsgroups, serveurs, façon dont les posts ont été lancés et options utilisées, plus des classements. Export en document PDF, page web, fichier CSV ou images PNG des graphiques
 -   **Historique** enregistre plus d'informations : les serveurs utilisés, les options (compression, mot de passe, par2), la façon dont le post a été lancé et la taille exacte. Les anciens historiques restent valides
 -   **Quick Post** : un profil avec un nom aléatoire remplace maintenant le nom pris sur le premier fichier
+-   **Limite de vitesse** : une vitesse d'envoi maximale en Mo/s pour toutes les connexions et tous les posts ensemble (Paramètres, Envois, Upload ; `--max_speed` en ligne de commande), pour que le reste de votre connexion reste utilisable. Modifiable pendant l'envoi
 
 **Sécurité et correctifs**
 -   **Correctif de sécurité**: dépassement de mémoire possible dans le tampon d'encodage yEnc (la sortie pouvait être plus grande que le tampon avec certaines données)
@@ -128,6 +129,7 @@ Le fichier de configuration fonctionne comme dans le projet original (par défau
 - **history** : `ON` (par défaut) ou `OFF`, historique des uploads affiché dans la page Historique. Sans **POST_HISTORY** le fichier est `ngPost_history.csv` à côté de la configuration. De nouvelles colonnes sont ajoutées à la fin de chaque ligne : statut, nombre de fichiers, durée et fichier NZB ; à partir de la v1.4 aussi les serveurs, les options, la façon dont le post a été lancé et la taille exacte
 - **move_posted** : dossier où Post Auto déplace chaque fichier ou dossier une fois posté (un nom comme `Posted` est créé à côté de chaque élément, un chemin complet est utilisé tel quel) ; aussi `--move_posted`
 - **warn_duplicates** : `ON` (par défaut) ou `OFF`, avertit (interface) ou ignore (ligne de commande) ce qui est déjà dans l'historique ; `--allow_repost` le poste quand même
+- **limit_speed** (`ON` / `OFF`) et **max_speed** (Mo/s) : vitesse d'envoi maximale pour toutes les connexions ensemble, aussi `--max_speed` ; `max_speed` seul active la limite (pratique avec Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** et **nfo_text** : fichier NFO écrit à côté du NZB, posté avec les fichiers, avec le mot de passe, avec les informations de MediaInfo ; chemin de MediaInfo ; texte libre ajouté à la fin
 - **profile** : les profils d'options enregistrés depuis l'interface, une ligne par profil (mieux vaut les gérer depuis le menu de Quick Post et de Post Auto qu'à la main)
 - **check_updates** : `ON` (par défaut) ou `OFF`, une fois par jour l'interface cherche une nouvelle version sur GitHub (la ligne de commande et Docker ne le font jamais)

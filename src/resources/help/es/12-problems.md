@@ -6,7 +6,7 @@ Comprueba el nombre de usuario y la contraseña, el host y el puerto, y el ajust
 
 ## La subida es lenta
 
-Aumenta el número de conexiones, hasta el límite de tu proveedor. Comprueba que SSL no esté ralentizando un ordenador antiguo y que nada más use tu línea.
+Aumenta el número de conexiones, hasta el límite de tu proveedor. Comprueba que SSL no esté ralentizando un ordenador antiguo y que nada más use tu línea. Si la velocidad es más baja de lo esperado, comprueba que el límite de velocidad no esté activado en **Ajustes**, categoría **Publicaciones**, tarjeta **Subida**.
 
 ## «No hay ningún grupo de noticias» o «los grupos de noticias no son válidos»
 

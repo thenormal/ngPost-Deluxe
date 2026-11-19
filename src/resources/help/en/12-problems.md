@@ -6,7 +6,7 @@ Check user name and password, the host and the port, and the SSL setting. Use **
 
 ## The upload is slow
 
-Raise the number of connections, up to the limit of your provider. Check that SSL is not slowing an old computer, and that nothing else uses your line.
+Raise the number of connections, up to the limit of your provider. Check that SSL is not slowing an old computer, and that nothing else uses your line. If the speed is lower than expected, check that the speed limit is not on in the **Settings**, category **Posts**, card **Upload**.
 
 ## "There is no newsgroup" or "newsgroups are not valid"
 

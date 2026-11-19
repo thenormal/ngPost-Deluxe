@@ -6,7 +6,7 @@ Verifique o nome de utilizador e a palavra-passe, o host e a porta, e a definiç
 
 ## O envio é lento
 
-Aumente o número de ligações, até ao limite do seu fornecedor. Verifique se o SSL não está a atrasar um computador antigo e se mais nada usa a sua linha.
+Aumente o número de ligações, até ao limite do seu fornecedor. Verifique se o SSL não está a atrasar um computador antigo e se mais nada usa a sua linha. Se a velocidade for mais baixa do que o esperado, verifique se o limite de velocidade não está ativo nas **Definições**, categoria **Publicações**, cartão **Upload**.
 
 ## «Não há nenhum newsgroup» ou «os newsgroups não são válidos»
 

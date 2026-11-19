@@ -13,6 +13,8 @@ A cor indica o estado: azul enquanto trabalha, cinzento em pausa, verde quando c
 
 O ETA é uma estimativa baseada na velocidade recente: muda quando a velocidade muda.
 
+Se definir um limite de velocidade (**Definições**, categoria **Publicações**, cartão **Upload**), a velocidade é seguida do limite, por exemplo *(máx. 2.5 MB/s)*.
+
 ## O registo
 
 O registo colore as linhas: as fases, os sucessos, os avisos e os erros distinguem-se facilmente. No fim de uma publicação mostra um resumo com o tempo de cada fase (compressão, par2, envio) e o total.

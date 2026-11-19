@@ -13,6 +13,8 @@ El color indica el estado: azul mientras trabaja, gris en pausa, verde al comple
 
 El ETA es una estimación basada en la velocidad reciente: cambia cuando cambia la velocidad.
 
+Si fijas un límite de velocidad (**Ajustes**, categoría **Publicaciones**, tarjeta **Subida**), la velocidad va seguida del límite, por ejemplo *(máx. 2.5 MB/s)*.
+
 ## El registro
 
 El registro colorea las líneas: las fases, los éxitos, los avisos y los errores se distinguen fácilmente. Al final de una publicación muestra un resumen con el tiempo de cada fase (compresión, par2, subida) y el total.

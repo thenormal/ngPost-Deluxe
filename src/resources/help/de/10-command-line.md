@@ -27,6 +27,7 @@ Einen Ordner überwachen und die Dateien nach dem Posten in einen Ordner „Post
 - `--disp_progress` BAR oder FILES
 - `--resume_queue` nicht beendete Posts erneut posten
 - `--allow_repost` Dateien, die schon im Verlauf stehen, erneut posten (standardmäßig werden sie übersprungen)
+- `--max_speed MB/s` begrenzt die Upload-Geschwindigkeit für alle Verbindungen zusammen (0: keine Begrenzung); entspricht den Schlüsseln `limit_speed` und `max_speed` der Konfigurationsdatei
 - `--gen_nfo` eine NFO-Datei neben die NZB schreiben; `--nfo_in_post` sie auch posten; `--nfo_password` das Passwort des Archivs hineinschreiben; `--nfo_text file.txt` einen Text am Ende anfügen; `--no_nfo_media` die Medieninformationen (MediaInfo) weglassen; `--mediainfo_path Pfad` das MediaInfo-Programm wählen
 - `--notify_discord URL`, `--notify_telegram_token T` mit `--notify_telegram_chat ID`, `--notify_webhook URL` und `--notify_when each|all_done`: Benachrichtigungen am Ende der Posts (siehe [Fortschritt und Protokoll](06-progress-and-log.md))
 - `--help` die vollständige Liste

@@ -13,6 +13,8 @@ Il colore indica lo stato: blu durante il lavoro, grigio in pausa, verde a compl
 
 L'ETA è una stima basata sulla velocità recente: cambia quando cambia la velocità.
 
+Se imposti un limite di velocità (**Impostazioni**, categoria **Post**, scheda **Upload**), dopo la velocità compare il limite, per esempio *(max 2.5 MB/s)*.
+
 ## Il log
 
 Il log colora le righe: fasi, successi, avvisi ed errori si distinguono facilmente. Alla fine di un post mostra un riepilogo con il tempo di ogni fase (compressione, par2, upload) e il totale.

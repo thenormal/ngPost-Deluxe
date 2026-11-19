@@ -27,6 +27,7 @@ Een map bewaken en de bestanden na het posten naar een map "Posted" verplaatsen:
 - `--disp_progress` BAR of FILES
 - `--resume_queue` posts die niet klaar waren opnieuw posten
 - `--allow_repost` bestanden die al in de geschiedenis staan opnieuw posten (standaard worden ze overgeslagen)
+- `--max_speed MB/s` beperkt de uploadsnelheid voor alle verbindingen samen (0: geen limiet); gelijk aan de sleutels `limit_speed` en `max_speed` van het configuratiebestand
 - `--gen_nfo` een NFO-bestand naast de nzb schrijven; `--nfo_in_post` het ook posten; `--nfo_password` het wachtwoord van het archief erin schrijven; `--nfo_text file.txt` een tekst aan het eind toevoegen; `--no_nfo_media` de media-informatie (MediaInfo) weglaten; `--mediainfo_path pad` het MediaInfo-programma kiezen
 - `--notify_discord URL`, `--notify_telegram_token T` met `--notify_telegram_chat ID`, `--notify_webhook URL` en `--notify_when each|all_done`: meldingen aan het einde van de posts (zie [Voortgang en logboek](06-progress-and-log.md))
 - `--help` de volledige lijst

@@ -13,6 +13,8 @@ La couleur indique l'état : bleu pendant le travail, gris en pause, vert une fo
 
 L'ETA est une estimation fondée sur la vitesse récente : elle change quand la vitesse change.
 
+Si vous réglez une limite de vitesse (**Paramètres**, catégorie **Envois**, carte **Upload**), la vitesse est suivie de la limite, par exemple *(max 2.5 Mo/s)*.
+
 ## Le journal
 
 Le journal colore les lignes : les phases, les succès, les avertissements et les erreurs se distinguent facilement. À la fin d'un envoi, il affiche un résumé avec la durée de chaque phase (compression, par2, téléversement) et le total.
