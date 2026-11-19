@@ -54,6 +54,7 @@ private:
     PostingJob        *_postingJob;
     STATE              _state;
     bool               _postingFinished;
+    bool               _nameFromFile = false; //!< the archive name was taken from the first file (not typed, not random): a profile with a random name may replace it
     bool               _filesAddedAfterPost; //!< files added to a finished tab: they make a new release, the reminder is shown again
 
     // ngPost Deluxe layout (built in code over the widgets of the .ui)
