@@ -10,6 +10,7 @@ import os
 import subprocess
 import sys
 import tempfile
+import time
 import traceback
 import xml.etree.ElementTree as ET
 
@@ -1143,6 +1144,50 @@ def test_version_number_unit(work):
     check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
 
 
+def test_speed_limiter_unit(work):
+    # the slots of time of the speed limit: a small program built with qmake
+    qmake = shutil.which("qmake") or shutil.which("qmake-qt5")
+    if not qmake:
+        print("      (qmake not found: this test is skipped)")
+        return
+    here = os.path.dirname(os.path.abspath(__file__))
+    build = os.path.join(work, "unit_speed")
+    os.makedirs(build)
+    r = subprocess.run([qmake, os.path.join(here, "unit", "speed_limiter_test.pro")], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "qmake failed\n" + r.stdout + r.stderr)
+    r = subprocess.run(["make", "-j4"], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "build failed\n" + r.stdout[-2000:] + r.stderr[-2000:])
+    r = subprocess.run([os.path.join(build, "speed_limiter_test")], capture_output=True, text=True)
+    check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
+
+
+def test_speed_limit(work):
+    # --max_speed: all the connections together stay under the limit; without it the same post is much faster
+    stub = NntpStub().start()
+    try:
+        src = os.path.join(work, "speed.bin")
+        make_file(src, 3 * 1024 * 1024, 41)
+        t = time.time()
+        r = run_ngpost(stub, work, [src], os.path.join(work, "fast.nzb"), conns=4)
+        fast = time.time() - t
+        check(r.returncode == 0, "post without limit failed\n" + LAST_OUTPUT)
+        stub.stop()
+        stub = NntpStub().start()
+        t = time.time()
+        r = run_ngpost(stub, work, [src], os.path.join(work, "slow.nzb"), conns=4, extra=["--max_speed", "1"])
+        slow = time.time() - t
+        check(r.returncode == 0, "post with the limit failed\n" + LAST_OUTPUT)
+        # 3 MB at 1 MB/s with 1 s of credit: about 2 s of waiting
+        check(slow >= 1.7, "the limit was not applied: %.1f s" % slow)
+        check(slow <= 8, "too slow with the limit: %.1f s" % slow)
+        check(slow > fast + 1.2, "with the limit %.1f s, without %.1f s" % (slow, fast))
+        common_checks(stub, os.path.join(work, "slow.nzb"), {"speed.bin": open(src, "rb").read()})
+        r = run_ngpost(stub, work, [src], os.path.join(work, "bad.nzb"), extra=["--max_speed", "fast"])
+        check(r.returncode != 0, "a wrong --max_speed was accepted")
+    finally:
+        stub.stop()
+
+
 def test_post_request_unit(work):
     # what the user wants to post (Guided Post): page used, checks and remembered choices; a small program built with qmake
     qmake = shutil.which("qmake") or shutil.which("qmake-qt5")
@@ -1304,7 +1349,8 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_help_pages, test_latency_is_measured, test_feedback_forms,
          test_duplicate_is_skipped, test_history_columns, test_nfo_file, test_nfo_media_info, test_profiles_and_par2_default, test_post_checker_unit, test_move_posted, test_move_posted_never_overwrites,
          test_move_posted_kept_when_articles_failed, test_move_posted_options, test_posted_mover_unit, test_notifications,
-         test_notification_when_all_done, test_version_number_unit, test_post_request_unit, test_translations_compiled]
+         test_notification_when_all_done, test_version_number_unit, test_post_request_unit, test_translations_compiled,
+         test_speed_limiter_unit, test_speed_limit]
 
 
 def main():

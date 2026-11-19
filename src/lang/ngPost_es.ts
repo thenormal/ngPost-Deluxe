@@ -1957,6 +1957,18 @@ Decidir más tarde: permanecen en la cola y se ofrecerán de nuevo en el próxim
         <source>Guided Post</source>
         <translation>Publicación guiada</translation>
     </message>
+    <message>
+        <source>Limit the upload speed to</source>
+        <translation>Limitar la velocidad de subida a</translation>
+    </message>
+    <message>
+        <source>MB/s</source>
+        <translation>MB/s</translation>
+    </message>
+    <message>
+        <source>For all the connections and all the posts together, so the rest of your connection stays usable. It can be changed while posting. Compression and par2 are not limited.</source>
+        <translation>Para todas las conexiones y todas las publicaciones juntas, así el resto de tu conexión sigue siendo usable. Se puede cambiar mientras se publica. La compresión y par2 no se limitan.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3533,6 +3545,22 @@ O bien usa --par2_pct o establece PAR2_PCT o PAR2_ARGS en el fichero de configur
         <source>bytes</source>
         <translation>bytes</translation>
     </message>
+    <message>
+        <source>limit the upload speed to this number of MB/s for all the connections (0: no limit)</source>
+        <translation>limitar la velocidad de subida a este número de MB/s para todas las conexiones (0: sin límite)</translation>
+    </message>
+    <message>
+        <source>You should give a number of MB/s for the speed limit (option --max_speed), 0 for no limit</source>
+        <translation>Debes indicar un número de MB/s para el límite de velocidad (opción --max_speed), 0 para sin límite</translation>
+    </message>
+    <message>
+        <source>## Speed limit: maximum upload speed in MB/s for all the connections together (limit_speed ON or OFF, same as --max_speed)</source>
+        <translation>## Límite de velocidad: velocidad máxima de subida en MB/s para todas las conexiones juntas (limit_speed ON u OFF, igual que --max_speed)</translation>
+    </message>
+    <message>
+        <source>(max %1 MB/s)</source>
+        <translation>(máx. %1 MB/s)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4127,6 +4155,10 @@ O bien usa --par2_pct o establece PAR2_PCT o PAR2_ARGS en el fichero de configur
     <message>
         <source>The original files have NOT been moved because some Articles couldn&apos;t be posted.</source>
         <translation>Los archivos originales NO se han movido porque algunos artículos no se pudieron publicar.</translation>
+    </message>
+    <message>
+        <source>Upload speed limited to %1 MB/s (all the connections together)</source>
+        <translation>Velocidad de subida limitada a %1 MB/s (todas las conexiones juntas)</translation>
     </message>
 </context>
 <context>

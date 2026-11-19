@@ -64,6 +64,7 @@ private:
     NntpArticle   *_currentArticle;
     ushort         _nbDisconnected;
     bool           _authFailed;    //!< the server refused the user / password (retrying would be useless)
+    quint32        _slotTicket = 0; //!< speed limit: id of the wait in progress (a new wait or a closing makes the old one useless)
 
     NgPost        *_ngPost;
     Poster        *_poster;
@@ -143,6 +144,7 @@ private:
     inline void _error(const std::string &aMsg) const; //!< log function for std::string
 
     void _sendNextArticle();
+    void _sendPostCommand(); //!< POST of _currentArticle (after the wait of the speed limit)
     void _closeConnection();
 
     inline void deleteSocket();

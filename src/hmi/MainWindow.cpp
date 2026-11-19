@@ -31,6 +31,7 @@
 
 #include <QDebug>
 #include <QProgressBar>
+#include <QDoubleSpinBox>
 #include "GroupsEdit.h"
 #include <QRegularExpression>
 #include <QStyle>
@@ -219,6 +220,20 @@ void MainWindow::init(NgPost *ngPost)
     connect(_historyCB,         &QAbstractButton::toggled, this, &MainWindow::onHistoryToggled);
     _duplicatesCB->setChecked(_ngPost->_checkDuplicates);
     connect(_duplicatesCB,      &QAbstractButton::toggled, this, [this](bool checked){ _ngPost->_checkDuplicates = checked; });
+    _limitSpeedCB->setChecked(_ngPost->_limitSpeed);
+    _maxSpeedSB->setValue(_ngPost->_maxSpeed);
+    _maxSpeedSB->setEnabled(_ngPost->_limitSpeed);
+    connect(_limitSpeedCB, &QAbstractButton::toggled, this, [this](bool checked) {
+        _ngPost->_limitSpeed = checked;
+        _maxSpeedSB->setEnabled(checked);
+        _ngPost->applySpeedLimit(); // at once, also for the posts in progress
+        scheduleAutoSave();
+    });
+    connect(_maxSpeedSB, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, [this](double mbps) {
+        _ngPost->_maxSpeed = mbps;
+        _ngPost->applySpeedLimit();
+        scheduleAutoSave();
+    });
     {
         Notifier::Settings &ns = _ngPost->_notifier.settings();
         _notifyOkCB->setChecked(ns.onSuccess);
@@ -1706,6 +1721,19 @@ QWidget *MainWindow::_buildSettingsPage()
     g->addWidget(_ui->threadSB, 2, 1);
     g->addWidget(_ui->autoCloseCB, 3, 0, 1, 3);
     g->addWidget(_ui->shutdownCB, 4, 0, 1, 3);
+    _limitSpeedCB = new QCheckBox(upload);
+    _limitSpeedCB->setObjectName("limitSpeedCB");
+    _maxSpeedSB = new QDoubleSpinBox(upload);
+    _maxSpeedSB->setObjectName("maxSpeedSB");
+    _maxSpeedSB->setDecimals(1);
+    _maxSpeedSB->setRange(0.1, 10000.);
+    _maxSpeedSB->setSingleStep(0.5);
+    _maxSpeedSB->setMinimumWidth(110);
+    _limitSpeedHint = newLabel("hint", upload);
+    _limitSpeedHint->setWordWrap(true);
+    g->addWidget(_limitSpeedCB, 5, 0);
+    g->addWidget(_maxSpeedSB, 5, 1);
+    g->addWidget(_limitSpeedHint, 6, 0, 1, 3);
     _ui->articleSizeEdit->setMaximumWidth(110);
     _ui->nbRetrySB->setMinimumWidth(80);
     _ui->threadSB->setMinimumWidth(80);
@@ -1915,6 +1943,10 @@ void MainWindow::_retranslateShell()
     if (_help && _ngPost)
         _help->setLanguage(_ngPost->_lang);
     _historyCB->setText(tr("Save the history of the uploads"));
+    _limitSpeedCB->setText(tr("Limit the upload speed to"));
+    _maxSpeedSB->setSuffix(" " + tr("MB/s"));
+    _limitSpeedHint->setText(tr("For all the connections and all the posts together, so the rest of your connection stays usable. "
+                                "It can be changed while posting. Compression and par2 are not limited."));
     _duplicatesCB->setText(tr("Warn when a post is already in the history (same name and size)"));
     _duplicatesCB->setToolTip(tr("Quick Post asks before posting it again; the auto posting skips it."));
     _historyPathButton->setToolTip(tr("Choose the history file"));

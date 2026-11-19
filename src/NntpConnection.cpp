@@ -19,6 +19,7 @@
 
 #include "NntpConnection.h"
 #include "utils/LatencyStats.h"
+#include "utils/SpeedLimiter.h"
 #include "nntp/NntpServerParams.h"
 #include "nntp/Nntp.h"
 #include "nntp/NntpArticle.h"
@@ -168,6 +169,7 @@ void NntpConnection::_closeConnection(){
 #endif
         if (_ngPost->debugMode())
             _log("Closing connection...");
+    ++_slotTicket; // a wait of the speed limit in progress is useless now
 #ifdef __USE_CONNECTION_TIMEOUT__
     if (_timeout)
         _timeout->stop();
@@ -210,6 +212,7 @@ void NntpConnection::_closeConnection(){
 
 void NntpConnection::onDisconnected()
 {
+    ++_slotTicket;
     if (_socket)
     {
 #if defined(__DEBUG__) && defined(LOG_CONNECTION_STEPS)
@@ -541,11 +544,22 @@ void NntpConnection::_sendNextArticle()
 
     if (_currentArticle)
     {
-        _postingState = PostingState::SENDING_ARTICLE;
-        if (_ngPost->debugFull())
-            _log(tr("start sending article: %1").arg(_currentArticle->str()));
-        _latencyTimer.restart();
-        _socket->write(Nntp::POST);
+        // speed limit: wait for the slot of time of this Article (yEnc adds about 2 % and the header)
+        const int waitMs = SpeedLimiter::reserve(static_cast<qint64>(_currentArticle->size()) * 102 / 100 + 512);
+        if (waitMs > 0)
+        {
+#ifdef __USE_CONNECTION_TIMEOUT__
+            if (_timeout)
+                _timeout->stop(); // nothing is expected from the server while we wait
+#endif
+            const quint32 ticket = ++_slotTicket;
+            QTimer::singleShot(waitMs, this, [this, ticket]() {
+                if (ticket == _slotTicket && _isConnected && _currentArticle)
+                    _sendPostCommand();
+            });
+        }
+        else
+            _sendPostCommand();
     }
     else
     {
@@ -561,6 +575,19 @@ void NntpConnection::_sendNextArticle()
 }
 
 
+
+void NntpConnection::_sendPostCommand()
+{
+    _postingState = PostingState::SENDING_ARTICLE;
+    if (_ngPost->debugFull())
+        _log(tr("start sending article: %1").arg(_currentArticle->str()));
+#ifdef __USE_CONNECTION_TIMEOUT__
+    if (_timeout && !_timeout->isActive())
+        _timeout->start(_ngPost->getSocketTimeout());
+#endif
+    _latencyTimer.restart();
+    _socket->write(Nntp::POST);
+}
 
 void NntpConnection::setPoster(Poster *poster)
 {

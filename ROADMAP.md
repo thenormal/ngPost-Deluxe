@@ -66,7 +66,7 @@ These are directions, not a list of promises. Version 1.3 is released; the point
 - **One list of the posts** (state, progress, size, NZB, password) instead of one tab for each post: it changes how the whole interface handles the posts, so it was moved here from 1.3
 - **A post is finished when it is verified**: check that the Articles are on the server (button, optional automatic), show the result in the history, and post again by itself what is missing
 - A post that stops **continues from the last Article sent** instead of starting again
-- **Bandwidth limit** and time slots for the upload
+- Done: **Speed limit**, one limit in MB/s for all the connections and all the posts together (Settings, Posts, Upload; `--max_speed`, keys `limit_speed` and `max_speed`), it can be changed while posting. The time slots are moved to the ideas below
 - Newsgroups per post and favorites, maybe the list of groups from the server
 
 ## Ideas, not committed
@@ -79,6 +79,7 @@ No order, no version. Some of them will probably be done, some will be dropped.
 - Temporary files in RAM: easier on Windows, and chosen automatically when there is room
 - Web panel for Docker and NAS: queue, progress, history and pause from a browser (access with password, local network only by default)
 - Automatic tuning of the number of connections and of the Article size, from the measures of the latency
+- Speed limit with **time slots** (for example full speed at night, limited during the day), and a limit for each server or each post
 
 **Check and comfort**
 - Log: filters by category, search, one log per post

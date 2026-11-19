@@ -42,6 +42,7 @@ class QGridLayout;
 class QFrame;
 class QLineEdit;
 class QCheckBox;
+class QDoubleSpinBox;
 class QPlainTextEdit;
 class QSystemTrayIcon;
 class HistoryWidget;
@@ -87,6 +88,9 @@ private:
     bool            _pauseIcon;   //!< the pause button shows pause (true) or play
     QCheckBox      *_historyCB;
     QCheckBox      *_duplicatesCB;
+    QCheckBox      *_limitSpeedCB = nullptr;   //!< Settings > Upload: limit the upload speed
+    QDoubleSpinBox *_maxSpeedSB = nullptr;     //!< the limit in MB/s
+    QLabel         *_limitSpeedHint = nullptr;
     QLineEdit      *_historyPathEdit;
     QPushButton    *_historyPathButton;
     QLabel         *_historyHint;
