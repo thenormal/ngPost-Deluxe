@@ -5717,5 +5717,93 @@ It will be irreversible...</source>
         <source>Known for %1 of the %2 post(s): it is recorded since version 1.4.</source>
         <translation>%2 个发布中有 %1 个已知: 自 1.4 版起记录.</translation>
     </message>
+    <message>
+        <source>PDF document (to print or read)</source>
+        <translation>PDF 文档 (用于打印或阅读)</translation>
+    </message>
+    <message>
+        <source>Web page (HTML)</source>
+        <translation>网页 (HTML)</translation>
+    </message>
+    <message>
+        <source>Spreadsheet (CSV)</source>
+        <translation>电子表格 (CSV)</translation>
+    </message>
+    <message>
+        <source>Images of the charts (PNG)</source>
+        <translation>图表图片 (PNG)</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation>导出</translation>
+    </message>
+    <message>
+        <source>Save the statistics of the period shown</source>
+        <translation>保存所显示时间段的统计数据</translation>
+    </message>
+    <message>
+        <source>bytes</source>
+        <translation>字节</translation>
+    </message>
+    <message>
+        <source>bytes/s</source>
+        <translation>字节/秒</translation>
+    </message>
+    <message>
+        <source>posts</source>
+        <translation>发布</translation>
+    </message>
+    <message>
+        <source>Statistics of ngPost Deluxe - %1</source>
+        <translation>ngPost Deluxe 统计 - %1</translation>
+    </message>
+    <message>
+        <source>Export the statistics</source>
+        <translation>导出统计数据</translation>
+    </message>
+    <message>
+        <source>CSV files (*.csv)</source>
+        <translation>CSV 文件 (*.csv)</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the file %1</source>
+        <translation>无法写入文件 %1</translation>
+    </message>
+    <message>
+        <source>Totals</source>
+        <translation>总计</translation>
+    </message>
+    <message>
+        <source>Period</source>
+        <translation>时间段</translation>
+    </message>
+    <message>
+        <source>Folder for the images of the charts</source>
+        <translation>图表图片的保存文件夹</translation>
+    </message>
+    <message>
+        <source>%1 images saved in %2</source>
+        <translation>已将 %1 张图片保存到 %2</translation>
+    </message>
+    <message>
+        <source>Web pages (*.html)</source>
+        <translation>网页 (*.html)</translation>
+    </message>
+    <message>
+        <source>Statistics of ngPost Deluxe</source>
+        <translation>ngPost Deluxe 统计</translation>
+    </message>
+    <message>
+        <source>Made on %1</source>
+        <translation>生成于 %1</translation>
+    </message>
+    <message>
+        <source>PDF documents (*.pdf)</source>
+        <translation>PDF 文档 (*.pdf)</translation>
+    </message>
+    <message>
+        <source>Page %1</source>
+        <translation>第 %1 页</translation>
+    </message>
 </context>
 </TS>

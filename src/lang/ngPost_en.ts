@@ -5677,5 +5677,93 @@ It will be irreversible...</source>
         <source>Known for %1 of the %2 post(s): it is recorded since version 1.4.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>PDF document (to print or read)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Web page (HTML)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spreadsheet (CSV)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Images of the charts (PNG)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the statistics of the period shown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bytes/s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>posts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Statistics of ngPost Deluxe - %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export the statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CSV files (*.csv)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Totals</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Period</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder for the images of the charts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 images saved in %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Web pages (*.html)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Statistics of ngPost Deluxe</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Made on %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PDF documents (*.pdf)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Page %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

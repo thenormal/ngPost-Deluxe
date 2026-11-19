@@ -5722,5 +5722,93 @@ Bestanden worden definitief verwijderd...</translation>
         <source>Known for %1 of the %2 post(s): it is recorded since version 1.4.</source>
         <translation>Bekend voor %1 van de %2 post(s): wordt sinds versie 1.4 vastgelegd.</translation>
     </message>
+    <message>
+        <source>PDF document (to print or read)</source>
+        <translation>PDF-document (om af te drukken of te lezen)</translation>
+    </message>
+    <message>
+        <source>Web page (HTML)</source>
+        <translation>Webpagina (HTML)</translation>
+    </message>
+    <message>
+        <source>Spreadsheet (CSV)</source>
+        <translation>Spreadsheet (CSV)</translation>
+    </message>
+    <message>
+        <source>Images of the charts (PNG)</source>
+        <translation>Afbeeldingen van de grafieken (PNG)</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation>Exporteren</translation>
+    </message>
+    <message>
+        <source>Save the statistics of the period shown</source>
+        <translation>De statistieken van de getoonde periode opslaan</translation>
+    </message>
+    <message>
+        <source>bytes</source>
+        <translation>bytes</translation>
+    </message>
+    <message>
+        <source>bytes/s</source>
+        <translation>bytes/s</translation>
+    </message>
+    <message>
+        <source>posts</source>
+        <translation>posts</translation>
+    </message>
+    <message>
+        <source>Statistics of ngPost Deluxe - %1</source>
+        <translation>Statistieken van ngPost Deluxe - %1</translation>
+    </message>
+    <message>
+        <source>Export the statistics</source>
+        <translation>Statistieken exporteren</translation>
+    </message>
+    <message>
+        <source>CSV files (*.csv)</source>
+        <translation>CSV-bestanden (*.csv)</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the file %1</source>
+        <translation>Kan het bestand %1 niet schrijven</translation>
+    </message>
+    <message>
+        <source>Totals</source>
+        <translation>Totalen</translation>
+    </message>
+    <message>
+        <source>Period</source>
+        <translation>Periode</translation>
+    </message>
+    <message>
+        <source>Folder for the images of the charts</source>
+        <translation>Map voor de afbeeldingen van de grafieken</translation>
+    </message>
+    <message>
+        <source>%1 images saved in %2</source>
+        <translation>%1 afbeeldingen opgeslagen in %2</translation>
+    </message>
+    <message>
+        <source>Web pages (*.html)</source>
+        <translation>Webpagina&apos;s (*.html)</translation>
+    </message>
+    <message>
+        <source>Statistics of ngPost Deluxe</source>
+        <translation>Statistieken van ngPost Deluxe</translation>
+    </message>
+    <message>
+        <source>Made on %1</source>
+        <translation>Gemaakt op %1</translation>
+    </message>
+    <message>
+        <source>PDF documents (*.pdf)</source>
+        <translation>PDF-documenten (*.pdf)</translation>
+    </message>
+    <message>
+        <source>Page %1</source>
+        <translation>Pagina %1</translation>
+    </message>
 </context>
 </TS>

@@ -23,6 +23,8 @@
 
 #include <QWidget>
 #include <QVector>
+#include <QImage>
+#include <QRectF>
 #include <functional>
 #include "HistoryWidget.h"
 
@@ -32,6 +34,8 @@ class QComboBox;
 class QTableWidget;
 class QGridLayout;
 class QFrame;
+class QPainter;
+class QPushButton;
 
 //! a simple chart drawn with QPainter (no extra library): vertical bars (stacked), lines, horizontal bars or a week/hour heat map
 class ChartWidget : public QWidget
@@ -54,6 +58,14 @@ public:
     bool isEmpty() const;
     void setBinaryScale(bool binary) { _binary = binary; } //!< steps of the scale in KB, MB, GB (sizes and speeds)
 
+    //! draws the chart in a document or an image (light colours, no hover)
+    void paintTo(QPainter &p, const QRectF &target);
+    QImage toImage(const QSize &size, qreal scale = 2);
+    Type type() const { return _type; }
+    const QStringList &labels() const { return _labels; }
+    const QVector<Series> &series() const { return _series; }
+    const QVector<QVector<double>> &grid() const { return _grid; }
+
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 
@@ -63,6 +75,7 @@ protected:
     void leaveEvent(QEvent *event) override;
 
 private:
+    void   _draw(QPainter &p, bool print);
     QRectF _plotRect() const;
     int    _hit(const QPoint &pos, int *col = nullptr) const;
     double _maxValue() const;
@@ -77,6 +90,7 @@ private:
     int               _hover    = -1;
     int               _hoverCol = -1;
     bool              _binary   = false;
+    QRectF            _area;      //!< where the chart is drawn when it is exported (null: the widget)
 };
 
 //! Statistics of the History page: totals, charts and rankings computed from the history file
@@ -96,12 +110,20 @@ private:
     QFrame *_chartCard(QLabel *&title, ChartWidget *chart, QLabel *&hint);
     QString _kindName(const QString &key) const;
     QString _locDate(const QDate &date, const QString &format) const;
+    QString _chartUnit(int chart) const;   //!< unit of the values of a chart in the exports
+    QString _savePath(const QString &title, const QString &ext, const QString &filter);
+    QString _reportTitle() const;          //!< "Statistics of ngPost Deluxe - Last 30 days"
+    void _exportCsv();
+    void _exportPdf();
+    void _exportHtml();
+    void _exportPng();
 
     NgPost      *_ngPost;
     QList<HistoryWidget::Entry> _entries;
     bool         _historyOn = true;
 
     QComboBox   *_period;
+    QPushButton *_exportButton;
     QLabel      *_note;
     QLabel      *_empty;
     QWidget     *_content;
