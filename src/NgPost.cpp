@@ -1191,6 +1191,7 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
                        << _historyFieldSeparator << _activeJob->serverHosts()
                        << _historyFieldSeparator << historyProfile(_activeJob)
                        << _historyFieldSeparator << historyKind(_activeJob)
+                       << _historyFieldSeparator << _activeJob->_totalSize // exact size (the size column is rounded)
                        << "\n" << MB_FLUSH;
                 hist.close();
             }
@@ -3498,7 +3499,7 @@ QStringList NgPost::historyHeader()
 {
     return {tr("date"), tr("nzb name"), tr("size"), tr("avg. speed"), tr("archive name"), tr("archive pass"),
             tr("groups"), tr("from"), tr("status"), tr("files"), tr("duration"), tr("nzb file"), tr("input size"),
-            tr("servers"), tr("options"), tr("kind")};
+            tr("servers"), tr("options"), tr("kind"), tr("bytes")};
 }
 
 QString NgPost::historyProfile(const PostingJob *job) const

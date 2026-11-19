@@ -1106,6 +1106,14 @@ Elke voltooide post verschijnt hier.</translation>
         <source>Can&apos;t write the file %1</source>
         <translation>Kan het bestand %1 niet schrijven</translation>
     </message>
+    <message>
+        <source>List</source>
+        <translation>Lijst</translation>
+    </message>
+    <message>
+        <source>Statistics</source>
+        <translation>Statistieken</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -3522,6 +3530,14 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
         <source>kind</source>
         <translation>soort</translation>
     </message>
+    <message>
+        <source>## Guided Post: the last choices (kind of post, options, what happens after the post) and whether to skip the step &quot;Where to post&quot; when everything is set</source>
+        <translation>## Begeleide post: de laatste keuzes (soort post, opties, wat er na de post gebeurt) en of de stap „Waar te posten” wordt overgeslagen als alles is ingesteld</translation>
+    </message>
+    <message>
+        <source>bytes</source>
+        <translation>bytes</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -5463,6 +5479,248 @@ Bestanden worden definitief verwijderd...</translation>
     <message>
         <source>Guided Post: %1 of %2 post(s) started, the others are still prepared in Guided Post</source>
         <translation>Begeleide post: %1 van %2 post(s) gestart, de andere blijven klaargezet in Begeleide post</translation>
+    </message>
+</context>
+<context>
+    <name>ChartWidget</name>
+    <message>
+        <source>No data for this period.</source>
+        <translation>Geen gegevens voor deze periode.</translation>
+    </message>
+</context>
+<context>
+    <name>StatsWidget</name>
+    <message>
+        <source>Quick Post</source>
+        <translation>Quick Post</translation>
+    </message>
+    <message>
+        <source>Auto Posting: chosen items</source>
+        <translation>Auto Posting: gekozen items</translation>
+    </message>
+    <message>
+        <source>Auto Posting: folder scan</source>
+        <translation>Auto Posting: map gescand</translation>
+    </message>
+    <message>
+        <source>Auto Posting: watched folder</source>
+        <translation>Auto Posting: gevolgde map</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation>Opdrachtregel</translation>
+    </message>
+    <message>
+        <source>Today</source>
+        <translation>Vandaag</translation>
+    </message>
+    <message>
+        <source>Last 7 days</source>
+        <translation>Laatste 7 dagen</translation>
+    </message>
+    <message>
+        <source>Last 30 days</source>
+        <translation>Laatste 30 dagen</translation>
+    </message>
+    <message>
+        <source>Last 12 months</source>
+        <translation>Laatste 12 maanden</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Alles</translation>
+    </message>
+    <message>
+        <source>Data uploaded</source>
+        <translation>Geüploade gegevens</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Snelheid</translation>
+    </message>
+    <message>
+        <source>Results</source>
+        <translation>Resultaten</translation>
+    </message>
+    <message>
+        <source>Most used newsgroups</source>
+        <translation>Meest gebruikte nieuwsgroepen</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>Servers</translation>
+    </message>
+    <message>
+        <source>How the posts were started</source>
+        <translation>Hoe de posts zijn gestart</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>Opties</translation>
+    </message>
+    <message>
+        <source>When you post (day and hour)</source>
+        <translation>Wanneer u post (dag en uur)</translation>
+    </message>
+    <message>
+        <source>Largest posts</source>
+        <translation>Grootste posts</translation>
+    </message>
+    <message>
+        <source>Busiest days</source>
+        <translation>Drukste dagen</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Datum</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Naam</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Grootte</translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation>Dag</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Posts</translation>
+    </message>
+    <message>
+        <source>%1 d %2 h</source>
+        <translation>%1 d %2 u</translation>
+    </message>
+    <message>
+        <source>%1 h %2 min</source>
+        <translation>%1 u %2 min</translation>
+    </message>
+    <message>
+        <source>%1 min %2 s</source>
+        <translation>%1 min %2 s</translation>
+    </message>
+    <message>
+        <source>The history is turned off: turn it on in the Settings to get statistics.</source>
+        <translation>De geschiedenis staat uit: zet hem aan in de Instellingen om statistieken te krijgen.</translation>
+    </message>
+    <message>
+        <source>No upload yet: the statistics appear after your first post.</source>
+        <translation>Nog geen upload: de statistieken verschijnen na uw eerste post.</translation>
+    </message>
+    <message>
+        <source>No upload in this period.</source>
+        <translation>Geen upload in deze periode.</translation>
+    </message>
+    <message>
+        <source>Data since %1 (%2 post(s) in the history).</source>
+        <translation>Gegevens sinds %1 (%2 post(s) in de geschiedenis).</translation>
+    </message>
+    <message>
+        <source>The sizes of the posts made before version 1.4 are rounded.</source>
+        <translation>De grootte van posts van vóór versie 1.4 is afgerond.</translation>
+    </message>
+    <message>
+        <source>Time spent posting</source>
+        <translation>Tijd besteed aan posten</translation>
+    </message>
+    <message>
+        <source>Posts without errors</source>
+        <translation>Posts zonder fouten</translation>
+    </message>
+    <message>
+        <source>Average speed</source>
+        <translation>Gemiddelde snelheid</translation>
+    </message>
+    <message>
+        <source>Best speed</source>
+        <translation>Hoogste snelheid</translation>
+    </message>
+    <message>
+        <source>Largest post</source>
+        <translation>Grootste post</translation>
+    </message>
+    <message>
+        <source>Average per day</source>
+        <translation>Gemiddeld per dag</translation>
+    </message>
+    <message>
+        <source>Compression, par2 and upload</source>
+        <translation>Compressie, par2 en upload</translation>
+    </message>
+    <message>
+        <source>Average</source>
+        <translation>Gemiddeld</translation>
+    </message>
+    <message>
+        <source>Best</source>
+        <translation>Beste</translation>
+    </message>
+    <message>
+        <source>Without errors</source>
+        <translation>Zonder fouten</translation>
+    </message>
+    <message>
+        <source>With errors</source>
+        <translation>Met fouten</translation>
+    </message>
+    <message>
+        <source>Compression</source>
+        <translation>Compressie</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Wachtwoord</translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation>par2</translation>
+    </message>
+    <message>
+        <source>Archives kept</source>
+        <translation>Archieven bewaard</translation>
+    </message>
+    <message>
+        <source>Files posted as they are</source>
+        <translation>Bestanden ongewijzigd gepost</translation>
+    </message>
+    <message>
+        <source>%1 post(s)</source>
+        <translation>%1 post(s)</translation>
+    </message>
+    <message>
+        <source>By hour</source>
+        <translation>Per uur</translation>
+    </message>
+    <message>
+        <source>By day</source>
+        <translation>Per dag</translation>
+    </message>
+    <message>
+        <source>By month</source>
+        <translation>Per maand</translation>
+    </message>
+    <message>
+        <source>Average and best speed of the posts</source>
+        <translation>Gemiddelde en hoogste snelheid van de posts</translation>
+    </message>
+    <message>
+        <source>Number of posts</source>
+        <translation>Aantal posts</translation>
+    </message>
+    <message>
+        <source>Number of posts in each newsgroup (10 most used)</source>
+        <translation>Aantal posts in elke nieuwsgroep (de 10 meest gebruikte)</translation>
+    </message>
+    <message>
+        <source>Number of posts started at each hour of each day of the week</source>
+        <translation>Aantal posts gestart op elk uur van elke dag van de week</translation>
+    </message>
+    <message>
+        <source>Known for %1 of the %2 post(s): it is recorded since version 1.4.</source>
+        <translation>Bekend voor %1 van de %2 post(s): wordt sinds versie 1.4 vastgelegd.</translation>
     </message>
 </context>
 </TS>

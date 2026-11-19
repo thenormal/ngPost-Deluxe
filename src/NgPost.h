@@ -87,6 +87,7 @@ class NgPost : public QObject, public CmdOrGuiApp
     friend class PostingJob;
     friend class AboutNgPost;
     friend class GuidedPostWidget;
+    friend class StatsWidget;
 
 public:
     enum LOG_LEVEL {LOG_INFO = 0, LOG_PHASE, LOG_OK, LOG_WARN, LOG_DEBUG}; //!< colors of the log in the GUI

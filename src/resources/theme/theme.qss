@@ -125,6 +125,13 @@ QLabel#pageSubtitle, QLabel#hint {
     color: @subtext@;
 }
 
+/* ---------- statistics ---------- */
+QLabel#statValue {
+    font-size: 20px;
+    font-weight: 600;
+    color: @text@;
+}
+
 /* ---------- cards ---------- */
 QFrame#card {
     background: @card@;

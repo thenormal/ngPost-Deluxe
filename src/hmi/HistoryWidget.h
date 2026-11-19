@@ -31,6 +31,8 @@ class QLineEdit;
 class QComboBox;
 class QPushButton;
 class QLabel;
+class QStackedWidget;
+class StatsWidget;
 
 //! History page: the uploads recorded in the history file (POST_HISTORY or ngPost_history.csv)
 class HistoryWidget : public QWidget
@@ -58,6 +60,7 @@ public:
         QString   servers;   //!< hosts used (empty for the lines written before 1.4)
         QString   options;   //!< compress, password, par2:10, keep or none (empty for the lines written before 1.4)
         QString   kind;      //!< quick, choose, scan, watch or cli (empty for the lines written before 1.4)
+        QString   exactBytes; //!< exact size in bytes (empty for the lines written before 1.4: bytes comes from the rounded size)
     };
 
     HistoryWidget(NgPost *ngPost, QWidget *parent = nullptr);
@@ -95,6 +98,9 @@ private:
     QLabel        *_summary;
     QTableWidget  *_table;
     QLabel        *_emptyLbl;
+    QPushButton   *_viewButtons[2];   //!< List | Statistics
+    QStackedWidget *_views;
+    StatsWidget   *_stats;
 
     enum Column {COL_DATE = 0, COL_NAME, COL_SIZE, COL_SPEED, COL_STATUS, COL_FILES, COL_DURATION,
                  COL_ARCHIVE, COL_PASS, COL_GROUPS, COL_FROM, NB_COLUMNS};
