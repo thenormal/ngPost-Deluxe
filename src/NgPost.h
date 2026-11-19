@@ -233,6 +233,9 @@ private:
     QString     _mediaInfoPath;        //!< path of MediaInfo (key "mediainfo_path", --mediainfo_path), empty = automatic
     QString     _nfoText;              //!< free text added to the NFO (key "nfo_text", --nfo_text file)
     bool        _checkDuplicates = true; //!< warn (GUI) / skip (auto, command line) a post already in the history (key "warn_duplicates", --allow_repost turns it off)
+    bool        _limitSpeed = false;     //!< limit the upload speed of all the posts (key "limit_speed", --max_speed)
+    double      _maxSpeed   = 10.;       //!< the limit in MB/s (1 MB = 1024 KB, like the speeds shown) (key "max_speed")
+    bool        _limitSpeedKey = false;  //!< limit_speed was in the configuration (else max_speed alone turns the limit on)
     bool        _closingApp   = false; //!< the posts are stopped because the application closes: keep them in the queue
     QList<QDir> _autoDirs;
 
@@ -422,6 +425,7 @@ public:
 
     inline int nbThreads() const;
     inline int getSocketTimeout() const;
+    void applySpeedLimit(); //!< gives _limitSpeed / _maxSpeed to the SpeedLimiter (at once, even while posting)
     inline QString nzbPath() const;
     void setNzbName(const QFileInfo &fileInfo);
     QString nzbPath(const QString &monitorFolder);

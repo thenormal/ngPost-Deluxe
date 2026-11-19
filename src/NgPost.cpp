@@ -18,6 +18,7 @@
 //========================================================================
 
 #include "NgPost.h"
+#include "utils/SpeedLimiter.h"
 #include "utils/PostedMover.h"
 #include <QSaveFile>
 #include "utils/Diagnostics.h"
@@ -204,6 +205,7 @@ const QList<QCommandLineOption> NgPost::sCmdOptions = {
     { "mediainfo_path",                       tr("path of the MediaInfo program (default: automatic)"), "mediainfo_path"},
     { "nfo_text",                             tr("text file whose content is added at the end of the NFO file"), "nfo_text"},
     { "allow_repost",                         tr("post again the files that are already in the history (by default they are skipped)")},
+    { "max_speed",                            tr("limit the upload speed to this number of MB/s for all the connections (0: no limit)"), "MB/s"},
 
 // quick posting (several files/folders)
     {{"i", sOptionNames[Opt::INPUT]},         tr("input file to upload (single file or directory), you can use it multiple times"), sOptionNames[Opt::INPUT]},
@@ -713,7 +715,12 @@ QStringList NgPost::progressParts(const ProgressInfo &info)
     if (uploading && info.etaSec >= 0)
         parts << tr("ETA %1").arg(PostingJob::humanDuration(info.etaSec * 1000));
     if (uploading && !info.immediateSpeed.trimmed().isEmpty())
-        parts << info.immediateSpeed.simplified();
+    {
+        QString speed = info.immediateSpeed.simplified();
+        if (SpeedLimiter::limit() > 0)
+            speed += " " + tr("(max %1 MB/s)").arg(QLocale().toString(SpeedLimiter::limit() / (1024. * 1024.), 'g', 4));
+        parts << speed;
+    }
     else if (info.phase == ProgressInfo::DONE)
         parts << info.avgSpeed.simplified();
     if (info.nbTotal && (info.phase == ProgressInfo::UPLOADING || info.phase == ProgressInfo::DONE))
@@ -1708,6 +1715,21 @@ bool NgPost::parseCommandLine(int argc, char *argv[])
         _resumeQueue = true;
     if (parser.isSet("allow_repost"))
         _checkDuplicates = false;
+    if (parser.isSet("max_speed"))
+    {
+        bool ok = false;
+        double mbps = parser.value("max_speed").replace(',', '.').toDouble(&ok);
+        if (!ok || mbps < 0)
+        {
+            _error(tr("You should give a number of MB/s for the speed limit (option --max_speed), 0 for no limit"),
+                   ERROR_CODE::ERR_WRONG_ARG);
+            return false;
+        }
+        _limitSpeed = mbps > 0;
+        if (mbps > 0)
+            _maxSpeed = mbps;
+        applySpeedLimit();
+    }
     if (parser.isSet("notify_discord"))
         _notifier.settings().discord = parser.value("notify_discord");
     if (parser.isSet("notify_telegram_token"))
@@ -2596,6 +2618,23 @@ QString NgPost::_parseConfig(const QString &configPath)
                     {
                         _nfoText = val.replace("\\n", "\n"); // saved on one line
                     }
+                    else if (opt == "max_speed")
+                    {
+                        double mbps = val.trimmed().replace(',', '.').toDouble(&ok);
+                        if (ok && mbps >= 0)
+                        {
+                            if (mbps > 0)
+                                _maxSpeed = mbps;
+                            if (!_limitSpeedKey)
+                                _limitSpeed = mbps > 0; // max_speed alone (Docker): the limit is on
+                        }
+                    }
+                    else if (opt == "limit_speed")
+                    {
+                        val = val.toLower();
+                        _limitSpeed = (val == "on" || val == "true" || val == "1" || val == "yes");
+                        _limitSpeedKey = true;
+                    }
                     else if (opt == "warn_duplicates")
                     {
                         val = val.toLower();
@@ -2867,8 +2906,14 @@ QString NgPost::_parseConfig(const QString &configPath)
         }
         file.close();
     }
+    applySpeedLimit();
 
     return err;
+}
+
+void NgPost::applySpeedLimit()
+{
+    SpeedLimiter::setLimit(_limitSpeed && _maxSpeed > 0 ? static_cast<qint64>(_maxSpeed * 1024. * 1024.) : 0);
 }
 
 void NgPost::_syntax(char *appName)
@@ -3223,6 +3268,10 @@ void NgPost::saveConfig(bool quiet)
                << "nfo_media = " << (_nfoMedia ? "ON" : "OFF") << "\n"
                << (_mediaInfoPath.isEmpty() ? "#" : "") << "mediainfo_path = " << _mediaInfoPath << "\n"
                << (_nfoText.trimmed().isEmpty() ? "#" : "") << "nfo_text = " << QString(_nfoText).replace("\r", "").replace("\n", "\\n") << "\n"
+               << "\n"
+               << tr("## Speed limit: maximum upload speed in MB/s for all the connections together (limit_speed ON or OFF, same as --max_speed)") << "\n"
+               << "limit_speed = " << (_limitSpeed ? "ON" : "OFF") << "\n"
+               << "max_speed = " << QString::number(_maxSpeed, 'g', 6) << "\n"
                << "\n"
                << tr("## Warn when a post is already in the history (same name and size): the GUI asks, the auto posting and the command line skip it (ON or OFF)") << "\n"
                << "warn_duplicates = " << (_checkDuplicates ? "ON" : "OFF") << "\n"

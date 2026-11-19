@@ -1958,6 +1958,18 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Guided Post</source>
         <translation>引导发布</translation>
     </message>
+    <message>
+        <source>Limit the upload speed to</source>
+        <translation>限制上传速度为</translation>
+    </message>
+    <message>
+        <source>MB/s</source>
+        <translation>MB/s</translation>
+    </message>
+    <message>
+        <source>For all the connections and all the posts together, so the rest of your connection stays usable. It can be changed while posting. Compression and par2 are not limited.</source>
+        <translation>适用于所有连接和所有发布的总和, 让您的网络其余部分仍可正常使用. 发布过程中也可以更改. 压缩和 par2 不受限制.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3533,6 +3545,22 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>bytes</source>
         <translation>字节</translation>
     </message>
+    <message>
+        <source>limit the upload speed to this number of MB/s for all the connections (0: no limit)</source>
+        <translation>将所有连接的上传速度限制为此 MB/s 数值 (0: 不限制)</translation>
+    </message>
+    <message>
+        <source>You should give a number of MB/s for the speed limit (option --max_speed), 0 for no limit</source>
+        <translation>请为速度限制指定 MB/s 数值 (选项 --max_speed), 0 表示不限制</translation>
+    </message>
+    <message>
+        <source>## Speed limit: maximum upload speed in MB/s for all the connections together (limit_speed ON or OFF, same as --max_speed)</source>
+        <translation>## 速度限制: 所有连接合计的最大上传速度, 单位 MB/s (limit_speed ON 或 OFF, 与 --max_speed 相同)</translation>
+    </message>
+    <message>
+        <source>(max %1 MB/s)</source>
+        <translation>(最高 %1 MB/s)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4127,6 +4155,10 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     <message>
         <source>The original files have NOT been moved because some Articles couldn&apos;t be posted.</source>
         <translation>由于部分文章无法发布，原始文件未被移动。</translation>
+    </message>
+    <message>
+        <source>Upload speed limited to %1 MB/s (all the connections together)</source>
+        <translation>上传速度限制为 %1 MB/s (所有连接合计)</translation>
     </message>
 </context>
 <context>

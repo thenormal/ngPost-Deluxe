@@ -40,6 +40,8 @@
 #include <QDebug>
 #include <QProcess>
 #include <QThread>
+#include <QLocale>
+#include "utils/SpeedLimiter.h"
 #include <QMutex>
 #include <QCoreApplication>
 #include <QDir>
@@ -881,6 +883,9 @@ int PostingJob::_createNntpConnections()
         _log(tr("Number of available Nntp Connections: %1").arg(_nbConnections));
     else
         _log(QString("[%1] %2: %3").arg(timestamp()).arg(tr("Number of available Nntp Connections")).arg(_nbConnections));
+    if (SpeedLimiter::limit() > 0)
+        _log(tr("Upload speed limited to %1 MB/s (all the connections together)").arg(
+                 QLocale().toString(SpeedLimiter::limit() / (1024. * 1024.), 'g', 4)));
 
     return _nbConnections;
 }

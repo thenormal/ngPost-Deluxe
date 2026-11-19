@@ -101,6 +101,7 @@ SOURCES += \
         utils/NfoWriter.cpp \
         utils/Notifier.cpp \
         utils/UpdateChecker.cpp \
+        utils/SpeedLimiter.cpp \
         utils/Yenc.cpp
 
 
@@ -137,6 +138,7 @@ HEADERS += \
     utils/NfoWriter.h \
     utils/Notifier.h \
     utils/UpdateChecker.h \
+    utils/SpeedLimiter.h \
     utils/VersionNumber.h \
     utils/Macros.h \
     utils/PureStaticClass.h \

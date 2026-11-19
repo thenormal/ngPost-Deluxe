@@ -1939,6 +1939,18 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Guided Post</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Limit the upload speed to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MB/s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For all the connections and all the posts together, so the rest of your connection stays usable. It can be changed while posting. Compression and par2 are not limited.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3504,6 +3516,22 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>bytes</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>limit the upload speed to this number of MB/s for all the connections (0: no limit)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You should give a number of MB/s for the speed limit (option --max_speed), 0 for no limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>## Speed limit: maximum upload speed in MB/s for all the connections together (limit_speed ON or OFF, same as --max_speed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(max %1 MB/s)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4090,6 +4118,10 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     </message>
     <message>
         <source>The original files have NOT been moved because some Articles couldn&apos;t be posted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upload speed limited to %1 MB/s (all the connections together)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

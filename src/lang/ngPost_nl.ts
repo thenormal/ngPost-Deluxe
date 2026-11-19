@@ -1960,6 +1960,18 @@ Later beslissen: ze blijven in de wachtrij en worden bij de volgende start opnie
         <source>Guided Post</source>
         <translation>Begeleide post</translation>
     </message>
+    <message>
+        <source>Limit the upload speed to</source>
+        <translation>Uploadsnelheid beperken tot</translation>
+    </message>
+    <message>
+        <source>MB/s</source>
+        <translation>MB/s</translation>
+    </message>
+    <message>
+        <source>For all the connections and all the posts together, so the rest of your connection stays usable. It can be changed while posting. Compression and par2 are not limited.</source>
+        <translation>Voor alle verbindingen en alle posts samen, zodat de rest van uw verbinding bruikbaar blijft. Kan tijdens het posten worden gewijzigd. Compressie en par2 worden niet beperkt.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3538,6 +3550,22 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
         <source>bytes</source>
         <translation>bytes</translation>
     </message>
+    <message>
+        <source>limit the upload speed to this number of MB/s for all the connections (0: no limit)</source>
+        <translation>de uploadsnelheid voor alle verbindingen beperken tot dit aantal MB/s (0: geen limiet)</translation>
+    </message>
+    <message>
+        <source>You should give a number of MB/s for the speed limit (option --max_speed), 0 for no limit</source>
+        <translation>Geef een aantal MB/s op voor de snelheidslimiet (optie --max_speed), 0 voor geen limiet</translation>
+    </message>
+    <message>
+        <source>## Speed limit: maximum upload speed in MB/s for all the connections together (limit_speed ON or OFF, same as --max_speed)</source>
+        <translation>## Snelheidslimiet: maximale uploadsnelheid in MB/s voor alle verbindingen samen (limit_speed ON of OFF, zoals --max_speed)</translation>
+    </message>
+    <message>
+        <source>(max %1 MB/s)</source>
+        <translation>(max. %1 MB/s)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4132,6 +4160,10 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
     <message>
         <source>The original files have NOT been moved because some Articles couldn&apos;t be posted.</source>
         <translation>De originele bestanden zijn NIET verplaatst omdat sommige artikelen niet gepost konden worden.</translation>
+    </message>
+    <message>
+        <source>Upload speed limited to %1 MB/s (all the connections together)</source>
+        <translation>Uploadsnelheid beperkt tot %1 MB/s (alle verbindingen samen)</translation>
     </message>
 </context>
 <context>
