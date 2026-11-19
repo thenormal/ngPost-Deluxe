@@ -30,7 +30,7 @@ C'est un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licen
 ### Démarrage rapide
 1. Installez et lancez ngPost Deluxe.
 2. Ouvrez **Servers**, ajoutez votre serveur Usenet et appuyez sur **Test connection**.
-3. Ouvrez **Quick Post** et glissez vos fichiers ou dossiers dans la fenêtre. Pour poster une release par fichier ou dossier, utilisez **Post Auto**. Le profil **Recommandé** est un bon départ (compression, nom et mot de passe aléatoires, par2 10 %). Vous ne savez pas par où commencer ? Le **Post guidé** vous pose quelques questions et prépare le post pour vous.
+3. Ouvrez **Quick Post** et glissez vos fichiers ou dossiers dans la fenêtre. Pour poster une release par fichier ou dossier, utilisez **Post Auto**. Le profil **Recommandé** est un bon départ (compression, nom et mot de passe aléatoires, par2 10 %).
 4. Appuyez sur **Post Files**. Le fichier NZB est écrit dans le dossier choisi dans les réglages, et chaque envoi apparaît dans **History**.
 
 Vous utilisez déjà ngPost ? Copiez votre `ngPost.conf` dans `%APPDATA%\ngPost Deluxe` et vos serveurs et réglages sont repris.
@@ -47,7 +47,6 @@ Vous utilisez déjà ngPost ? Copiez votre `ngPost.conf` dans `%APPDATA%\ngPost 
 ### Ce qui change dans ce fork
 
 **Interface**
--   **Post guidé** (nouveau) : un assistant dans la barre latérale qui demande ce que vous voulez faire (une release, chaque élément, analyser un dossier, surveiller un dossier), quoi poster, les options et où, puis prépare le post avec les mêmes vérifications que Quick Post et Post Auto. Il se souvient de vos derniers choix et peut démarrer plusieurs posts ensemble
 -   **Nouvelle interface** : barre latérale (Quick Post, Post Auto, Serveurs, Paramètres, Historique), pages en cartes, options avancées masquées tant qu'elles ne servent pas, une nouvelle icône et un écran vide qui explique quoi faire. **Thèmes clair et sombre**, ou automatique comme Windows (clé `theme`). Définissez la variable d'environnement `NGPOST_NO_THEME` pour retrouver l'apparence native
 -   **Interface en italien**: l'interface graphique et la ligne de commande sont maintenant aussi traduites en italien (déjà disponibles en allemand, anglais, chinois, espagnol, français, néerlandais et portugais)
 -   **ngPost Deluxe v1.0** : nouveau nom et nouvelle version (le programme Windows s'appelle maintenant `ngPostDeluxe.exe` ; le fichier de configuration ne change pas), fenêtre À propos redessinée, les boutons de don d'origine sont remplacés par un bouton **Ko-fi** pour ce fork (dans la fenêtre À propos et dans les Paramètres)
@@ -86,6 +85,12 @@ Vous utilisez déjà ngPost ? Copiez votre `ngPost.conf` dans `%APPDATA%\ngPost 
 -   **Petites fenêtres** : Quick Post et Post Auto défilent au lieu d'écraser les cartes les unes sur les autres
 -   Le désinstalleur demande s'il faut aussi supprimer vos paramètres et l'historique (par défaut : les garder)
 
+**Nouveautés de la 1.4 (pas encore publiée)**
+-   **Post guidé** : un assistant dans la barre latérale qui demande ce que vous voulez faire (une release, chaque élément, analyser un dossier, surveiller un dossier), quoi poster, les options et où, puis prépare le post avec les mêmes vérifications que Quick Post et Post Auto. Il se souvient de vos derniers choix et peut démarrer plusieurs posts ensemble
+-   **Statistiques** (page Historique, bascule Liste / Statistiques) : totaux et graphiques pour la période choisie (aujourd'hui, 7 jours, 30 jours, 12 mois, tout) : données postées, vitesse, résultats, jours et heures les plus actifs, newsgroups, serveurs, façon dont les posts ont été lancés et options utilisées, plus des classements. Export en document PDF, page web, fichier CSV ou images PNG des graphiques
+-   **Historique** enregistre plus d'informations : les serveurs utilisés, les options (compression, mot de passe, par2), la façon dont le post a été lancé et la taille exacte. Les anciens historiques restent valides
+-   **Quick Post** : un profil avec un nom aléatoire remplace maintenant le nom pris sur le premier fichier
+
 **Sécurité et correctifs**
 -   **Correctif de sécurité**: dépassement de mémoire possible dans le tampon d'encodage yEnc (la sortie pouvait être plus grande que le tampon avec certaines données)
 -   **Correctif yEnc**: un espace ou une tabulation en fin de ligne est maintenant correctement échappé (certains serveurs le supprimaient, ce qui corrompait les données)
@@ -120,7 +125,7 @@ Le fichier de configuration fonctionne comme dans le projet original (par défau
 - **PAR2_PATH**: pour changer le générateur de par2 et pouvoir utiliser [Parpar](https://github.com/animetosho/ParPar) ou [Multipar](http://hp.vector.co.jp/authors/VA021385/). (ParPar est utilisé automatiquement sous Windows 64bit si `parpar.exe` est dans le dossier de ngPost; par2cmdline reste le choix par défaut ailleurs)
 - **PAR2_ARGS**: pour personnaliser la commande par2, surtout si vous choisissez un programme différent de celui par défaut. Respecte maintenant les guillemets.
 - **theme** : thème de l'interface, `AUTO` (comme Windows), `LIGHT` ou `DARK`
-- **history** : `ON` (par défaut) ou `OFF`, historique des uploads affiché dans la page Historique. Sans **POST_HISTORY** le fichier est `ngPost_history.csv` à côté de la configuration. De nouvelles colonnes sont ajoutées à la fin de chaque ligne : statut, nombre de fichiers, durée et fichier NZB
+- **history** : `ON` (par défaut) ou `OFF`, historique des uploads affiché dans la page Historique. Sans **POST_HISTORY** le fichier est `ngPost_history.csv` à côté de la configuration. De nouvelles colonnes sont ajoutées à la fin de chaque ligne : statut, nombre de fichiers, durée et fichier NZB ; à partir de la v1.4 aussi les serveurs, les options, la façon dont le post a été lancé et la taille exacte
 - **move_posted** : dossier où Post Auto déplace chaque fichier ou dossier une fois posté (un nom comme `Posted` est créé à côté de chaque élément, un chemin complet est utilisé tel quel) ; aussi `--move_posted`
 - **warn_duplicates** : `ON` (par défaut) ou `OFF`, avertit (interface) ou ignore (ligne de commande) ce qui est déjà dans l'historique ; `--allow_repost` le poste quand même
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** et **nfo_text** : fichier NFO écrit à côté du NZB, posté avec les fichiers, avec le mot de passe, avec les informations de MediaInfo ; chemin de MediaInfo ; texte libre ajouté à la fin

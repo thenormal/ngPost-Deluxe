@@ -30,7 +30,7 @@ It is a fork of [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licenc
 ### Quick start
 1. Install and start ngPost Deluxe.
 2. Open **Servers**, add your Usenet server and press **Test connection**.
-3. Open **Quick Post** and drag your files or folders into the window. To post one release for each file or folder, use **Auto Posting**. The **Recommended** profile is a good start (compression, random name and password, par2 10 %). Not sure where to start? **Guided Post** asks a few questions and prepares the post for you.
+3. Open **Quick Post** and drag your files or folders into the window. To post one release for each file or folder, use **Auto Posting**. The **Recommended** profile is a good start (compression, random name and password, par2 10 %).
 4. Press **Post Files**. The NZB file is written in the folder chosen in the Settings, and every upload is listed in **History**.
 
 Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and your servers and settings are there.
@@ -47,7 +47,6 @@ Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and
 ### What is different in this fork
 
 **Interface**
--   **Guided Post** (new): a wizard in the side bar that asks what you want to do (one release, each item, scan a folder, watch a folder), what to post, the options and where, then prepares the post with the same checks as Quick Post and Auto Posting. It remembers your last choices and can start several posts together
 -   **New interface**: side bar (Quick Post, Auto Posting, Servers, Settings, History), pages with cards, advanced options hidden until needed, a new icon and an empty screen that explains what to do. **Light and dark themes**, or automatic like Windows (`theme` key). Set the environment variable `NGPOST_NO_THEME` to get the native look back
 -   **Italian interface**: the GUI/CMD is now also translated in Italian (it was already available in Chinese, Dutch, English, French, German, Portuguese and Spanish)
 -   **ngPost Deluxe v1.0**: new name and version (the Windows program is now `ngPostDeluxe.exe`; the configuration file does not change), redesigned About window, the original donation buttons are replaced by a **Ko-fi** button for this fork (in the About window and in the Settings)
@@ -86,6 +85,12 @@ Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and
 -   **Small windows**: Quick Post and Auto Posting scroll instead of squeezing the cards on top of each other
 -   The uninstaller asks whether to also delete your settings and history (default: keep them)
 
+**Coming in 1.4 (not released yet)**
+-   **Guided Post**: a wizard in the side bar that asks what you want to do (one release, each item, scan a folder, watch a folder), what to post, the options and where, then prepares the post with the same checks as Quick Post and Auto Posting. It remembers your last choices and can start several posts together
+-   **Statistics** (History page, switch List / Statistics): totals and charts for the period you choose (today, 7 days, 30 days, 12 months, all): data posted, speed, results, busiest days and hours, newsgroups, servers, how the posts were started and options used, plus rankings. Export as a PDF document, a web page, a CSV file or PNG images of the charts
+-   **History** records more: the servers used, the options (compression, password, par2), how the post was started and the exact size. Old histories stay valid
+-   **Quick Post**: a profile with a random name now replaces the name taken from the first file
+
 **Security and fixes**
 -   **Security fix**: possible heap overflow in the yEnc encoding buffer (the output could be bigger than the buffer with specific data)
 -   **yEnc fix**: a space or tab at the end of a line is now escaped correctly (some servers strip it, which corrupted the data)
@@ -120,7 +125,7 @@ The configuration file works as in the original project (default: **~/.ngPost** 
 - **PAR2_PATH**: to change the par2 generator and be able to use [Parpar](https://github.com/animetosho/ParPar) or [Multipar](http://hp.vector.co.jp/authors/VA021385/). (ParPar is used automatically on Windows 64bit if `parpar.exe` is in the ngPost folder; par2cmdline is still the default elsewhere)
 - **PAR2_ARGS**: to customise the par2 command, especially if you choose a program different from the default one. It now respects double quotes.
 - **theme**: interface theme, `AUTO` (like Windows), `LIGHT` or `DARK`
-- **history**: `ON` (default) or `OFF`, history of the uploads shown in the History page. Without **POST_HISTORY** the file is `ngPost_history.csv` next to the configuration. New columns are added at the end of each line: status, number of files, duration and NZB file
+- **history**: `ON` (default) or `OFF`, history of the uploads shown in the History page. Without **POST_HISTORY** the file is `ngPost_history.csv` next to the configuration. New columns are added at the end of each line: status, number of files, duration and NZB file; from v1.4 also the servers, the options, how the post was started and the exact size
 - **move_posted**: folder where Auto Posting moves each file or folder once it is posted (a name like `Posted` is created next to each item, a full path is used as it is); also `--move_posted`
 - **warn_duplicates**: `ON` (default) or `OFF`, warns (GUI) or skips (command line) what is already in the history; `--allow_repost` posts it anyway
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** and **nfo_text**: NFO file written next to the NZB, posted with the files, with the password, with the MediaInfo information; path of MediaInfo; free text added at the end
