@@ -603,3 +603,12 @@ void ServersWidget::onTogglePassword()
 }
 
 #include "ServersWidget.moc"
+
+QVector<ServersWidget::Info> ServersWidget::infos() const
+{
+    QVector<Info> list;
+    for (const Entry &e : _entries)
+        if (!e.params.host.trimmed().isEmpty())
+            list.append({e.params.host.trimmed(), e.params.enabled, e.status});
+    return list;
+}

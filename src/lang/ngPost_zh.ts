@@ -1942,6 +1942,14 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Once a day, asks GitHub (it only sees your IP address) whether a newer release exists, and tells you. Nothing is downloaded or installed.</source>
         <translation>每天向 GitHub 询问一次是否有更新的版本(GitHub 只能看到您的 IP 地址), 并通知您. 不会下载或安装任何内容.</translation>
     </message>
+    <message>
+        <source>Guided Post: nothing started (%1)</source>
+        <translation>引导发布: 未开始任何发布 (%1)</translation>
+    </message>
+    <message>
+        <source>Guided Post</source>
+        <translation>引导发布</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -4991,6 +4999,453 @@ Click on &quot;Add&quot; to configure your Usenet provider.</source>
     <message>
         <source>%1 h %2 min</source>
         <translation>%1 小时 %2 分钟</translation>
+    </message>
+</context>
+<context>
+    <name>GuidedPostWidget</name>
+    <message>
+        <source>Select Files</source>
+        <translation>选择文件</translation>
+    </message>
+    <message>
+        <source>Select a Folder</source>
+        <translation>选择一个文件夹</translation>
+    </message>
+    <message>
+        <source>Guided Post</source>
+        <translation>引导发布</translation>
+    </message>
+    <message>
+        <source>Answer a few questions and the post is prepared for you. It is made by Quick Post or Auto Posting, with the same checks.</source>
+        <translation>回答几个问题, 发布就会为您准备好. 它由 Quick Post 或自动发布完成, 检查项目相同.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>上一步</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation>下一步</translation>
+    </message>
+    <message>
+        <source>Add another post</source>
+        <translation>再添加一个发布</translation>
+    </message>
+    <message>
+        <source>Post these files or folders as one release</source>
+        <translation>将这些文件或文件夹作为一个发布来上传</translation>
+    </message>
+    <message>
+        <source>One NZB file and, with compression, one archive for everything.</source>
+        <translation>一个 NZB 文件; 启用压缩时, 所有内容放进一个压缩包.</translation>
+    </message>
+    <message>
+        <source>Post each file or folder as its own release</source>
+        <translation>将每个文件或文件夹作为单独的发布上传</translation>
+    </message>
+    <message>
+        <source>Each item becomes a post with its own NZB file.</source>
+        <translation>每个项目成为一个带有自己 NZB 文件的发布.</translation>
+    </message>
+    <message>
+        <source>Scan a folder once and post what is inside</source>
+        <translation>扫描一次文件夹并上传其中的内容</translation>
+    </message>
+    <message>
+        <source>Each file or folder inside it becomes a post.</source>
+        <translation>其中的每个文件或文件夹都成为一个发布.</translation>
+    </message>
+    <message>
+        <source>Watch a folder and post what arrives</source>
+        <translation>监视文件夹并发布新文件</translation>
+    </message>
+    <message>
+        <source>New files and folders are posted by themselves, until you stop watching.</source>
+        <translation>新文件和新文件夹会自动上传, 直到您停止监视.</translation>
+    </message>
+    <message>
+        <source>Files and folders to post</source>
+        <translation>要发布的文件和文件夹</translation>
+    </message>
+    <message>
+        <source>Select Folder</source>
+        <translation>选择文件夹</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>全部移除</translation>
+    </message>
+    <message>
+        <source>Choose...</source>
+        <translation>选择...</translation>
+    </message>
+    <message>
+        <source>Profile:</source>
+        <translation>配置：</translation>
+    </message>
+    <message>
+        <source>Hide the options</source>
+        <translation>隐藏选项</translation>
+    </message>
+    <message>
+        <source>Customize</source>
+        <translation>自定义</translation>
+    </message>
+    <message>
+        <source>Compress</source>
+        <translation>压缩</translation>
+    </message>
+    <message>
+        <source>Random name</source>
+        <translation>随机名称</translation>
+    </message>
+    <message>
+        <source>Random password</source>
+        <translation>随机密码</translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation>par2</translation>
+    </message>
+    <message>
+        <source>Keep the archives</source>
+        <translation>保留压缩包</translation>
+    </message>
+    <message>
+        <source>Write an NFO file next to the NZB</source>
+        <translation>在 NZB 旁生成 NFO 文件</translation>
+    </message>
+    <message>
+        <source>Also post the NFO file with the files</source>
+        <translation>同时将 NFO 文件与文件一起发布</translation>
+    </message>
+    <message>
+        <source>Write the password of the archive in the NFO file</source>
+        <translation>在 NFO 中写入压缩包的密码</translation>
+    </message>
+    <message>
+        <source>Media information (MediaInfo)</source>
+        <translation>媒体信息 (MediaInfo)</translation>
+    </message>
+    <message>
+        <source>After posting:</source>
+        <translation>发布后：</translation>
+    </message>
+    <message>
+        <source>Do nothing with the files</source>
+        <translation>不处理文件</translation>
+    </message>
+    <message>
+        <source>Move them to a &quot;Posted&quot; folder</source>
+        <translation>移动到“Posted”文件夹</translation>
+    </message>
+    <message>
+        <source>Delete them</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Posted (a name, or a full path)</source>
+        <translation>Posted (名称或完整路径)</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>服务器</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>新闻组</translation>
+    </message>
+    <message>
+        <source>Folder of the NZB files</source>
+        <translation>NZB 文件夹</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>打开服务器</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>打开设置</translation>
+    </message>
+    <message>
+        <source>Skip this step when everything is set</source>
+        <translation>一切就绪时跳过此步骤</translation>
+    </message>
+    <message>
+        <source>Posts ready</source>
+        <translation>已准备的发布</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>编辑</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>This post</source>
+        <translation>当前发布</translation>
+    </message>
+    <message>
+        <source>Checks</source>
+        <translation>检查</translation>
+    </message>
+    <message>
+        <source>Save these choices as a profile</source>
+        <translation>将这些选择保存为配置</translation>
+    </message>
+    <message>
+        <source>Name of the profile</source>
+        <translation>配置名称</translation>
+    </message>
+    <message>
+        <source>Step %1 of %2</source>
+        <translation>第 %1 步, 共 %2 步</translation>
+    </message>
+    <message>
+        <source>What do you want to do?</source>
+        <translation>您想做什么?</translation>
+    </message>
+    <message>
+        <source>Choose how the files will be posted.</source>
+        <translation>选择文件的上传方式.</translation>
+    </message>
+    <message>
+        <source>What to post</source>
+        <translation>要上传的内容</translation>
+    </message>
+    <message>
+        <source>Add the files or folders you want to post. Double click an item to remove it.</source>
+        <translation>添加要上传的文件或文件夹. 双击某一项可将其移除.</translation>
+    </message>
+    <message>
+        <source>Choose the folder.</source>
+        <translation>选择文件夹.</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>选项</translation>
+    </message>
+    <message>
+        <source>Choose how the post is prepared. You can leave the suggested profile.</source>
+        <translation>选择发布的准备方式. 可以保留建议的配置.</translation>
+    </message>
+    <message>
+        <source>Where to post</source>
+        <translation>上传到哪里</translation>
+    </message>
+    <message>
+        <source>The servers, the newsgroups and the folder of the NZB files are those of the program.</source>
+        <translation>服务器、新闻组和 NZB 文件夹均为程序中的设置.</translation>
+    </message>
+    <message>
+        <source>Summary</source>
+        <translation>摘要</translation>
+    </message>
+    <message>
+        <source>Check what will be posted, then press Post.</source>
+        <translation>检查将要上传的内容, 然后点击“上传”.</translation>
+    </message>
+    <message>
+        <source>compression</source>
+        <translation>压缩</translation>
+    </message>
+    <message>
+        <source>random name</source>
+        <translation>随机名称</translation>
+    </message>
+    <message>
+        <source>random password</source>
+        <translation>随机密码</translation>
+    </message>
+    <message>
+        <source>par2 %1 %</source>
+        <translation>par2 %1 %</translation>
+    </message>
+    <message>
+        <source>the archives are kept</source>
+        <translation>保留压缩包</translation>
+    </message>
+    <message>
+        <source>The files are posted as they are.</source>
+        <translation>文件将按原样上传.</translation>
+    </message>
+    <message>
+        <source>Uses: %1.</source>
+        <translation>使用: %1.</translation>
+    </message>
+    <message>
+        <source>Folder: %1</source>
+        <translation>文件夹: %1</translation>
+    </message>
+    <message>
+        <source>%1 item(s), %2</source>
+        <translation>%1 项，%2</translation>
+    </message>
+    <message>
+        <source>An NFO file is written next to the NZB.</source>
+        <translation>将在 NZB 旁生成 NFO 文件.</translation>
+    </message>
+    <message>
+        <source>Once posted, the files are moved to &quot;%1&quot;.</source>
+        <translation>上传后, 文件将移动到“%1”.</translation>
+    </message>
+    <message>
+        <source>Once posted, the files are deleted.</source>
+        <translation>上传后, 文件将被删除.</translation>
+    </message>
+    <message>
+        <source>Add at least one file or folder.</source>
+        <translation>请至少添加一个文件或文件夹.</translation>
+    </message>
+    <message>
+        <source>Choose a folder that exists.</source>
+        <translation>请选择一个已存在的文件夹.</translation>
+    </message>
+    <message>
+        <source>A folder can only be watched with compression.</source>
+        <translation>只有启用压缩才能监视文件夹.</translation>
+    </message>
+    <message>
+        <source>Post all (%1)</source>
+        <translation>全部上传 (%1)</translation>
+    </message>
+    <message>
+        <source>Start watching</source>
+        <translation>开始监视</translation>
+    </message>
+    <message>
+        <source>Post</source>
+        <translation>发布</translation>
+    </message>
+    <message>
+        <source>%1 post(s) are already prepared: this is another one.</source>
+        <translation>已准备 %1 个发布: 这是另一个.</translation>
+    </message>
+    <message>
+        <source>Cancel the %1 post(s) already prepared?</source>
+        <translation>取消已准备的 %1 个发布?</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>自定义</translation>
+    </message>
+    <message>
+        <source>Recommended (compression, random name and password, par2 10 %)</source>
+        <translation>推荐（压缩、随机名称和密码、par2 10 %）</translation>
+    </message>
+    <message>
+        <source>Folder to watch</source>
+        <translation>要监视的文件夹</translation>
+    </message>
+    <message>
+        <source>Folder to scan</source>
+        <translation>要扫描的文件夹</translation>
+    </message>
+    <message>
+        <source>Nothing added yet.</source>
+        <translation>尚未添加任何内容.</translation>
+    </message>
+    <message>
+        <source>about %1 to upload</source>
+        <translation>约 %1 待上传</translation>
+    </message>
+    <message>
+        <source>Choose a folder.</source>
+        <translation>请选择文件夹.</translation>
+    </message>
+    <message>
+        <source>This folder does not exist.</source>
+        <translation>该文件夹不存在.</translation>
+    </message>
+    <message>
+        <source>The folder is empty.</source>
+        <translation>文件夹为空.</translation>
+    </message>
+    <message>
+        <source>%1 item(s) in the folder.</source>
+        <translation>文件夹中有 %1 项.</translation>
+    </message>
+    <message>
+        <source>The last connection test failed on every enabled server: check them in Servers.</source>
+        <translation>所有已启用的服务器上次连接测试均失败: 请在“服务器”中检查.</translation>
+    </message>
+    <message>
+        <source> (off)</source>
+        <translation> (已关闭)</translation>
+    </message>
+    <message>
+        <source> (the test succeeded)</source>
+        <translation> (测试成功)</translation>
+    </message>
+    <message>
+        <source> (the last test failed)</source>
+        <translation> (上次测试失败)</translation>
+    </message>
+    <message>
+        <source>No server yet.</source>
+        <translation>尚无服务器.</translation>
+    </message>
+    <message>
+        <source>No newsgroup yet.</source>
+        <translation>尚无新闻组.</translation>
+    </message>
+    <message>
+        <source>Not set: the NZB files are written in the default folder.</source>
+        <translation>未设置: NZB 文件将写入默认文件夹.</translation>
+    </message>
+    <message>
+        <source>Everything is ready.</source>
+        <translation>一切就绪.</translation>
+    </message>
+    <message>
+        <source>Everything is fine.</source>
+        <translation>一切正常.</translation>
+    </message>
+    <message>
+        <source>Nothing to check yet.</source>
+        <translation>暂无可检查的内容.</translation>
+    </message>
+    <message>
+        <source>%1 item(s)</source>
+        <translation>%1 项</translation>
+    </message>
+    <message>
+        <source>Nothing is being prepared: add another post or press Post.</source>
+        <translation>没有正在准备的发布: 请添加另一个发布或点击“上传”.</translation>
+    </message>
+    <message>
+        <source>Deleting files/folders once posted</source>
+        <translation>发布后删除文件/文件夹</translation>
+    </message>
+    <message>
+        <source>You&apos;re about to delete files from your computer once they&apos;ve been posted!
+Use it at your own risk!
+It will be irreversible...</source>
+        <translation>文件发布成功后您将会从您的电脑中删除这些文件!
+请谨慎使用!
+这个删除过程是不可逆的...</translation>
+    </message>
+    <message>
+        <source>Save as profile</source>
+        <translation>另存为配置</translation>
+    </message>
+    <message>
+        <source>Choose a name for the profile (&quot;Custom&quot; and &quot;Recommended&quot; are reserved).</source>
+        <translation>请为配置选择名称 (“Custom”和“Recommended”为保留名称).</translation>
+    </message>
+    <message>
+        <source>Guided Post: %1 post(s) started</source>
+        <translation>引导发布: 已开始 %1 个发布</translation>
+    </message>
+    <message>
+        <source>Guided Post: %1 of %2 post(s) started, the others are still prepared in Guided Post</source>
+        <translation>引导发布: 已开始 %1 个 (共 %2 个) 发布, 其余仍保留在引导发布中</translation>
     </message>
 </context>
 </TS>

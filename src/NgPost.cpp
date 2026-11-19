@@ -2537,6 +2537,15 @@ QString NgPost::_parseConfig(const QString &configPath)
                         bool on = (val == "on" || val == "true" || val == "1" || val == "yes");
                         (opt == "notify_ok" ? _notifier.settings().onSuccess : opt == "notify_errors" ? _notifier.settings().onErrors : _notifier.settings().tray) = on;
                     }
+                    else if (opt == "guided_post")
+                    {
+                        _guidedHasChoices = PostRequest::fromChoicesLine(val.trimmed(), _guidedChoices);
+                    }
+                    else if (opt == "guided_skip_where")
+                    {
+                        val = val.toLower();
+                        _guidedSkipWhere = (val == "on" || val == "true" || val == "1" || val == "yes");
+                    }
                     else if (opt == "check_updates")
                     {
                         val = val.toLower();
@@ -3191,6 +3200,10 @@ void NgPost::saveConfig(bool quiet)
                << tr("## New versions: the GUI looks once a day for a newer release on GitHub and only tells you (nothing is downloaded)") << "\n"
                << "check_updates = " << (_checkUpdates ? "ON" : "OFF") << "\n"
                << (_updateLastCheck.isEmpty() ? "#" : "") << "update_last_check = " << _updateLastCheck << "\n"
+               << "\n"
+               << tr("## Guided Post: the last choices (kind of post, options, what happens after the post) and whether to skip the step \"Where to post\" when everything is set") << "\n"
+               << (_guidedHasChoices ? "" : "#") << "guided_post = " << (_guidedHasChoices ? _guidedChoices.choicesLine() : QString()) << "\n"
+               << "guided_skip_where = " << (_guidedSkipWhere ? "ON" : "OFF") << "\n"
                << "\n"
                << tr("## Auto Posting: last mode used (choose, scan or watch) and the folder where the posted files are moved") << "\n"
                << tr("## (a name like Posted is created next to each file/folder, a full path is used as it is; without it nothing is moved)") << "\n"

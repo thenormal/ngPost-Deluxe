@@ -46,6 +46,7 @@ class QPlainTextEdit;
 class QSystemTrayIcon;
 class HistoryWidget;
 class HelpWidget;
+class GuidedPostWidget;
 class GroupsEdit;
 
 namespace Ui {
@@ -74,13 +75,14 @@ private:
     static constexpr int sAutoSaveDelayMs = 1000;
 
     // new layout of ngPost Deluxe: side bar + pages
-    enum Page {PAGE_POSTS = 0, PAGE_SERVERS, PAGE_SETTINGS, PAGE_HISTORY, PAGE_HELP};
-    enum Nav  {NAV_QUICK = 0, NAV_AUTO, NAV_SERVERS, NAV_SETTINGS, NAV_HISTORY, NAV_HELP, NB_NAV};
+    enum Page {PAGE_POSTS = 0, PAGE_SERVERS, PAGE_SETTINGS, PAGE_HISTORY, PAGE_HELP, PAGE_GUIDED};
+    enum Nav  {NAV_GUIDED = 0, NAV_QUICK, NAV_AUTO, NAV_SERVERS, NAV_SETTINGS, NAV_HISTORY, NAV_HELP, NB_NAV};
     QStackedWidget *_pages;
     QButtonGroup   *_nav;
     QPushButton    *_navButtons[NB_NAV];
     HistoryWidget  *_history;
     HelpWidget     *_help;
+    GuidedPostWidget *_guided = nullptr; //!< Guided Post wizard
     int             _jobNumber;   //!< post shown in the bottom bar (-1: none)
     bool            _pauseIcon;   //!< the pause button shows pause (true) or play
     QCheckBox      *_historyCB;
@@ -144,6 +146,9 @@ public:
     QStringList invalidGroups() const;  //!< the newsgroups that are not valid
     bool hasGroups() const;
     void showServersPage();
+    void showGuidedPage();
+    ServersWidget *serversWidget() const { return _servers; }
+    QStringList groupsList() const;  //!< the newsgroups of the settings
     enum SettingsCategory { CAT_GENERAL, CAT_POST, CAT_NZB, CAT_NOTIFY, CAT_HISTORY, NB_CATS };
     void showSettingsPage(int category = -1); //!< -1: the category that was open
     void updateFirstSteps();                  //!< shows what is missing before a first post (server, newsgroup), hides it when done

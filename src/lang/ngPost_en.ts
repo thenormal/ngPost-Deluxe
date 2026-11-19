@@ -1923,6 +1923,14 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>Once a day, asks GitHub (it only sees your IP address) whether a newer release exists, and tells you. Nothing is downloaded or installed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Guided Post: nothing started (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Guided Post</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -4952,6 +4960,451 @@ Click on &quot;Add&quot; to configure your Usenet provider.</translation>
     </message>
     <message>
         <source>%1 h %2 min</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>GuidedPostWidget</name>
+    <message>
+        <source>Select Files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Guided Post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Answer a few questions and the post is prepared for you. It is made by Quick Post or Auto Posting, with the same checks.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add another post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post these files or folders as one release</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>One NZB file and, with compression, one archive for everything.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post each file or folder as its own release</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Each item becomes a post with its own NZB file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Scan a folder once and post what is inside</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Each file or folder inside it becomes a post.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Watch a folder and post what arrives</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New files and folders are posted by themselves, until you stop watching.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files and folders to post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide the options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Customize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Random name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Random password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the archives</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write an NFO file next to the NZB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Also post the NFO file with the files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write the password of the archive in the NFO file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Media information (MediaInfo)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>After posting:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do nothing with the files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move them to a &quot;Posted&quot; folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete them</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Posted (a name, or a full path)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder of the NZB files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip this step when everything is set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Posts ready</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save these choices as a profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name of the profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Step %1 of %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>What do you want to do?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose how the files will be posted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>What to post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add the files or folders you want to post. Double click an item to remove it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose how the post is prepared. You can leave the suggested profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Where to post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The servers, the newsgroups and the folder of the NZB files are those of the program.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Summary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check what will be posted, then press Post.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>compression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>random name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>random password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>par2 %1 %</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>the archives are kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files are posted as they are.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uses: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 item(s), %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An NFO file is written next to the NZB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once posted, the files are moved to &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Once posted, the files are deleted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add at least one file or folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a folder that exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A folder can only be watched with compression.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post all (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start watching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 post(s) are already prepared: this is another one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel the %1 post(s) already prepared?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recommended (compression, random name and password, par2 10 %)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder to watch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder to scan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing added yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>about %1 to upload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This folder does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 item(s) in the folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The last connection test failed on every enabled server: check them in Servers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (off)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (the test succeeded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (the last test failed)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No server yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No newsgroup yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not set: the NZB files are written in the default folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Everything is ready.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Everything is fine.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing to check yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 item(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing is being prepared: add another post or press Post.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting files/folders once posted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You&apos;re about to delete files from your computer once they&apos;ve been posted!
+Use it at your own risk!
+It will be irreversible...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save as profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a name for the profile (&quot;Custom&quot; and &quot;Recommended&quot; are reserved).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Guided Post: %1 post(s) started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Guided Post: %1 of %2 post(s) started, the others are still prepared in Guided Post</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

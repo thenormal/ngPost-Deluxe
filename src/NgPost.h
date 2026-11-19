@@ -39,6 +39,7 @@
 #include "utils/Notifier.h"
 #include "utils/UpdateChecker.h"
 #include "utils/PostProfile.h"
+#include "utils/PostRequest.h"
 #include <functional>
 #include <QNetworkProxy>
 class QTranslator;
@@ -85,6 +86,7 @@ class NgPost : public QObject, public CmdOrGuiApp
     friend class NfoCard;
     friend class PostingJob;
     friend class AboutNgPost;
+    friend class GuidedPostWidget;
 
 public:
     enum LOG_LEVEL {LOG_INFO = 0, LOG_PHASE, LOG_OK, LOG_WARN, LOG_DEBUG}; //!< colors of the log in the GUI
@@ -215,6 +217,9 @@ private:
     UpdateChecker _updateChecker;      //!< looks for a newer release on GitHub (GUI only, once a day)
     bool        _checkUpdates = true;  //!< key check_updates
     QString     _updateLastCheck;      //!< key update_last_check (day of the last valid answer)
+    PostRequest _guidedChoices;        //!< Guided Post: last choices (key guided_post, the files are not kept)
+    bool        _guidedHasChoices = false;
+    bool        _guidedSkipWhere  = false; //!< key guided_skip_where: skip the "Where to post" step when everything is set
     bool        _genNfo       = false; //!< write an NFO file next to the nzb (key "gen_nfo", --gen_nfo)
     bool        _nfoInPost    = false; //!< and post it with the files (key "nfo_in_post", --nfo_in_post)
     bool        _nfoPassword  = false; //!< write the password of the archive in it (key "nfo_password", --nfo_password)

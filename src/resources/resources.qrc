@@ -41,6 +41,7 @@
         <file>icons/right.png</file>
         <file>theme/theme.qss</file>
         <file>icons/nav_quick.png</file>
+        <file>icons/nav_guided.png</file>
         <file>icons/nav_auto.png</file>
         <file>icons/nav_servers.png</file>
         <file>icons/nav_settings.png</file>
