@@ -1094,6 +1094,14 @@ Each finished post will appear here.</translation>
         <source>Can&apos;t write the file %1</source>
         <translation>Can&apos;t write the file %1</translation>
     </message>
+    <message>
+        <source>List</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Statistics</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -3488,6 +3496,14 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>kind</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>## Guided Post: the last choices (kind of post, options, what happens after the post) and whether to skip the step &quot;Where to post&quot; when everything is set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bytes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -5417,6 +5433,248 @@ It will be irreversible...</source>
     </message>
     <message>
         <source>Guided Post: %1 of %2 post(s) started, the others are still prepared in Guided Post</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChartWidget</name>
+    <message>
+        <source>No data for this period.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>StatsWidget</name>
+    <message>
+        <source>Quick Post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Posting: chosen items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Posting: folder scan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto Posting: watched folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Today</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last 7 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last 30 days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last 12 months</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data uploaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Results</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Most used newsgroups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>How the posts were started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When you post (day and hour)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Largest posts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Busiest days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 d %2 h</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 h %2 min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 min %2 s</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The history is turned off: turn it on in the Settings to get statistics.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No upload yet: the statistics appear after your first post.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No upload in this period.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data since %1 (%2 post(s) in the history).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The sizes of the posts made before version 1.4 are rounded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time spent posting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Posts without errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Best speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Largest post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average per day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compression, par2 and upload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Best</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Without errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>With errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archives kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files posted as they are</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 post(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By day</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>By month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average and best speed of the posts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of posts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of posts in each newsgroup (10 most used)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of posts started at each hour of each day of the week</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Known for %1 of the %2 post(s): it is recorded since version 1.4.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

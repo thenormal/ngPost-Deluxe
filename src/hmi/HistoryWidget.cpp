@@ -19,6 +19,10 @@
 //========================================================================
 
 #include "HistoryWidget.h"
+#include "StatsWidget.h"
+#include <QStackedWidget>
+#include <QScrollArea>
+#include <QButtonGroup>
 #include "NgPost.h"
 #include "utils/Diagnostics.h"
 
@@ -93,6 +97,32 @@ HistoryWidget::HistoryWidget(NgPost *ngPost, QWidget *parent) :
     root->addWidget(_warning);
     root->addSpacing(8);
 
+    // List | Statistics
+    QHBoxLayout *viewRow = new QHBoxLayout();
+    viewRow->setSpacing(0);
+    QButtonGroup *viewGroup = new QButtonGroup(this);
+    for (int i = 0; i < 2; ++i)
+    {
+        _viewButtons[i] = new QPushButton(this);
+        _viewButtons[i]->setObjectName("modeButton");
+        _viewButtons[i]->setCheckable(true);
+        _viewButtons[i]->setCursor(Qt::PointingHandCursor);
+        _viewButtons[i]->setMinimumHeight(34);
+        _viewButtons[i]->setMinimumWidth(150);
+        viewGroup->addButton(_viewButtons[i], i);
+        viewRow->addWidget(_viewButtons[i]);
+    }
+    viewRow->addStretch();
+    _viewButtons[0]->setChecked(true);
+    root->addLayout(viewRow);
+    root->addSpacing(8);
+
+    _views = new QStackedWidget(this);
+    QWidget *listPage = new QWidget(_views);
+    QVBoxLayout *listLayout = new QVBoxLayout(listPage);
+    listLayout->setContentsMargins(0, 0, 0, 0);
+    listLayout->setSpacing(4);
+
     // tool bar: search, period, passwords, export, open the file
     QHBoxLayout *bar = new QHBoxLayout();
     bar->setSpacing(8);
@@ -112,13 +142,13 @@ HistoryWidget::HistoryWidget(NgPost *ngPost, QWidget *parent) :
     bar->addWidget(_passButton);
     bar->addWidget(_exportButton);
     bar->addWidget(_openButton);
-    root->addLayout(bar);
-    root->addSpacing(6);
+    listLayout->addLayout(bar);
+    listLayout->addSpacing(6);
 
     _summary = new QLabel(this);
     _summary->setObjectName("cardTitle");
-    root->addWidget(_summary);
-    root->addSpacing(4);
+    listLayout->addWidget(_summary);
+    listLayout->addSpacing(4);
 
     _table = new QTableWidget(0, NB_COLUMNS, this);
     _table->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -134,7 +164,22 @@ HistoryWidget::HistoryWidget(NgPost *ngPost, QWidget *parent) :
     _table->setContextMenuPolicy(Qt::CustomContextMenu);
     _table->setSortingEnabled(true);
     _table->sortByColumn(COL_DATE, Qt::DescendingOrder);
-    root->addWidget(_table, 1);
+    listLayout->addWidget(_table, 1);
+    _views->addWidget(listPage);
+
+    _stats = new StatsWidget(_ngPost, _views);
+    QScrollArea *statsScroll = new QScrollArea(_views);
+    statsScroll->setWidgetResizable(true);
+    statsScroll->setFrameShape(QFrame::NoFrame);
+    statsScroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    statsScroll->setWidget(_stats);
+    _views->addWidget(statsScroll);
+    root->addWidget(_views, 1);
+    for (int i = 0; i < 2; ++i)
+        connect(_viewButtons[i], &QAbstractButton::clicked, this, [this, i](){
+            _views->setCurrentIndex(i);
+            _warning->setVisible(i == 0); // the passwords are only in the list
+        });
 
     _emptyLbl = new QLabel(_table->viewport());
     _emptyLbl->setObjectName("hint");
@@ -159,6 +204,9 @@ HistoryWidget::HistoryWidget(NgPost *ngPost, QWidget *parent) :
 void HistoryWidget::retranslate()
 {
     _title->setText(tr("History"));
+    _viewButtons[0]->setText(tr("List"));
+    _viewButtons[1]->setText(tr("Statistics"));
+    _stats->retranslate();
     _warning->setText(tr("<b>Keep this file private:</b> the history also records the <b>password of each archive</b> "
                          "in clear text, so you can always open your releases again. It stays on this computer "
                          "and is never sent anywhere, but anyone using this computer can read it. "
@@ -271,10 +319,16 @@ void HistoryWidget::reload()
             e.servers   = f.value(13).trimmed();
             e.options   = f.value(14).trimmed();
             e.kind      = f.value(15).trimmed();
+            e.exactBytes = f.value(16).trimmed();
+            bool exactOk = false;
+            const double exact = e.exactBytes.toDouble(&exactOk);
+            if (exactOk && exact > 0)
+                e.bytes = exact;
             _entries << e;
         }
     }
     _fillTable();
+    _stats->setEntries(_entries, !path.isEmpty());
 }
 
 QList<int> HistoryWidget::_visibleEntries() const
@@ -477,7 +531,7 @@ void HistoryWidget::onExport()
                << sep << e->archive << sep << e->pass << sep << e->groups << sep << e->from << sep << e->status
                << sep << (e->nbFiles >= 0 ? QString::number(e->nbFiles) : QString()) << sep << e->duration
                << sep << e->nzbPath << sep << e->inputSize
-               << sep << e->servers << sep << e->options << sep << e->kind << "\n";
+               << sep << e->servers << sep << e->options << sep << e->kind << sep << e->exactBytes << "\n";
     }
     stream.flush();
     if (!file.commit())

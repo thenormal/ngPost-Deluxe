@@ -1104,6 +1104,14 @@ Ogni post completato comparirà qui.</translation>
         <source>Can&apos;t write the file %1</source>
         <translation>Impossibile scrivere il file %1</translation>
     </message>
+    <message>
+        <source>List</source>
+        <translation>Elenco</translation>
+    </message>
+    <message>
+        <source>Statistics</source>
+        <translation>Statistiche</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -3518,6 +3526,14 @@ Usa --par2_pct oppure imposta PAR2_PCT o PAR2_ARGS nel file di configurazione.</
         <source>kind</source>
         <translation>tipo</translation>
     </message>
+    <message>
+        <source>## Guided Post: the last choices (kind of post, options, what happens after the post) and whether to skip the step &quot;Where to post&quot; when everything is set</source>
+        <translation>## Post guidato: le ultime scelte (tipo di post, opzioni, cosa succede dopo il post) e se saltare il passaggio «Dove postare» quando tutto è impostato</translation>
+    </message>
+    <message>
+        <source>bytes</source>
+        <translation>byte</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -5459,6 +5475,248 @@ Sarà irreversibile...</translation>
     <message>
         <source>Guided Post: %1 of %2 post(s) started, the others are still prepared in Guided Post</source>
         <translation>Post guidato: %1 post su %2 avviati, gli altri restano preparati nel Post guidato</translation>
+    </message>
+</context>
+<context>
+    <name>ChartWidget</name>
+    <message>
+        <source>No data for this period.</source>
+        <translation>Nessun dato per questo periodo.</translation>
+    </message>
+</context>
+<context>
+    <name>StatsWidget</name>
+    <message>
+        <source>Quick Post</source>
+        <translation>Quick Post</translation>
+    </message>
+    <message>
+        <source>Auto Posting: chosen items</source>
+        <translation>Post automatico: elementi scelti</translation>
+    </message>
+    <message>
+        <source>Auto Posting: folder scan</source>
+        <translation>Post automatico: scansione cartella</translation>
+    </message>
+    <message>
+        <source>Auto Posting: watched folder</source>
+        <translation>Post automatico: cartella monitorata</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation>Riga di comando</translation>
+    </message>
+    <message>
+        <source>Today</source>
+        <translation>Oggi</translation>
+    </message>
+    <message>
+        <source>Last 7 days</source>
+        <translation>Ultimi 7 giorni</translation>
+    </message>
+    <message>
+        <source>Last 30 days</source>
+        <translation>Ultimi 30 giorni</translation>
+    </message>
+    <message>
+        <source>Last 12 months</source>
+        <translation>Ultimi 12 mesi</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>Tutto</translation>
+    </message>
+    <message>
+        <source>Data uploaded</source>
+        <translation>Dati caricati</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Velocità</translation>
+    </message>
+    <message>
+        <source>Results</source>
+        <translation>Esiti</translation>
+    </message>
+    <message>
+        <source>Most used newsgroups</source>
+        <translation>Newsgroup più usati</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>Server</translation>
+    </message>
+    <message>
+        <source>How the posts were started</source>
+        <translation>Come sono stati avviati i post</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>Opzioni</translation>
+    </message>
+    <message>
+        <source>When you post (day and hour)</source>
+        <translation>Quando posti (giorno e ora)</translation>
+    </message>
+    <message>
+        <source>Largest posts</source>
+        <translation>Post più grandi</translation>
+    </message>
+    <message>
+        <source>Busiest days</source>
+        <translation>Giorni più attivi</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>Data</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Dimensione</translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation>Giorno</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Post</translation>
+    </message>
+    <message>
+        <source>%1 d %2 h</source>
+        <translation>%1 g %2 h</translation>
+    </message>
+    <message>
+        <source>%1 h %2 min</source>
+        <translation>%1 h %2 min</translation>
+    </message>
+    <message>
+        <source>%1 min %2 s</source>
+        <translation>%1 min %2 s</translation>
+    </message>
+    <message>
+        <source>The history is turned off: turn it on in the Settings to get statistics.</source>
+        <translation>La cronologia è disattivata: attivala nelle Impostazioni per avere le statistiche.</translation>
+    </message>
+    <message>
+        <source>No upload yet: the statistics appear after your first post.</source>
+        <translation>Nessun upload per ora: le statistiche compaiono dopo il primo post.</translation>
+    </message>
+    <message>
+        <source>No upload in this period.</source>
+        <translation>Nessun upload in questo periodo.</translation>
+    </message>
+    <message>
+        <source>Data since %1 (%2 post(s) in the history).</source>
+        <translation>Dati dal %1 (%2 post nella cronologia).</translation>
+    </message>
+    <message>
+        <source>The sizes of the posts made before version 1.4 are rounded.</source>
+        <translation>Le dimensioni dei post fatti prima della versione 1.4 sono arrotondate.</translation>
+    </message>
+    <message>
+        <source>Time spent posting</source>
+        <translation>Tempo impiegato a postare</translation>
+    </message>
+    <message>
+        <source>Posts without errors</source>
+        <translation>Post senza errori</translation>
+    </message>
+    <message>
+        <source>Average speed</source>
+        <translation>Velocità media</translation>
+    </message>
+    <message>
+        <source>Best speed</source>
+        <translation>Velocità migliore</translation>
+    </message>
+    <message>
+        <source>Largest post</source>
+        <translation>Post più grande</translation>
+    </message>
+    <message>
+        <source>Average per day</source>
+        <translation>Media al giorno</translation>
+    </message>
+    <message>
+        <source>Compression, par2 and upload</source>
+        <translation>Compressione, par2 e upload</translation>
+    </message>
+    <message>
+        <source>Average</source>
+        <translation>Media</translation>
+    </message>
+    <message>
+        <source>Best</source>
+        <translation>Migliore</translation>
+    </message>
+    <message>
+        <source>Without errors</source>
+        <translation>Senza errori</translation>
+    </message>
+    <message>
+        <source>With errors</source>
+        <translation>Con errori</translation>
+    </message>
+    <message>
+        <source>Compression</source>
+        <translation>Compressione</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation>par2</translation>
+    </message>
+    <message>
+        <source>Archives kept</source>
+        <translation>Archivi conservati</translation>
+    </message>
+    <message>
+        <source>Files posted as they are</source>
+        <translation>File postati così come sono</translation>
+    </message>
+    <message>
+        <source>%1 post(s)</source>
+        <translation>%1 post</translation>
+    </message>
+    <message>
+        <source>By hour</source>
+        <translation>Per ora</translation>
+    </message>
+    <message>
+        <source>By day</source>
+        <translation>Per giorno</translation>
+    </message>
+    <message>
+        <source>By month</source>
+        <translation>Per mese</translation>
+    </message>
+    <message>
+        <source>Average and best speed of the posts</source>
+        <translation>Velocità media e migliore dei post</translation>
+    </message>
+    <message>
+        <source>Number of posts</source>
+        <translation>Numero di post</translation>
+    </message>
+    <message>
+        <source>Number of posts in each newsgroup (10 most used)</source>
+        <translation>Numero di post in ogni newsgroup (i 10 più usati)</translation>
+    </message>
+    <message>
+        <source>Number of posts started at each hour of each day of the week</source>
+        <translation>Numero di post avviati a ogni ora di ogni giorno della settimana</translation>
+    </message>
+    <message>
+        <source>Known for %1 of the %2 post(s): it is recorded since version 1.4.</source>
+        <translation>Noto per %1 dei %2 post: viene registrato dalla versione 1.4.</translation>
     </message>
 </context>
 </TS>

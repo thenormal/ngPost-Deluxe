@@ -1103,6 +1103,14 @@ Each finished post will appear here.</source>
         <source>Can&apos;t write the file %1</source>
         <translation>无法写入文件 %1</translation>
     </message>
+    <message>
+        <source>List</source>
+        <translation>列表</translation>
+    </message>
+    <message>
+        <source>Statistics</source>
+        <translation>统计</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -3517,6 +3525,14 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>kind</source>
         <translation>类型</translation>
     </message>
+    <message>
+        <source>## Guided Post: the last choices (kind of post, options, what happens after the post) and whether to skip the step &quot;Where to post&quot; when everything is set</source>
+        <translation>## 引导发布: 上次的选择 (发布类型、选项、发布后的处理) 以及一切就绪时是否跳过“上传到哪里”步骤</translation>
+    </message>
+    <message>
+        <source>bytes</source>
+        <translation>字节</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -5458,6 +5474,248 @@ It will be irreversible...</source>
     <message>
         <source>Guided Post: %1 of %2 post(s) started, the others are still prepared in Guided Post</source>
         <translation>引导发布: 已开始 %1 个 (共 %2 个) 发布, 其余仍保留在引导发布中</translation>
+    </message>
+</context>
+<context>
+    <name>ChartWidget</name>
+    <message>
+        <source>No data for this period.</source>
+        <translation>此时间段没有数据.</translation>
+    </message>
+</context>
+<context>
+    <name>StatsWidget</name>
+    <message>
+        <source>Quick Post</source>
+        <translation>快速发布</translation>
+    </message>
+    <message>
+        <source>Auto Posting: chosen items</source>
+        <translation>自动发布: 所选项目</translation>
+    </message>
+    <message>
+        <source>Auto Posting: folder scan</source>
+        <translation>自动发布: 扫描文件夹</translation>
+    </message>
+    <message>
+        <source>Auto Posting: watched folder</source>
+        <translation>自动发布: 监视文件夹</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation>命令行</translation>
+    </message>
+    <message>
+        <source>Today</source>
+        <translation>今天</translation>
+    </message>
+    <message>
+        <source>Last 7 days</source>
+        <translation>最近 7 天</translation>
+    </message>
+    <message>
+        <source>Last 30 days</source>
+        <translation>最近 30 天</translation>
+    </message>
+    <message>
+        <source>Last 12 months</source>
+        <translation>最近 12 个月</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>全部</translation>
+    </message>
+    <message>
+        <source>Data uploaded</source>
+        <translation>上传数据量</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>速度</translation>
+    </message>
+    <message>
+        <source>Results</source>
+        <translation>结果</translation>
+    </message>
+    <message>
+        <source>Most used newsgroups</source>
+        <translation>最常用的新闻组</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>服务器</translation>
+    </message>
+    <message>
+        <source>How the posts were started</source>
+        <translation>发布的启动方式</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>选项</translation>
+    </message>
+    <message>
+        <source>When you post (day and hour)</source>
+        <translation>发布时间 (星期和小时)</translation>
+    </message>
+    <message>
+        <source>Largest posts</source>
+        <translation>最大的发布</translation>
+    </message>
+    <message>
+        <source>Busiest days</source>
+        <translation>最忙的日子</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation>日期</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>大小</translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation>日期</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>发布数</translation>
+    </message>
+    <message>
+        <source>%1 d %2 h</source>
+        <translation>%1 天 %2 小时</translation>
+    </message>
+    <message>
+        <source>%1 h %2 min</source>
+        <translation>%1 小时 %2 分</translation>
+    </message>
+    <message>
+        <source>%1 min %2 s</source>
+        <translation>%1 分 %2 秒</translation>
+    </message>
+    <message>
+        <source>The history is turned off: turn it on in the Settings to get statistics.</source>
+        <translation>历史记录已关闭: 请在“设置”中开启以获取统计数据.</translation>
+    </message>
+    <message>
+        <source>No upload yet: the statistics appear after your first post.</source>
+        <translation>尚无上传: 第一次发布后会显示统计数据.</translation>
+    </message>
+    <message>
+        <source>No upload in this period.</source>
+        <translation>此时间段没有上传.</translation>
+    </message>
+    <message>
+        <source>Data since %1 (%2 post(s) in the history).</source>
+        <translation>数据始于 %1 (历史记录中共 %2 个发布).</translation>
+    </message>
+    <message>
+        <source>The sizes of the posts made before version 1.4 are rounded.</source>
+        <translation>1.4 版之前的发布大小为近似值.</translation>
+    </message>
+    <message>
+        <source>Time spent posting</source>
+        <translation>发布所用时间</translation>
+    </message>
+    <message>
+        <source>Posts without errors</source>
+        <translation>无错误的发布</translation>
+    </message>
+    <message>
+        <source>Average speed</source>
+        <translation>平均速度</translation>
+    </message>
+    <message>
+        <source>Best speed</source>
+        <translation>最高速度</translation>
+    </message>
+    <message>
+        <source>Largest post</source>
+        <translation>最大的发布</translation>
+    </message>
+    <message>
+        <source>Average per day</source>
+        <translation>日均</translation>
+    </message>
+    <message>
+        <source>Compression, par2 and upload</source>
+        <translation>压缩、par2 和上传</translation>
+    </message>
+    <message>
+        <source>Average</source>
+        <translation>平均</translation>
+    </message>
+    <message>
+        <source>Best</source>
+        <translation>最高</translation>
+    </message>
+    <message>
+        <source>Without errors</source>
+        <translation>无错误</translation>
+    </message>
+    <message>
+        <source>With errors</source>
+        <translation>有错误</translation>
+    </message>
+    <message>
+        <source>Compression</source>
+        <translation>压缩</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation>par2</translation>
+    </message>
+    <message>
+        <source>Archives kept</source>
+        <translation>保留压缩包</translation>
+    </message>
+    <message>
+        <source>Files posted as they are</source>
+        <translation>文件按原样上传</translation>
+    </message>
+    <message>
+        <source>%1 post(s)</source>
+        <translation>%1 个发布</translation>
+    </message>
+    <message>
+        <source>By hour</source>
+        <translation>按小时</translation>
+    </message>
+    <message>
+        <source>By day</source>
+        <translation>按天</translation>
+    </message>
+    <message>
+        <source>By month</source>
+        <translation>按月</translation>
+    </message>
+    <message>
+        <source>Average and best speed of the posts</source>
+        <translation>发布的平均速度和最高速度</translation>
+    </message>
+    <message>
+        <source>Number of posts</source>
+        <translation>发布数量</translation>
+    </message>
+    <message>
+        <source>Number of posts in each newsgroup (10 most used)</source>
+        <translation>每个新闻组的发布数量 (最常用的 10 个)</translation>
+    </message>
+    <message>
+        <source>Number of posts started at each hour of each day of the week</source>
+        <translation>一周每天各小时开始的发布数量</translation>
+    </message>
+    <message>
+        <source>Known for %1 of the %2 post(s): it is recorded since version 1.4.</source>
+        <translation>%2 个发布中有 %1 个已知: 自 1.4 版起记录.</translation>
     </message>
 </context>
 </TS>

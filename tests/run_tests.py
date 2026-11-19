@@ -817,7 +817,8 @@ def test_history_columns(work):
         check(lines[0] + "\n" == old, "the old line was changed: %s" % lines[0])
         check(len(lines) == 2, "expected the old line and one more, got %d" % len(lines))
         f = lines[1].split(";")
-        check(len(f) == 16, "expected 16 columns, got %d: %s" % (len(f), lines[1]))
+        check(len(f) == 17, "expected 17 columns, got %d: %s" % (len(f), lines[1]))
+        check(f[16].isdigit() and int(f[16]) >= 150_000, "bytes column: %r" % f[16])
         check(f[13] == "127.0.0.1", "servers column: %r" % f[13])
         check(f[14] == "none", "options column: %r" % f[14])
         check(f[15] == "cli", "kind column: %r" % f[15])
@@ -833,7 +834,7 @@ def test_history_columns(work):
                                 extra=["--compress", "--rar_name", "colsarch", "--rar_pass", "secret"])
             check(r.returncode == 0, "compressed post failed\n" + LAST_OUTPUT)
             f = open(hist, encoding="utf-8").read().splitlines()[-1].split(";")
-            check(len(f) == 16 and f[14] == "compress+password", "options of a compressed post: %r" % f)
+            check(len(f) == 17 and f[14] == "compress+password", "options of a compressed post: %r" % f)
     finally:
         stub.stop()
 
