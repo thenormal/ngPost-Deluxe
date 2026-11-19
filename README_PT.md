@@ -30,7 +30,7 @@ Comprima, adicione par2, ofusque e publique os seus ficheiros a partir de uma in
 ### Início rápido
 1. Instale e inicie o ngPost Deluxe.
 2. Abra **Servers**, adicione o seu servidor Usenet e prima **Test connection**.
-3. Abra **Quick Post** e arraste os seus ficheiros ou pastas para a janela. Para postar uma release por cada ficheiro ou pasta, use **Postagem Automática**. O perfil **Recomendado** é um bom ponto de partida (compressão, nome e palavra-passe aleatórios, par2 10 %). Não sabe por onde começar? A **Postagem guiada** faz algumas perguntas e prepara a postagem por si.
+3. Abra **Quick Post** e arraste os seus ficheiros ou pastas para a janela. Para postar uma release por cada ficheiro ou pasta, use **Postagem Automática**. O perfil **Recomendado** é um bom ponto de partida (compressão, nome e palavra-passe aleatórios, par2 10 %).
 4. Prima **Post Files**. O ficheiro NZB é escrito na pasta escolhida nas definições e cada envio aparece em **History**.
 
 Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os seus servidores e definições ficam lá.
@@ -47,7 +47,6 @@ Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os 
 ### O que muda neste fork
 
 **Interface**
--   **Postagem guiada** (novidade): um assistente na barra lateral que pergunta o que quer fazer (uma release, cada item, examinar uma pasta, vigiar uma pasta), o que postar, as opções e onde, e depois prepara a postagem com as mesmas verificações do Quick Post e da Postagem Automática. Lembra-se das últimas escolhas e pode iniciar várias postagens em conjunto
 -   **Nova interface**: barra lateral (Quick Post, Postagem Automática, Servidores, Definições, Histórico), páginas com cartões, opções avançadas ocultas até serem precisas, um novo ícone e um ecrã vazio que explica o que fazer. **Temas claro e escuro**, ou automático como o Windows (chave `theme`). Defina a variável de ambiente `NGPOST_NO_THEME` para voltar ao aspeto nativo
 -   **Interface em italiano**: a GUI/CMD agora também está traduzida para italiano (já disponível em chinês, holandês, inglês, francês, alemão, português e espanhol)
 -   **ngPost Deluxe v1.0**: novo nome e nova versão (o programa para Windows chama-se agora `ngPostDeluxe.exe`; o ficheiro de configuração não muda), janela Sobre redesenhada, os botões de donativo originais foram substituídos por um botão **Ko-fi** para este fork (na janela Sobre e nas Definições)
@@ -86,6 +85,12 @@ Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os 
 -   **Janelas pequenas**: Quick Post e Postagem Automática deslocam-se em vez de esmagar os cartões uns contra os outros
 -   O desinstalador pergunta se também deve apagar as suas definições e o histórico (por defeito: mantê-los)
 
+**Novidades da 1.4 (ainda não publicada)**
+-   **Postagem guiada**: um assistente na barra lateral que pergunta o que quer fazer (uma release, cada item, examinar uma pasta, vigiar uma pasta), o que postar, as opções e onde, e depois prepara a postagem com as mesmas verificações do Quick Post e da Postagem Automática. Lembra-se das últimas escolhas e pode iniciar várias postagens em conjunto
+-   **Estatísticas** (página Histórico, alternador Lista / Estatísticas): totais e gráficos do período escolhido (hoje, 7 dias, 30 dias, 12 meses, tudo): dados postados, velocidade, resultados, dias e horas mais ativos, grupos de notícias, servidores, como as postagens foram iniciadas e opções usadas, além de classificações. Exportação em documento PDF, página web, ficheiro CSV ou imagens PNG dos gráficos
+-   **Histórico** guarda mais dados: os servidores usados, as opções (compressão, palavra-passe, par2), como a postagem foi iniciada e o tamanho exato. Os históricos antigos continuam válidos
+-   **Quick Post**: um perfil com nome aleatório passa a substituir o nome tirado do primeiro ficheiro
+
 **Segurança e correções**
 -   **Correção de segurança**: possível estouro de heap no buffer de codificação yEnc (com certos dados, a saída podia exceder o buffer)
 -   **Correção yEnc**: um espaço ou tab no fim de uma linha agora é escapado corretamente (alguns servidores o removiam, corrompendo os dados)
@@ -123,7 +128,7 @@ O arquivo de configuração funciona como no projeto original (padrão: **~/.ngP
 - **PAR2_PATH**: para mudar o gerador de par2 e poder usar o [Parpar](https://github.com/animetosho/ParPar) ou o [Multipar](http://hp.vector.co.jp/authors/VA021385/). (o par2cmdline é o gerador incluído por padrão; no Windows 64 bits o ParPar é usado automaticamente se `parpar.exe` estiver na pasta do ngPost)
 - **PAR2_ARGS**: para personalizar o comando par2, sobretudo se escolher um programa diferente do par2cmdline padrão
 - **theme**: tema da interface, `AUTO` (como o Windows), `LIGHT` ou `DARK`
-- **history**: `ON` (predefinido) ou `OFF`, histórico dos uploads mostrado na página Histórico. Sem **POST_HISTORY** o ficheiro é `ngPost_history.csv` ao lado da configuração. São adicionadas novas colunas no fim de cada linha: estado, número de ficheiros, duração e ficheiro NZB
+- **history**: `ON` (predefinido) ou `OFF`, histórico dos uploads mostrado na página Histórico. Sem **POST_HISTORY** o ficheiro é `ngPost_history.csv` ao lado da configuração. São adicionadas novas colunas no fim de cada linha: estado, número de ficheiros, duração e ficheiro NZB; a partir da v1.4 também os servidores, as opções, como a postagem foi iniciada e o tamanho exato
 - **move_posted**: pasta para onde a Postagem Automática move cada ficheiro ou pasta depois de postado (junto a cada item é criada uma pasta com um nome como `Posted`, um caminho completo é usado tal como está); também `--move_posted`
 - **warn_duplicates**: `ON` (por defeito) ou `OFF`, avisa (GUI) ou ignora (linha de comandos) o que já está no histórico; `--allow_repost` posta na mesma
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** e **nfo_text**: ficheiro NFO escrito junto ao NZB, postado com os ficheiros, com a palavra-passe, com as informações do MediaInfo; caminho do MediaInfo; texto livre acrescentado no fim

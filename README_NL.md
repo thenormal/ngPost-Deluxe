@@ -30,7 +30,7 @@ Het is een fork van [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, li
 ### Snelstart
 1. Installeer ngPost Deluxe en start het.
 2. Open **Servers**, voeg je Usenet-server toe en druk op **Test connection**.
-3. Open **Quick Post** en sleep je bestanden of mappen in het venster. Om voor elk bestand of elke map een aparte release te posten, gebruik je **Auto Posting**. Het profiel **Aanbevolen** is een goed begin (compressie, willekeurige naam en wachtwoord, par2 10 %). Weet je niet waar je moet beginnen? De **Begeleide post** stelt een paar vragen en bereidt de post voor je voor.
+3. Open **Quick Post** en sleep je bestanden of mappen in het venster. Om voor elk bestand of elke map een aparte release te posten, gebruik je **Auto Posting**. Het profiel **Aanbevolen** is een goed begin (compressie, willekeurige naam en wachtwoord, par2 10 %).
 4. Druk op **Post Files**. Het NZB-bestand wordt weggeschreven in de map die je in de instellingen koos, en elke upload staat in **History**.
 
 Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en je servers en instellingen zijn er weer.
@@ -47,7 +47,6 @@ Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en
 ### Wat is er anders in deze fork
 
 **Interface**
--   **Begeleide post** (nieuw): een assistent in de zijbalk die vraagt wat je wilt doen (één release, elk item, een map scannen, een map bewaken), wat je wilt posten, de opties en waar, en daarna de post voorbereidt met dezelfde controles als Quick Post en Auto Posting. Hij onthoudt je laatste keuzes en kan meerdere posts tegelijk starten
 -   **Nieuwe interface**: zijbalk (Quick Post, Auto Posting, Servers, Instellingen, Geschiedenis), pagina's met kaarten, geavanceerde opties verborgen tot ze nodig zijn, een nieuw pictogram en een leeg scherm dat uitlegt wat te doen. **Licht en donker thema**, of automatisch zoals Windows (sleutel `theme`). Zet de omgevingsvariabele `NGPOST_NO_THEME` om het native uiterlijk terug te krijgen
 -   **Italiaanse interface**: de GUI/CMD is nu ook in het Italiaans vertaald (al beschikbaar in het Chinees, Nederlands, Engels, Frans, Duits, Portugees en Spaans)
 -   **ngPost Deluxe v1.0**: nieuwe naam en versie (het Windows-programma heet nu `ngPostDeluxe.exe`; het configuratiebestand verandert niet), vernieuwd Over-venster, de oorspronkelijke donatieknoppen zijn vervangen door een **Ko-fi**-knop voor deze fork (in het Over-venster en in de Instellingen)
@@ -86,6 +85,12 @@ Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en
 -   **Kleine vensters**: Quick Post en Auto Posting scrollen in plaats van de kaarten op elkaar te drukken
 -   Het verwijderprogramma vraagt of ook je instellingen en geschiedenis verwijderd moeten worden (standaard: bewaren)
 
+**Nieuw in 1.4 (nog niet uitgebracht)**
+-   **Begeleide post**: een assistent in de zijbalk die vraagt wat je wilt doen (één release, elk item, een map scannen, een map bewaken), wat je wilt posten, de opties en waar, en daarna de post voorbereidt met dezelfde controles als Quick Post en Auto Posting. Hij onthoudt je laatste keuzes en kan meerdere posts tegelijk starten
+-   **Statistieken** (pagina Geschiedenis, schakelaar Lijst / Statistieken): totalen en grafieken voor de gekozen periode (vandaag, 7 dagen, 30 dagen, 12 maanden, alles): geposte data, snelheid, resultaten, drukste dagen en uren, newsgroups, servers, hoe de posts zijn gestart en gebruikte opties, plus ranglijsten. Exporteren als PDF-document, webpagina, CSV-bestand of PNG-afbeeldingen van de grafieken
+-   **Geschiedenis** bewaart meer gegevens: de gebruikte servers, de opties (compressie, wachtwoord, par2), hoe de post is gestart en de exacte grootte. Oude geschiedenissen blijven geldig
+-   **Quick Post**: een profiel met een willekeurige naam vervangt nu de naam van het eerste bestand
+
 **Beveiliging en correcties**
 -   **Beveiligingsfix**: mogelijke heap-overflow in de yEnc-codeerbuffer (bij bepaalde gegevens kon de uitvoer groter zijn dan de buffer)
 -   **yEnc-fix**: een spatie of tab aan het einde van een regel wordt nu correct geëscaped (sommige servers verwijderden die, waardoor de gegevens beschadigd raakten)
@@ -123,7 +128,7 @@ Het configuratiebestand werkt zoals in het oorspronkelijke project (standaard: *
 - **PAR2_PATH**: om de par2-generator te wijzigen en [Parpar](https://github.com/animetosho/ParPar) of [Multipar](http://hp.vector.co.jp/authors/VA021385/) te kunnen gebruiken. (par2cmdline is de standaard meegeleverde generator, ParPar wordt op Windows 64bit automatisch gebruikt als `parpar.exe` in de ngPost-map staat)
 - **PAR2_ARGS**: om het par2-commando aan te passen, vooral als je een ander programma kiest dan de standaard par2cmdline
 - **theme**: thema van de interface, `AUTO` (zoals Windows), `LIGHT` of `DARK`
-- **history**: `ON` (standaard) of `OFF`, geschiedenis van de uploads op de pagina Geschiedenis. Zonder **POST_HISTORY** is het bestand `ngPost_history.csv` naast de configuratie. Aan het einde van elke regel komen nieuwe kolommen: status, aantal bestanden, duur en NZB-bestand
+- **history**: `ON` (standaard) of `OFF`, geschiedenis van de uploads op de pagina Geschiedenis. Zonder **POST_HISTORY** is het bestand `ngPost_history.csv` naast de configuratie. Aan het einde van elke regel komen nieuwe kolommen: status, aantal bestanden, duur en NZB-bestand; vanaf v1.4 ook de servers, de opties, hoe de post is gestart en de exacte grootte
 - **move_posted**: map waarheen Auto Posting elk bestand of elke map verplaatst na het posten (naast elk item wordt een map met een naam als `Posted` gemaakt, een volledig pad wordt ongewijzigd gebruikt); ook `--move_posted`
 - **warn_duplicates**: `ON` (standaard) of `OFF`, waarschuwt (GUI) of slaat over (opdrachtregel) wat al in de geschiedenis staat; `--allow_repost` post het toch
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** en **nfo_text**: NFO-bestand naast het NZB-bestand, mee gepost met de bestanden, met het wachtwoord, met de MediaInfo-informatie; pad van MediaInfo; vrije tekst aan het eind

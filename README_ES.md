@@ -30,7 +30,7 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 ### Inicio rápido
 1. Instala e inicia ngPost Deluxe.
 2. Abre **Servers**, añade tu servidor de Usenet y pulsa **Test connection**.
-3. Abre **Quick Post** y arrastra tus archivos o carpetas a la ventana. Para publicar una release por cada archivo o carpeta usa **Publicación Automática**. El perfil **Recomendado** es un buen punto de partida (compresión, nombre y contraseña aleatorios, par2 10 %). ¿No sabes por dónde empezar? La **Publicación guiada** te hace unas preguntas y prepara la publicación por ti.
+3. Abre **Quick Post** y arrastra tus archivos o carpetas a la ventana. Para publicar una release por cada archivo o carpeta usa **Publicación Automática**. El perfil **Recomendado** es un buen punto de partida (compresión, nombre y contraseña aleatorios, par2 10 %).
 4. Pulsa **Post Files**. El archivo NZB se escribe en la carpeta elegida en los ajustes y cada subida aparece en **History**.
 
 ¿Ya usas ngPost? Copia tu `ngPost.conf` en `%APPDATA%\ngPost Deluxe` y tendrás tus servidores y ajustes.
@@ -47,7 +47,6 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 ### Qué cambia en este fork
 
 **Interfaz**
--   **Publicación guiada** (novedad): un asistente en la barra lateral que pregunta qué quieres hacer (una release, cada elemento, analizar una carpeta, vigilar una carpeta), qué publicar, las opciones y dónde, y luego prepara la publicación con las mismas comprobaciones que Quick Post y la Publicación Automática. Recuerda tus últimas opciones y puede iniciar varias publicaciones a la vez
 -   **Nueva interfaz**: barra lateral (Quick Post, Publicación Automática, Servidores, Ajustes, Historial), páginas con tarjetas, opciones avanzadas ocultas hasta que se necesitan, un nuevo icono y una pantalla vacía que explica qué hacer. **Temas claro y oscuro**, o automático como Windows (clave `theme`). Define la variable de entorno `NGPOST_NO_THEME` para volver al aspecto nativo
 -   **Interfaz en italiano**: la GUI/CMD ahora también está traducida al italiano (ya estaba disponible en chino, neerlandés, inglés, francés, alemán, portugués y español)
 -   **ngPost Deluxe v1.0**: nuevo nombre y nueva versión (el programa de Windows ahora es `ngPostDeluxe.exe`; el archivo de configuración no cambia), ventana Acerca de rediseñada, los botones de donación originales se sustituyen por un botón de **Ko-fi** para este fork (en la ventana Acerca de y en los Ajustes)
@@ -86,6 +85,12 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 -   **Ventanas pequeñas**: Quick Post y Publicación Automática se desplazan en lugar de aplastar las tarjetas unas contra otras
 -   El desinstalador pregunta si también hay que borrar tus ajustes y el historial (por defecto: conservarlos)
 
+**Novedades de la 1.4 (aún no publicada)**
+-   **Publicación guiada**: un asistente en la barra lateral que pregunta qué quieres hacer (una release, cada elemento, analizar una carpeta, vigilar una carpeta), qué publicar, las opciones y dónde, y luego prepara la publicación con las mismas comprobaciones que Quick Post y la Publicación Automática. Recuerda tus últimas opciones y puede iniciar varias publicaciones a la vez
+-   **Estadísticas** (página Historial, selector Lista / Estadísticas): totales y gráficos del periodo elegido (hoy, 7 días, 30 días, 12 meses, todo): datos publicados, velocidad, resultados, días y horas más activos, grupos de noticias, servidores, cómo se iniciaron las publicaciones y opciones usadas, además de clasificaciones. Exportación a documento PDF, página web, archivo CSV o imágenes PNG de los gráficos
+-   **Historial** guarda más datos: los servidores usados, las opciones (compresión, contraseña, par2), cómo se inició la publicación y el tamaño exacto. Los historiales antiguos siguen siendo válidos
+-   **Quick Post**: un perfil con nombre aleatorio sustituye ahora al nombre tomado del primer archivo
+
 **Seguridad y correcciones**
 -   **Corrección de seguridad**: posible desbordamiento de memoria en el búfer de codificación yEnc (con ciertos datos la salida podía ser mayor que el búfer)
 -   **Corrección yEnc**: un espacio o tabulador al final de una línea ahora se escapa correctamente (algunos servidores lo eliminaban y corrompían los datos)
@@ -123,7 +128,7 @@ El archivo de configuración funciona como en el proyecto original (por defecto:
 - **PAR2_PATH**: para cambiar el generador de par2 y poder usar [Parpar](https://github.com/animetosho/ParPar) o [Multipar](http://hp.vector.co.jp/authors/VA021385/). (par2cmdline es el generador incluido por defecto; ParPar se usa automáticamente en Windows de 64 bits si `parpar.exe` está en la carpeta de ngPost)
 - **PAR2_ARGS**: para personalizar el comando par2, sobre todo si eliges otro programa distinto del par2cmdline por defecto
 - **theme**: tema de la interfaz, `AUTO` (como Windows), `LIGHT` o `DARK`
-- **history**: `ON` (por defecto) u `OFF`, historial de subidas mostrado en la página Historial. Sin **POST_HISTORY** el archivo es `ngPost_history.csv` junto a la configuración. Se añaden nuevas columnas al final de cada línea: estado, número de archivos, duración y archivo NZB
+- **history**: `ON` (por defecto) u `OFF`, historial de subidas mostrado en la página Historial. Sin **POST_HISTORY** el archivo es `ngPost_history.csv` junto a la configuración. Se añaden nuevas columnas al final de cada línea: estado, número de archivos, duración y archivo NZB; desde la v1.4 también los servidores, las opciones, cómo se inició la publicación y el tamaño exacto
 - **move_posted**: carpeta donde Publicación Automática mueve cada archivo o carpeta una vez publicado (junto a cada elemento se crea una carpeta con un nombre como `Posted`, una ruta completa se usa tal cual); también `--move_posted`
 - **warn_duplicates**: `ON` (por defecto) u `OFF`, avisa (GUI) u omite (línea de comandos) lo que ya está en el historial; `--allow_repost` lo publica igualmente
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** y **nfo_text**: archivo NFO escrito junto al NZB, publicado con los archivos, con la contraseña, con la información de MediaInfo; ruta de MediaInfo; texto libre añadido al final
