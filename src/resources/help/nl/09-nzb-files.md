@@ -20,6 +20,8 @@ Op de opdrachtregel controleert `--check` of de artikelen van een NZB nog beschi
 
 De pagina **Geschiedenis** somt uw eerdere uploads op (datum, naam, grootte, snelheid, archief, wachtwoord, groepen). U kunt de geschiedenis uitzetten in de Instellingen. Het wachtwoord wordt in leesbare tekst opgeslagen.
 
+De weergave **Statistieken** van deze pagina (de schakelaar naast **Lijst**) maakt van de geschiedenis totalen en grafieken: zie [Statistieken](09b-statistics.md).
+
 ### Posts die al in de geschiedenis staan
 
 Voordat een post start, zoekt ngPost in de geschiedenis naar een geslaagde post met dezelfde NZB-naam en dezelfde totale grootte van de bestanden. In **Quick Post** vraagt een venster of u hem opnieuw wilt posten (**Toch posten** of **Annuleren**). In **Auto Posting** en op de opdrachtregel wordt de post overgeslagen en vermeldt een regel in het logboek dat. Om hem toch opnieuw te posten, gebruikt u de optie `--allow_repost` of zet u de waarschuwing uit bij **Instellingen**, categorie **Geschiedenis en wachtrij** (kaart Geschiedenis van de uploads). De controle vereist dat de geschiedenis aan staat en kijkt alleen naar de naam en de grootte: een hernoemde map wordt niet herkend.

@@ -71,6 +71,7 @@
         <file>help/en/07-failed-articles.md</file>
         <file>help/en/08-auto-posting.md</file>
         <file>help/en/09-nzb-files.md</file>
+        <file>help/en/09b-statistics.md</file>
         <file>help/en/10-command-line.md</file>
         <file>help/en/11-glossary.md</file>
         <file>help/en/12-problems.md</file>
@@ -85,6 +86,7 @@
         <file>help/it/07-failed-articles.md</file>
         <file>help/it/08-auto-posting.md</file>
         <file>help/it/09-nzb-files.md</file>
+        <file>help/it/09b-statistics.md</file>
         <file>help/it/10-command-line.md</file>
         <file>help/it/11-glossary.md</file>
         <file>help/it/12-problems.md</file>
@@ -99,6 +101,7 @@
         <file>help/fr/07-failed-articles.md</file>
         <file>help/fr/08-auto-posting.md</file>
         <file>help/fr/09-nzb-files.md</file>
+        <file>help/fr/09b-statistics.md</file>
         <file>help/fr/10-command-line.md</file>
         <file>help/fr/11-glossary.md</file>
         <file>help/fr/12-problems.md</file>
@@ -113,6 +116,7 @@
         <file>help/es/07-failed-articles.md</file>
         <file>help/es/08-auto-posting.md</file>
         <file>help/es/09-nzb-files.md</file>
+        <file>help/es/09b-statistics.md</file>
         <file>help/es/10-command-line.md</file>
         <file>help/es/11-glossary.md</file>
         <file>help/es/12-problems.md</file>
@@ -127,6 +131,7 @@
         <file>help/pt/07-failed-articles.md</file>
         <file>help/pt/08-auto-posting.md</file>
         <file>help/pt/09-nzb-files.md</file>
+        <file>help/pt/09b-statistics.md</file>
         <file>help/pt/10-command-line.md</file>
         <file>help/pt/11-glossary.md</file>
         <file>help/pt/12-problems.md</file>
@@ -141,6 +146,7 @@
         <file>help/de/07-failed-articles.md</file>
         <file>help/de/08-auto-posting.md</file>
         <file>help/de/09-nzb-files.md</file>
+        <file>help/de/09b-statistics.md</file>
         <file>help/de/10-command-line.md</file>
         <file>help/de/11-glossary.md</file>
         <file>help/de/12-problems.md</file>
@@ -155,6 +161,7 @@
         <file>help/nl/07-failed-articles.md</file>
         <file>help/nl/08-auto-posting.md</file>
         <file>help/nl/09-nzb-files.md</file>
+        <file>help/nl/09b-statistics.md</file>
         <file>help/nl/10-command-line.md</file>
         <file>help/nl/11-glossary.md</file>
         <file>help/nl/12-problems.md</file>
@@ -169,6 +176,7 @@
         <file>help/zh/07-failed-articles.md</file>
         <file>help/zh/08-auto-posting.md</file>
         <file>help/zh/09-nzb-files.md</file>
+        <file>help/zh/09b-statistics.md</file>
         <file>help/zh/10-command-line.md</file>
         <file>help/zh/11-glossary.md</file>
         <file>help/zh/12-problems.md</file>

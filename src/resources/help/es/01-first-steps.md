@@ -27,7 +27,7 @@ El archivo NZB es el «mapa» de tu publicación: sin él nadie puede encontrar 
 - **Publicación Automática**: analiza o vigila carpetas.
 - **Servidores**: tus proveedores de Usenet.
 - **Ajustes**: opciones predeterminadas del programa, en cinco categorías (General, Publicaciones, Archivos NZB, Notificaciones, Historial y cola).
-- **Historial**: todo lo que has publicado.
+- **Historial**: todo lo que has publicado, con sus [estadísticas](09b-statistics.md).
 - **Ayuda**: esta sección.
 
 ## Nuevas versiones

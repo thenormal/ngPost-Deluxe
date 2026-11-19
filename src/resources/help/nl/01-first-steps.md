@@ -27,7 +27,7 @@ Het NZB-bestand is de "kaart" van uw post: zonder dat bestand kan niemand de art
 - **Auto Posting**: mappen scannen of bewaken.
 - **Servers**: uw Usenet-providers.
 - **Instellingen**: standaardopties van het programma, in vijf categorieën (Algemeen, Posts, NZB-bestanden, Meldingen, Geschiedenis en wachtrij).
-- **Geschiedenis**: alles wat u hebt gepost.
+- **Geschiedenis**: alles wat u hebt gepost, met de [statistieken](09b-statistics.md).
 - **Help**: dit onderdeel.
 
 ## Nieuwe versies

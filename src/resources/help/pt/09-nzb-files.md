@@ -20,6 +20,8 @@ Na linha de comandos, `--check` verifica se os artigos de um NZB ainda estão di
 
 A página **Histórico** lista os seus envios passados (data, nome, tamanho, velocidade, arquivo, palavra-passe, grupos). Pode desativar o histórico nas Definições. A palavra-passe é guardada em texto simples.
 
+A vista **Estatísticas** desta página (o seletor ao lado de **Lista**) transforma o histórico em totais e gráficos: veja [Estatísticas](09b-statistics.md).
+
 ### Publicações já presentes no histórico
 
 Antes de uma publicação começar, o ngPost procura no histórico uma publicação bem-sucedida com o mesmo nome de NZB e o mesmo tamanho total dos ficheiros. Na **Postagem Rápida** uma janela pergunta se a quer publicar de novo (**Postar mesmo assim** ou **Cancelar**). Na **Postagem Automática** e na linha de comandos a publicação é ignorada e uma linha no registo di-lo. Para a publicar mesmo assim, use a opção `--allow_repost` ou desative o aviso em **Definições**, categoria **Histórico e fila** (cartão Histórico dos envios). A verificação precisa de o histórico estar ativado e só olha para o nome e o tamanho: uma pasta renomeada não é reconhecida.
