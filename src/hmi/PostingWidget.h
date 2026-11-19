@@ -97,6 +97,7 @@ public:
     //! what to do with the original files once posted (Auto Posting): nothing, delete them, or move them to \a moveTo
     //! the tab was created by Auto Posting: duplicates were already asked in one window, an existing nzb gets a number
     void setFromAutoPosting() { _fromAuto = true; }
+    bool isFromAutoPosting() const { return _fromAuto; }
     void setAfterPost(bool act, const QString &moveTo) { _afterAct = act; _afterMoveTo = moveTo; }
     inline uint jobNumber() const;
 

@@ -55,6 +55,9 @@ public:
         qint64    durationSec = -1;
         QString   nzbPath;
         QString   inputSize; //!< bytes of the original files (empty for the older lines)
+        QString   servers;   //!< hosts used (empty for the lines written before 1.4)
+        QString   options;   //!< compress, password, par2:10, keep or none (empty for the lines written before 1.4)
+        QString   kind;      //!< quick, choose, scan, watch or cli (empty for the lines written before 1.4)
     };
 
     HistoryWidget(NgPost *ngPost, QWidget *parent = nullptr);

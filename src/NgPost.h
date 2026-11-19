@@ -401,6 +401,8 @@ public:
     QString historyFile() const;  //!< history file used (explicit POST_HISTORY or ngPost_history.csv next to the config), empty if off
     inline QString historyFieldSeparator() const { return _historyFieldSeparator; }
     static QStringList historyHeader();
+    QString historyProfile(const PostingJob *job) const; //!< options of the post as keys that are not translated: compress, password, par2:10, keep (or none)
+    QString historyKind(const PostingJob *job) const;    //!< how it was posted: quick, choose, scan, watch (Auto Posting page) or cli
     //! date of the post already in the history with this nzb name and these input files (empty if none, or if the check is off)
     QString duplicateInPost(const QString &nzbName, const QFileInfoList &files) const;
     static qint64 inputSize(const QFileInfoList &files); //!< size of the files and folders (recursive)

@@ -852,6 +852,8 @@ int PostingJob::_createNntpConnections()
         {
             _nbConnections += srvParams->nbCons;
             ++_nbEnabledServers;
+            if (!_serverHosts.contains(srvParams->host))
+                _serverHosts << srvParams->host;
         }
     }
     if (_nbEnabledServers == 0)

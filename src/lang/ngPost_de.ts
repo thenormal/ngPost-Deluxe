@@ -3505,6 +3505,18 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>## New versions: the GUI looks once a day for a newer release on GitHub and only tells you (nothing is downloaded)</source>
         <translation>## Neue Versionen: Die GUI sucht einmal am Tag auf GitHub nach einer neueren Version und informiert nur (es wird nichts heruntergeladen)</translation>
     </message>
+    <message>
+        <source>servers</source>
+        <translation>Server</translation>
+    </message>
+    <message>
+        <source>options</source>
+        <translation>Optionen</translation>
+    </message>
+    <message>
+        <source>kind</source>
+        <translation>Art</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>

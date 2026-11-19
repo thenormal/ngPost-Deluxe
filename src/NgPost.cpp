@@ -1187,6 +1187,10 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
                                                                      .arg(sec % 60, 2, 10, QChar('0'))
                        << _historyFieldSeparator << QDir::toNativeSeparators(_activeJob->nzbFilePath())
                        << _historyFieldSeparator << inputSize(_activeJob->originalFiles()) // to recognize the same post later
+                       // columns added in 1.4 for the statistics: servers used, options, how it was posted
+                       << _historyFieldSeparator << _activeJob->serverHosts()
+                       << _historyFieldSeparator << historyProfile(_activeJob)
+                       << _historyFieldSeparator << historyKind(_activeJob)
                        << "\n" << MB_FLUSH;
                 hist.close();
             }
@@ -3493,7 +3497,38 @@ const QString NgPost::sNgPostASCII = QString("\
 QStringList NgPost::historyHeader()
 {
     return {tr("date"), tr("nzb name"), tr("size"), tr("avg. speed"), tr("archive name"), tr("archive pass"),
-            tr("groups"), tr("from"), tr("status"), tr("files"), tr("duration"), tr("nzb file"), tr("input size")};
+            tr("groups"), tr("from"), tr("status"), tr("files"), tr("duration"), tr("nzb file"), tr("input size"),
+            tr("servers"), tr("options"), tr("kind")};
+}
+
+QString NgPost::historyProfile(const PostingJob *job) const
+{
+    QStringList keys;
+    if (job->hasCompressed())
+    {
+        keys << "compress";
+        if (job->hasRarPass())
+            keys << "password";
+    }
+    if (job->hasPar2())
+        keys << QString("par2:%1").arg(job->par2Pct());
+    if (job->hasCompressed() && job->keepsRar())
+        keys << "keep";
+    return keys.isEmpty() ? QString("none") : keys.join("+");
+}
+
+QString NgPost::historyKind(const PostingJob *job) const
+{
+#ifdef __USE_HMI__
+    if (_hmi)
+    {
+        if (job->widget() && !job->widget()->isFromAutoPosting())
+            return "quick";
+        return _autoMode == "scan" ? "scan" : _autoMode == "watch" ? "watch" : "choose";
+    }
+#endif
+    Q_UNUSED(job)
+    return "cli";
 }
 
 QString NgPost::queueFile() const

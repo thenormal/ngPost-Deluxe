@@ -797,6 +797,47 @@ def test_duplicate_is_skipped(work):
         stub.stop()
 
 
+def test_history_columns(work):
+    # the history keeps the servers used, the options and how the post was started (columns added in 1.4 for the statistics);
+    # the lines written before stay valid and are left as they are
+    stub = NntpStub().start()
+    try:
+        hist = os.path.join(work, "history.csv")
+        old = "2026/01/02 03:04:05;old.nzb;1.00 MB;5.00 MB/s;;;alt.binaries.test;me@x;OK;1;00:00:01;/x/old.nzb;1000\n"
+        with open(hist, "w", encoding="utf-8") as f:
+            f.write(old)
+        conf = os.path.join(work, "cols.conf")
+        with open(conf, "w") as f:
+            f.write("POST_HISTORY = %s\n" % hist)
+        src = os.path.join(work, "cols.bin")
+        make_file(src, 150_000, 31)
+        r = run_ngpost(stub, work, [src], os.path.join(work, "cols.nzb"), extra=["--conf", conf])
+        check(r.returncode == 0, "post failed\n" + LAST_OUTPUT)
+        lines = open(hist, encoding="utf-8").read().splitlines()
+        check(lines[0] + "\n" == old, "the old line was changed: %s" % lines[0])
+        check(len(lines) == 2, "expected the old line and one more, got %d" % len(lines))
+        f = lines[1].split(";")
+        check(len(f) == 16, "expected 16 columns, got %d: %s" % (len(f), lines[1]))
+        check(f[13] == "127.0.0.1", "servers column: %r" % f[13])
+        check(f[14] == "none", "options column: %r" % f[14])
+        check(f[15] == "cli", "kind column: %r" % f[15])
+
+        seven = shutil.which("7z")
+        if seven:  # a compressed post with a password
+            tmp = os.path.join(work, "tmp")
+            os.makedirs(tmp)
+            conf_extra = "POST_HISTORY = %s\nTMP_DIR = %s\nRAR_PATH = %s\nRAR_SIZE = 0\n" % (hist, tmp, seven)
+            clip = os.path.join(work, "colsclip.bin")
+            make_file(clip, 120_000, 32)
+            r = run_ngpost_conf([stub], work, [clip], os.path.join(work, "colsclip.nzb"), conns=1, threads=1, conf_extra=conf_extra,
+                                extra=["--compress", "--rar_name", "colsarch", "--rar_pass", "secret"])
+            check(r.returncode == 0, "compressed post failed\n" + LAST_OUTPUT)
+            f = open(hist, encoding="utf-8").read().splitlines()[-1].split(";")
+            check(len(f) == 16 and f[14] == "compress+password", "options of a compressed post: %r" % f)
+    finally:
+        stub.stop()
+
+
 def test_nfo_file(work):
     # the NFO: next to the nzb, with the password only if asked, in the post if asked, no names when they are hidden
     stub = NntpStub().start()
@@ -1260,7 +1301,7 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_queue_resume_after_crash, test_queue_file_gone, test_queue_missing_articles,
          test_queue_used_by_another_ngpost, test_phase_durations, test_progress_line_has_eta, test_groups_are_cleaned,
          test_help_pages, test_latency_is_measured, test_feedback_forms,
-         test_duplicate_is_skipped, test_nfo_file, test_nfo_media_info, test_profiles_and_par2_default, test_post_checker_unit, test_move_posted, test_move_posted_never_overwrites,
+         test_duplicate_is_skipped, test_history_columns, test_nfo_file, test_nfo_media_info, test_profiles_and_par2_default, test_post_checker_unit, test_move_posted, test_move_posted_never_overwrites,
          test_move_posted_kept_when_articles_failed, test_move_posted_options, test_posted_mover_unit, test_notifications,
          test_notification_when_all_done, test_version_number_unit, test_post_request_unit, test_translations_compiled]
 
