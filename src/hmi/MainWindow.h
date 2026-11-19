@@ -24,6 +24,8 @@
 #include "ProgressInfo.h"
 #include <QFileInfoList>
 #include <QMap>
+#include "utils/PostChecker.h"
+#include "utils/PostRequest.h"
 class QTimer;
 class ServersWidget;
 class NgPost;
@@ -152,6 +154,22 @@ public:
     QString fixedArchivePassword() const;
 
     PostingWidget *addNewQuickTab(int lastTabIdx, const QFileInfoList &files = QFileInfoList());
+
+    /*!
+     * \brief starts what the user wants to post (Guided Post): one release in a new Quick Post tab,
+     * everything else in Auto Posting. The pages do their usual checks (and fixes), the window of the items
+     * already posted and the queue: nothing is posted in another way.
+     * \return false when nothing was started (invalid request, checks cancelled, a folder already watched...)
+     */
+    bool startPost(const PostRequest &request);
+
+    /*!
+     * \brief what the checks before posting need (Quick Post, Auto Posting, Guided Post), from the current settings
+     * \param nzbFile the nzb file that will be written (empty: none known yet)
+     * \param watching a folder is watched: what will arrive is not known yet
+     */
+    PostChecker::Input checkInput(const QFileInfoList &files, bool hasFolder, const QString &nzbFile,
+                                  bool passwordChecked, const QString &password, bool watching = false) const;
 
     void setTab(QWidget *postWidget);
     void clearJobTab(QWidget *postWidget);

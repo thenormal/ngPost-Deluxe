@@ -52,6 +52,8 @@
 #include <QStackedWidget>
 #include "utils/Diagnostics.h"
 #include "utils/LatencyStats.h"
+#include "utils/MediaInfoReader.h"
+#include <QDirIterator>
 #include "PostingJob.h"
 #include "PostQueue.h"
 #include "RepostInfo.h"
@@ -714,6 +716,96 @@ PostingWidget *MainWindow::addNewQuickTab(int lastTabIdx, const QFileInfoList &f
 
     _fixIconButtons();
     return newPostingWidget;
+}
+
+PostChecker::Input MainWindow::checkInput(const QFileInfoList &files, bool hasFolder, const QString &nzbFile,
+                                          bool passwordChecked, const QString &password, bool watching) const
+{
+    PostChecker::Input in;
+    for (NntpServerParams *srv : _ngPost->_nntpServers)
+        if (srv->enabled)
+            ++in.nbServers;
+    in.hasGroups       = hasGroups();
+    in.invalidGroups   = invalidGroups().join(", ");
+    in.hasFolder       = hasFolder;
+    in.compress        = _ngPost->_doCompress;
+    in.rarPath         = _ngPost->_rarPath;
+    in.tmpPath         = _ngPost->_tmpPath;
+    in.par2            = _ngPost->_doPar2;
+    in.par2Path        = _ngPost->_par2Path;
+    in.par2Pct         = _ngPost->_par2Pct;
+    in.passwordChecked = passwordChecked;
+    in.password        = password;
+    in.nzbFile         = nzbFile;
+    for (const QFileInfo &fi : files)
+        in.sourceBytes += NgPost::recursiveSize(fi);
+    if (in.compress || in.par2)
+    {
+        QStorageInfo storage(QFileInfo(in.tmpPath).exists() ? in.tmpPath : QDir::tempPath());
+        in.freeBytesTmp = storage.isValid() ? storage.bytesAvailable() : -1;
+    }
+    in.mediaInfoWanted = _ngPost->_genNfo && _ngPost->_nfoMedia;
+    if (in.mediaInfoWanted)
+    {
+        in.mediaInfoFound = !MediaInfoReader::findProgram(_ngPost->_mediaInfoPath).isEmpty();
+        if (watching)
+            in.hasMediaFiles = true; // we don't know yet what will arrive
+        for (const QFileInfo &fi : files)
+        {
+            if (fi.isDir())
+            {
+                QDirIterator it(fi.absoluteFilePath(), QDir::Files|QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+                while (!in.hasMediaFiles && it.hasNext())
+                    in.hasMediaFiles = MediaInfoReader::isMediaFile(it.next());
+            }
+            else
+                in.hasMediaFiles = MediaInfoReader::isMediaFile(fi.fileName());
+            if (in.hasMediaFiles)
+                break;
+        }
+    }
+    return in;
+}
+
+bool MainWindow::startPost(const PostRequest &request)
+{
+    QString why;
+    if (!request.isValid(&why))
+    {
+        logError(tr("Guided Post: nothing started (%1)").arg(why));
+        return false;
+    }
+
+    // the NFO options are shared by all the posts (the NFO cards of the pages follow)
+    _ngPost->_genNfo      = request.genNfo || request.nfoInPost;
+    _ngPost->_nfoInPost   = request.nfoInPost;
+    _ngPost->_nfoPassword = request.nfoPassword;
+    _ngPost->_nfoMedia    = request.nfoMedia;
+    emit _ngPost->nfoOptionsChanged();
+
+    if (request.usesAutoPosting())
+    {
+        _navButtons[NAV_AUTO]->click();
+        return _autoPostTab->postRequest(request);
+    }
+
+    // one release: an empty Quick Post tab is used, otherwise a new one is opened
+    PostingWidget *tab = nullptr;
+    int nbTabs = _ui->postTabWidget->count() - 1; // the last one is "New"
+    for (int i = 0; i < nbTabs && !tab; ++i)
+    {
+        if (i == 1)
+            continue; // Auto Posting
+        PostingWidget *w = static_cast<PostingWidget*>(_ui->postTabWidget->widget(i));
+        if (w && w->isEmptyAndIdle())
+            tab = w;
+    }
+    if (!tab)
+        tab = addNewQuickTab(0);
+    _navButtons[NAV_QUICK]->click();
+    setTab(tab);
+    tab->applyRequest(request);
+    return tab->startFromRequest();
 }
 
 void MainWindow::setTab(QWidget *postWidget)

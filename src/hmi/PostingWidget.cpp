@@ -193,51 +193,10 @@ bool PostingWidget::_checkBeforePosting(const QFileInfoList &files, bool hasFold
 {
     auto makeInput = [this, &files, hasFolder]() {
         udatePostingParams();
-
-        PostChecker::Input in;
-        for (NntpServerParams *srv : _ngPost->_nntpServers)
-            if (srv->enabled)
-                ++in.nbServers;
-        in.hasGroups     = _hmi->hasGroups();
-        in.invalidGroups = _hmi->invalidGroups().join(", ");
-        in.hasFolder     = hasFolder;
-        in.compress      = _ngPost->_doCompress;
-        in.rarPath       = _ngPost->_rarPath;
-        in.tmpPath       = _ngPost->_tmpPath;
-        in.par2          = _ngPost->_doPar2;
-        in.par2Path      = _ngPost->_par2Path;
-        in.par2Pct       = _ngPost->_par2Pct;
-        in.passwordChecked = _ui->nzbPassCB->isChecked();
-        in.password      = _ui->nzbPassEdit->text();
-        in.nzbFile       = _ngPost->nzbPath();
-        if (!in.nzbFile.endsWith(".nzb"))
-            in.nzbFile += ".nzb";
-        for (const QFileInfo &fi : files)
-            in.sourceBytes += NgPost::recursiveSize(fi);
-        if (in.compress || in.par2)
-        {
-            QStorageInfo storage(QFileInfo(in.tmpPath).exists() ? in.tmpPath : QDir::tempPath());
-            in.freeBytesTmp = storage.isValid() ? storage.bytesAvailable() : -1;
-        }
-        in.mediaInfoWanted = _ngPost->_genNfo && _ngPost->_nfoMedia;
-        if (in.mediaInfoWanted)
-        {
-            in.mediaInfoFound = !MediaInfoReader::findProgram(_ngPost->_mediaInfoPath).isEmpty();
-            for (const QFileInfo &fi : files)
-            {
-                if (fi.isDir())
-                {
-                    QDirIterator it(fi.absoluteFilePath(), QDir::Files|QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-                    while (!in.hasMediaFiles && it.hasNext())
-                        in.hasMediaFiles = MediaInfoReader::isMediaFile(it.next());
-                }
-                else
-                    in.hasMediaFiles = MediaInfoReader::isMediaFile(fi.fileName());
-                if (in.hasMediaFiles)
-                    break;
-            }
-        }
-        return in;
+        QString nzbFile = _ngPost->nzbPath();
+        if (!nzbFile.endsWith(".nzb"))
+            nzbFile += ".nzb";
+        return _hmi->checkInput(files, hasFolder, nzbFile, _ui->nzbPassCB->isChecked(), _ui->nzbPassEdit->text());
     };
     return PostCheckDialog::run(this, makeInput, [this](PostChecker::Code code){ return _applyFix(code); });
 }
@@ -1132,6 +1091,33 @@ PostProfile PostingWidget::currentProfile() const
     p.par2Pct  = static_cast<uint>(_ui->redundancySB->value());
     p.keepRar  = _ui->keepRarCB->isChecked();
     return p;
+}
+
+bool PostingWidget::isEmptyAndIdle() const
+{
+    return _state == STATE::IDLE && !_postingFinished && _ui->filesList->count() == 0;
+}
+
+void PostingWidget::applyRequest(const PostRequest &request)
+{
+    // the profile first: a random name is only made while the name of the archive is empty (the files fill it)
+    _profileBar->select(request.profile);
+    for (const QString &path : request.paths)
+    {
+        QFileInfo fi(path);
+        if (!path.trimmed().isEmpty())
+            addPath(fi.absoluteFilePath(), _ui->filesList->count(), fi.isDir());
+    }
+    _updateReleaseInfo();
+    _updateSummary();
+}
+
+bool PostingWidget::startFromRequest()
+{
+    if (_state != STATE::IDLE || _ui->filesList->count() == 0)
+        return false;
+    postFiles(true);
+    return _state != STATE::IDLE;
 }
 
 void PostingWidget::applyProfile(const PostProfile &p)

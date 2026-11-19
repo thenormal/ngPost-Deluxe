@@ -23,6 +23,7 @@
 #include <QWidget>
 #include "utils/PostProfile.h"
 #include "utils/PostChecker.h"
+#include "utils/PostRequest.h"
 class NgPost;
 class NntpFile;
 class MainWindow;
@@ -115,6 +116,10 @@ public:
     void setPackingAuto(bool enabled, const QStringList &keys);
 
     void postFiles(bool updateMainParams);
+
+    bool isEmptyAndIdle() const; //!< nothing in the list and no post: the tab can be used for a new post
+    void applyRequest(const PostRequest &request); //!< files and options of a Guided Post (one release)
+    bool startFromRequest(); //!< posts like the button (checks, items already posted...); false if nothing started
 
     //! tab rebuilt from the persistent queue: a post posted again from the beginning (started at once)
     bool restoreFromQueue(const QJsonObject &entry, QString &error);

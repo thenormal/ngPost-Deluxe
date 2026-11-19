@@ -25,6 +25,7 @@
 #include <QStringList>
 #include "utils/PostProfile.h"
 #include "utils/PostChecker.h"
+#include "utils/PostRequest.h"
 class NgPost;
 class MainWindow;
 class ProfileBar;
@@ -91,6 +92,10 @@ private:
     void _onWatchPause();
     QFileInfoList _checkedFiles(bool *hasFolder = nullptr) const;
     bool _checkBeforeStart(const QFileInfoList &files, bool hasFolder);
+    //! posts each file/folder in its own Quick Post tab (checks, items already posted...); false if nothing was created
+    bool _postFiles(QFileInfoList files, bool hasFolder, bool forceStart);
+    void _applyRequestOptions(const PostRequest &request); //!< profile and what happens after the post
+    void _afterPostChanged(bool warnDelete);
     bool _applyFix(PostChecker::Code code);
     void _buildLayout();
     void _retranslateLayout();
@@ -111,6 +116,9 @@ public:
     void udatePostingParams();
     PostProfile currentProfile() const;            //!< the options of the Archive card (to save them as a profile)
     void applyProfile(const PostProfile &profile); //!< a profile was chosen
+
+    //! Guided Post: one post for each item, scan of a folder or watch of a folder; false if nothing started
+    bool postRequest(const PostRequest &request);
 
     void newFileToProcess(const QFileInfo &fileInfo);
     void updateFinishedJob(const QString &path, uint nbArticles, uint nbUploaded, uint nbFailed);

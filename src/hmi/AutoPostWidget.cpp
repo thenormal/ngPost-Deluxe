@@ -168,10 +168,15 @@ void AutoPostWidget::onGenQuickPosts()
         return;
     }
 
+    _postFiles(files, hasFolder, false);
+}
+
+bool AutoPostWidget::_postFiles(QFileInfoList files, bool hasFolder, bool forceStart)
+{
     if (!_hmi->checkGroups())
-        return;
+        return false;
     if (!_checkBeforeStart(files, hasFolder)) // the same checks as Quick Post, once for the whole group
-        return;
+        return false;
     _hmi->updateServers();
     _hmi->updateParams();
     udatePostingParams();
@@ -191,7 +196,7 @@ void AutoPostWidget::onGenQuickPosts()
         {
             QSet<QString> again;
             if (!DuplicatesDialog::run(this, dups, again))
-                return;
+                return false;
             QFileInfoList kept;
             for (const QFileInfo &file : files)
                 kept << file;
@@ -221,13 +226,13 @@ void AutoPostWidget::onGenQuickPosts()
                 }
             }
             if (files.isEmpty())
-                return;
+                return false;
         }
     }
 
     const QString afterMoveTo = movePostedTo();
     const bool afterAct = deleteFilesOncePosted() || !afterMoveTo.isEmpty();
-    bool startPost = _ui->startJobsCB->isChecked(),
+    bool startPost = forceStart || _ui->startJobsCB->isChecked(),
          useRarMax = _ui->rarMaxCB->isChecked();
     for (const QFileInfo &file : files)
     {
@@ -254,7 +259,7 @@ void AutoPostWidget::onGenQuickPosts()
 
         if (startPost)
             quickPostWidget->postFiles(false);
-    }
+    }    return true;
 }
 
 
@@ -460,10 +465,15 @@ void AutoPostWidget::newFileToProcess(const QFileInfo &fileInfo)
 
 void AutoPostWidget::onAfterPostChanged()
 {
+    _afterPostChanged(true);
+}
+
+void AutoPostWidget::_afterPostChanged(bool warnDelete)
+{
     const int mode = _afterCombo->currentIndex();
     _postedEdit->setVisible(mode == 1);
     _postedButton->setVisible(mode == 1);
-    if (mode == 2)
+    if (mode == 2 && warnDelete)
         QMessageBox::warning(this,
                          tr("Deleting files/folders once posted"),
                          tr("You're about to delete files from your computer once they've been posted!\nUse it at your own risk!\nIt will be irreversible..."));
@@ -700,6 +710,95 @@ PostProfile AutoPostWidget::currentProfile() const
     p.par2Pct  = static_cast<uint>(_ui->redundancySB->value());
     p.keepRar  = _ui->keepRarCB->isChecked();
     return p;
+}
+
+void AutoPostWidget::_applyRequestOptions(const PostRequest &request)
+{
+    _profileBar->select(request.profile);
+    _afterCombo->setCurrentIndex(static_cast<int>(request.after));
+    if (request.after == PostRequest::After::MoveToPosted)
+        _postedEdit->setText(request.moveTo);
+    _afterPostChanged(false); // Guided Post asked before deleting
+}
+
+bool AutoPostWidget::postRequest(const PostRequest &request)
+{
+    using Kind = PostRequest::Kind;
+    if (!request.usesAutoPosting())
+        return false;
+
+    if (request.kind == Kind::WatchFolder)
+    {
+        QFileInfo fi(request.folder);
+        if (!fi.exists() || !fi.isDir() || !fi.isReadable())
+        {
+            QMessageBox::warning(this, tr("Error accessing Auto Dir..."), tr("The auto directory must exist and be readable..."));
+            return false;
+        }
+        const QString path = fi.absoluteFilePath();
+        if (_isMonitoring)
+        {
+            // one more folder, watched with the options of the folders already watched
+            if (_watchedFolders.contains(path) || _watchedFolders.contains(QDir::toNativeSeparators(path)))
+            {
+                _ngPost->_log(tr("%1 is already watched").arg(QDir::toNativeSeparators(path)));
+                return false;
+            }
+            _ui->filesList->addItem(new QListWidgetItem(QIcon(":/icons/monitor.png"), tr("Monitoring %1").arg(path)));
+            _ngPost->addMonitoringFolder(path);
+            _watchedFolders << QDir::toNativeSeparators(path);
+            _updateWatchBar();
+            _ngPost->_log(tr("%1 is also watched, with the options of the folders already watched").arg(QDir::toNativeSeparators(path)));
+            return true;
+        }
+        _setMode(Mode::Watch);
+        _applyRequestOptions(request);
+        _ui->autoDirEdit->setText(path);
+        onMonitoringClicked();
+        return _isMonitoring;
+    }
+
+    QFileInfoList files;
+    bool hasFolder = false;
+    if (request.kind == Kind::ScanFolder)
+    {
+        if (_isMonitoring)
+        {
+            QMessageBox::warning(this, tr("A folder is watched"),
+                                 tr("Stop watching the folder before scanning another one."));
+            return false;
+        }
+        _setMode(Mode::Scan);
+        _applyRequestOptions(request);
+        _ui->autoDirEdit->setText(QFileInfo(request.folder).absoluteFilePath());
+        onScanAutoDirClicked();
+        for (int i = 0; i < _ui->filesList->count(); ++i)
+            files << QFileInfo(_ui->filesList->item(i)->text());
+        if (files.isEmpty())
+        {
+            QMessageBox::warning(this, tr("Nothing to post..."), tr("The folder %1 is empty.").arg(QDir::toNativeSeparators(request.folder)));
+            return false;
+        }
+    }
+    else // EachItem
+    {
+        if (!_isMonitoring) // while watching, the list shows the watched folders
+            _setMode(Mode::Choose);
+        _applyRequestOptions(request);
+        for (const QString &p : request.paths)
+        {
+            QFileInfo fi(p);
+            if (p.trimmed().isEmpty() || !fi.exists())
+                continue;
+            files << fi;
+            if (!_isMonitoring)
+                _ui->filesList->addPathIfNotInList(fi.absoluteFilePath(), _ui->filesList->count(), fi.isDir());
+        }
+    }
+    for (const QFileInfo &fi : files)
+        if (fi.isDir())
+            hasFolder = true;
+    return _postFiles(files, hasFolder, true);
 }
 
 void AutoPostWidget::applyProfile(const PostProfile &p)
@@ -1248,51 +1347,11 @@ bool AutoPostWidget::_checkBeforeStart(const QFileInfoList &files, bool hasFolde
         _hmi->updateServers();
         _hmi->updateParams();
         udatePostingParams();
-
-        PostChecker::Input in;
-        for (NntpServerParams *srv : _ngPost->_nntpServers)
-            if (srv->enabled)
-                ++in.nbServers;
-        in.hasGroups     = _hmi->hasGroups();
-        in.invalidGroups = _hmi->invalidGroups().join(", ");
-        in.hasFolder     = hasFolder;
-        in.compress      = _ngPost->_doCompress;
-        in.rarPath       = _ngPost->_rarPath;
-        in.tmpPath       = _ngPost->_tmpPath;
-        in.par2          = _ngPost->_doPar2;
-        in.par2Path      = _ngPost->_par2Path;
-        in.par2Pct       = _ngPost->_par2Pct;
-        in.passwordChecked = false; // each post has its own password
+        QString nzbFile;
         if (!_ngPost->_nzbPath.isEmpty())
-            in.nzbFile = QDir(_ngPost->_nzbPath).filePath("ngpost.nzb");
-        for (const QFileInfo &fi : files)
-            in.sourceBytes += NgPost::recursiveSize(fi);
-        if (in.compress || in.par2)
-        {
-            QStorageInfo storage(QFileInfo(in.tmpPath).exists() ? in.tmpPath : QDir::tempPath());
-            in.freeBytesTmp = storage.isValid() ? storage.bytesAvailable() : -1;
-        }
-        in.mediaInfoWanted = _ngPost->_genNfo && _ngPost->_nfoMedia;
-        if (in.mediaInfoWanted)
-        {
-            in.mediaInfoFound = !MediaInfoReader::findProgram(_ngPost->_mediaInfoPath).isEmpty();
-            if (files.isEmpty())
-                in.hasMediaFiles = true; // watching: we don't know yet what will arrive
-            for (const QFileInfo &fi : files)
-            {
-                if (fi.isDir())
-                {
-                    QDirIterator it(fi.absoluteFilePath(), QDir::Files|QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-                    while (!in.hasMediaFiles && it.hasNext())
-                        in.hasMediaFiles = MediaInfoReader::isMediaFile(it.next());
-                }
-                else
-                    in.hasMediaFiles = MediaInfoReader::isMediaFile(fi.fileName());
-                if (in.hasMediaFiles)
-                    break;
-            }
-        }
-        return in;
+            nzbFile = QDir(_ngPost->_nzbPath).filePath("ngpost.nzb");
+        // each post has its own password; no files: a folder is watched
+        return _hmi->checkInput(files, hasFolder, nzbFile, false, QString(), files.isEmpty());
     };
     return PostCheckDialog::run(this, makeInput, [this](PostChecker::Code code){ return _applyFix(code); });
 }
