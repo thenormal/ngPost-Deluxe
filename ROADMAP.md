@@ -75,6 +75,8 @@ No order, no version. Some of them will probably be done, some will be dropped.
 
 **Control**
 - VPN guard: pause the posts when the VPN connection drops (the real kill-switch stays in the firewall or in the VPN application)
+- Notifications by **email** (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords
+- **Backup servers and priority**: if a server fails, the posts continue on another one by themselves (it extends the second round of Articles, which already tries another server)
 - Update from inside the program (the check for a new version exists since 1.3; this would download it, with a checksum, and ask before anything is installed)
 - Temporary files in RAM: easier on Windows, and chosen automatically when there is room
 - Web panel for Docker and NAS: queue, progress, history and pause from a browser (access with password, local network only by default)
@@ -83,6 +85,7 @@ No order, no version. Some of them will probably be done, some will be dropped.
 
 **Check and comfort**
 - Log: filters by category, search, one log per post
+- **Availability check** of the old NZB files, by itself and from time to time: warns when a post starts to disappear from the servers (retention)
 - A progress bar for each post in the lists, a graph of the speed
 - Contextual help and search in the Help section
 
