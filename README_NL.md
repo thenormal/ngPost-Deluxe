@@ -30,7 +30,7 @@ Het is een fork van [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, li
 ### Snelstart
 1. Installeer ngPost Deluxe en start het.
 2. Open **Servers**, voeg je Usenet-server toe en druk op **Test connection**.
-3. Open **Quick Post** en sleep je bestanden of mappen in het venster. Om voor elk bestand of elke map een aparte release te posten, gebruik je **Auto Posting**. Het profiel **Aanbevolen** is een goed begin (compressie, willekeurige naam en wachtwoord, par2 10 %).
+3. Open **Quick Post** en sleep je bestanden of mappen in het venster. Om voor elk bestand of elke map een aparte release te posten, gebruik je **Auto Posting**. Het profiel **Aanbevolen** is een goed begin (compressie, willekeurige naam en wachtwoord, par2 10 %). Weet je niet waar je moet beginnen? De **Begeleide post** stelt een paar vragen en bereidt de post voor je voor.
 4. Druk op **Post Files**. Het NZB-bestand wordt weggeschreven in de map die je in de instellingen koos, en elke upload staat in **History**.
 
 Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en je servers en instellingen zijn er weer.
@@ -47,6 +47,7 @@ Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en
 ### Wat is er anders in deze fork
 
 **Interface**
+-   **Begeleide post** (nieuw): een assistent in de zijbalk die vraagt wat je wilt doen (één release, elk item, een map scannen, een map bewaken), wat je wilt posten, de opties en waar, en daarna de post voorbereidt met dezelfde controles als Quick Post en Auto Posting. Hij onthoudt je laatste keuzes en kan meerdere posts tegelijk starten
 -   **Nieuwe interface**: zijbalk (Quick Post, Auto Posting, Servers, Instellingen, Geschiedenis), pagina's met kaarten, geavanceerde opties verborgen tot ze nodig zijn, een nieuw pictogram en een leeg scherm dat uitlegt wat te doen. **Licht en donker thema**, of automatisch zoals Windows (sleutel `theme`). Zet de omgevingsvariabele `NGPOST_NO_THEME` om het native uiterlijk terug te krijgen
 -   **Italiaanse interface**: de GUI/CMD is nu ook in het Italiaans vertaald (al beschikbaar in het Chinees, Nederlands, Engels, Frans, Duits, Portugees en Spaans)
 -   **ngPost Deluxe v1.0**: nieuwe naam en versie (het Windows-programma heet nu `ngPostDeluxe.exe`; het configuratiebestand verandert niet), vernieuwd Over-venster, de oorspronkelijke donatieknoppen zijn vervangen door een **Ko-fi**-knop voor deze fork (in het Over-venster en in de Instellingen)

@@ -30,7 +30,7 @@ Es ist ein Fork von [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, Li
 ### Schnellstart
 1. Installiere ngPost Deluxe und starte es.
 2. Öffne **Servers**, füge deinen Usenet-Server hinzu und drücke **Test connection**.
-3. Öffne **Quick Post** und ziehe deine Dateien oder Ordner ins Fenster. Um für jede Datei oder jeden Ordner ein eigenes Release zu posten, nutzen Sie **Auto Posting**. Das Profil **Empfohlen** ist ein guter Anfang (Komprimierung, zufälliger Name und Passwort, par2 10 %).
+3. Öffne **Quick Post** und ziehe deine Dateien oder Ordner ins Fenster. Um für jede Datei oder jeden Ordner ein eigenes Release zu posten, nutzen Sie **Auto Posting**. Das Profil **Empfohlen** ist ein guter Anfang (Komprimierung, zufälliger Name und Passwort, par2 10 %). Sie wissen nicht, wo Sie anfangen sollen? Der **Geführte Post** stellt ein paar Fragen und bereitet den Post für Sie vor.
 4. Drücke **Post Files**. Die NZB-Datei wird in den in den Einstellungen gewählten Ordner geschrieben, und jeder Upload erscheint in **History**.
 
 Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Deluxe`, dann sind deine Server und Einstellungen da.
@@ -47,6 +47,7 @@ Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Delu
 ### Was in diesem Fork anders ist
 
 **Oberfläche**
+-   **Geführter Post** (neu): ein Assistent in der Seitenleiste, der fragt, was Sie tun möchten (ein Release, jedes Element, einen Ordner durchsuchen, einen Ordner überwachen), was gepostet wird, die Optionen und wohin, und dann den Post mit denselben Prüfungen wie Quick Post und Auto Posting vorbereitet. Er merkt sich Ihre letzte Auswahl und kann mehrere Posts gemeinsam starten
 -   **Neue Oberfläche**: Seitenleiste (Quick Post, Auto Posting, Server, Einstellungen, Verlauf), Seiten mit Karten, erweiterte Optionen ausgeblendet, bis sie gebraucht werden, ein neues Symbol und ein leerer Bildschirm, der erklärt, was zu tun ist. **Helles und dunkles Design** oder automatisch wie Windows (Schlüssel `theme`). Setze die Umgebungsvariable `NGPOST_NO_THEME`, um das native Aussehen zurückzubekommen
 -   **Italienische Oberfläche**: GUI/CMD sind jetzt auch auf Italienisch übersetzt (bereits verfügbar auf Chinesisch, Niederländisch, Englisch, Französisch, Deutsch, Portugiesisch und Spanisch)
 -   **ngPost Deluxe v1.0**: neuer Name und neue Version (das Windows-Programm heißt jetzt `ngPostDeluxe.exe`; die Konfigurationsdatei bleibt gleich), neu gestaltetes Über-Fenster, die ursprünglichen Spenden-Schaltflächen wurden durch eine **Ko-fi**-Schaltfläche für diesen Fork ersetzt (im Über-Fenster und in den Einstellungen)

@@ -22,6 +22,7 @@ O ficheiro NZB é o «mapa» da sua publicação: sem ele ninguém consegue enco
 
 ## Onde está cada coisa
 
+- **Postagem guiada**: responda a algumas perguntas e a postagem é preparada para você. Veja [Postagem guiada](01b-guided-post.md).
 - **Postagem Rápida**: publica já ficheiros e pastas.
 - **Postagem Automática**: analisa ou vigia pastas.
 - **Servidores**: os seus fornecedores de Usenet.

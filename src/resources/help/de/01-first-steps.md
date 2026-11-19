@@ -22,6 +22,7 @@ Die NZB-Datei ist die „Karte“ Ihres Posts: Ohne sie kann niemand die Artikel
 
 ## Wo was zu finden ist
 
+- **Geführter Post**: Beantworten Sie ein paar Fragen und der Post wird für Sie vorbereitet. Siehe [Geführter Post](01b-guided-post.md).
 - **Quick Post**: Dateien und Ordner sofort posten.
 - **Auto Posting**: Ordner durchsuchen oder überwachen.
 - **Server**: Ihre Usenet-Anbieter.

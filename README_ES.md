@@ -30,7 +30,7 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 ### Inicio rápido
 1. Instala e inicia ngPost Deluxe.
 2. Abre **Servers**, añade tu servidor de Usenet y pulsa **Test connection**.
-3. Abre **Quick Post** y arrastra tus archivos o carpetas a la ventana. Para publicar una release por cada archivo o carpeta usa **Publicación Automática**. El perfil **Recomendado** es un buen punto de partida (compresión, nombre y contraseña aleatorios, par2 10 %).
+3. Abre **Quick Post** y arrastra tus archivos o carpetas a la ventana. Para publicar una release por cada archivo o carpeta usa **Publicación Automática**. El perfil **Recomendado** es un buen punto de partida (compresión, nombre y contraseña aleatorios, par2 10 %). ¿No sabes por dónde empezar? La **Publicación guiada** te hace unas preguntas y prepara la publicación por ti.
 4. Pulsa **Post Files**. El archivo NZB se escribe en la carpeta elegida en los ajustes y cada subida aparece en **History**.
 
 ¿Ya usas ngPost? Copia tu `ngPost.conf` en `%APPDATA%\ngPost Deluxe` y tendrás tus servidores y ajustes.
@@ -47,6 +47,7 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 ### Qué cambia en este fork
 
 **Interfaz**
+-   **Publicación guiada** (novedad): un asistente en la barra lateral que pregunta qué quieres hacer (una release, cada elemento, analizar una carpeta, vigilar una carpeta), qué publicar, las opciones y dónde, y luego prepara la publicación con las mismas comprobaciones que Quick Post y la Publicación Automática. Recuerda tus últimas opciones y puede iniciar varias publicaciones a la vez
 -   **Nueva interfaz**: barra lateral (Quick Post, Publicación Automática, Servidores, Ajustes, Historial), páginas con tarjetas, opciones avanzadas ocultas hasta que se necesitan, un nuevo icono y una pantalla vacía que explica qué hacer. **Temas claro y oscuro**, o automático como Windows (clave `theme`). Define la variable de entorno `NGPOST_NO_THEME` para volver al aspecto nativo
 -   **Interfaz en italiano**: la GUI/CMD ahora también está traducida al italiano (ya estaba disponible en chino, neerlandés, inglés, francés, alemán, portugués y español)
 -   **ngPost Deluxe v1.0**: nuevo nombre y nueva versión (el programa de Windows ahora es `ngPostDeluxe.exe`; el archivo de configuración no cambia), ventana Acerca de rediseñada, los botones de donación originales se sustituyen por un botón de **Ko-fi** para este fork (en la ventana Acerca de y en los Ajustes)

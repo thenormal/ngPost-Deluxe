@@ -22,6 +22,7 @@ Le fichier NZB est la « carte » de votre envoi : sans lui, personne ne peut re
 
 ## Où se trouvent les choses
 
+- **Post guidé** : répondez à quelques questions et le post est préparé pour vous. Voir [Post guidé](01b-guided-post.md).
 - **Post Rapide** : poster tout de suite des fichiers et des dossiers.
 - **Post Auto** : analyser ou surveiller des dossiers.
 - **Serveurs** : vos fournisseurs Usenet.

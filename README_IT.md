@@ -30,7 +30,7 @@ Comprimi, aggiungi i par2, offusca e posta i tuoi file da un'interfaccia pulita 
 ### Avvio rapido
 1. Installa e avvia ngPost Deluxe.
 2. Apri **Servers**, aggiungi il tuo server Usenet e premi **Test connection**.
-3. Apri **Quick Post** e trascina nella finestra i tuoi file o cartelle. Per pubblicare una release per ogni file o cartella usa **Post automatico**. Il profilo **Consigliato** è un buon punto di partenza (compressione, nome e password casuali, par2 10 %).
+3. Apri **Quick Post** e trascina nella finestra i tuoi file o cartelle. Per pubblicare una release per ogni file o cartella usa **Post automatico**. Il profilo **Consigliato** è un buon punto di partenza (compressione, nome e password casuali, par2 10 %). Non sai da dove cominciare? Il **Post guidato** ti fa alcune domande e prepara il post per te.
 4. Premi **Post Files**. Il file NZB viene scritto nella cartella scelta nelle impostazioni e ogni upload compare in **History**.
 
 Usi già ngPost? Copia il tuo `ngPost.conf` in `%APPDATA%\ngPost Deluxe` e ritrovi server e impostazioni.
@@ -47,6 +47,7 @@ Usi già ngPost? Copia il tuo `ngPost.conf` in `%APPDATA%\ngPost Deluxe` e ritro
 ### Cosa cambia in questo fork
 
 **Interfaccia**
+-   **Post guidato** (novità): una procedura guidata nella barra laterale che chiede cosa vuoi fare (una release, ogni elemento, scansione di una cartella, monitoraggio di una cartella), cosa postare, le opzioni e dove, poi prepara il post con gli stessi controlli di Quick Post e Post automatico. Ricorda le ultime scelte e può avviare più post insieme
 -   **Nuova interfaccia**: barra laterale (Quick Post, Post automatico, Server, Impostazioni, Cronologia), pagine a carte, opzioni avanzate nascoste finché non servono, una nuova icona e una schermata vuota che spiega cosa fare. **Tema chiaro e scuro**, oppure automatico come Windows (chiave `theme`). Imposta la variabile d'ambiente `NGPOST_NO_THEME` per tornare all'aspetto nativo
 -   **Interfaccia in italiano**: la GUI/CMD è ora tradotta anche in italiano (era già disponibile in cinese, olandese, inglese, francese, tedesco, portoghese e spagnolo)
 -   **ngPost Deluxe v1.0**: nuovo nome e nuova versione (il programma per Windows ora si chiama `ngPostDeluxe.exe`; il file di configurazione non cambia), finestra About ridisegnata, i pulsanti per le donazioni originali sono sostituiti da un pulsante **Ko-fi** per questo fork (nella finestra About e nelle Impostazioni)

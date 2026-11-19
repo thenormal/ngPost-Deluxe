@@ -22,6 +22,7 @@ The NZB file is the "map" of your post: without it nobody can find the articles,
 
 ## Where things are
 
+- **Guided Post**: answer a few questions and the post is prepared for you. See [Guided Post](01b-guided-post.md).
 - **Quick Post**: post files and folders now.
 - **Auto Posting**: scan or monitor folders.
 - **Servers**: your Usenet providers.

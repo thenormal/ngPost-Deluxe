@@ -30,7 +30,7 @@ It is a fork of [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licenc
 ### Quick start
 1. Install and start ngPost Deluxe.
 2. Open **Servers**, add your Usenet server and press **Test connection**.
-3. Open **Quick Post** and drag your files or folders into the window. To post one release for each file or folder, use **Auto Posting**. The **Recommended** profile is a good start (compression, random name and password, par2 10 %).
+3. Open **Quick Post** and drag your files or folders into the window. To post one release for each file or folder, use **Auto Posting**. The **Recommended** profile is a good start (compression, random name and password, par2 10 %). Not sure where to start? **Guided Post** asks a few questions and prepares the post for you.
 4. Press **Post Files**. The NZB file is written in the folder chosen in the Settings, and every upload is listed in **History**.
 
 Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and your servers and settings are there.
@@ -47,6 +47,7 @@ Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and
 ### What is different in this fork
 
 **Interface**
+-   **Guided Post** (new): a wizard in the side bar that asks what you want to do (one release, each item, scan a folder, watch a folder), what to post, the options and where, then prepares the post with the same checks as Quick Post and Auto Posting. It remembers your last choices and can start several posts together
 -   **New interface**: side bar (Quick Post, Auto Posting, Servers, Settings, History), pages with cards, advanced options hidden until needed, a new icon and an empty screen that explains what to do. **Light and dark themes**, or automatic like Windows (`theme` key). Set the environment variable `NGPOST_NO_THEME` to get the native look back
 -   **Italian interface**: the GUI/CMD is now also translated in Italian (it was already available in Chinese, Dutch, English, French, German, Portuguese and Spanish)
 -   **ngPost Deluxe v1.0**: new name and version (the Windows program is now `ngPostDeluxe.exe`; the configuration file does not change), redesigned About window, the original donation buttons are replaced by a **Ko-fi** button for this fork (in the About window and in the Settings)

@@ -22,6 +22,7 @@ Het NZB-bestand is de "kaart" van uw post: zonder dat bestand kan niemand de art
 
 ## Waar vindt u wat
 
+- **Begeleide post**: beantwoord een paar vragen en de post wordt voor u voorbereid. Zie [Begeleide post](01b-guided-post.md).
 - **Quick Post**: bestanden en mappen meteen posten.
 - **Auto Posting**: mappen scannen of bewaken.
 - **Servers**: uw Usenet-providers.
