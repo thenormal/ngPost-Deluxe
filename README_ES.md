@@ -90,6 +90,7 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 -   **Estadísticas** (página Historial, selector Lista / Estadísticas): totales y gráficos del periodo elegido (hoy, 7 días, 30 días, 12 meses, todo): datos publicados, velocidad, resultados, días y horas más activos, grupos de noticias, servidores, cómo se iniciaron las publicaciones y opciones usadas, además de clasificaciones. Exportación a documento PDF, página web, archivo CSV o imágenes PNG de los gráficos
 -   **Historial** guarda más datos: los servidores usados, las opciones (compresión, contraseña, par2), cómo se inició la publicación y el tamaño exacto. Los historiales antiguos siguen siendo válidos
 -   **Quick Post**: un perfil con nombre aleatorio sustituye ahora al nombre tomado del primer archivo
+-   **Límite de velocidad**: una velocidad máxima de subida en MB/s para todas las conexiones y todas las publicaciones juntas (Ajustes, Publicaciones, Subida; `--max_speed` en la línea de comandos), para que el resto de tu conexión siga siendo usable. Se puede cambiar mientras se publica
 
 **Seguridad y correcciones**
 -   **Corrección de seguridad**: posible desbordamiento de memoria en el búfer de codificación yEnc (con ciertos datos la salida podía ser mayor que el búfer)
@@ -131,6 +132,7 @@ El archivo de configuración funciona como en el proyecto original (por defecto:
 - **history**: `ON` (por defecto) u `OFF`, historial de subidas mostrado en la página Historial. Sin **POST_HISTORY** el archivo es `ngPost_history.csv` junto a la configuración. Se añaden nuevas columnas al final de cada línea: estado, número de archivos, duración y archivo NZB; desde la v1.4 también los servidores, las opciones, cómo se inició la publicación y el tamaño exacto
 - **move_posted**: carpeta donde Publicación Automática mueve cada archivo o carpeta una vez publicado (junto a cada elemento se crea una carpeta con un nombre como `Posted`, una ruta completa se usa tal cual); también `--move_posted`
 - **warn_duplicates**: `ON` (por defecto) u `OFF`, avisa (GUI) u omite (línea de comandos) lo que ya está en el historial; `--allow_repost` lo publica igualmente
+- **limit_speed** (`ON` / `OFF`) y **max_speed** (MB/s): velocidad máxima de subida para todas las conexiones juntas, también `--max_speed`; `max_speed` solo activa el límite (cómodo con Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** y **nfo_text**: archivo NFO escrito junto al NZB, publicado con los archivos, con la contraseña, con la información de MediaInfo; ruta de MediaInfo; texto libre añadido al final
 - **profile**: los perfiles de opciones guardados desde la GUI, una línea por perfil (mejor gestionarlos desde el menú de Quick Post y Publicación Automática que a mano)
 - **check_updates**: `ON` (por defecto) o `OFF`, una vez al día la interfaz busca una versión nueva en GitHub (la línea de comandos y Docker nunca lo hacen)

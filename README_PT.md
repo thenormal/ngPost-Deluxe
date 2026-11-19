@@ -90,6 +90,7 @@ Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os 
 -   **Estatísticas** (página Histórico, alternador Lista / Estatísticas): totais e gráficos do período escolhido (hoje, 7 dias, 30 dias, 12 meses, tudo): dados postados, velocidade, resultados, dias e horas mais ativos, grupos de notícias, servidores, como as postagens foram iniciadas e opções usadas, além de classificações. Exportação em documento PDF, página web, ficheiro CSV ou imagens PNG dos gráficos
 -   **Histórico** guarda mais dados: os servidores usados, as opções (compressão, palavra-passe, par2), como a postagem foi iniciada e o tamanho exato. Os históricos antigos continuam válidos
 -   **Quick Post**: um perfil com nome aleatório passa a substituir o nome tirado do primeiro ficheiro
+-   **Limite de velocidade**: uma velocidade máxima de envio em MB/s para todas as ligações e todas as publicações em conjunto (Definições, Publicações, Upload; `--max_speed` na linha de comandos), para que o resto da sua ligação continue utilizável. Pode ser alterado durante a publicação
 
 **Segurança e correções**
 -   **Correção de segurança**: possível estouro de heap no buffer de codificação yEnc (com certos dados, a saída podia exceder o buffer)
@@ -131,6 +132,7 @@ O arquivo de configuração funciona como no projeto original (padrão: **~/.ngP
 - **history**: `ON` (predefinido) ou `OFF`, histórico dos uploads mostrado na página Histórico. Sem **POST_HISTORY** o ficheiro é `ngPost_history.csv` ao lado da configuração. São adicionadas novas colunas no fim de cada linha: estado, número de ficheiros, duração e ficheiro NZB; a partir da v1.4 também os servidores, as opções, como a postagem foi iniciada e o tamanho exato
 - **move_posted**: pasta para onde a Postagem Automática move cada ficheiro ou pasta depois de postado (junto a cada item é criada uma pasta com um nome como `Posted`, um caminho completo é usado tal como está); também `--move_posted`
 - **warn_duplicates**: `ON` (por defeito) ou `OFF`, avisa (GUI) ou ignora (linha de comandos) o que já está no histórico; `--allow_repost` posta na mesma
+- **limit_speed** (`ON` / `OFF`) e **max_speed** (MB/s): velocidade máxima de envio para todas as ligações em conjunto, também `--max_speed`; só `max_speed` ativa o limite (útil com Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** e **nfo_text**: ficheiro NFO escrito junto ao NZB, postado com os ficheiros, com a palavra-passe, com as informações do MediaInfo; caminho do MediaInfo; texto livre acrescentado no fim
 - **profile**: os perfis de opções guardados a partir da GUI, uma linha por perfil (é melhor geri-los pelo menu de Quick Post e Postagem Automática do que à mão)
 - **check_updates**: `ON` (por defeito) ou `OFF`, uma vez por dia a interface procura uma versão nova no GitHub (a linha de comandos e o Docker nunca o fazem)

@@ -13,6 +13,8 @@ De kleur geeft de status aan: blauw tijdens het werk, grijs bij pauze, groen als
 
 De ETA is een schatting op basis van de recente snelheid: hij verandert als de snelheid verandert.
 
+Als u een snelheidslimiet instelt (**Instellingen**, categorie **Posts**, kaart **Upload**), staat achter de snelheid de limiet, bijvoorbeeld *(max. 2.5 MB/s)*.
+
 ## Het logboek
 
 Het logboek kleurt de regels: fasen, successen, waarschuwingen en fouten zijn gemakkelijk te onderscheiden. Aan het einde van een post toont het een samenvatting met de tijd van elke fase (compressie, par2, upload) en het totaal.

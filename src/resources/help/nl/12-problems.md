@@ -6,7 +6,7 @@ Controleer gebruikersnaam en wachtwoord, de host en de poort, en de SSL-instelli
 
 ## De upload is traag
 
-Verhoog het aantal verbindingen, tot de limiet van uw provider. Controleer of SSL een oude computer niet afremt en of niets anders uw lijn gebruikt.
+Verhoog het aantal verbindingen, tot de limiet van uw provider. Controleer of SSL een oude computer niet afremt en of niets anders uw lijn gebruikt. Is de snelheid lager dan verwacht, controleer dan dat de snelheidslimiet niet aanstaat bij de **Instellingen**, categorie **Posts**, kaart **Upload**.
 
 ## "Er is geen nieuwsgroep" of "nieuwsgroepen zijn niet geldig"
 

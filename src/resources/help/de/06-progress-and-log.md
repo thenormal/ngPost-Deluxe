@@ -13,6 +13,8 @@ Die Farbe zeigt den Zustand: blau während der Arbeit, grau bei Pause, grün bei
 
 Die ETA ist eine Schätzung auf Basis der letzten Geschwindigkeit: Sie ändert sich, wenn sich die Geschwindigkeit ändert.
 
+Wenn Sie eine Geschwindigkeitsbegrenzung einstellen (**Einstellungen**, Kategorie **Posts**, Karte **Upload**), steht hinter der Geschwindigkeit die Grenze, zum Beispiel *(max. 2.5 MB/s)*.
+
 ## Das Protokoll
 
 Das Protokoll färbt die Zeilen: Phasen, Erfolge, Warnungen und Fehler lassen sich leicht unterscheiden. Am Ende eines Posts zeigt es eine Zusammenfassung mit der Zeit jeder Phase (Komprimierung, par2, Upload) und der Gesamtzeit.

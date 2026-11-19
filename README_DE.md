@@ -90,6 +90,7 @@ Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Delu
 -   **Statistik** (Seite Verlauf, Umschalter Liste / Statistik): Summen und Diagramme für den gewählten Zeitraum (heute, 7 Tage, 30 Tage, 12 Monate, alles): geposteter Datenumfang, Geschwindigkeit, Ergebnisse, aktivste Tage und Uhrzeiten, Newsgroups, Server, Art des Starts der Posts und verwendete Optionen, dazu Ranglisten. Export als PDF-Dokument, Webseite, CSV-Datei oder PNG-Bilder der Diagramme
 -   **Verlauf** speichert mehr: die verwendeten Server, die Optionen (Komprimierung, Passwort, par2), wie der Post gestartet wurde und die genaue Größe. Alte Verläufe bleiben gültig
 -   **Quick Post**: Ein Profil mit zufälligem Namen ersetzt jetzt den Namen der ersten Datei
+-   **Geschwindigkeitsbegrenzung**: eine maximale Upload-Geschwindigkeit in MB/s für alle Verbindungen und alle Posts zusammen (Einstellungen, Posts, Upload; `--max_speed` in der Befehlszeile), damit der Rest Ihrer Internetverbindung nutzbar bleibt. Kann während des Postens geändert werden
 
 **Sicherheit und Korrekturen**
 -   **Sicherheitskorrektur**: möglicher Heap-Überlauf im yEnc-Kodierungspuffer (die Ausgabe konnte bei bestimmten Daten größer als der Puffer sein)
@@ -131,6 +132,7 @@ Die Konfigurationsdatei funktioniert wie im Originalprojekt (Standard: **~/.ngPo
 - **history**: `ON` (Standard) oder `OFF`, Verlauf der Uploads auf der Seite Verlauf. Ohne **POST_HISTORY** ist die Datei `ngPost_history.csv` neben der Konfiguration. Am Ende jeder Zeile kommen neue Spalten hinzu: Status, Anzahl der Dateien, Dauer und NZB-Datei; ab v1.4 außerdem die Server, die Optionen, die Art des Starts und die genaue Größe
 - **move_posted**: Ordner, in den Auto Posting jede Datei oder jeden Ordner nach dem Posten verschiebt (neben jedem Eintrag wird ein Ordner mit einem Namen wie `Posted` angelegt, ein vollständiger Pfad wird unverändert benutzt); auch `--move_posted`
 - **warn_duplicates**: `ON` (Standard) oder `OFF`, warnt (GUI) oder überspringt (Kommandozeile), was schon im Verlauf steht; `--allow_repost` postet es trotzdem
+- **limit_speed** (`ON` / `OFF`) und **max_speed** (MB/s): maximale Upload-Geschwindigkeit für alle Verbindungen zusammen, auch `--max_speed`; `max_speed` allein schaltet die Begrenzung ein (praktisch mit Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** und **nfo_text**: NFO-Datei neben der NZB-Datei, mit den Dateien gepostet, mit dem Passwort, mit den MediaInfo-Informationen; Pfad von MediaInfo; freier Text am Ende
 - **profile**: die in der GUI gespeicherten Options-Profile, eine Zeile pro Profil (besser über das Menü von Quick Post und Auto Posting verwalten als von Hand)
 - **check_updates**: `ON` (Standard) oder `OFF`, einmal am Tag sucht die Oberfläche auf GitHub nach einer neuen Version (Kommandozeile und Docker tun das nie)

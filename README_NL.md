@@ -90,6 +90,7 @@ Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en
 -   **Statistieken** (pagina Geschiedenis, schakelaar Lijst / Statistieken): totalen en grafieken voor de gekozen periode (vandaag, 7 dagen, 30 dagen, 12 maanden, alles): geposte data, snelheid, resultaten, drukste dagen en uren, newsgroups, servers, hoe de posts zijn gestart en gebruikte opties, plus ranglijsten. Exporteren als PDF-document, webpagina, CSV-bestand of PNG-afbeeldingen van de grafieken
 -   **Geschiedenis** bewaart meer gegevens: de gebruikte servers, de opties (compressie, wachtwoord, par2), hoe de post is gestart en de exacte grootte. Oude geschiedenissen blijven geldig
 -   **Quick Post**: een profiel met een willekeurige naam vervangt nu de naam van het eerste bestand
+-   **Snelheidslimiet**: een maximale uploadsnelheid in MB/s voor alle verbindingen en alle posts samen (Instellingen, Posts, Upload; `--max_speed` op de opdrachtregel), zodat de rest van uw verbinding bruikbaar blijft. Kan tijdens het posten worden gewijzigd
 
 **Beveiliging en correcties**
 -   **Beveiligingsfix**: mogelijke heap-overflow in de yEnc-codeerbuffer (bij bepaalde gegevens kon de uitvoer groter zijn dan de buffer)
@@ -131,6 +132,7 @@ Het configuratiebestand werkt zoals in het oorspronkelijke project (standaard: *
 - **history**: `ON` (standaard) of `OFF`, geschiedenis van de uploads op de pagina Geschiedenis. Zonder **POST_HISTORY** is het bestand `ngPost_history.csv` naast de configuratie. Aan het einde van elke regel komen nieuwe kolommen: status, aantal bestanden, duur en NZB-bestand; vanaf v1.4 ook de servers, de opties, hoe de post is gestart en de exacte grootte
 - **move_posted**: map waarheen Auto Posting elk bestand of elke map verplaatst na het posten (naast elk item wordt een map met een naam als `Posted` gemaakt, een volledig pad wordt ongewijzigd gebruikt); ook `--move_posted`
 - **warn_duplicates**: `ON` (standaard) of `OFF`, waarschuwt (GUI) of slaat over (opdrachtregel) wat al in de geschiedenis staat; `--allow_repost` post het toch
+- **limit_speed** (`ON` / `OFF`) en **max_speed** (MB/s): maximale uploadsnelheid voor alle verbindingen samen, ook `--max_speed`; `max_speed` alleen schakelt de limiet in (handig met Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** en **nfo_text**: NFO-bestand naast het NZB-bestand, mee gepost met de bestanden, met het wachtwoord, met de MediaInfo-informatie; pad van MediaInfo; vrije tekst aan het eind
 - **profile**: de in de GUI opgeslagen profielen met opties, één regel per profiel (beheer ze liever via het menu van Quick Post en Auto Posting dan met de hand)
 - **check_updates**: `ON` (standaard) of `OFF`, één keer per dag zoekt de interface op GitHub naar een nieuwe versie (de opdrachtregel en Docker doen dat nooit)

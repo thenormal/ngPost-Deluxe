@@ -90,6 +90,7 @@ Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and
 -   **Statistics** (History page, switch List / Statistics): totals and charts for the period you choose (today, 7 days, 30 days, 12 months, all): data posted, speed, results, busiest days and hours, newsgroups, servers, how the posts were started and options used, plus rankings. Export as a PDF document, a web page, a CSV file or PNG images of the charts
 -   **History** records more: the servers used, the options (compression, password, par2), how the post was started and the exact size. Old histories stay valid
 -   **Quick Post**: a profile with a random name now replaces the name taken from the first file
+-   **Speed limit**: a maximum upload speed in MB/s for all the connections and all the posts together (Settings, Posts, Upload; `--max_speed` on the command line), so the rest of your connection stays usable. It can be changed while posting
 
 **Security and fixes**
 -   **Security fix**: possible heap overflow in the yEnc encoding buffer (the output could be bigger than the buffer with specific data)
@@ -128,6 +129,7 @@ The configuration file works as in the original project (default: **~/.ngPost** 
 - **history**: `ON` (default) or `OFF`, history of the uploads shown in the History page. Without **POST_HISTORY** the file is `ngPost_history.csv` next to the configuration. New columns are added at the end of each line: status, number of files, duration and NZB file; from v1.4 also the servers, the options, how the post was started and the exact size
 - **move_posted**: folder where Auto Posting moves each file or folder once it is posted (a name like `Posted` is created next to each item, a full path is used as it is); also `--move_posted`
 - **warn_duplicates**: `ON` (default) or `OFF`, warns (GUI) or skips (command line) what is already in the history; `--allow_repost` posts it anyway
+- **limit_speed** (`ON` / `OFF`) and **max_speed** (MB/s): maximum upload speed for all the connections together, also `--max_speed`; `max_speed` alone turns the limit on (handy with Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** and **nfo_text**: NFO file written next to the NZB, posted with the files, with the password, with the MediaInfo information; path of MediaInfo; free text added at the end
 - **profile**: the profiles of options saved from the GUI, one line for each (better managed from the menu of Quick Post and Auto Posting than by hand)
 - **check_updates**: `ON` (default) or `OFF`, once a day the GUI looks for a new version on GitHub (the command line and Docker never do)

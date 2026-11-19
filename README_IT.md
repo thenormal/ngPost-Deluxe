@@ -90,6 +90,7 @@ Usi già ngPost? Copia il tuo `ngPost.conf` in `%APPDATA%\ngPost Deluxe` e ritro
 -   **Statistiche** (pagina Cronologia, selettore Elenco / Statistiche): totali e grafici per il periodo scelto (oggi, 7 giorni, 30 giorni, 12 mesi, tutto): dati postati, velocità, risultati, giorni e ore più attivi, newsgroup, server, come sono stati avviati i post e opzioni usate, più le classifiche. Esportazione in documento PDF, pagina web, file CSV o immagini PNG dei grafici
 -   **Cronologia** registra più informazioni: i server usati, le opzioni (compressione, password, par2), come è stato avviato il post e la dimensione esatta. Le vecchie cronologie restano valide
 -   **Quick Post**: un profilo con nome casuale ora sostituisce il nome preso dal primo file
+-   **Limite di velocità**: una velocità massima di upload in MB/s per tutte le connessioni e tutti i post insieme (Impostazioni, Post, Upload; `--max_speed` da riga di comando), così il resto della connessione resta utilizzabile. Si può cambiare mentre si posta
 
 **Sicurezza e correzioni**
 -   **Correzione di sicurezza**: possibile overflow dell'heap nel buffer di codifica yEnc (con certi dati l'output poteva essere più grande del buffer)
@@ -131,6 +132,7 @@ Il file di configurazione funziona come nel progetto originale (predefinito: **~
 - **history**: `ON` (predefinito) o `OFF`, cronologia degli upload mostrata nella pagina Cronologia. Senza **POST_HISTORY** il file è `ngPost_history.csv` accanto alla configurazione. In fondo a ogni riga ci sono nuove colonne: stato, numero di file, durata e file NZB; dalla v1.4 anche i server, le opzioni, come è stato avviato il post e la dimensione esatta
 - **move_posted**: cartella in cui il Post automatico sposta ogni file o cartella dopo la pubblicazione (accanto a ogni elemento viene creata una cartella con un nome come `Posted`, un percorso completo viene usato così com'è); anche `--move_posted`
 - **warn_duplicates**: `ON` (predefinito) oppure `OFF`, avvisa (GUI) o salta (riga di comando) ciò che è già nella cronologia; `--allow_repost` lo pubblica comunque
+- **limit_speed** (`ON` / `OFF`) e **max_speed** (MB/s): velocità massima di upload per tutte le connessioni insieme, anche `--max_speed`; la sola `max_speed` attiva il limite (comodo con Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** e **nfo_text**: file NFO scritto accanto all'NZB, pubblicato con i file, con la password, con le informazioni di MediaInfo; percorso di MediaInfo; testo libero aggiunto in fondo
 - **profile**: i profili di opzioni salvati dalla GUI, una riga per ciascuno (meglio gestirli dal menu di Quick Post e Post automatico che a mano)
 - **check_updates**: `ON` (predefinito) oppure `OFF`, una volta al giorno la GUI cerca una nuova versione su GitHub (la riga di comando e Docker non lo fanno mai)

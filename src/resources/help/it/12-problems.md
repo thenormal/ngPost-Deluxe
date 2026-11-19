@@ -6,7 +6,7 @@ Controlla nome utente e password, l'host e la porta, e l'impostazione SSL. Usa *
 
 ## L'upload è lento
 
-Aumenta il numero di connessioni, fino al limite del tuo provider. Controlla che SSL non rallenti un computer vecchio e che nient'altro usi la tua linea.
+Aumenta il numero di connessioni, fino al limite del tuo provider. Controlla che SSL non rallenti un computer vecchio e che nient'altro usi la tua linea. Se la velocità è più bassa del previsto, controlla che il limite di velocità non sia attivo nelle **Impostazioni**, categoria **Post**, scheda **Upload**.
 
 ## "Non c'è alcun newsgroup" o "i newsgroup non sono validi"
 
