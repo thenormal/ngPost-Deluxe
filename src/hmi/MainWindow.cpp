@@ -18,6 +18,7 @@
 //========================================================================
 
 #include "MainWindow.h"
+#include "GuidedPostWidget.h"
 #include "ui_MainWindow.h"
 #include "PostingWidget.h"
 #include "AutoPostWidget.h"
@@ -210,6 +211,9 @@ void MainWindow::init(NgPost *ngPost)
     _help = new HelpWidget(_pages);
     _pages->insertWidget(PAGE_HELP, _help);
     _help->setLanguage(_ngPost->_lang);
+    // Guided Post wizard
+    _guided = new GuidedPostWidget(_ngPost, this, _pages);
+    _pages->insertWidget(PAGE_GUIDED, _guided);
     _historyCB->setChecked(_ngPost->_historyEnabled);
     _updateHistorySettings();
     connect(_historyCB,         &QAbstractButton::toggled, this, &MainWindow::onHistoryToggled);
@@ -408,6 +412,11 @@ void MainWindow::dragEnterEvent(QDragEnterEvent *e)
 
 void MainWindow::dropEvent(QDropEvent *e)
 {
+    if (_guided && _pages->currentIndex() == PAGE_GUIDED)
+    {
+        _guided->handleDropEvent(e);
+        return;
+    }
     int currentTabIdx = _ui->postTabWidget->currentIndex();
     if (currentTabIdx == 1)
         _autoPostTab->handleDropEvent(e);
@@ -1841,6 +1850,9 @@ void MainWindow::_retranslateShell()
     if (!_pages)
         return;
     // same names as the tabs
+    _navButtons[NAV_GUIDED]->setText(tr("Guided Post"));
+    if (_guided)
+        _guided->retranslate();
     _navButtons[NAV_QUICK]->setText(_ngPost ? _ngPost->quickJobName() : tr("Quick Post"));
     _navButtons[NAV_AUTO]->setText(_ngPost ? _ngPost->folderMonitoringName() : tr("Auto Posting"));
     _navButtons[NAV_SERVERS]->setText(tr("Servers"));
@@ -1937,6 +1949,8 @@ void MainWindow::_retranslateGroups()
 QStringList MainWindow::invalidGroups() const { return _groupsEdit->invalidGroups(); }
 bool MainWindow::hasGroups() const { return !_groupsEdit->groups().isEmpty(); }
 void MainWindow::showServersPage()  { _navButtons[NAV_SERVERS]->click(); }
+void MainWindow::showGuidedPage()   { _navButtons[NAV_GUIDED]->click(); }
+QStringList MainWindow::groupsList() const { return _groupsEdit ? _groupsEdit->groups() : QStringList(); }
 void MainWindow::showSettingsPage(int category)
 {
     _navButtons[NAV_SETTINGS]->click();
@@ -2010,7 +2024,7 @@ void MainWindow::onThemeApplied()
     bool dark = _ngPost->isDarkTheme();
     QColor normal  = dark ? QColor("#d6d6d6") : QColor("#3b3b3b");
     QColor checked = dark ? QColor("#4cc2ff") : QColor("#0067c0");
-    static const char *icons[NB_NAV] = {":/icons/nav_quick.png", ":/icons/nav_auto.png",
+    static const char *icons[NB_NAV] = {":/icons/nav_guided.png", ":/icons/nav_quick.png", ":/icons/nav_auto.png",
                                         ":/icons/nav_servers.png", ":/icons/nav_settings.png",
                                         ":/icons/nav_history.png", ":/icons/nav_help.png"};
     for (int i = 0; i < NB_NAV; ++i)
@@ -2027,6 +2041,9 @@ void MainWindow::onNavClicked(int id)
 {
     switch (id)
     {
+    case NAV_GUIDED:
+        _pages->setCurrentIndex(PAGE_GUIDED);
+        break;
     case NAV_QUICK:
         _pages->setCurrentIndex(PAGE_POSTS);
         if (_ui->postTabWidget->currentIndex() == 1)

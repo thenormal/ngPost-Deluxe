@@ -56,6 +56,9 @@ public:
     void setServers(const QList<NntpServerParams*> &servers);
     QVector<NntpServerParams> servers() const; //!< servers with a host (the empty ones are ignored)
 
+    struct Info { QString host; bool enabled; Status status; };
+    QVector<Info> infos() const; //!< host, on/off and last known result of "Test connection" of each server (Guided Post)
+
     void retranslate();
 
 signals:

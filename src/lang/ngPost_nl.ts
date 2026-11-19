@@ -1944,6 +1944,14 @@ Later beslissen: ze blijven in de wachtrij en worden bij de volgende start opnie
         <source>Once a day, asks GitHub (it only sees your IP address) whether a newer release exists, and tells you. Nothing is downloaded or installed.</source>
         <translation>Eén keer per dag wordt GitHub gevraagd (het ziet alleen uw IP-adres) of er een nieuwere versie bestaat, en u krijgt een melding. Er wordt niets gedownload of geïnstalleerd.</translation>
     </message>
+    <message>
+        <source>Guided Post: nothing started (%1)</source>
+        <translation>Begeleide post: niets gestart (%1)</translation>
+    </message>
+    <message>
+        <source>Guided Post</source>
+        <translation>Begeleide post</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -4996,6 +5004,453 @@ Klik op ‘Toevoegen’ om je Usenet-provider in te stellen.</translation>
     <message>
         <source>%1 h %2 min</source>
         <translation>%1 u %2 min</translation>
+    </message>
+</context>
+<context>
+    <name>GuidedPostWidget</name>
+    <message>
+        <source>Select Files</source>
+        <translation>Bestanden kiezen</translation>
+    </message>
+    <message>
+        <source>Select a Folder</source>
+        <translation>Selecteer een Map</translation>
+    </message>
+    <message>
+        <source>Guided Post</source>
+        <translation>Begeleide post</translation>
+    </message>
+    <message>
+        <source>Answer a few questions and the post is prepared for you. It is made by Quick Post or Auto Posting, with the same checks.</source>
+        <translation>Beantwoord een paar vragen en de post wordt voor u voorbereid. Hij wordt uitgevoerd door Quick Post of Auto Posting, met dezelfde controles.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation>Volgende</translation>
+    </message>
+    <message>
+        <source>Add another post</source>
+        <translation>Nog een post toevoegen</translation>
+    </message>
+    <message>
+        <source>Post these files or folders as one release</source>
+        <translation>Deze bestanden of mappen als één release posten</translation>
+    </message>
+    <message>
+        <source>One NZB file and, with compression, one archive for everything.</source>
+        <translation>Eén NZB-bestand en, met compressie, één archief voor alles.</translation>
+    </message>
+    <message>
+        <source>Post each file or folder as its own release</source>
+        <translation>Elk bestand of elke map als eigen release posten</translation>
+    </message>
+    <message>
+        <source>Each item becomes a post with its own NZB file.</source>
+        <translation>Elk item wordt een post met een eigen NZB-bestand.</translation>
+    </message>
+    <message>
+        <source>Scan a folder once and post what is inside</source>
+        <translation>Een map eenmalig scannen en de inhoud posten</translation>
+    </message>
+    <message>
+        <source>Each file or folder inside it becomes a post.</source>
+        <translation>Elk bestand of elke map erin wordt een post.</translation>
+    </message>
+    <message>
+        <source>Watch a folder and post what arrives</source>
+        <translation>Een map bewaken en posten wat binnenkomt</translation>
+    </message>
+    <message>
+        <source>New files and folders are posted by themselves, until you stop watching.</source>
+        <translation>Nieuwe bestanden en mappen worden automatisch gepost, totdat u het volgen stopt.</translation>
+    </message>
+    <message>
+        <source>Files and folders to post</source>
+        <translation>Te posten bestanden en mappen</translation>
+    </message>
+    <message>
+        <source>Select Folder</source>
+        <translation>Selecteer map</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>Alles verwijderen</translation>
+    </message>
+    <message>
+        <source>Choose...</source>
+        <translation>Kiezen...</translation>
+    </message>
+    <message>
+        <source>Profile:</source>
+        <translation>Profiel:</translation>
+    </message>
+    <message>
+        <source>Hide the options</source>
+        <translation>Opties verbergen</translation>
+    </message>
+    <message>
+        <source>Customize</source>
+        <translation>Aanpassen</translation>
+    </message>
+    <message>
+        <source>Compress</source>
+        <translation>Comprimeren</translation>
+    </message>
+    <message>
+        <source>Random name</source>
+        <translation>Willekeurige naam</translation>
+    </message>
+    <message>
+        <source>Random password</source>
+        <translation>Willekeurig wachtwoord</translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation>par2</translation>
+    </message>
+    <message>
+        <source>Keep the archives</source>
+        <translation>Archieven bewaren</translation>
+    </message>
+    <message>
+        <source>Write an NFO file next to the NZB</source>
+        <translation>Een NFO-bestand naast de NZB schrijven</translation>
+    </message>
+    <message>
+        <source>Also post the NFO file with the files</source>
+        <translation>Post het NFO-bestand ook mee met de bestanden</translation>
+    </message>
+    <message>
+        <source>Write the password of the archive in the NFO file</source>
+        <translation>Schrijf het wachtwoord van het archief in het NFO-bestand</translation>
+    </message>
+    <message>
+        <source>Media information (MediaInfo)</source>
+        <translation>Media-informatie (MediaInfo)</translation>
+    </message>
+    <message>
+        <source>After posting:</source>
+        <translation>Na het posten:</translation>
+    </message>
+    <message>
+        <source>Do nothing with the files</source>
+        <translation>Niets doen met de bestanden</translation>
+    </message>
+    <message>
+        <source>Move them to a &quot;Posted&quot; folder</source>
+        <translation>Naar een map „Posted” verplaatsen</translation>
+    </message>
+    <message>
+        <source>Delete them</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>Posted (a name, or a full path)</source>
+        <translation>Posted (een naam of een volledig pad)</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>Servers</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>Nieuwsgroepen</translation>
+    </message>
+    <message>
+        <source>Folder of the NZB files</source>
+        <translation>Map van de NZB-bestanden</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>Servers openen</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>Instellingen openen</translation>
+    </message>
+    <message>
+        <source>Skip this step when everything is set</source>
+        <translation>Deze stap overslaan als alles is ingesteld</translation>
+    </message>
+    <message>
+        <source>Posts ready</source>
+        <translation>Klaargezette posts</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Bewerken</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>This post</source>
+        <translation>Deze post</translation>
+    </message>
+    <message>
+        <source>Checks</source>
+        <translation>Controles</translation>
+    </message>
+    <message>
+        <source>Save these choices as a profile</source>
+        <translation>Deze keuzes als profiel opslaan</translation>
+    </message>
+    <message>
+        <source>Name of the profile</source>
+        <translation>Naam van het profiel</translation>
+    </message>
+    <message>
+        <source>Step %1 of %2</source>
+        <translation>Stap %1 van %2</translation>
+    </message>
+    <message>
+        <source>What do you want to do?</source>
+        <translation>Wat wilt u doen?</translation>
+    </message>
+    <message>
+        <source>Choose how the files will be posted.</source>
+        <translation>Kies hoe de bestanden worden gepost.</translation>
+    </message>
+    <message>
+        <source>What to post</source>
+        <translation>Wat te posten</translation>
+    </message>
+    <message>
+        <source>Add the files or folders you want to post. Double click an item to remove it.</source>
+        <translation>Voeg de bestanden of mappen toe die u wilt posten. Dubbelklik op een item om het te verwijderen.</translation>
+    </message>
+    <message>
+        <source>Choose the folder.</source>
+        <translation>Kies de map.</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>Opties</translation>
+    </message>
+    <message>
+        <source>Choose how the post is prepared. You can leave the suggested profile.</source>
+        <translation>Kies hoe de post wordt voorbereid. U kunt het voorgestelde profiel laten staan.</translation>
+    </message>
+    <message>
+        <source>Where to post</source>
+        <translation>Waar te posten</translation>
+    </message>
+    <message>
+        <source>The servers, the newsgroups and the folder of the NZB files are those of the program.</source>
+        <translation>De servers, de nieuwsgroepen en de map van de NZB-bestanden zijn die van het programma.</translation>
+    </message>
+    <message>
+        <source>Summary</source>
+        <translation>Samenvatting</translation>
+    </message>
+    <message>
+        <source>Check what will be posted, then press Post.</source>
+        <translation>Controleer wat wordt gepost en druk dan op Posten.</translation>
+    </message>
+    <message>
+        <source>compression</source>
+        <translation>compressie</translation>
+    </message>
+    <message>
+        <source>random name</source>
+        <translation>willekeurige naam</translation>
+    </message>
+    <message>
+        <source>random password</source>
+        <translation>willekeurig wachtwoord</translation>
+    </message>
+    <message>
+        <source>par2 %1 %</source>
+        <translation>par2 %1 %</translation>
+    </message>
+    <message>
+        <source>the archives are kept</source>
+        <translation>de archieven worden bewaard</translation>
+    </message>
+    <message>
+        <source>The files are posted as they are.</source>
+        <translation>De bestanden worden ongewijzigd gepost.</translation>
+    </message>
+    <message>
+        <source>Uses: %1.</source>
+        <translation>Gebruikt: %1.</translation>
+    </message>
+    <message>
+        <source>Folder: %1</source>
+        <translation>Map: %1</translation>
+    </message>
+    <message>
+        <source>%1 item(s), %2</source>
+        <translation>%1 item(s), %2</translation>
+    </message>
+    <message>
+        <source>An NFO file is written next to the NZB.</source>
+        <translation>Naast de NZB wordt een NFO-bestand geschreven.</translation>
+    </message>
+    <message>
+        <source>Once posted, the files are moved to &quot;%1&quot;.</source>
+        <translation>Na het posten worden de bestanden naar „%1” verplaatst.</translation>
+    </message>
+    <message>
+        <source>Once posted, the files are deleted.</source>
+        <translation>Na het posten worden de bestanden verwijderd.</translation>
+    </message>
+    <message>
+        <source>Add at least one file or folder.</source>
+        <translation>Voeg minstens één bestand of map toe.</translation>
+    </message>
+    <message>
+        <source>Choose a folder that exists.</source>
+        <translation>Kies een bestaande map.</translation>
+    </message>
+    <message>
+        <source>A folder can only be watched with compression.</source>
+        <translation>Een map kan alleen met compressie worden gevolgd.</translation>
+    </message>
+    <message>
+        <source>Post all (%1)</source>
+        <translation>Alles posten (%1)</translation>
+    </message>
+    <message>
+        <source>Start watching</source>
+        <translation>Bewaking starten</translation>
+    </message>
+    <message>
+        <source>Post</source>
+        <translation>Posten</translation>
+    </message>
+    <message>
+        <source>%1 post(s) are already prepared: this is another one.</source>
+        <translation>%1 post(s) zijn al klaargezet: dit is nog een.</translation>
+    </message>
+    <message>
+        <source>Cancel the %1 post(s) already prepared?</source>
+        <translation>De %1 al klaargezette post(s) annuleren?</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Aangepast</translation>
+    </message>
+    <message>
+        <source>Recommended (compression, random name and password, par2 10 %)</source>
+        <translation>Aanbevolen (compressie, willekeurige naam en wachtwoord, par2 10 %)</translation>
+    </message>
+    <message>
+        <source>Folder to watch</source>
+        <translation>Te bewaken map</translation>
+    </message>
+    <message>
+        <source>Folder to scan</source>
+        <translation>Te scannen map</translation>
+    </message>
+    <message>
+        <source>Nothing added yet.</source>
+        <translation>Nog niets toegevoegd.</translation>
+    </message>
+    <message>
+        <source>about %1 to upload</source>
+        <translation>ongeveer %1 te uploaden</translation>
+    </message>
+    <message>
+        <source>Choose a folder.</source>
+        <translation>Kies een map.</translation>
+    </message>
+    <message>
+        <source>This folder does not exist.</source>
+        <translation>Deze map bestaat niet.</translation>
+    </message>
+    <message>
+        <source>The folder is empty.</source>
+        <translation>De map is leeg.</translation>
+    </message>
+    <message>
+        <source>%1 item(s) in the folder.</source>
+        <translation>%1 item(s) in de map.</translation>
+    </message>
+    <message>
+        <source>The last connection test failed on every enabled server: check them in Servers.</source>
+        <translation>De laatste verbindingstest is op elke ingeschakelde server mislukt: controleer ze bij Servers.</translation>
+    </message>
+    <message>
+        <source> (off)</source>
+        <translation> (uit)</translation>
+    </message>
+    <message>
+        <source> (the test succeeded)</source>
+        <translation> (de test is geslaagd)</translation>
+    </message>
+    <message>
+        <source> (the last test failed)</source>
+        <translation> (de laatste test is mislukt)</translation>
+    </message>
+    <message>
+        <source>No server yet.</source>
+        <translation>Nog geen server.</translation>
+    </message>
+    <message>
+        <source>No newsgroup yet.</source>
+        <translation>Nog geen nieuwsgroep.</translation>
+    </message>
+    <message>
+        <source>Not set: the NZB files are written in the default folder.</source>
+        <translation>Niet ingesteld: de NZB-bestanden worden in de standaardmap geschreven.</translation>
+    </message>
+    <message>
+        <source>Everything is ready.</source>
+        <translation>Alles is klaar.</translation>
+    </message>
+    <message>
+        <source>Everything is fine.</source>
+        <translation>Alles in orde.</translation>
+    </message>
+    <message>
+        <source>Nothing to check yet.</source>
+        <translation>Nog niets te controleren.</translation>
+    </message>
+    <message>
+        <source>%1 item(s)</source>
+        <translation>%1 item(s)</translation>
+    </message>
+    <message>
+        <source>Nothing is being prepared: add another post or press Post.</source>
+        <translation>Er wordt niets voorbereid: voeg nog een post toe of druk op Posten.</translation>
+    </message>
+    <message>
+        <source>Deleting files/folders once posted</source>
+        <translation>Bestanden / mappen verwijderen zodra ze zijn gepost</translation>
+    </message>
+    <message>
+        <source>You&apos;re about to delete files from your computer once they&apos;ve been posted!
+Use it at your own risk!
+It will be irreversible...</source>
+        <translation>Je staat op het punt om bestanden van je computer te verwijderen zodra ze zijn gepost!
+Gebruik het op eigen risico!
+Bestanden worden definitief verwijderd...</translation>
+    </message>
+    <message>
+        <source>Save as profile</source>
+        <translation>Opslaan als profiel</translation>
+    </message>
+    <message>
+        <source>Choose a name for the profile (&quot;Custom&quot; and &quot;Recommended&quot; are reserved).</source>
+        <translation>Kies een naam voor het profiel („Custom” en „Recommended” zijn gereserveerd).</translation>
+    </message>
+    <message>
+        <source>Guided Post: %1 post(s) started</source>
+        <translation>Begeleide post: %1 post(s) gestart</translation>
+    </message>
+    <message>
+        <source>Guided Post: %1 of %2 post(s) started, the others are still prepared in Guided Post</source>
+        <translation>Begeleide post: %1 van %2 post(s) gestart, de andere blijven klaargezet in Begeleide post</translation>
     </message>
 </context>
 </TS>

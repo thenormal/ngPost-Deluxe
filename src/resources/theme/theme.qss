@@ -360,6 +360,21 @@ QCheckBox::indicator, QListView::indicator, QTableView::indicator {
     border-radius: 4px;
     background: @input@;
 }
+QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+    border: 1px solid @scrollHover@;
+    border-radius: 9px;
+    background: @input@;
+}
+QRadioButton::indicator:hover {
+    border-color: @accent@;
+}
+QRadioButton::indicator:checked {
+    border-color: @accent@;
+    background: qradialgradient(cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+                                stop:0 @accent@, stop:0.5 @accent@, stop:0.56 @input@, stop:1 @input@);
+}
 QCheckBox::indicator:hover, QListView::indicator:hover {
     border-color: @accent@;
 }

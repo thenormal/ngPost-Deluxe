@@ -20,6 +20,7 @@ SOURCES += \
     hmi/CheckBoxCenterWidget.cpp \
     hmi/FeedbackDialog.cpp \
     hmi/GroupsEdit.cpp \
+    hmi/GuidedPostWidget.cpp \
     hmi/HelpWidget.cpp \
     hmi/NfoCard.cpp \
     hmi/PostCheckDialog.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     hmi/CheckBoxCenterWidget.h \
     hmi/FeedbackDialog.h \
     hmi/GroupsEdit.h \
+    hmi/GuidedPostWidget.h \
     hmi/NfoCard.h \
     hmi/PostCheckDialog.h \
     hmi/DuplicatesDialog.h \

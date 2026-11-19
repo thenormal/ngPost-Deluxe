@@ -1942,6 +1942,14 @@ Später entscheiden: Sie bleiben in der Warteschlange und werden beim nächsten 
         <source>Once a day, asks GitHub (it only sees your IP address) whether a newer release exists, and tells you. Nothing is downloaded or installed.</source>
         <translation>Einmal am Tag wird GitHub gefragt (es sieht nur Ihre IP-Adresse), ob es eine neuere Version gibt, und Sie werden informiert. Es wird nichts heruntergeladen oder installiert.</translation>
     </message>
+    <message>
+        <source>Guided Post: nothing started (%1)</source>
+        <translation>Geführter Post: nichts gestartet (%1)</translation>
+    </message>
+    <message>
+        <source>Guided Post</source>
+        <translation>Geführter Post</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -4990,6 +4998,453 @@ Klicken Sie auf „Hinzufügen“, um Ihren Usenet-Anbieter einzurichten.</trans
     <message>
         <source>%1 h %2 min</source>
         <translation>%1 Std. %2 Min.</translation>
+    </message>
+</context>
+<context>
+    <name>GuidedPostWidget</name>
+    <message>
+        <source>Select Files</source>
+        <translation>Dateien auswählen</translation>
+    </message>
+    <message>
+        <source>Select a Folder</source>
+        <translation>Ordner auswählen</translation>
+    </message>
+    <message>
+        <source>Guided Post</source>
+        <translation>Geführter Post</translation>
+    </message>
+    <message>
+        <source>Answer a few questions and the post is prepared for you. It is made by Quick Post or Auto Posting, with the same checks.</source>
+        <translation>Beantworten Sie ein paar Fragen und der Post wird für Sie vorbereitet. Er wird von Quick Post oder Auto Posting mit denselben Prüfungen erstellt.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation>Weiter</translation>
+    </message>
+    <message>
+        <source>Add another post</source>
+        <translation>Weiteren Post hinzufügen</translation>
+    </message>
+    <message>
+        <source>Post these files or folders as one release</source>
+        <translation>Diese Dateien oder Ordner als ein Release posten</translation>
+    </message>
+    <message>
+        <source>One NZB file and, with compression, one archive for everything.</source>
+        <translation>Eine NZB-Datei und, mit Komprimierung, ein Archiv für alles.</translation>
+    </message>
+    <message>
+        <source>Post each file or folder as its own release</source>
+        <translation>Jede Datei oder jeden Ordner als eigenes Release posten</translation>
+    </message>
+    <message>
+        <source>Each item becomes a post with its own NZB file.</source>
+        <translation>Jedes Element wird ein Post mit eigener NZB-Datei.</translation>
+    </message>
+    <message>
+        <source>Scan a folder once and post what is inside</source>
+        <translation>Einen Ordner einmal durchsuchen und den Inhalt posten</translation>
+    </message>
+    <message>
+        <source>Each file or folder inside it becomes a post.</source>
+        <translation>Jede Datei oder jeder Ordner darin wird ein Post.</translation>
+    </message>
+    <message>
+        <source>Watch a folder and post what arrives</source>
+        <translation>Ordner überwachen und Neues posten</translation>
+    </message>
+    <message>
+        <source>New files and folders are posted by themselves, until you stop watching.</source>
+        <translation>Neue Dateien und Ordner werden automatisch gepostet, bis Sie die Überwachung beenden.</translation>
+    </message>
+    <message>
+        <source>Files and folders to post</source>
+        <translation>Zu postende Dateien und Ordner</translation>
+    </message>
+    <message>
+        <source>Select Folder</source>
+        <translation>Ordner auswählen</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>Alle entfernen</translation>
+    </message>
+    <message>
+        <source>Choose...</source>
+        <translation>Auswählen...</translation>
+    </message>
+    <message>
+        <source>Profile:</source>
+        <translation>Profil:</translation>
+    </message>
+    <message>
+        <source>Hide the options</source>
+        <translation>Optionen ausblenden</translation>
+    </message>
+    <message>
+        <source>Customize</source>
+        <translation>Anpassen</translation>
+    </message>
+    <message>
+        <source>Compress</source>
+        <translation>Komprimieren</translation>
+    </message>
+    <message>
+        <source>Random name</source>
+        <translation>Zufälliger Name</translation>
+    </message>
+    <message>
+        <source>Random password</source>
+        <translation>Zufälliges Passwort</translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation>par2</translation>
+    </message>
+    <message>
+        <source>Keep the archives</source>
+        <translation>Archive behalten</translation>
+    </message>
+    <message>
+        <source>Write an NFO file next to the NZB</source>
+        <translation>NFO-Datei neben der NZB schreiben</translation>
+    </message>
+    <message>
+        <source>Also post the NFO file with the files</source>
+        <translation>NFO-Datei auch mit den Dateien posten</translation>
+    </message>
+    <message>
+        <source>Write the password of the archive in the NFO file</source>
+        <translation>Passwort des Archivs in die NFO-Datei schreiben</translation>
+    </message>
+    <message>
+        <source>Media information (MediaInfo)</source>
+        <translation>Medieninformationen (MediaInfo)</translation>
+    </message>
+    <message>
+        <source>After posting:</source>
+        <translation>Nach dem Posten:</translation>
+    </message>
+    <message>
+        <source>Do nothing with the files</source>
+        <translation>Dateien unverändert lassen</translation>
+    </message>
+    <message>
+        <source>Move them to a &quot;Posted&quot; folder</source>
+        <translation>In einen Ordner „Posted“ verschieben</translation>
+    </message>
+    <message>
+        <source>Delete them</source>
+        <translation>Löschen</translation>
+    </message>
+    <message>
+        <source>Posted (a name, or a full path)</source>
+        <translation>Posted (ein Name oder ein vollständiger Pfad)</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>Server</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>Newsgroups</translation>
+    </message>
+    <message>
+        <source>Folder of the NZB files</source>
+        <translation>Ordner der NZB-Dateien</translation>
+    </message>
+    <message>
+        <source>Open Servers</source>
+        <translation>Server öffnen</translation>
+    </message>
+    <message>
+        <source>Open Settings</source>
+        <translation>Einstellungen öffnen</translation>
+    </message>
+    <message>
+        <source>Skip this step when everything is set</source>
+        <translation>Diesen Schritt überspringen, wenn alles eingerichtet ist</translation>
+    </message>
+    <message>
+        <source>Posts ready</source>
+        <translation>Vorbereitete Posts</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Bearbeiten</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Entfernen</translation>
+    </message>
+    <message>
+        <source>This post</source>
+        <translation>Dieser Post</translation>
+    </message>
+    <message>
+        <source>Checks</source>
+        <translation>Prüfungen</translation>
+    </message>
+    <message>
+        <source>Save these choices as a profile</source>
+        <translation>Diese Auswahl als Profil speichern</translation>
+    </message>
+    <message>
+        <source>Name of the profile</source>
+        <translation>Name des Profils</translation>
+    </message>
+    <message>
+        <source>Step %1 of %2</source>
+        <translation>Schritt %1 von %2</translation>
+    </message>
+    <message>
+        <source>What do you want to do?</source>
+        <translation>Was möchten Sie tun?</translation>
+    </message>
+    <message>
+        <source>Choose how the files will be posted.</source>
+        <translation>Wählen Sie, wie die Dateien gepostet werden.</translation>
+    </message>
+    <message>
+        <source>What to post</source>
+        <translation>Was gepostet wird</translation>
+    </message>
+    <message>
+        <source>Add the files or folders you want to post. Double click an item to remove it.</source>
+        <translation>Fügen Sie die Dateien oder Ordner hinzu, die Sie posten möchten. Doppelklick auf ein Element entfernt es.</translation>
+    </message>
+    <message>
+        <source>Choose the folder.</source>
+        <translation>Wählen Sie den Ordner.</translation>
+    </message>
+    <message>
+        <source>Options</source>
+        <translation>Optionen</translation>
+    </message>
+    <message>
+        <source>Choose how the post is prepared. You can leave the suggested profile.</source>
+        <translation>Wählen Sie, wie der Post vorbereitet wird. Das vorgeschlagene Profil können Sie beibehalten.</translation>
+    </message>
+    <message>
+        <source>Where to post</source>
+        <translation>Wohin gepostet wird</translation>
+    </message>
+    <message>
+        <source>The servers, the newsgroups and the folder of the NZB files are those of the program.</source>
+        <translation>Server, Newsgroups und Ordner der NZB-Dateien sind die des Programms.</translation>
+    </message>
+    <message>
+        <source>Summary</source>
+        <translation>Zusammenfassung</translation>
+    </message>
+    <message>
+        <source>Check what will be posted, then press Post.</source>
+        <translation>Prüfen Sie, was gepostet wird, und drücken Sie dann auf Posten.</translation>
+    </message>
+    <message>
+        <source>compression</source>
+        <translation>Komprimierung</translation>
+    </message>
+    <message>
+        <source>random name</source>
+        <translation>zufälliger Name</translation>
+    </message>
+    <message>
+        <source>random password</source>
+        <translation>zufälliges Passwort</translation>
+    </message>
+    <message>
+        <source>par2 %1 %</source>
+        <translation>par2 %1 %</translation>
+    </message>
+    <message>
+        <source>the archives are kept</source>
+        <translation>die Archive werden behalten</translation>
+    </message>
+    <message>
+        <source>The files are posted as they are.</source>
+        <translation>Die Dateien werden unverändert gepostet.</translation>
+    </message>
+    <message>
+        <source>Uses: %1.</source>
+        <translation>Verwendet: %1.</translation>
+    </message>
+    <message>
+        <source>Folder: %1</source>
+        <translation>Ordner: %1</translation>
+    </message>
+    <message>
+        <source>%1 item(s), %2</source>
+        <translation>%1 Element(e), %2</translation>
+    </message>
+    <message>
+        <source>An NFO file is written next to the NZB.</source>
+        <translation>Neben der NZB wird eine NFO-Datei geschrieben.</translation>
+    </message>
+    <message>
+        <source>Once posted, the files are moved to &quot;%1&quot;.</source>
+        <translation>Nach dem Posten werden die Dateien nach „%1“ verschoben.</translation>
+    </message>
+    <message>
+        <source>Once posted, the files are deleted.</source>
+        <translation>Nach dem Posten werden die Dateien gelöscht.</translation>
+    </message>
+    <message>
+        <source>Add at least one file or folder.</source>
+        <translation>Fügen Sie mindestens eine Datei oder einen Ordner hinzu.</translation>
+    </message>
+    <message>
+        <source>Choose a folder that exists.</source>
+        <translation>Wählen Sie einen vorhandenen Ordner.</translation>
+    </message>
+    <message>
+        <source>A folder can only be watched with compression.</source>
+        <translation>Ein Ordner kann nur mit Komprimierung überwacht werden.</translation>
+    </message>
+    <message>
+        <source>Post all (%1)</source>
+        <translation>Alle posten (%1)</translation>
+    </message>
+    <message>
+        <source>Start watching</source>
+        <translation>Überwachung starten</translation>
+    </message>
+    <message>
+        <source>Post</source>
+        <translation>Posten</translation>
+    </message>
+    <message>
+        <source>%1 post(s) are already prepared: this is another one.</source>
+        <translation>%1 Post(s) sind schon vorbereitet: dies ist ein weiterer.</translation>
+    </message>
+    <message>
+        <source>Cancel the %1 post(s) already prepared?</source>
+        <translation>Die %1 bereits vorbereiteten Post(s) verwerfen?</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Benutzerdefiniert</translation>
+    </message>
+    <message>
+        <source>Recommended (compression, random name and password, par2 10 %)</source>
+        <translation>Empfohlen (Komprimierung, zufälliger Name und Passwort, par2 10 %)</translation>
+    </message>
+    <message>
+        <source>Folder to watch</source>
+        <translation>Zu überwachender Ordner</translation>
+    </message>
+    <message>
+        <source>Folder to scan</source>
+        <translation>Zu durchsuchender Ordner</translation>
+    </message>
+    <message>
+        <source>Nothing added yet.</source>
+        <translation>Noch nichts hinzugefügt.</translation>
+    </message>
+    <message>
+        <source>about %1 to upload</source>
+        <translation>ca. %1 hochzuladen</translation>
+    </message>
+    <message>
+        <source>Choose a folder.</source>
+        <translation>Wählen Sie einen Ordner.</translation>
+    </message>
+    <message>
+        <source>This folder does not exist.</source>
+        <translation>Dieser Ordner existiert nicht.</translation>
+    </message>
+    <message>
+        <source>The folder is empty.</source>
+        <translation>Der Ordner ist leer.</translation>
+    </message>
+    <message>
+        <source>%1 item(s) in the folder.</source>
+        <translation>%1 Element(e) im Ordner.</translation>
+    </message>
+    <message>
+        <source>The last connection test failed on every enabled server: check them in Servers.</source>
+        <translation>Der letzte Verbindungstest ist auf jedem aktivierten Server fehlgeschlagen: Prüfen Sie sie unter Server.</translation>
+    </message>
+    <message>
+        <source> (off)</source>
+        <translation> (aus)</translation>
+    </message>
+    <message>
+        <source> (the test succeeded)</source>
+        <translation> (der Test war erfolgreich)</translation>
+    </message>
+    <message>
+        <source> (the last test failed)</source>
+        <translation> (der letzte Test ist fehlgeschlagen)</translation>
+    </message>
+    <message>
+        <source>No server yet.</source>
+        <translation>Noch kein Server.</translation>
+    </message>
+    <message>
+        <source>No newsgroup yet.</source>
+        <translation>Noch keine Newsgroup.</translation>
+    </message>
+    <message>
+        <source>Not set: the NZB files are written in the default folder.</source>
+        <translation>Nicht festgelegt: Die NZB-Dateien werden im Standardordner gespeichert.</translation>
+    </message>
+    <message>
+        <source>Everything is ready.</source>
+        <translation>Alles ist bereit.</translation>
+    </message>
+    <message>
+        <source>Everything is fine.</source>
+        <translation>Alles in Ordnung.</translation>
+    </message>
+    <message>
+        <source>Nothing to check yet.</source>
+        <translation>Noch nichts zu prüfen.</translation>
+    </message>
+    <message>
+        <source>%1 item(s)</source>
+        <translation>%1 Element(e)</translation>
+    </message>
+    <message>
+        <source>Nothing is being prepared: add another post or press Post.</source>
+        <translation>Es wird nichts vorbereitet: Fügen Sie einen weiteren Post hinzu oder drücken Sie auf Posten.</translation>
+    </message>
+    <message>
+        <source>Deleting files/folders once posted</source>
+        <translation>Daten/Ordner nach dem Post löschen</translation>
+    </message>
+    <message>
+        <source>You&apos;re about to delete files from your computer once they&apos;ve been posted!
+Use it at your own risk!
+It will be irreversible...</source>
+        <translation>Sie sind im Begriff, Dateien von Ihrem Computer zu löschen, sobald sie veröffentlicht worden sind!
+Die Benutzung erfolgt auf eigene Gefahr!
+Es wird nicht mehr rückgängig zu machen sein...</translation>
+    </message>
+    <message>
+        <source>Save as profile</source>
+        <translation>Als Profil speichern</translation>
+    </message>
+    <message>
+        <source>Choose a name for the profile (&quot;Custom&quot; and &quot;Recommended&quot; are reserved).</source>
+        <translation>Wählen Sie einen Namen für das Profil („Custom“ und „Recommended“ sind reserviert).</translation>
+    </message>
+    <message>
+        <source>Guided Post: %1 post(s) started</source>
+        <translation>Geführter Post: %1 Post(s) gestartet</translation>
+    </message>
+    <message>
+        <source>Guided Post: %1 of %2 post(s) started, the others are still prepared in Guided Post</source>
+        <translation>Geführter Post: %1 von %2 Post(s) gestartet, die anderen bleiben im Geführten Post vorbereitet</translation>
     </message>
 </context>
 </TS>
