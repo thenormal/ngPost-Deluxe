@@ -22,6 +22,7 @@ El archivo NZB es el «mapa» de tu publicación: sin él nadie puede encontrar 
 
 ## Dónde está cada cosa
 
+- **Publicación guiada**: responde unas preguntas y la publicación se prepara por ti. Consulta [Publicación guiada](01b-guided-post.md).
 - **Publicación Rápida**: publica archivos y carpetas ahora.
 - **Publicación Automática**: analiza o vigila carpetas.
 - **Servidores**: tus proveedores de Usenet.

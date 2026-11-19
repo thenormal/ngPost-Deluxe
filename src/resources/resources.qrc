@@ -62,6 +62,7 @@
         <file>icons/tab_close_dark.png</file>
         <file>icons/check_dark.png</file>
             <file>help/en/01-first-steps.md</file>
+        <file>help/en/01b-guided-post.md</file>
         <file>help/en/02-servers.md</file>
         <file>help/en/03-newsgroups.md</file>
         <file>help/en/04-quick-post.md</file>
@@ -75,6 +76,7 @@
         <file>help/en/12-problems.md</file>
         <file>help/en/13-warnings.md</file>
         <file>help/it/01-first-steps.md</file>
+        <file>help/it/01b-guided-post.md</file>
         <file>help/it/02-servers.md</file>
         <file>help/it/03-newsgroups.md</file>
         <file>help/it/04-quick-post.md</file>
@@ -88,6 +90,7 @@
         <file>help/it/12-problems.md</file>
         <file>help/it/13-warnings.md</file>
         <file>help/fr/01-first-steps.md</file>
+        <file>help/fr/01b-guided-post.md</file>
         <file>help/fr/02-servers.md</file>
         <file>help/fr/03-newsgroups.md</file>
         <file>help/fr/04-quick-post.md</file>
@@ -101,6 +104,7 @@
         <file>help/fr/12-problems.md</file>
         <file>help/fr/13-warnings.md</file>
         <file>help/es/01-first-steps.md</file>
+        <file>help/es/01b-guided-post.md</file>
         <file>help/es/02-servers.md</file>
         <file>help/es/03-newsgroups.md</file>
         <file>help/es/04-quick-post.md</file>
@@ -114,6 +118,7 @@
         <file>help/es/12-problems.md</file>
         <file>help/es/13-warnings.md</file>
         <file>help/pt/01-first-steps.md</file>
+        <file>help/pt/01b-guided-post.md</file>
         <file>help/pt/02-servers.md</file>
         <file>help/pt/03-newsgroups.md</file>
         <file>help/pt/04-quick-post.md</file>
@@ -127,6 +132,7 @@
         <file>help/pt/12-problems.md</file>
         <file>help/pt/13-warnings.md</file>
         <file>help/de/01-first-steps.md</file>
+        <file>help/de/01b-guided-post.md</file>
         <file>help/de/02-servers.md</file>
         <file>help/de/03-newsgroups.md</file>
         <file>help/de/04-quick-post.md</file>
@@ -140,6 +146,7 @@
         <file>help/de/12-problems.md</file>
         <file>help/de/13-warnings.md</file>
         <file>help/nl/01-first-steps.md</file>
+        <file>help/nl/01b-guided-post.md</file>
         <file>help/nl/02-servers.md</file>
         <file>help/nl/03-newsgroups.md</file>
         <file>help/nl/04-quick-post.md</file>
@@ -153,6 +160,7 @@
         <file>help/nl/12-problems.md</file>
         <file>help/nl/13-warnings.md</file>
         <file>help/zh/01-first-steps.md</file>
+        <file>help/zh/01b-guided-post.md</file>
         <file>help/zh/02-servers.md</file>
         <file>help/zh/03-newsgroups.md</file>
         <file>help/zh/04-quick-post.md</file>

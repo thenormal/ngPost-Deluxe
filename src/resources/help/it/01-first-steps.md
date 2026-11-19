@@ -22,6 +22,7 @@ Il file NZB è la "mappa" del tuo post: senza di esso nessuno può trovare gli a
 
 ## Dove si trovano le cose
 
+- **Post guidato**: rispondi ad alcune domande e il post viene preparato per te. Vedi [Post guidato](01b-guided-post.md).
 - **Quick Post**: posta subito file e cartelle.
 - **Post automatico**: analizza o monitora le cartelle.
 - **Server**: i tuoi provider Usenet.
