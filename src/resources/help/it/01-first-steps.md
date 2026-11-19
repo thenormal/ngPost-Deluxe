@@ -27,7 +27,7 @@ Il file NZB è la "mappa" del tuo post: senza di esso nessuno può trovare gli a
 - **Post automatico**: analizza o monitora le cartelle.
 - **Server**: i tuoi provider Usenet.
 - **Impostazioni**: le opzioni predefinite del programma, in cinque categorie (Generale, Post, File NZB, Notifiche, Cronologia e coda).
-- **Cronologia**: tutto ciò che hai postato.
+- **Cronologia**: tutto ciò che hai postato, con le sue [statistiche](09b-statistics.md).
 - **Guida**: questa sezione.
 
 ## Nuove versioni

@@ -27,7 +27,7 @@ Le fichier NZB est la « carte » de votre envoi : sans lui, personne ne peut re
 - **Post Auto** : analyser ou surveiller des dossiers.
 - **Serveurs** : vos fournisseurs Usenet.
 - **Paramètres** : les options par défaut du programme, en cinq catégories (Général, Envois, Fichiers NZB, Notifications, Historique et file d'attente).
-- **Historique** : tout ce que vous avez posté.
+- **Historique** : tout ce que vous avez posté, avec ses [statistiques](09b-statistics.md).
 - **Aide** : cette section.
 
 ## Nouvelles versions

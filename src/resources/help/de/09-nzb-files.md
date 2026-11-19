@@ -20,6 +20,8 @@ In der Kommandozeile prüft `--check`, ob die Artikel einer NZB noch auf dem Ser
 
 Die Seite **Verlauf** listet Ihre früheren Uploads auf (Datum, Name, Größe, Geschwindigkeit, Archiv, Passwort, Gruppen). Sie können den Verlauf in den Einstellungen abschalten. Das Passwort wird im Klartext gespeichert.
 
+Die Ansicht **Statistiken** dieser Seite (der Umschalter neben **Liste**) macht aus dem Verlauf Summen und Diagramme: siehe [Statistiken](09b-statistics.md).
+
 ### Posts, die schon im Verlauf stehen
 
 Bevor ein Post startet, sucht ngPost im Verlauf nach einem erfolgreichen Post mit demselben NZB-Namen und derselben Gesamtgröße der Dateien. In **Quick Post** fragt ein Fenster, ob er erneut gepostet werden soll (**Trotzdem posten** oder **Abbrechen**). In **Auto Posting** und in der Kommandozeile wird der Post übersprungen und eine Zeile im Protokoll sagt das. Um ihn dennoch erneut zu posten, verwenden Sie die Option `--allow_repost` oder schalten Sie die Warnung unter **Einstellungen**, Kategorie **Verlauf und Warteschlange** (Karte Verlauf der Uploads) ab. Die Prüfung setzt voraus, dass der Verlauf aktiv ist, und sie betrachtet nur Name und Größe: Ein umbenannter Ordner wird nicht erkannt.

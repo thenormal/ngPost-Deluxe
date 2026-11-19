@@ -27,7 +27,7 @@ Die NZB-Datei ist die „Karte“ Ihres Posts: Ohne sie kann niemand die Artikel
 - **Auto Posting**: Ordner durchsuchen oder überwachen.
 - **Server**: Ihre Usenet-Anbieter.
 - **Einstellungen**: Standardoptionen des Programms, in fünf Kategorien (Allgemein, Posts, NZB-Dateien, Benachrichtigungen, Verlauf und Warteschlange).
-- **Verlauf**: alles, was Sie gepostet haben.
+- **Verlauf**: alles, was Sie gepostet haben, mit den [Statistiken](09b-statistics.md).
 - **Hilfe**: dieser Bereich.
 
 ## Neue Versionen

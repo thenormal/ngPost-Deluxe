@@ -20,6 +20,8 @@ Da riga di comando, `--check` verifica che gli articoli di un NZB siano ancora d
 
 La pagina **Cronologia** elenca i tuoi upload passati (data, nome, dimensione, velocità, archivio, password, gruppi). Puoi disattivare la cronologia nelle Impostazioni. La password è salvata in chiaro.
 
+La vista **Statistiche** di questa pagina (il selettore accanto a **Elenco**) trasforma la cronologia in totali e grafici: vedi [Statistiche](09b-statistics.md).
+
 ### Post già presenti nella cronologia
 
 Prima che un post parta, ngPost cerca nella cronologia un post riuscito con lo stesso nome NZB e la stessa dimensione totale dei file. In **Quick Post** una finestra chiede se postarlo di nuovo (**Pubblica comunque** o **Annulla**). In **Post automatico** e da riga di comando il post viene saltato e una riga nel log lo segnala. Per postarlo comunque, usa l'opzione `--allow_repost` oppure disattiva l'avviso in **Impostazioni**, categoria **Cronologia e coda** (scheda Cronologia degli upload). Il controllo richiede che la cronologia sia attiva e guarda solo il nome e la dimensione: una cartella rinominata non viene riconosciuta.

@@ -20,6 +20,8 @@ En la línea de comandos, `--check` verifica que los artículos de un NZB siguen
 
 La página **Historial** lista tus subidas pasadas (fecha, nombre, tamaño, velocidad, archivo comprimido, contraseña, grupos). Puedes desactivar el historial en Ajustes. La contraseña se guarda en texto claro.
 
+La vista **Estadísticas** de esta página (el selector junto a **Lista**) convierte el historial en totales y gráficos: consulta [Estadísticas](09b-statistics.md).
+
 ### Publicaciones que ya están en el historial
 
 Antes de que empiece una publicación, ngPost busca en el historial una publicación correcta con el mismo nombre de NZB y el mismo tamaño total de los archivos. En **Publicación Rápida** una ventana pregunta si publicarla de nuevo (**Publicar igualmente** o **Cancelar**). En **Publicación Automática** y en la línea de comandos la publicación se omite y una línea del registro lo indica. Para publicarla de todos modos, usa la opción `--allow_repost` o desactiva el aviso en **Ajustes**, categoría **Historial y cola** (tarjeta Historial de las subidas). La comprobación necesita que el historial esté activado y solo mira el nombre y el tamaño: una carpeta renombrada no se reconoce.

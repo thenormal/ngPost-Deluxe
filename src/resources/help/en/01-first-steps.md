@@ -27,7 +27,7 @@ The NZB file is the "map" of your post: without it nobody can find the articles,
 - **Auto Posting**: scan or monitor folders.
 - **Servers**: your Usenet providers.
 - **Settings**: default options of the program, in five categories (General, Posts, NZB files, Notifications, History and queue).
-- **History**: everything you posted.
+- **History**: everything you posted, with its [statistics](09b-statistics.md).
 - **Help**: this section.
 
 ## New versions

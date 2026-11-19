@@ -27,7 +27,7 @@ O ficheiro NZB é o «mapa» da sua publicação: sem ele ninguém consegue enco
 - **Postagem Automática**: analisa ou vigia pastas.
 - **Servidores**: os seus fornecedores de Usenet.
 - **Definições**: opções predefinidas do programa, em cinco categorias (Geral, Publicações, Ficheiros NZB, Notificações, Histórico e fila).
-- **Histórico**: tudo o que publicou.
+- **Histórico**: tudo o que publicou, com as suas [estatísticas](09b-statistics.md).
 - **Ajuda**: esta secção.
 
 ## Novas versões

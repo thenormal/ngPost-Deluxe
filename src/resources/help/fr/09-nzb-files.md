@@ -20,6 +20,8 @@ En ligne de commande, `--check` vérifie que les articles d'un NZB sont toujours
 
 La page **Historique** liste vos téléversements passés (date, nom, taille, vitesse, archive, mot de passe, groupes). Vous pouvez désactiver l'historique dans les Paramètres. Le mot de passe est enregistré en clair.
 
+La vue **Statistiques** de cette page (la bascule à côté de **Liste**) transforme l'historique en totaux et graphiques : voir [Statistiques](09b-statistics.md).
+
 ### Envois déjà dans l'historique
 
 Avant qu'un envoi ne démarre, ngPost cherche dans l'historique un envoi réussi ayant le même nom de NZB et la même taille totale de fichiers. Dans **Post Rapide**, une fenêtre demande s'il faut le reposter (**Poster quand même** ou **Annuler**). Dans **Post Auto** et en ligne de commande, l'envoi est ignoré et une ligne du journal l'indique. Pour le poster malgré tout, utilisez l'option `--allow_repost` ou désactivez l'avertissement dans **Paramètres**, catégorie **Historique et file d'attente** (carte Historique des téléversements). La vérification demande que l'historique soit activé, et elle ne regarde que le nom et la taille : un dossier renommé n'est pas reconnu.
