@@ -5718,5 +5718,93 @@ Sarà irreversibile...</translation>
         <source>Known for %1 of the %2 post(s): it is recorded since version 1.4.</source>
         <translation>Noto per %1 dei %2 post: viene registrato dalla versione 1.4.</translation>
     </message>
+    <message>
+        <source>PDF document (to print or read)</source>
+        <translation>Documento PDF (da stampare o leggere)</translation>
+    </message>
+    <message>
+        <source>Web page (HTML)</source>
+        <translation>Pagina web (HTML)</translation>
+    </message>
+    <message>
+        <source>Spreadsheet (CSV)</source>
+        <translation>Foglio di calcolo (CSV)</translation>
+    </message>
+    <message>
+        <source>Images of the charts (PNG)</source>
+        <translation>Immagini dei grafici (PNG)</translation>
+    </message>
+    <message>
+        <source>Export</source>
+        <translation>Esporta</translation>
+    </message>
+    <message>
+        <source>Save the statistics of the period shown</source>
+        <translation>Salva le statistiche del periodo mostrato</translation>
+    </message>
+    <message>
+        <source>bytes</source>
+        <translation>byte</translation>
+    </message>
+    <message>
+        <source>bytes/s</source>
+        <translation>byte/s</translation>
+    </message>
+    <message>
+        <source>posts</source>
+        <translation>post</translation>
+    </message>
+    <message>
+        <source>Statistics of ngPost Deluxe - %1</source>
+        <translation>Statistiche di ngPost Deluxe - %1</translation>
+    </message>
+    <message>
+        <source>Export the statistics</source>
+        <translation>Esporta le statistiche</translation>
+    </message>
+    <message>
+        <source>CSV files (*.csv)</source>
+        <translation>File CSV (*.csv)</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the file %1</source>
+        <translation>Impossibile scrivere il file %1</translation>
+    </message>
+    <message>
+        <source>Totals</source>
+        <translation>Totali</translation>
+    </message>
+    <message>
+        <source>Period</source>
+        <translation>Periodo</translation>
+    </message>
+    <message>
+        <source>Folder for the images of the charts</source>
+        <translation>Cartella per le immagini dei grafici</translation>
+    </message>
+    <message>
+        <source>%1 images saved in %2</source>
+        <translation>%1 immagini salvate in %2</translation>
+    </message>
+    <message>
+        <source>Web pages (*.html)</source>
+        <translation>Pagine web (*.html)</translation>
+    </message>
+    <message>
+        <source>Statistics of ngPost Deluxe</source>
+        <translation>Statistiche di ngPost Deluxe</translation>
+    </message>
+    <message>
+        <source>Made on %1</source>
+        <translation>Creato il %1</translation>
+    </message>
+    <message>
+        <source>PDF documents (*.pdf)</source>
+        <translation>Documenti PDF (*.pdf)</translation>
+    </message>
+    <message>
+        <source>Page %1</source>
+        <translation>Pagina %1</translation>
+    </message>
 </context>
 </TS>

@@ -38,6 +38,18 @@
 #include <QLocale>
 #include <QtMath>
 #include <algorithm>
+#include <QMenu>
+#include <QPushButton>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QSaveFile>
+#include <QTextStream>
+#include <QStandardPaths>
+#include <QPdfWriter>
+#include <QPageSize>
+#include <QBuffer>
+#include <QApplication>
+#include <QDir>
 
 namespace {
 
@@ -46,10 +58,10 @@ struct Palette {
     QColor roles[4];
 };
 
-Palette chartPalette(NgPost *ngPost)
+Palette chartPalette(NgPost *ngPost, bool forceLight = false)
 {
     Palette p;
-    if (ngPost && ngPost->isDarkTheme())
+    if (!forceLight && ngPost && ngPost->isDarkTheme())
     {
         p.text  = QColor("#e6e6e6");
         p.sub   = QColor("#9d9d9d");
@@ -152,7 +164,7 @@ QSize ChartWidget::minimumSizeHint() const
 
 QRectF ChartWidget::_plotRect() const
 {
-    QRectF r = rect();
+    QRectF r = _area.isNull() ? QRectF(rect()) : _area;
     switch (_type)
     {
     case Type::Bars:
@@ -160,8 +172,8 @@ QRectF ChartWidget::_plotRect() const
         return r.adjusted(68, _series.size() > 1 ? 26 : 8, -10, -24);
     case Type::HBars:
     {
-        double labelW = qMin(r.width() * 0.38, 210.0);
-        return r.adjusted(labelW, 4, -96, -4);
+        double labelW = qMin(r.width() * 0.45, 210.0);
+        return r.adjusted(labelW, 4, -64, -4);
     }
     case Type::Heatmap:
         return r.adjusted(48, 4, -6, -22);
@@ -256,7 +268,7 @@ QString ChartWidget::_tooltip(int index, int col) const
     for (const Series &s : _series)
     {
         double v = s.values.value(index);
-        QString value = qIsNaN(v) ? QString::fromUtf8("—") : _fmt(v);
+        QString value = qIsNaN(v) ? QString(QChar(0x2014)) : _fmt(v);
         lines << (s.name.isEmpty() ? value : QString("%1: %2").arg(s.name, value));
     }
     return lines.join("\n");
@@ -288,8 +300,38 @@ void ChartWidget::leaveEvent(QEvent *event)
 void ChartWidget::paintEvent(QPaintEvent *)
 {
     QPainter p(this);
+    _draw(p, false);
+}
+
+void ChartWidget::paintTo(QPainter &p, const QRectF &target)
+{
+    p.save();
+    p.translate(target.topLeft());
+    p.setClipRect(QRectF(QPointF(0, 0), target.size()));
+    _area = QRectF(QPointF(0, 0), target.size());
+    const int hover = _hover;
+    _hover = -1;
+    _draw(p, true);
+    _hover = hover;
+    _area = QRectF();
+    p.restore();
+}
+
+QImage ChartWidget::toImage(const QSize &size, qreal scale)
+{
+    QImage img(size * scale, QImage::Format_ARGB32_Premultiplied);
+    img.setDevicePixelRatio(scale);
+    img.fill(Qt::white);
+    QPainter p(&img);
+    paintTo(p, QRectF(QPointF(0, 0), size));
+    return img;
+}
+
+void ChartWidget::_draw(QPainter &p, bool print)
+{
+    const QRectF area = _area.isNull() ? QRectF(rect()) : _area;
     p.setRenderHint(QPainter::Antialiasing, true);
-    const Palette pal = chartPalette(_ngPost);
+    const Palette pal = chartPalette(_ngPost, print);
     QFont small = font();
     small.setPointSizeF(qMax(7.0, font().pointSizeF() - 1));
     p.setFont(small);
@@ -298,7 +340,7 @@ void ChartWidget::paintEvent(QPaintEvent *)
     if (isEmpty())
     {
         p.setPen(pal.sub);
-        p.drawText(rect(), Qt::AlignCenter, tr("No data for this period."));
+        p.drawText(area, Qt::AlignCenter, tr("No data for this period."));
         return;
     }
 
@@ -351,7 +393,7 @@ void ChartWidget::paintEvent(QPaintEvent *)
         {
             double cx = _type == Type::Line ? (n == 1 ? plot.center().x() : plot.left() + i * xStep) : plot.left() + slot * (i + 0.5);
             const double w = fm.horizontalAdvance(_labels.at(i)) + 4;
-            const double x0 = qBound(0.0, cx - w / 2, width() - w); // the first and last labels stay inside
+            const double x0 = qBound(0.0, cx - w / 2, area.width() - w); // the first and last labels stay inside
             p.drawText(QRectF(x0, plot.bottom() + 4, w, 18), Qt::AlignHCenter | Qt::AlignTop, _labels.at(i));
         }
 
@@ -435,7 +477,7 @@ void ChartWidget::paintEvent(QPaintEvent *)
         const double rowH = 26;
         for (int i = 0; i < n; ++i)
         {
-            QRectF row(0, plot.top() + i * rowH, width(), rowH);
+            QRectF row(0, plot.top() + i * rowH, area.width(), rowH);
             if (i == _hover)
             {
                 p.setPen(Qt::NoPen);
@@ -500,6 +542,11 @@ StatsWidget::StatsWidget(NgPost *ngPost, QWidget *parent) :
     _period->setCurrentIndex(PERIOD_30_DAYS);
     bar->addWidget(_period);
     bar->addStretch();
+    _exportButton = new QPushButton(this);
+    _exportButton->setObjectName("menuButton");
+    QMenu *menu = new QMenu(_exportButton);
+    _exportButton->setMenu(menu);
+    bar->addWidget(_exportButton);
     root->addLayout(bar);
 
     _note = new QLabel(this);
@@ -602,6 +649,13 @@ StatsWidget::StatsWidget(NgPost *ngPost, QWidget *parent) :
     cl->addLayout(ranks);
 
     connect(_period, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](){ _refresh(); });
+    connect(menu, &QMenu::aboutToShow, this, [this, menu](){
+        menu->clear();
+        menu->addAction(tr("PDF document (to print or read)"), this, &StatsWidget::_exportPdf);
+        menu->addAction(tr("Web page (HTML)"), this, &StatsWidget::_exportHtml);
+        menu->addAction(tr("Spreadsheet (CSV)"), this, &StatsWidget::_exportCsv);
+        menu->addAction(tr("Images of the charts (PNG)"), this, &StatsWidget::_exportPng);
+    });
 }
 
 QFrame *StatsWidget::_chartCard(QLabel *&title, ChartWidget *chart, QLabel *&hint)
@@ -652,6 +706,8 @@ void StatsWidget::retranslate()
     _chartTitle[CH_KINDS]->setText(tr("How the posts were started"));
     _chartTitle[CH_OPTIONS]->setText(tr("Options"));
     _chartTitle[CH_HEATMAP]->setText(tr("When you post (day and hour)"));
+    _exportButton->setText(tr("Export"));
+    _exportButton->setToolTip(tr("Save the statistics of the period shown"));
     _biggestTitle->setText(tr("Largest posts"));
     _daysTitle->setText(tr("Busiest days"));
     _biggest->setHorizontalHeaderLabels({tr("Date"), tr("Name"), tr("Size"), tr("Speed")});
@@ -714,6 +770,7 @@ void StatsWidget::_refresh()
                                                          : tr("No upload in this period."));
         _empty->show();
         _content->hide();
+        _exportButton->setEnabled(false);
         _note->setVisible(_historyOn && !_entries.isEmpty());
         if (first.isValid())
             _note->setText(tr("Data since %1 (%2 post(s) in the history).").arg(_locDate(first, "d MMMM yyyy")).arg(_entries.size()));
@@ -721,6 +778,7 @@ void StatsWidget::_refresh()
     }
     _empty->hide();
     _content->show();
+    _exportButton->setEnabled(true);
     _note->show();
     QString note = tr("Data since %1 (%2 post(s) in the history).").arg(_locDate(first, "d MMMM yyyy")).arg(_entries.size());
     if (exact < sel.size())
@@ -765,8 +823,8 @@ void StatsWidget::_refresh()
     const QString values[8] = {
         loc.toString(n), hs(bytes), durationText(seconds),
         QString("%1 %").arg(loc.toString(100.0 * (n - errors) / n, 'f', 1)),
-        avgSpeed > 0 ? hs(avgSpeed) + "/s" : QString::fromUtf8("—"),
-        best > 0 ? hs(best) + "/s" : QString::fromUtf8("—"),
+        avgSpeed > 0 ? hs(avgSpeed) + "/s" : QString(QChar(0x2014)),
+        best > 0 ? hs(best) + "/s" : QString(QChar(0x2014)),
         hs(biggest), hs(bytes / qMax(1, days))};
     const QString labels[8] = {tr("Posts"), tr("Data uploaded"), tr("Time spent posting"), tr("Posts without errors"),
                                tr("Average speed"), tr("Best speed"), tr("Largest post"), tr("Average per day")};
@@ -945,4 +1003,381 @@ void StatsWidget::_refresh()
             _days->setItem(i, c, item);
         }
     }
+}
+
+// ============================================================ exports
+
+namespace {
+const char *sChartFile[] = {"data", "speed", "results", "newsgroups", "servers", "kinds", "options", "heatmap"};
+const int sPrintOrder[] = {0, 1, 2, 7, 3, 4, 5, 6}; // CH_DATA, CH_SPEED, CH_RESULTS, CH_HEATMAP, CH_GROUPS, CH_SERVERS, CH_KINDS, CH_OPTIONS
+
+double chartHeight(const ChartWidget *chart)
+{
+    if (chart->type() == ChartWidget::Type::HBars)
+        return qMax(64, chart->labels().size() * 26 + 8);
+    return chart->type() == ChartWidget::Type::Heatmap ? 200 : 230;
+}
+} // namespace
+
+QString StatsWidget::_chartUnit(int chart) const
+{
+    if (chart == CH_DATA)
+        return tr("bytes");
+    if (chart == CH_SPEED)
+        return tr("bytes/s");
+    return tr("posts");
+}
+
+QString StatsWidget::_reportTitle() const
+{
+    return tr("Statistics of ngPost Deluxe - %1").arg(_period->currentText());
+}
+
+QString StatsWidget::_savePath(const QString &title, const QString &ext, const QString &filter)
+{
+    QString dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString name = QString("ngPost_statistics_%1.%2").arg(QDate::currentDate().toString("yyyy-MM-dd"), ext);
+    return QFileDialog::getSaveFileName(this, title, QDir(dir).filePath(name), filter);
+}
+
+void StatsWidget::_exportCsv()
+{
+    const QString path = _savePath(tr("Export the statistics"), "csv", tr("CSV files (*.csv)"));
+    if (path.isEmpty())
+        return;
+    QSaveFile file(path);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::warning(this, tr("Export the statistics"), tr("Can't write the file %1").arg(path));
+        return;
+    }
+    const QString sep = _ngPost->historyFieldSeparator();
+    auto clean = [&sep](QString t) { return t.replace(sep, " ").replace('\n', ' '); };
+    auto num = [](double v) { return qIsNaN(v) ? QString() : QString::number(v, 'f', v == qRound64(v) ? 0 : 2); };
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << clean(_reportTitle()) << "\n" << clean(_note->text()) << "\n\n" << clean(tr("Totals")) << "\n";
+    for (int i = 0; i < 8; ++i)
+        out << clean(_tileLabel[i]->text()) << sep << clean(_tileValue[i]->text()) << "\n";
+    for (int k = 0; k < NB_CHARTS; ++k)
+    {
+        const int c = sPrintOrder[k];
+        const ChartWidget *chart = _charts[c];
+        out << "\n" << clean(_chartTitle[c]->text()) << "\n";
+        if (chart->type() == ChartWidget::Type::Heatmap)
+        {
+            out << clean(tr("Day"));
+            for (int h = 0; h < 24; ++h)
+                out << sep << QString("%1:00").arg(h, 2, 10, QChar('0'));
+            out << "\n";
+            for (int r = 0; r < chart->grid().size(); ++r)
+            {
+                out << clean(chart->labels().value(r));
+                for (double v : chart->grid().at(r))
+                    out << sep << num(v);
+                out << "\n";
+            }
+            continue;
+        }
+        out << clean(chart->type() == ChartWidget::Type::HBars ? tr("Name") : tr("Period"));
+        for (const ChartWidget::Series &s : chart->series())
+            out << sep << clean(s.name.isEmpty() ? _chartUnit(c) : QString("%1 (%2)").arg(s.name, _chartUnit(c)));
+        out << "\n";
+        for (int i = 0; i < chart->labels().size(); ++i)
+        {
+            out << clean(chart->labels().at(i));
+            for (const ChartWidget::Series &s : chart->series())
+                out << sep << num(s.values.value(i));
+            out << "\n";
+        }
+    }
+    for (QTableWidget *t : {_biggest, _days})
+    {
+        out << "\n" << clean(t == _biggest ? _biggestTitle->text() : _daysTitle->text()) << "\n";
+        QStringList head;
+        for (int c = 0; c < t->columnCount(); ++c)
+            head << clean(t->horizontalHeaderItem(c)->text());
+        out << head.join(sep) << "\n";
+        for (int r = 0; r < t->rowCount(); ++r)
+        {
+            QStringList row;
+            for (int c = 0; c < t->columnCount(); ++c)
+                row << clean(t->item(r, c) ? t->item(r, c)->text() : QString());
+            out << row.join(sep) << "\n";
+        }
+    }
+    out.flush();
+    if (!file.commit())
+        QMessageBox::warning(this, tr("Export the statistics"), tr("Can't write the file %1").arg(path));
+}
+
+void StatsWidget::_exportPng()
+{
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Folder for the images of the charts"),
+                                                    QStandardPaths::writableLocation(QStandardPaths::PicturesLocation));
+    if (dir.isEmpty())
+        return;
+    const QString day = QDate::currentDate().toString("yyyy-MM-dd");
+    QFont titleFont = font();
+    titleFont.setBold(true);
+    titleFont.setPointSizeF(font().pointSizeF() + 2);
+    int saved = 0;
+    QStringList failed;
+    for (int c = 0; c < NB_CHARTS; ++c)
+    {
+        const QSizeF size(760, chartHeight(_charts[c]) + 70);
+        QImage img((size * 2).toSize(), QImage::Format_ARGB32_Premultiplied);
+        img.setDevicePixelRatio(2);
+        img.fill(Qt::white);
+        QPainter p(&img);
+        p.setRenderHint(QPainter::Antialiasing);
+        p.setFont(titleFont);
+        p.setPen(QColor("#1f1f1f"));
+        p.drawText(QRectF(16, 10, size.width() - 32, 24), Qt::AlignLeft | Qt::AlignVCenter, _chartTitle[c]->text());
+        QFont small = font();
+        small.setPointSizeF(qMax(7.0, font().pointSizeF() - 1));
+        p.setFont(small);
+        p.setPen(QColor("#6b6b6b"));
+        p.drawText(QRectF(16, 10, size.width() - 32, 24), Qt::AlignRight | Qt::AlignVCenter, _period->currentText());
+        _charts[c]->paintTo(p, QRectF(16, 40, size.width() - 32, chartHeight(_charts[c])));
+        p.setFont(small);
+        p.setPen(QColor("#6b6b6b"));
+        p.drawText(QRectF(16, size.height() - 26, size.width() - 32, 20), Qt::AlignLeft | Qt::AlignVCenter, _chartHint[c]->text());
+        p.end();
+        const QString path = QDir(dir).filePath(QString("ngPost_statistics_%1_%2.png").arg(day, sChartFile[c]));
+        if (img.save(path, "PNG"))
+            ++saved;
+        else
+            failed << QDir::toNativeSeparators(path);
+    }
+    if (failed.isEmpty())
+        QMessageBox::information(this, tr("Export the statistics"),
+                                 tr("%1 images saved in %2").arg(saved).arg(QDir::toNativeSeparators(dir)));
+    else
+        QMessageBox::warning(this, tr("Export the statistics"), tr("Can't write the file %1").arg(failed.join("\n")));
+}
+
+void StatsWidget::_exportHtml()
+{
+    const QString path = _savePath(tr("Export the statistics"), "html", tr("Web pages (*.html)"));
+    if (path.isEmpty())
+        return;
+    auto e = [](const QString &t) { return t.toHtmlEscaped(); };
+    QString html;
+    QTextStream h(&html);
+    h << "<!DOCTYPE html>\n<html lang=\"" << e(_ngPost->_lang.toLower()) << "\">\n<head>\n<meta charset=\"utf-8\">\n"
+      << "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>" << e(_reportTitle()) << "</title>\n"
+      << "<style>\n"
+         "body{font-family:\"Segoe UI\",system-ui,-apple-system,Arial,sans-serif;max-width:1120px;margin:28px auto;padding:0 18px;color:#1f1f1f;background:#fafafa}\n"
+         "h1{font-size:26px;margin:0 0 4px}h2{font-size:17px;margin:26px 0 10px}.sub{color:#6b6b6b;margin:0 0 4px}\n"
+         ".tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}\n"
+         ".tile,.card{background:#fff;border:1px solid #e3e3e3;border-radius:8px;padding:10px 14px}\n"
+         ".v{font-size:22px;font-weight:600}.l,.hint{color:#6b6b6b;font-size:13px}\n"
+         ".charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.card h3{font-size:15px;margin:2px 0 8px}\n"
+         ".card img{width:100%;height:auto;display:block}\n"
+         ".tables{display:grid;grid-template-columns:3fr 2fr;gap:12px;margin-top:14px}\n"
+         "table{border-collapse:collapse;width:100%;font-size:14px}th{text-align:left;border-bottom:1px solid #e3e3e3}\n"
+         "th,td{padding:5px 8px}td.n,th.n{text-align:right}tr:nth-child(even) td{background:#f5f5f5}\n"
+         "footer{color:#8a8a8a;font-size:12px;margin:26px 0 8px}\n"
+         "@media(max-width:760px){.tiles{grid-template-columns:1fr 1fr}.charts,.tables{grid-template-columns:1fr}}\n"
+         "@media print{body{background:#fff;margin:0}.card,.tile{break-inside:avoid}}\n"
+         "</style>\n</head>\n<body>\n";
+    h << "<h1>" << e(tr("Statistics of ngPost Deluxe")) << "</h1>\n<p class=\"sub\">" << e(_period->currentText()) << " &middot; "
+      << e(tr("Made on %1").arg(QLocale(_ngPost->_lang).toString(QDateTime::currentDateTime(), QLocale::LongFormat))) << "</p>\n"
+      << "<p class=\"sub\">" << e(_note->text()) << "</p>\n<div class=\"tiles\">\n";
+    for (int i = 0; i < 8; ++i)
+        h << "<div class=\"tile\"><div class=\"v\">" << e(_tileValue[i]->text()) << "</div><div class=\"l\">"
+          << e(_tileLabel[i]->text()) << "</div></div>\n";
+    h << "</div>\n<div class=\"charts\">\n";
+    for (int k = 0; k < NB_CHARTS; ++k)
+    {
+        const int c = sPrintOrder[k];
+        QImage img = _charts[c]->toImage(QSize(520, static_cast<int>(chartHeight(_charts[c]))), 2);
+        QByteArray png;
+        QBuffer buf(&png);
+        buf.open(QIODevice::WriteOnly);
+        img.save(&buf, "PNG");
+        h << "<div class=\"card\"><h3>" << e(_chartTitle[c]->text()) << "</h3><img alt=\"" << e(_chartTitle[c]->text())
+          << "\" src=\"data:image/png;base64," << QString::fromLatin1(png.toBase64()) << "\"><div class=\"hint\">"
+          << e(_chartHint[c]->text()) << "</div></div>\n";
+    }
+    h << "</div>\n<div class=\"tables\">\n";
+    for (QTableWidget *t : {_biggest, _days})
+    {
+        h << "<div class=\"card\"><h3>" << e(t == _biggest ? _biggestTitle->text() : _daysTitle->text()) << "</h3><table><tr>";
+        const int firstNumber = t == _biggest ? 2 : 1;
+        for (int c = 0; c < t->columnCount(); ++c)
+            h << "<th" << (c >= firstNumber ? " class=\"n\"" : "") << ">" << e(t->horizontalHeaderItem(c)->text()) << "</th>";
+        h << "</tr>\n";
+        for (int r = 0; r < t->rowCount(); ++r)
+        {
+            h << "<tr>";
+            for (int c = 0; c < t->columnCount(); ++c)
+                h << "<td" << (c >= firstNumber ? " class=\"n\"" : "") << ">" << e(t->item(r, c) ? t->item(r, c)->text() : QString()) << "</td>";
+            h << "</tr>\n";
+        }
+        h << "</table></div>\n";
+    }
+    h << "</div>\n<footer>ngPost Deluxe &middot; https://github.com/thenormal/ngPost-Deluxe</footer>\n</body>\n</html>\n";
+    h.flush();
+
+    QSaveFile file(path);
+    if (!file.open(QIODevice::WriteOnly) || file.write(html.toUtf8()) < 0 || !file.commit())
+        QMessageBox::warning(this, tr("Export the statistics"), tr("Can't write the file %1").arg(path));
+}
+
+void StatsWidget::_exportPdf()
+{
+    const QString path = _savePath(tr("Export the statistics"), "pdf", tr("PDF documents (*.pdf)"));
+    if (path.isEmpty())
+        return;
+    QPdfWriter writer(path);
+    writer.setPageSize(QPageSize(QPageSize::A4));
+    writer.setPageMargins(QMarginsF(14, 14, 14, 14), QPageLayout::Millimeter);
+    writer.setResolution(96);
+    writer.setTitle(_reportTitle());
+    writer.setCreator("ngPost Deluxe");
+    QPainter p;
+    if (!p.begin(&writer))
+    {
+        QMessageBox::warning(this, tr("Export the statistics"), tr("Can't write the file %1").arg(path));
+        return;
+    }
+    p.setRenderHint(QPainter::Antialiasing);
+    const double W = writer.width(), H = writer.height();
+    const QString family = QApplication::font().family();
+    auto f = [&family](double pt, bool bold = false) { QFont ft(family); ft.setPointSizeF(pt); ft.setBold(bold); return ft; };
+    const QColor text("#1f1f1f"), sub("#6b6b6b"), line("#dedede"), zebra("#f5f5f5");
+    double y = 0;
+    int page = 1;
+    auto footer = [&]() {
+        p.setFont(f(7.5));
+        p.setPen(sub);
+        p.drawText(QRectF(0, H - 14, W, 14), Qt::AlignLeft | Qt::AlignVCenter, QString("ngPost Deluxe %1 github.com/thenormal/ngPost-Deluxe").arg(QChar(0x00B7)));
+        p.drawText(QRectF(0, H - 14, W, 14), Qt::AlignRight | Qt::AlignVCenter, tr("Page %1").arg(page));
+    };
+    auto ensure = [&](double h) {
+        if (y + h > H - 28)
+        {
+            footer();
+            writer.newPage();
+            ++page;
+            y = 0;
+        }
+    };
+    auto paragraph = [&](const QString &t, const QFont &font, const QColor &color, double gap) {
+        p.setFont(font);
+        p.setPen(color);
+        QRectF r = p.boundingRect(QRectF(0, y, W, 1000), Qt::TextWordWrap, t);
+        ensure(r.height());
+        r.moveTop(y);
+        p.drawText(QRectF(0, y, W, r.height()), Qt::TextWordWrap, t);
+        y += r.height() + gap;
+    };
+
+    // header
+    paragraph(tr("Statistics of ngPost Deluxe"), f(18, true), text, 2);
+    paragraph(QString("%1 %2 %3").arg(_period->currentText()).arg(QChar(0x00B7)).arg(
+              tr("Made on %1").arg(QLocale(_ngPost->_lang).toString(QDateTime::currentDateTime(), QLocale::LongFormat))),
+              f(9), sub, 2);
+    paragraph(_note->text(), f(8.5), sub, 12);
+
+    // totals: 4 x 2
+    const double gap = 8, boxW = (W - 3 * gap) / 4, boxH = 50;
+    for (int i = 0; i < 8; ++i)
+    {
+        QRectF box((boxW + gap) * (i % 4), y + (boxH + gap) * (i / 4), boxW, boxH);
+        p.setPen(QPen(line, 1));
+        p.setBrush(Qt::white);
+        p.drawRoundedRect(box, 6, 6);
+        p.setFont(f(13, true));
+        p.setPen(text);
+        p.drawText(box.adjusted(10, 6, -6, -22), Qt::AlignLeft | Qt::AlignVCenter, _tileValue[i]->text());
+        p.setFont(f(8));
+        p.setPen(sub);
+        p.drawText(box.adjusted(10, 28, -6, -4), Qt::AlignLeft | Qt::AlignVCenter, _tileLabel[i]->text());
+    }
+    y += 2 * boxH + gap + 18;
+
+    // charts: the charts over time full width, the rankings two by row
+    const QVector<QVector<int>> rows = {{CH_DATA}, {CH_SPEED}, {CH_RESULTS}, {CH_HEATMAP}, {CH_GROUPS, CH_SERVERS}, {CH_KINDS, CH_OPTIONS}};
+    for (const QVector<int> &row : rows)
+    {
+        double ch = 0;
+        for (int c : row)
+            ch = qMax(ch, chartHeight(_charts[c]));
+        const double blockH = 22 + ch + 18;
+        ensure(blockH);
+        const double colW = (W - gap * (row.size() - 1)) / row.size();
+        for (int k = 0; k < row.size(); ++k)
+        {
+            const int c = row.at(k);
+            const double x = k * (colW + gap);
+            p.setFont(f(11, true));
+            p.setPen(text);
+            p.drawText(QRectF(x, y, colW, 20), Qt::AlignLeft | Qt::AlignVCenter, _chartTitle[c]->text());
+            _charts[c]->paintTo(p, QRectF(x, y + 22, colW, chartHeight(_charts[c])));
+            p.setFont(f(7.5));
+            p.setPen(sub);
+            p.drawText(QRectF(x, y + 22 + ch + 2, colW, 14), Qt::AlignLeft | Qt::AlignVCenter,
+                       QFontMetrics(f(7.5)).elidedText(_chartHint[c]->text(), Qt::ElideRight, static_cast<int>(colW)));
+        }
+        y += blockH + 14;
+    }
+
+    // rankings
+    for (QTableWidget *t : {_biggest, _days})
+    {
+        const double rowH = 18;
+        ensure(24 + rowH * (t->rowCount() + 1));
+        p.setFont(f(11, true));
+        p.setPen(text);
+        p.drawText(QRectF(0, y, W, 20), Qt::AlignLeft | Qt::AlignVCenter, t == _biggest ? _biggestTitle->text() : _daysTitle->text());
+        y += 24;
+        const int firstNumber = t == _biggest ? 2 : 1;
+        QVector<double> widths;
+        if (t == _biggest)
+            widths = {0.2, 0.5, 0.15, 0.15};
+        else
+            widths = {0.5, 0.2, 0.3};
+        auto drawRow = [&](const QStringList &cells, bool head, bool shade) {
+            if (shade)
+            {
+                p.setPen(Qt::NoPen);
+                p.setBrush(zebra);
+                p.drawRect(QRectF(0, y, W, rowH));
+            }
+            p.setFont(f(8.5, head));
+            p.setPen(head ? text : text);
+            double x = 0;
+            for (int c = 0; c < cells.size(); ++c)
+            {
+                const double cw = W * widths.value(c);
+                const Qt::Alignment al = (c >= firstNumber ? Qt::AlignRight : Qt::AlignLeft) | Qt::AlignVCenter;
+                p.drawText(QRectF(x + 4, y, cw - 8, rowH), al,
+                           QFontMetrics(p.font()).elidedText(cells.at(c), Qt::ElideMiddle, static_cast<int>(cw - 8)));
+                x += cw;
+            }
+            if (head)
+            {
+                p.setPen(QPen(line, 1));
+                p.drawLine(QPointF(0, y + rowH), QPointF(W, y + rowH));
+            }
+            y += rowH;
+        };
+        QStringList head;
+        for (int c = 0; c < t->columnCount(); ++c)
+            head << t->horizontalHeaderItem(c)->text();
+        drawRow(head, true, false);
+        for (int r = 0; r < t->rowCount(); ++r)
+        {
+            QStringList cells;
+            for (int c = 0; c < t->columnCount(); ++c)
+                cells << (t->item(r, c) ? t->item(r, c)->text() : QString());
+            drawRow(cells, false, r % 2 == 1);
+        }
+        y += 16;
+    }
+    footer();
+    p.end();
 }

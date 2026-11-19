@@ -993,7 +993,7 @@ void GuidedPostWidget::_updateFileSummary()
         bytes += NgPost::recursiveSize(QFileInfo(_fileList->item(i)->data(Qt::UserRole).toString()));
     QString text = tr("%1 item(s), %2").arg(_fileList->count()).arg(NfoWriter::humanSize(bytes));
     if (_req.profile.compress || _req.profile.par2)
-        text += QString::fromUtf8(" → ") + tr("about %1 to upload").arg(
+        text += QString(" %1 ").arg(QChar(0x2192)) + tr("about %1 to upload").arg(
                     NfoWriter::humanSize(PostChecker::uploadBytes(bytes, _req.profile.par2, _req.profile.par2Pct)));
     _fileSummary->setText(text);
     _updateButtons();
@@ -1210,7 +1210,7 @@ void GuidedPostWidget::_showChecks(const PostRequest &r)
         QHBoxLayout *h = new QHBoxLayout(row);
         h->setContentsMargins(0, 0, 0, 0);
         QLabel *text = newLabel("", row);
-        text->setText(QString("%1 %2").arg(issue.blocking ? QString::fromUtf8("⛔") : QString::fromUtf8("⚠️"), issue.text.toHtmlEscaped()));
+        text->setText(QString("%1 %2").arg(issue.blocking ? QString(QChar(0x26D4)) : QString(QChar(0x26A0)) + QChar(0xFE0F), issue.text.toHtmlEscaped()));
         h->addWidget(text, 1);
         if (!issue.fixLabel.isEmpty())
         {
