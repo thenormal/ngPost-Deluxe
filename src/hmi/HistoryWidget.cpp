@@ -268,6 +268,9 @@ void HistoryWidget::reload()
                 e.durationSec = hms[0].toLongLong() * 3600 + hms[1].toLongLong() * 60 + hms[2].toLongLong();
             e.nzbPath  = f.value(11).trimmed();
             e.inputSize = f.value(12).trimmed();
+            e.servers   = f.value(13).trimmed();
+            e.options   = f.value(14).trimmed();
+            e.kind      = f.value(15).trimmed();
             _entries << e;
         }
     }
@@ -473,7 +476,8 @@ void HistoryWidget::onExport()
         stream << e->date.toString("yyyy/MM/dd hh:mm:ss") << sep << e->name << sep << e->size << sep << e->speed
                << sep << e->archive << sep << e->pass << sep << e->groups << sep << e->from << sep << e->status
                << sep << (e->nbFiles >= 0 ? QString::number(e->nbFiles) : QString()) << sep << e->duration
-               << sep << e->nzbPath << sep << e->inputSize << "\n";
+               << sep << e->nzbPath << sep << e->inputSize
+               << sep << e->servers << sep << e->options << sep << e->kind << "\n";
     }
     stream.flush();
     if (!file.commit())

@@ -192,6 +192,7 @@ private:
     bool                 _secondRoundDone   = false; //!< the second round has started (only one)
     bool                 _heldOverflow      = false; //!< too many failed Articles: no second round
     int                  _nbEnabledServers  = 1;
+    QStringList          _serverHosts;      //!< hosts of the servers used by this post (for the history)
 
     bool _isActiveJob;
 
@@ -299,6 +300,11 @@ public:
     //! job that posts again the Articles listed in info (same nzb, groups, ...) and fixes the nzb
     static PostingJob *createRepostJob(NgPost *ngPost, const RepostInfo &info, PostingWidget *postWidget);
     inline bool isRepost() const { return _isRepost; }
+    inline QString serverHosts() const { return _serverHosts.join(","); }
+    inline uint par2Pct() const { return _par2Pct; }
+    inline bool hasPar2() const { return _doPar2; }
+    inline bool keepsRar() const { return _keepRar; }
+    inline bool hasRarPass() const { return !_rarPass.isEmpty(); }
     //! Articles that couldn't be posted (valid once the job is finished)
     inline const RepostInfo &repostInfo() const { return _repostInfo; }
     inline bool isRepostApplied() const { return _repostApplied; }

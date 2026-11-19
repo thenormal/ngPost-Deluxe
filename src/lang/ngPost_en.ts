@@ -3476,6 +3476,18 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>## New versions: the GUI looks once a day for a newer release on GitHub and only tells you (nothing is downloaded)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>kind</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
