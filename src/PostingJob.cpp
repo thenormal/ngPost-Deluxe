@@ -42,6 +42,7 @@
 #include <QThread>
 #include <QLocale>
 #include "utils/SpeedLimiter.h"
+#include "utils/ProcessText.h"
 #include <QMutex>
 #include <QCoreApplication>
 #include <QDir>
@@ -1917,13 +1918,15 @@ void PostingJob::onCompressionFinished(int exitCode)
 {
     {
         qint64 ms = _diagTimer.isValid() ? _diagTimer.elapsed() : 0;
-        QString msg = QString("end: exit code %1 | %2 in %3 s => %4").arg(exitCode).arg(
-                    Diagnostics::humanSize(_diagInputSize)).arg(ms / 1000.0, 0, 'f', 1).arg(Diagnostics::speed(_diagInputSize, ms));
+        QString msg = QString("end: exit code %1 | %2 in %3 s").arg(exitCode).arg(
+                    Diagnostics::humanSize(_diagInputSize)).arg(ms / 1000.0, 0, 'f', 1);
+        if (exitCode == 0) // the speed of a compression that failed means nothing
+            msg += " => " + Diagnostics::speed(_diagInputSize, ms);
         Diagnostics::instance().event("COMPRESS", msg);
         _compressMs = ms;
         if (_diagCompressing)
         {
-            QString tail = QString::fromLocal8Bit(_diagOutTail).trimmed().replace('\r', ' ').replace('\n', " | ");
+            QString tail = ProcessText::decode(_diagOutTail).trimmed().replace('\r', ' ').replace('\n', " | ");
             Diagnostics::instance().event("COMPRESS", QString("compressor exited after %1 ms, slot run after %2 ms | output: %3 chunk(s), first after %4 ms, last after %5 ms | end of the output: %6").arg(
                                               _diagProcDone).arg(ms).arg(_diagNbOut).arg(_diagFirstOut).arg(_diagLastOut).arg(tail.right(300)));
             _diagCompressing = false;
@@ -2202,7 +2205,7 @@ void PostingJob::onExtProcReadyReadStandardOutput()
             _diagOutTail = _diagOutTail.right(1000);
     }
     if (_ngPost->debugMode())
-        _log(data, false);
+        _log(ProcessText::decode(data), false);
     else if (_isActiveJob)
     {
         if (!_limitProcDisplay || ++_nbProcDisp%42 == 0)
@@ -2212,7 +2215,7 @@ void PostingJob::onExtProcReadyReadStandardOutput()
 
 void PostingJob::onExtProcReadyReadStandardError()
 {
-    _error(_extProc->readAllStandardError());
+    _error(ProcessText::decode(_extProc->readAllStandardError()));
 }
 
 

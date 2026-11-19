@@ -5060,6 +5060,10 @@ Click on &quot;Add&quot; to configure your Usenet provider.</source>
         <source>%1 h %2 min</source>
         <translation>%1 小时 %2 分钟</translation>
     </message>
+    <message>
+        <source>The temporary folder is in a folder that %1 may synchronize: it can lock the files while the archive is written and make the post fail. Choose another folder (Quick Post, advanced options).</source>
+        <translation>临时文件夹位于 %1 可能同步的文件夹中: 在写入压缩包时它可能锁定文件, 导致发布失败. 请选择其他文件夹 (Quick Post, 高级选项).</translation>
+    </message>
 </context>
 <context>
     <name>GuidedPostWidget</name>

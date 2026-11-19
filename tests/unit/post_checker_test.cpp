@@ -100,6 +100,31 @@ int main(int argc, char **argv)
     CHECK(PostChecker::durationText(100LL * 1000 * 1000, 1000 * 1000) == "2 min", "100 MB at 1 MB/s = 2 min (rounded)");
     CHECK(PostChecker::durationText(3600LL * 1000 * 1000, 1000 * 1000) == "1 h 00 min", "one hour");
 
+    // temporary folder in a synchronized folder: a warning (never an error)
+    CHECK(PostChecker::syncedFolder("C:/Users/me/OneDrive/tmp", false) == "OneDrive", "OneDrive");
+    CHECK(PostChecker::syncedFolder("C:\\Users\\me\\OneDrive - Company\\tmp", false) == "OneDrive", "OneDrive with a company name");
+    CHECK(PostChecker::syncedFolder("/home/me/Dropbox/work", false) == "Dropbox", "Dropbox");
+    CHECK(PostChecker::syncedFolder("G:/Google Drive/x", false) == "Google Drive", "Google Drive");
+    CHECK(PostChecker::syncedFolder("C:/Users/me/Desktop/tmp", true) == "OneDrive", "Desktop on Windows");
+    CHECK(PostChecker::syncedFolder("C:/Users/me/Documents", true) == "OneDrive", "Documents on Windows");
+    CHECK(PostChecker::syncedFolder("/home/me/Desktop/tmp", false).isEmpty(), "Desktop elsewhere is fine");
+    CHECK(PostChecker::syncedFolder("C:/ngpost_tmp", true).isEmpty(), "a plain folder");
+    CHECK(PostChecker::syncedFolder("D:/DesktopBackup/tmp", true).isEmpty(), "only the exact folder name counts");
+    {
+        QDir().mkpath(dir.filePath("OneDrive/tmp"));
+        PostChecker::Input s2 = ok;
+        s2.compress = true;
+        s2.rarPath = prog;
+        s2.tmpPath = dir.filePath("OneDrive/tmp");
+        auto l2 = PostChecker::check(s2);
+        CHECK(has(l2, C::TmpSynced, false) && !has(l2, C::TmpSynced, true), "a temporary folder in OneDrive is a warning");
+        s2.tmpPath = dir.path();
+        CHECK(!has(PostChecker::check(s2), C::TmpSynced, false), "no warning for a plain temporary folder");
+        s2.tmpPath = dir.filePath("OneDrive/tmp");
+        s2.compress = false; // nothing is written in it
+        CHECK(!has(PostChecker::check(s2), C::TmpSynced, false), "no warning when the temporary folder is not used");
+    }
+
     if (failures == 0)
         std::cout << "post_checker_test: all good\n";
     return failures ? 1 : 0;
