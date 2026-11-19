@@ -95,6 +95,7 @@ SOURCES += \
         utils/LatencyStats.cpp \
         utils/MediaInfoReader.cpp \
         utils/PostProfile.cpp \
+        utils/PostRequest.cpp \
         utils/PostChecker.cpp \
         utils/PostedMover.cpp \
         utils/NfoWriter.cpp \
@@ -130,6 +131,7 @@ HEADERS += \
     utils/LatencyStats.h \
     utils/MediaInfoReader.h \
     utils/PostProfile.h \
+    utils/PostRequest.h \
     utils/PostChecker.h \
     utils/PostedMover.h \
     utils/NfoWriter.h \

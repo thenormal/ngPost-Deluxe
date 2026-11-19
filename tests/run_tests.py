@@ -1101,6 +1101,23 @@ def test_version_number_unit(work):
     check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
 
 
+def test_post_request_unit(work):
+    # what the user wants to post (Guided Post): page used, checks and remembered choices; a small program built with qmake
+    qmake = shutil.which("qmake") or shutil.which("qmake-qt5")
+    if not qmake:
+        print("      (qmake not found: this test is skipped)")
+        return
+    here = os.path.dirname(os.path.abspath(__file__))
+    build = os.path.join(work, "unit_request")
+    os.makedirs(build)
+    r = subprocess.run([qmake, os.path.join(here, "unit", "post_request_test.pro")], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "qmake failed\n" + r.stdout + r.stderr)
+    r = subprocess.run(["make", "-j4"], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "build failed\n" + r.stdout[-2000:] + r.stderr[-2000:])
+    r = subprocess.run([os.path.join(build, "post_request_test")], capture_output=True, text=True)
+    check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
+
+
 def test_translations_compiled(work):
     # the .qm files (what the program really uses) must contain the translations of the .ts files:
     # after editing a .ts, run: lrelease src/lang/ngPost_xx.ts -qm src/resources/lang/ngPost_xx.qm
@@ -1245,7 +1262,7 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_help_pages, test_latency_is_measured, test_feedback_forms,
          test_duplicate_is_skipped, test_nfo_file, test_nfo_media_info, test_profiles_and_par2_default, test_post_checker_unit, test_move_posted, test_move_posted_never_overwrites,
          test_move_posted_kept_when_articles_failed, test_move_posted_options, test_posted_mover_unit, test_notifications,
-         test_notification_when_all_done, test_version_number_unit, test_translations_compiled]
+         test_notification_when_all_done, test_version_number_unit, test_post_request_unit, test_translations_compiled]
 
 
 def main():

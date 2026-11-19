@@ -112,6 +112,28 @@ void ProfileBar::applyRecommendedIfNew()
     _applyProfile(PostProfile::recommended());
 }
 
+static bool sameOptions(const PostProfile &a, const PostProfile &b)
+{
+    return a.compress == b.compress && a.genName == b.genName && a.genPass == b.genPass
+            && a.par2 == b.par2 && a.par2Pct == b.par2Pct && a.keepRar == b.keepRar;
+}
+
+void ProfileBar::select(const PostProfile &profile)
+{
+    int idx = 0; // Custom
+    for (int i = 0; i < _ngPost->_profiles.size(); ++i)
+        if (_ngPost->_profiles.at(i).name == profile.name && sameOptions(_ngPost->_profiles.at(i), profile))
+            idx = i + 2;
+    if (idx == 0 && sameOptions(profile, PostProfile::recommended()))
+        idx = 1;
+    {
+        QSignalBlocker block(_combo);
+        _combo->setCurrentIndex(idx);
+    }
+    _deleteButton->setEnabled(idx >= 2);
+    _applyProfile(profile);
+}
+
 void ProfileBar::_applyProfile(const PostProfile &profile)
 {
     if (!_apply)

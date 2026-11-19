@@ -42,6 +42,7 @@ public:
     void setHandlers(std::function<PostProfile()> current, std::function<void(const PostProfile &)> apply);
     void markCustom();         //!< the user changed an option by hand
     void applyRecommendedIfNew(); //!< first start of a new installation: "Recommended"
+    void select(const PostProfile &profile); //!< applies the options and shows the matching entry (Guided Post)
     void retranslate();
 
 private slots:
