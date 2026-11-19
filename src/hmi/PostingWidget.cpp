@@ -344,6 +344,7 @@ bool PostingWidget::restoreFromQueue(const QJsonObject &entry, QString &error)
     _ui->keepRarCB->setChecked(entry.value("keepRar").toBool());
     if (entry.value("compress").toBool())
         _ui->compressNameEdit->setText(entry.value("rarName").toString());
+    _nameFromFile = false;
     const QString pass = entry.value("rarPass").toString();
     _ui->nzbPassCB->setChecked(!pass.isEmpty());
     _ui->nzbPassEdit->setText(pass);
@@ -501,6 +502,7 @@ void PostingWidget::onClearFilesClicked()
     _filesAddedAfterPost = false;
     _ui->nzbFileEdit->clear();
     _ui->compressNameEdit->clear();
+    _nameFromFile = false;
     if (_hmi->hasAutoCompress())
     {
         onGenCompressName();
@@ -523,6 +525,7 @@ void PostingWidget::onCompressCB(bool checked)
 void PostingWidget::onGenCompressName()
 {
     _ui->compressNameEdit->setText(_ngPost->randomPass(static_cast<uint>(_ui->nameLengthSB->value())));
+    _nameFromFile = false;
 }
 
 void PostingWidget::onCompressPathClicked()
@@ -685,6 +688,7 @@ void PostingWidget::init()
 
     connect(_ui->compressCB,        &QAbstractButton::toggled, this, &PostingWidget::onCompressCB);
     connect(_ui->genCompressName,   &QAbstractButton::clicked, this, &PostingWidget::onGenCompressName);
+    connect(_ui->compressNameEdit,  &QLineEdit::textEdited, this, [this](){ _nameFromFile = false; });
 
 
     connect(_ui->compressPathButton,&QAbstractButton::clicked, this, &PostingWidget::onCompressPathClicked);
@@ -856,7 +860,10 @@ void PostingWidget::addPath(const QString &path, int currentNbFiles, int isDir)
             _ui->nzbFileEdit->setText(QString("%1.nzb").arg(_ngPost->nzbPath()));
         }
         if (_ui->compressNameEdit->text().isEmpty())
+        {
             _ui->compressNameEdit->setText(_ngPost->_nzbName);
+            _nameFromFile = true;
+        }
     }
 }
 
@@ -1137,7 +1144,8 @@ void PostingWidget::applyProfile(const PostProfile &p)
             else
                 onGenNzbPassword();
         }
-        if (p.genName && _ui->compressNameEdit->text().isEmpty())
+        // the name taken from the first file is replaced by a random one, a name typed by the user is kept
+        if (p.genName && (_ui->compressNameEdit->text().isEmpty() || _nameFromFile))
             onGenCompressName();
     }
 }
