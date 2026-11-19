@@ -5065,6 +5065,10 @@ Klik op ‘Toevoegen’ om je Usenet-provider in te stellen.</translation>
         <source>%1 h %2 min</source>
         <translation>%1 u %2 min</translation>
     </message>
+    <message>
+        <source>The temporary folder is in a folder that %1 may synchronize: it can lock the files while the archive is written and make the post fail. Choose another folder (Quick Post, advanced options).</source>
+        <translation>De tijdelijke map staat in een map die %1 kan synchroniseren: dat kan de bestanden vergrendelen terwijl het archief wordt geschreven en de post laten mislukken. Kies een andere map (Quick Post, geavanceerde opties).</translation>
+    </message>
 </context>
 <context>
     <name>GuidedPostWidget</name>

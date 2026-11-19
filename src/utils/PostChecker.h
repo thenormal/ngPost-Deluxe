@@ -31,7 +31,7 @@ class PostChecker
 public:
     enum class Code {
         NoServer, NoGroup, FoldersNoCompress, RarMissing, Par2Missing, PasswordEmpty, NzbFolderNotWritable,
-        TmpNotWritable, LowSpace, MediaInfoMissing
+        TmpNotWritable, LowSpace, MediaInfoMissing, TmpSynced
     };
 
     struct Issue {
@@ -49,6 +49,7 @@ public:
         bool    compress = false;
         QString rarPath;
         QString tmpPath;
+        bool    windowsPaths = false;   //!< Windows: Desktop and Documents are often synchronized by OneDrive
         bool    par2 = false;
         QString par2Path;
         bool    passwordChecked = false;
@@ -63,6 +64,13 @@ public:
     };
 
     static QList<Issue> check(const Input &in);
+
+    /*!
+     * \brief the cloud service that may synchronize \a path ("" if none): the software uploads and may lock every file written there,
+     * which breaks the archive being written (7-Zip: "the file is used by another process")
+     * \param windows : on Windows the Desktop and Documents folders count too (OneDrive backs them up by default)
+     */
+    static QString syncedFolder(const QString &path, bool windows);
 
     //! bytes to upload for \a sourceBytes: the archive (same size, the media are not compressible) and par2
     static qint64 uploadBytes(qint64 sourceBytes, bool par2, uint par2Pct);

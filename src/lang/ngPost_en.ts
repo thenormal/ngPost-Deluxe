@@ -5022,6 +5022,10 @@ Click on &quot;Add&quot; to configure your Usenet provider.</translation>
         <source>%1 h %2 min</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The temporary folder is in a folder that %1 may synchronize: it can lock the files while the archive is written and make the post fail. Choose another folder (Quick Post, advanced options).</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>GuidedPostWidget</name>

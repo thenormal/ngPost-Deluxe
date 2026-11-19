@@ -71,12 +71,36 @@ QList<PostChecker::Issue> PostChecker::check(const Input &in)
                                 tr("The temporary folder may not have enough free space: about %1 needed, %2 free.").arg(
                                     NfoWriter::humanSize(need), NfoWriter::humanSize(in.freeBytesTmp)), QString()};
         }
+        const QString synced = syncedFolder(in.tmpPath, in.windowsPaths);
+        if (!synced.isEmpty())
+            issues << Issue{Code::TmpSynced, false,
+                            tr("The temporary folder is in a folder that %1 may synchronize: it can lock the files while the archive is written and make the post fail. "
+                               "Choose another folder (Quick Post, advanced options).").arg(synced), QString()};
     }
 
     if (in.mediaInfoWanted && in.hasMediaFiles && !in.mediaInfoFound)
         issues << Issue{Code::MediaInfoMissing, false, tr("MediaInfo was not found: the NFO file will have no media information."), tr("Turn media information off")};
 
     return issues;
+}
+
+QString PostChecker::syncedFolder(const QString &path, bool windows)
+{
+    const QStringList parts = QString(path).replace('\\', '/').toLower().split('/', Qt::SkipEmptyParts);
+    for (const QString &p : parts)
+    {
+        if (p == "onedrive" || p.startsWith("onedrive -") || p.startsWith("onedrive-"))
+            return QStringLiteral("OneDrive");
+        if (p == "dropbox" || p.startsWith("dropbox ("))
+            return QStringLiteral("Dropbox");
+        if (p == "google drive" || p == "googledrive")
+            return QStringLiteral("Google Drive");
+        if (p == "icloud drive" || p == "iclouddrive")
+            return QStringLiteral("iCloud");
+        if (windows && (p == "desktop" || p == "documents"))
+            return QStringLiteral("OneDrive");
+    }
+    return QString();
 }
 
 qint64 PostChecker::uploadBytes(qint64 sourceBytes, bool par2, uint par2Pct)

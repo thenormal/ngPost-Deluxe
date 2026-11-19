@@ -5059,6 +5059,10 @@ Klicken Sie auf „Hinzufügen“, um Ihren Usenet-Anbieter einzurichten.</trans
         <source>%1 h %2 min</source>
         <translation>%1 Std. %2 Min.</translation>
     </message>
+    <message>
+        <source>The temporary folder is in a folder that %1 may synchronize: it can lock the files while the archive is written and make the post fail. Choose another folder (Quick Post, advanced options).</source>
+        <translation>Der temporäre Ordner liegt in einem Ordner, den %1 synchronisieren kann: Das kann die Dateien sperren, während das Archiv geschrieben wird, und den Post scheitern lassen. Wählen Sie einen anderen Ordner (Quick Post, erweiterte Optionen).</translation>
+    </message>
 </context>
 <context>
     <name>GuidedPostWidget</name>

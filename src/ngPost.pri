@@ -102,6 +102,7 @@ SOURCES += \
         utils/Notifier.cpp \
         utils/UpdateChecker.cpp \
         utils/SpeedLimiter.cpp \
+        utils/ProcessText.cpp \
         utils/Yenc.cpp
 
 
@@ -139,6 +140,7 @@ HEADERS += \
     utils/Notifier.h \
     utils/UpdateChecker.h \
     utils/SpeedLimiter.h \
+    utils/ProcessText.h \
     utils/VersionNumber.h \
     utils/Macros.h \
     utils/PureStaticClass.h \

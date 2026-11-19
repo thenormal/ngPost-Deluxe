@@ -755,6 +755,9 @@ PostChecker::Input MainWindow::checkInput(const QFileInfoList &files, bool hasFo
     in.compress        = _ngPost->_doCompress;
     in.rarPath         = _ngPost->_rarPath;
     in.tmpPath         = _ngPost->_tmpPath;
+#ifdef Q_OS_WIN
+    in.windowsPaths    = true; // Desktop and Documents are often synchronized by OneDrive
+#endif
     in.par2            = _ngPost->_doPar2;
     in.par2Path        = _ngPost->_par2Path;
     in.par2Pct         = _ngPost->_par2Pct;
