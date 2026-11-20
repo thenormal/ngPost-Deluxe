@@ -118,6 +118,18 @@ static bool sameOptions(const PostProfile &a, const PostProfile &b)
             && a.par2 == b.par2 && a.par2Pct == b.par2Pct && a.keepRar == b.keepRar;
 }
 
+void ProfileBar::restore(const PostProfile &options)
+{
+    PostProfile p = options;
+    for (const PostProfile &saved : _ngPost->_profiles)
+        if (sameOptions(saved, options))
+        {
+            p.name = saved.name;
+            break;
+        }
+    select(p);
+}
+
 void ProfileBar::select(const PostProfile &profile)
 {
     int idx = 0; // Custom
