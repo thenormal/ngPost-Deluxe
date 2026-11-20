@@ -726,7 +726,7 @@ void PostingWidget::init()
 
     // the options of the last session, unless the options of the command line / PACK decide
     if (_ngPost->_quickOptionsSet && !_ngPost->_packAuto)
-        _profileBar->restore(_ngPost->_quickOptions);
+        _profileBar->restore(_ngPost->_quickOptions, _ngPost->_quickProfile);
     else
         _profileBar->applyRecommendedIfNew(); // first start of a new installation
 }
@@ -1102,6 +1102,11 @@ void PostingWidget::_buildLayout()
 
     _showAdvanced(sShowAdvanced);
     _retranslateLayout();
+}
+
+QString PostingWidget::profileName() const
+{
+    return _profileBar ? _profileBar->selectedName() : QString();
 }
 
 PostProfile PostingWidget::currentProfile() const

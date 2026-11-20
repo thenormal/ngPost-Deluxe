@@ -3565,6 +3565,10 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>## Quick Post and Auto Posting: the options of the last session (compress|random name|random password|par2|par2 %|keep the archives, 1 or 0)</source>
         <translation>## Quick Post 和 Auto Posting: 上次会话的选项 (压缩|随机名称|随机密码|par2|par2 %|保留压缩包, 1 或 0)</translation>
     </message>
+    <message>
+        <source>Profile chosen when the program was closed (a name of the list of profiles, Recommended, or empty = Custom)</source>
+        <translation>关闭程序时选择的配置文件 (配置文件列表中的名称, Recommended, 或留空 = Custom)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>

@@ -2594,6 +2594,10 @@ QString NgPost::_parseConfig(const QString &configPath)
                         _movePosted = val.trimmed();
                     else if (opt == "quick_options")
                         _quickOptionsSet = PostProfile::fromOptionsLine(val.trimmed(), _quickOptions);
+                    else if (opt == "quick_profile")
+                        _quickProfile = PostProfile::cleanName(val);
+                    else if (opt == "auto_profile")
+                        _autoProfile = PostProfile::cleanName(val);
                     else if (opt == "auto_options")
                         _autoOptionsSet = PostProfile::fromOptionsLine(val.trimmed(), _autoOptions);
                     else if (opt == "auto_mode")
@@ -3262,6 +3266,9 @@ void NgPost::saveConfig(bool quiet)
                << tr("## Quick Post and Auto Posting: the options of the last session (compress|random name|random password|par2|par2 %|keep the archives, 1 or 0)") << "\n"
                << (_quickOptionsSet ? "" : "#") << "quick_options = " << _quickOptions.optionsLine() << "\n"
                << (_autoOptionsSet ? "" : "#") << "auto_options = " << _autoOptions.optionsLine() << "\n"
+               << "## " << tr("Profile chosen when the program was closed (a name of the list of profiles, Recommended, or empty = Custom)") << "\n"
+               << (_quickProfile.isEmpty() ? "#" : "") << "quick_profile = " << _quickProfile << "\n"
+               << (_autoProfile.isEmpty() ? "#" : "") << "auto_profile = " << _autoProfile << "\n"
                << "\n"
                << tr("## Auto Posting: last mode used (choose, scan or watch) and the folder where the posted files are moved") << "\n"
                << tr("## (a name like Posted is created next to each file/folder, a full path is used as it is; without it nothing is moved)") << "\n"

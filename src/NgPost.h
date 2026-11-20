@@ -230,6 +230,8 @@ private:
     double      _lastUploadSpeed = 0.; //!< bytes/s of the last upload of this session (0: none yet), for the estimated time
     PostProfile _quickOptions;         //!< Quick Post: options of the last session (key quick_options)
     bool        _quickOptionsSet = false;
+    QString     _quickProfile;         //!< Quick Post: profile chosen when the program was closed (key quick_profile, empty = Custom)
+    QString     _autoProfile;          //!< Auto Posting: same (key auto_profile)
     PostProfile _autoOptions;          //!< Auto Posting: options of the last session (key auto_options)
     bool        _autoOptionsSet = false;
     QString     _autoMode     = "choose"; //!< last mode of the Auto Posting page: choose, scan or watch (key "auto_mode")

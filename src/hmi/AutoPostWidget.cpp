@@ -151,7 +151,7 @@ void AutoPostWidget::init()
 
     // the options of the last session, unless the options of the command line / PACK decide
     if (_ngPost->_autoOptionsSet && !_ngPost->_packAuto)
-        _profileBar->restore(_ngPost->_autoOptions);
+        _profileBar->restore(_ngPost->_autoOptions, _ngPost->_autoProfile);
     else
         _profileBar->applyRecommendedIfNew(); // first start of a new installation
 
@@ -711,6 +711,11 @@ void AutoPostWidget::retranslate()
     _ui->removeAllButton->setToolTip(tr("Empty the whole list (the posts already started and the files on disk are not touched)"));
     _ui->closeTabsButton->setToolTip(tr("Close the Quick Post tabs whose upload is finished"));
     _ui->filesList->setToolTip(tr("Uncheck what you don't want to post. To remove items from the list, select them and press DEL."));
+}
+
+QString AutoPostWidget::profileName() const
+{
+    return _profileBar ? _profileBar->selectedName() : QString();
 }
 
 PostProfile AutoPostWidget::currentProfile() const

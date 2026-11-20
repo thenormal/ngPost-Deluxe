@@ -198,6 +198,7 @@ void MainWindow::init(NgPost *ngPost)
     _watchForAutoSave(_pages->widget(PAGE_SETTINGS), -1);
     _watchForAutoSave(_quickJobTab, 0);
     _watchForAutoSave(_autoPostTab, 1);
+    connect(_ngPost, &NgPost::profilesChanged, this, [this](){ _autoSaveQuickTab = _autoSaveAutoTab = true; scheduleAutoSave(); }); // profile saved or deleted
     connect(_ngPost, &NgPost::nfoOptionsChanged, this, &MainWindow::scheduleAutoSave); // NFO options (also the text and the MediaInfo path)
     QTimer::singleShot(0, this, [this](){ _autoSaveReady = true; }); // after the initialisation of the widgets
 
@@ -1019,6 +1020,8 @@ void MainWindow::_saveConfig(bool quickTab, bool autoTab)
         _ngPost->_autoOptions = _autoPostTab->currentProfile();
         _ngPost->_autoOptionsSet = true;
     }
+    _ngPost->_quickProfile = _quickJobTab->profileName();
+    _ngPost->_autoProfile  = _autoPostTab->profileName();
     _ngPost->saveConfig(true);
 }
 
@@ -1191,7 +1194,8 @@ void MainWindow::_watchForAutoSave(QWidget *root, int tab)
 {
     // only the signals emitted by a user action (not when the code fills the widgets)
     // the fields that only concern one post (nzb name, archive name and password of a post) are not watched
-    static const QStringList perPostFields = {"nzbFileEdit", "nzbPassCB", "nzbPassEdit", "compressNameEdit",
+    // (the check box "Password" is an option of the post, so it is watched)
+    static const QStringList perPostFields = {"nzbFileEdit", "nzbPassEdit", "compressNameEdit",
                                               "debugBox", "debugSB"};
     auto changed = [this, tab]() {
         if (tab == 0)
@@ -1242,6 +1246,8 @@ void MainWindow::onSaveConfig()
         if (postWidget)
             postWidget->udatePostingParams();
     }
+    _ngPost->_quickProfile = _quickJobTab->profileName();
+    _ngPost->_autoProfile  = _autoPostTab->profileName();
     _ngPost->saveConfig();
 }
 
