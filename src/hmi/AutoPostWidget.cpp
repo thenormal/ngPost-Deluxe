@@ -150,7 +150,9 @@ void AutoPostWidget::init()
     connect(_ui->redundancySB, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](){ _updateSummary(); });
 
     // the options of the last session, unless the options of the command line / PACK decide
-    if (_ngPost->_autoOptionsSet && !_ngPost->_packAuto)
+    if (_ngPost->_packAuto)
+        _profileBar->showMatching(_ngPost->_autoProfile); // the options were set by "compress automatically": show the matching profile
+    else if (_ngPost->_autoOptionsSet)
         _profileBar->restore(_ngPost->_autoOptions, _ngPost->_autoProfile);
     else
         _profileBar->applyRecommendedIfNew(); // first start of a new installation
