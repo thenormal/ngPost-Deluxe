@@ -118,8 +118,31 @@ static bool sameOptions(const PostProfile &a, const PostProfile &b)
             && a.par2 == b.par2 && a.par2Pct == b.par2Pct && a.keepRar == b.keepRar;
 }
 
-void ProfileBar::restore(const PostProfile &options)
+QString ProfileBar::selectedName() const
 {
+    int idx = _combo->currentIndex();
+    if (idx == 1)
+        return QStringLiteral("Recommended");
+    if (idx >= 2 && idx - 2 < _ngPost->_profiles.size())
+        return _ngPost->_profiles.at(idx - 2).name;
+    return QString();
+}
+
+void ProfileBar::restore(const PostProfile &options, const QString &profileName)
+{
+    // the profile that was chosen when the program was closed (if it still exists): its options are applied
+    if (profileName == QLatin1String("Recommended"))
+    {
+        PostProfile r = PostProfile::recommended();
+        select(r);
+        return;
+    }
+    for (const PostProfile &saved : _ngPost->_profiles)
+        if (!profileName.isEmpty() && saved.name == profileName)
+        {
+            select(saved);
+            return;
+        }
     PostProfile p = options;
     for (const PostProfile &saved : _ngPost->_profiles)
         if (sameOptions(saved, options))

@@ -139,6 +139,7 @@ signals:
 
 public:
     PostProfile currentProfile() const;            //!< the options of the Archive card (to save them as a profile)
+    QString profileName() const;                   //!< profile chosen in the bar (empty = Custom)
 
 public slots: // for PostingJob
     void onFilePosted(QString filePath, uint nbArticles, uint nbFailed);

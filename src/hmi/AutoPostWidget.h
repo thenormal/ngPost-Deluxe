@@ -115,6 +115,7 @@ public:
 
     void udatePostingParams();
     PostProfile currentProfile() const;            //!< the options of the Archive card (to save them as a profile)
+    QString profileName() const;                   //!< profile chosen in the bar (empty = Custom)
     void applyProfile(const PostProfile &profile); //!< a profile was chosen
 
     //! Guided Post: one post for each item, scan of a folder or watch of a folder; false if nothing started

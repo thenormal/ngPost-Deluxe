@@ -3566,6 +3566,10 @@ Usa --par2_pct oppure imposta PAR2_PCT o PAR2_ARGS nel file di configurazione.</
         <source>## Quick Post and Auto Posting: the options of the last session (compress|random name|random password|par2|par2 %|keep the archives, 1 or 0)</source>
         <translation>## Quick Post e Auto Posting: le opzioni dell&apos;ultima sessione (comprimi|nome casuale|password casuale|par2|par2 %|conserva gli archivi, 1 o 0)</translation>
     </message>
+    <message>
+        <source>Profile chosen when the program was closed (a name of the list of profiles, Recommended, or empty = Custom)</source>
+        <translation>Profilo scelto alla chiusura del programma (un nome della lista dei profili, Recommended, oppure vuoto = Custom)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
