@@ -42,6 +42,10 @@ struct PostProfile
     static QString cleanName(const QString &name);
 
     QString toLine() const;
+
+    //! the options without name (last choices of Quick Post / Auto Posting): compress|genName|genPass|par2|par2Pct|keepRar
+    QString optionsLine() const;
+    static bool fromOptionsLine(const QString &line, PostProfile &profile);
     static bool fromLine(const QString &line, PostProfile &profile);
 };
 

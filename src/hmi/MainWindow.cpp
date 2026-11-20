@@ -198,6 +198,7 @@ void MainWindow::init(NgPost *ngPost)
     _watchForAutoSave(_pages->widget(PAGE_SETTINGS), -1);
     _watchForAutoSave(_quickJobTab, 0);
     _watchForAutoSave(_autoPostTab, 1);
+    connect(_ngPost, &NgPost::nfoOptionsChanged, this, &MainWindow::scheduleAutoSave); // NFO options (also the text and the MediaInfo path)
     QTimer::singleShot(0, this, [this](){ _autoSaveReady = true; }); // after the initialisation of the widgets
 
     _ui->goCmdButton->hide();
@@ -1007,9 +1008,17 @@ void MainWindow::_saveConfig(bool quickTab, bool autoTab)
     updateServers();
     updateParams();
     if (quickTab)
+    {
         _quickJobTab->udatePostingParams();
+        _ngPost->_quickOptions = _quickJobTab->currentProfile();
+        _ngPost->_quickOptionsSet = true;
+    }
     if (autoTab)
+    {
         _autoPostTab->udatePostingParams();
+        _ngPost->_autoOptions = _autoPostTab->currentProfile();
+        _ngPost->_autoOptionsSet = true;
+    }
     _ngPost->saveConfig(true);
 }
 
@@ -1216,9 +1225,17 @@ void MainWindow::onSaveConfig()
     updateParams();
     int currentTabIdx = _ui->postTabWidget->currentIndex();
     if (currentTabIdx == 0)
+    {
         _quickJobTab->udatePostingParams();
+        _ngPost->_quickOptions = _quickJobTab->currentProfile();
+        _ngPost->_quickOptionsSet = true;
+    }
     else if (currentTabIdx == 1)
+    {
         _autoPostTab->udatePostingParams();
+        _ngPost->_autoOptions = _autoPostTab->currentProfile();
+        _ngPost->_autoOptionsSet = true;
+    }
     else
     {
         PostingWidget *postWidget = _getPostWidget(currentTabIdx);
@@ -1302,7 +1319,10 @@ void MainWindow::onNzbPathClicked()
                 QFileDialog::ShowDirsOnly);
 
     if (!path.isEmpty())
+    {
         _ui->nzbPathEdit->setText(path);
+        emit _ui->nzbPathEdit->editingFinished();
+    }
 }
 
 void MainWindow::onLangChanged(const QString &lang)

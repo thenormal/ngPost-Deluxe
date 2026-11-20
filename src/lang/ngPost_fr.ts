@@ -3551,6 +3551,10 @@ Soit utilisez --par2_pct, soit renseignez PAR2_PCT ou PAR2_ARGS dans le fichier 
         <source>(max %1 MB/s)</source>
         <translation>(max %1 Mo/s)</translation>
     </message>
+    <message>
+        <source>## Quick Post and Auto Posting: the options of the last session (compress|random name|random password|par2|par2 %|keep the archives, 1 or 0)</source>
+        <translation>## Quick Post et Auto Posting : les options de la dernière session (compresser|nom aléatoire|mot de passe aléatoire|par2|par2 %|garder les archives, 1 ou 0)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>

@@ -149,7 +149,11 @@ void AutoPostWidget::init()
         connect(b, &QAbstractButton::toggled, this, [this](){ _updateSummary(); });
     connect(_ui->redundancySB, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](){ _updateSummary(); });
 
-    _profileBar->applyRecommendedIfNew(); // first start of a new installation
+    // the options of the last session, unless the options of the command line / PACK decide
+    if (_ngPost->_autoOptionsSet && !_ngPost->_packAuto)
+        _profileBar->restore(_ngPost->_autoOptions);
+    else
+        _profileBar->applyRecommendedIfNew(); // first start of a new installation
 
     Mode mode = _ngPost->_autoMode == "scan" ? Mode::Scan : _ngPost->_autoMode == "watch" ? Mode::Watch : Mode::Choose;
     _setMode(mode);
@@ -272,7 +276,10 @@ void AutoPostWidget::onCompressPathClicked()
                 QFileDialog::ShowDirsOnly);
 
     if (!path.isEmpty())
+    {
         _ui->compressPathEdit->setText(path);
+        emit _ui->compressPathEdit->editingFinished(); // same as a typed change: the config is saved
+    }
 }
 
 void AutoPostWidget::onRarPathClicked()
@@ -287,7 +294,10 @@ void AutoPostWidget::onRarPathClicked()
     {
         QFileInfo fi(path);
         if (fi.isFile() && fi.isExecutable())
+        {
             _ui->rarEdit->setText(path);
+            emit _ui->rarEdit->editingFinished();
+        }
         else
             _ngPost->error(tr("the selected file is not executable..."));
     }
@@ -302,7 +312,10 @@ void AutoPostWidget::onSelectAutoDirClicked()
                 QFileDialog::ShowDirsOnly);
 
     if (!path.isEmpty())
+    {
         _ui->autoDirEdit->setText(path);
+        emit _ui->autoDirEdit->editingFinished();
+    }
 }
 
 void AutoPostWidget::onScanAutoDirClicked()
@@ -1201,6 +1214,7 @@ void AutoPostWidget::_setMode(Mode mode)
         return;
     _mode = mode;
     _ngPost->_autoMode = mode == Mode::Scan ? "scan" : mode == Mode::Watch ? "watch" : "choose";
+    _hmi->scheduleAutoSave();
     _applyMode();
     _decorateItems();
 }

@@ -537,7 +537,10 @@ void PostingWidget::onCompressPathClicked()
                 QFileDialog::ShowDirsOnly);
 
     if (!path.isEmpty())
+    {
         _ui->compressPathEdit->setText(path);
+        emit _ui->compressPathEdit->editingFinished(); // same as a typed change: the config is saved
+    }
 }
 
 void PostingWidget::onNzbFileClicked()
@@ -565,7 +568,10 @@ void PostingWidget::onRarPathClicked()
     {
         QFileInfo fi(path);
         if (fi.isFile() && fi.isExecutable())
+        {
             _ui->rarEdit->setText(path);
+            emit _ui->rarEdit->editingFinished();
+        }
         else
             _ngPost->error(tr("the selected file is not executable..."));
     }
@@ -718,7 +724,11 @@ void PostingWidget::init()
     if (!fixedPass.isEmpty())
         _ui->nzbPassEdit->setText(fixedPass);
 
-    _profileBar->applyRecommendedIfNew(); // first start of a new installation
+    // the options of the last session, unless the options of the command line / PACK decide
+    if (_ngPost->_quickOptionsSet && !_ngPost->_packAuto)
+        _profileBar->restore(_ngPost->_quickOptions);
+    else
+        _profileBar->applyRecommendedIfNew(); // first start of a new installation
 }
 
 void PostingWidget::genNameAndPassword(bool genName, bool genPass, bool doPar2, bool useRarMax)

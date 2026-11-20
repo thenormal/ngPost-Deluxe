@@ -137,6 +137,9 @@ public:
 signals:
     void postingDone(bool uploadedWithoutError); //!< emitted when the post is finished (used by the Auto Posting tab)
 
+public:
+    PostProfile currentProfile() const;            //!< the options of the Archive card (to save them as a profile)
+
 public slots: // for PostingJob
     void onFilePosted(QString filePath, uint nbArticles, uint nbFailed);
     void onArchiveFileNames(QStringList paths);
@@ -151,7 +154,6 @@ private slots: // for the HMI
     void onNzbPassToggled(bool checked);
     void onGenNzbPassword();
     void _updateSummary(bool recomputeSize = true);
-    PostProfile currentProfile() const;            //!< the options of the Archive card (to save them as a profile)
     void applyProfile(const PostProfile &profile); //!< a profile was chosen
 
 

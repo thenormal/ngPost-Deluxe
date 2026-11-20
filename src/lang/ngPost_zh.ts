@@ -3561,6 +3561,10 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>(max %1 MB/s)</source>
         <translation>(最高 %1 MB/s)</translation>
     </message>
+    <message>
+        <source>## Quick Post and Auto Posting: the options of the last session (compress|random name|random password|par2|par2 %|keep the archives, 1 or 0)</source>
+        <translation>## Quick Post 和 Auto Posting: 上次会话的选项 (压缩|随机名称|随机密码|par2|par2 %|保留压缩包, 1 或 0)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>

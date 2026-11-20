@@ -75,6 +75,21 @@ int main()
     CHECK(!PostRequest::fromChoicesLine("scan|0|1|1|1|1|P|1|1|1|1|999|0|", untouched));
     CHECK(untouched.kind == Kind::ScanFolder && untouched.after == After::Nothing);
 
+    // options of the last session (Quick Post / Auto Posting): no name, same fields as a profile
+    {
+        PostProfile opt;
+        opt.compress = true; opt.genName = false; opt.genPass = true; opt.par2 = false; opt.par2Pct = 25; opt.keepRar = true;
+        CHECK(opt.optionsLine() == "1|0|1|0|25|1");
+        PostProfile back;
+        CHECK(PostProfile::fromOptionsLine(opt.optionsLine(), back));
+        CHECK(back.name.isEmpty() && back.compress && !back.genName && back.genPass && !back.par2 && back.par2Pct == 25 && back.keepRar);
+        PostProfile keep = opt;
+        CHECK(!PostProfile::fromOptionsLine("", keep));
+        CHECK(!PostProfile::fromOptionsLine("1|0|1", keep));
+        CHECK(!PostProfile::fromOptionsLine("1|0|1|0|999|1", keep));
+        CHECK(keep.par2Pct == 25);
+    }
+
     if (failures == 0)
         std::printf("OK\n");
     return failures ? 1 : 0;

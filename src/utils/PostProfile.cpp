@@ -36,6 +36,21 @@ QString PostProfile::toLine() const
     return QString("%1|%2|%3|%4|%5|%6|%7").arg(cleanName(name)).arg(compress).arg(genName).arg(genPass).arg(par2).arg(par2Pct).arg(keepRar);
 }
 
+QString PostProfile::optionsLine() const
+{
+    return QString("%1|%2|%3|%4|%5|%6").arg(compress).arg(genName).arg(genPass).arg(par2).arg(par2Pct).arg(keepRar);
+}
+
+bool PostProfile::fromOptionsLine(const QString &line, PostProfile &profile)
+{
+    PostProfile p;
+    if (!fromLine(QStringLiteral("x|") + line.trimmed(), p))
+        return false;
+    p.name.clear();
+    profile = p;
+    return true;
+}
+
 bool PostProfile::fromLine(const QString &line, PostProfile &profile)
 {
     QStringList f = line.split('|');

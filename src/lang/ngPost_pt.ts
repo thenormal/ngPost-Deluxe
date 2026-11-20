@@ -3560,6 +3560,10 @@ OU use --par2_pct ou coloque PAR2_PCT ou PAR2_ARGS na configuração de arquivo.
         <source>(max %1 MB/s)</source>
         <translation>(máx. %1 MB/s)</translation>
     </message>
+    <message>
+        <source>## Quick Post and Auto Posting: the options of the last session (compress|random name|random password|par2|par2 %|keep the archives, 1 or 0)</source>
+        <translation>## Quick Post e Auto Posting: as opções da última sessão (comprimir|nome aleatório|palavra-passe aleatória|par2|par2 %|manter os arquivos, 1 ou 0)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
