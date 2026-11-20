@@ -1685,6 +1685,20 @@ bool PostingJob::startCompressFiles(const QString &cmdRar,
     if (!_canCompress())
         return false;
 
+    // the files of the list may have been moved or deleted since they were added: stop at once with a clear
+    // message (7-Zip would search the missing names on all the drives and stay silent for minutes)
+    for (const QFileInfo &fi : _files)
+    {
+        if (!fi.exists())
+        {
+            _error(tr("ERROR: %1 doesn't exist anymore (moved or deleted?). Remove it from the list and add it again.").arg(
+                       QDir::toNativeSeparators(fi.absoluteFilePath())));
+            Diagnostics::instance().anomaly(QString("compression not started: missing source %1").arg(fi.absoluteFilePath()));
+            return false;
+        }
+    }
+    _procErrLines = 0;
+
     // 1.: create archive temporary folder
     QString archiveTmpFolder = _createArchiveFolder(tmpFolder, archiveName);
     if (archiveTmpFolder.isEmpty())
@@ -1851,7 +1865,9 @@ bool PostingJob::startCompressFiles(const QString &cmdRar,
         }
     }
 
-    if (hasDir && !args.contains("-r"))
+    // 7-Zip takes the folders by name with their content: "-r" is useless for it and, when a path doesn't exist
+    // anymore, makes it search the name on all the drives
+    if (hasDir && !_use7z && !args.contains("-r"))
         args << "-r";
 
     // 3.: launch rar
@@ -2225,7 +2241,26 @@ void PostingJob::onExtProcReadyReadStandardOutput()
 
 void PostingJob::onExtProcReadyReadStandardError()
 {
-    _error(ProcessText::decode(_extProc->readAllStandardError()));
+    const QString text = ProcessText::decode(_extProc->readAllStandardError());
+    QStringList lines = text.split('\n');
+    lines.removeAll(QString());
+    static const int sMaxProcErrLines = 20;
+    for (const QString &line : lines)
+    {
+        if (line.trimmed().isEmpty())
+            continue;
+        ++_procErrLines;
+        if (_procErrLines <= sMaxProcErrLines)
+            _error(line);
+        else if (_procErrLines == sMaxProcErrLines + 1)
+            _error(tr("... more messages from the compression program are not shown (see the diagnostic report)."));
+    }
+    if (_diagCompressing && !lines.isEmpty())
+    {
+        _diagOutTail.append(text.toUtf8());
+        if (_diagOutTail.size() > 1000)
+            _diagOutTail = _diagOutTail.right(1000);
+    }
 }
 
 

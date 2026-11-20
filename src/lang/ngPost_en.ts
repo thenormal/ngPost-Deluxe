@@ -4132,6 +4132,14 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Upload speed limited to %1 MB/s (all the connections together)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ERROR: %1 doesn&apos;t exist anymore (moved or deleted?). Remove it from the list and add it again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>... more messages from the compression program are not shown (see the diagnostic report).</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PostingWidget</name>

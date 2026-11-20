@@ -4167,6 +4167,14 @@ OU use --par2_pct ou coloque PAR2_PCT ou PAR2_ARGS na configuração de arquivo.
         <source>Upload speed limited to %1 MB/s (all the connections together)</source>
         <translation>Velocidade de envio limitada a %1 MB/s (todas as ligações em conjunto)</translation>
     </message>
+    <message>
+        <source>ERROR: %1 doesn&apos;t exist anymore (moved or deleted?). Remove it from the list and add it again.</source>
+        <translation>ERRO: %1 já não existe (movido ou eliminado?). Remova-o da lista e adicione-o novamente.</translation>
+    </message>
+    <message>
+        <source>... more messages from the compression program are not shown (see the diagnostic report).</source>
+        <translation>... as restantes mensagens do programa de compressão não são mostradas (veja o relatório de diagnóstico).</translation>
+    </message>
 </context>
 <context>
     <name>PostingWidget</name>

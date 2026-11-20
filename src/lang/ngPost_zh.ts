@@ -4168,6 +4168,14 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Upload speed limited to %1 MB/s (all the connections together)</source>
         <translation>上传速度限制为 %1 MB/s (所有连接合计)</translation>
     </message>
+    <message>
+        <source>ERROR: %1 doesn&apos;t exist anymore (moved or deleted?). Remove it from the list and add it again.</source>
+        <translation>错误: %1 已不存在 (已被移动或删除?)。请从列表中移除后重新添加。</translation>
+    </message>
+    <message>
+        <source>... more messages from the compression program are not shown (see the diagnostic report).</source>
+        <translation>... 压缩程序的其余消息不再显示 (请参阅诊断报告)。</translation>
+    </message>
 </context>
 <context>
     <name>PostingWidget</name>

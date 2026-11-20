@@ -132,6 +132,7 @@ private:
     qint64        _diagLastOut     = -1;    //!< diagnostics: ms of the last output
     qint64        _diagProcDone    = -1;    //!< diagnostics: ms when the compressor really exited
     int           _diagNbOut       = 0;     //!< diagnostics: number of outputs of the compressor
+    int           _procErrLines = 0;        //!< lines of warnings/errors of the compressor already shown
     QByteArray    _diagOutTail;             //!< diagnostics: end of the output of the compressor
     quint64       _totalSize; //!< total size (in Bytes) to be uploaded
     QElapsedTimer _pauseTimer;   //!< to record the time when ngPost is in pause

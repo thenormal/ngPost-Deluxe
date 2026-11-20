@@ -4173,6 +4173,14 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
         <source>Upload speed limited to %1 MB/s (all the connections together)</source>
         <translation>Uploadsnelheid beperkt tot %1 MB/s (alle verbindingen samen)</translation>
     </message>
+    <message>
+        <source>ERROR: %1 doesn&apos;t exist anymore (moved or deleted?). Remove it from the list and add it again.</source>
+        <translation>FOUT: %1 bestaat niet meer (verplaatst of verwijderd?). Verwijder het uit de lijst en voeg het opnieuw toe.</translation>
+    </message>
+    <message>
+        <source>... more messages from the compression program are not shown (see the diagnostic report).</source>
+        <translation>... verdere meldingen van het compressieprogramma worden niet getoond (zie het diagnoserapport).</translation>
+    </message>
 </context>
 <context>
     <name>PostingWidget</name>

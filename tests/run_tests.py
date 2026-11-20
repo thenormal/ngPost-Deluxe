@@ -1355,6 +1355,34 @@ def test_notification_when_all_done(work):
         stub.stop()
 
 
+def test_7z_folder_without_recursion(work):
+    # a folder is compressed with 7-Zip without "-r" (7-Zip takes the folders by name, "-r" would make it
+    # search a name that doesn't exist anymore on all the drives): all the files must still be in the archive
+    if not shutil.which("7z"):
+        print("SKIP  (7z is not installed)")
+        return
+    tmp = os.path.join(work, "tmp")
+    os.makedirs(tmp)
+    folder = os.path.join(work, "album")
+    os.makedirs(os.path.join(folder, "sub"))
+    make_file(os.path.join(folder, "a.bin"), 50_000, 61)
+    make_file(os.path.join(folder, "sub", "b.bin"), 50_000, 62)
+    stub = NntpStub().start()
+    try:
+        r = run_ngpost_conf([stub], work, [folder], os.path.join(work, "album.nzb"), conns=1, threads=1,
+                            extra=["--compress", "--rar_name", "albumarch", "--debug"],
+                            conf_extra="TMP_DIR = %s\nRAR_PATH = %s\nRAR_SIZE = 0\n" % (tmp, shutil.which("7z")))
+        out = r.stdout + r.stderr
+        check(r.returncode == 0, "exit code %d:\n%s" % (r.returncode, out[-1500:]))
+        check(" -r" not in out.split("Compressing files")[-1].split("\n")[0], "-r given to 7-Zip:\n" + out[-1500:])
+        archives = glob.glob(os.path.join(tmp, "*", "*.7z"))
+        if archives:
+            listing = subprocess.run([shutil.which("7z"), "l", archives[0]], capture_output=True, text=True).stdout
+            check("a.bin" in listing and "b.bin" in listing, "files missing in the archive:\n" + listing)
+    finally:
+        stub.stop()
+
+
 TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_retry_after_refusals, test_wrong_password, test_some_logins_refused,
          test_article_always_refused_on_one_connection, test_server_going_down,
@@ -1367,7 +1395,8 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_duplicate_is_skipped, test_history_columns, test_nfo_file, test_nfo_media_info, test_profiles_and_par2_default, test_post_checker_unit, test_move_posted, test_move_posted_never_overwrites,
          test_move_posted_kept_when_articles_failed, test_move_posted_options, test_posted_mover_unit, test_notifications,
          test_notification_when_all_done, test_version_number_unit, test_post_request_unit, test_translations_compiled,
-         test_speed_limiter_unit, test_speed_limit, test_process_text_unit]
+         test_speed_limiter_unit, test_speed_limit, test_process_text_unit,
+         test_7z_folder_without_recursion]
 
 
 def main():
