@@ -128,6 +128,24 @@ QString ProfileBar::selectedName() const
     return QString();
 }
 
+void ProfileBar::showMatching(const QString &profileName)
+{
+    if (!_current)
+        return;
+    const PostProfile now = _current();
+    int idx = 0; // Custom
+    // the profile of the last session first, then any profile with the same options
+    for (int pass = 0; pass < 2 && idx == 0; ++pass)
+        for (int i = 0; i < _ngPost->_profiles.size() && idx == 0; ++i)
+            if (sameOptions(_ngPost->_profiles.at(i), now) && (pass == 1 || _ngPost->_profiles.at(i).name == profileName))
+                idx = i + 2;
+    if (idx == 0 && sameOptions(now, PostProfile::recommended()) && (profileName.isEmpty() || profileName == QLatin1String("Recommended")))
+        idx = 1;
+    QSignalBlocker block(_combo);
+    _combo->setCurrentIndex(idx);
+    _deleteButton->setEnabled(idx >= 2);
+}
+
 void ProfileBar::restore(const PostProfile &options, const QString &profileName)
 {
     // the profile that was chosen when the program was closed (if it still exists): its options are applied

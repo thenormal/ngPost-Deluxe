@@ -725,7 +725,9 @@ void PostingWidget::init()
         _ui->nzbPassEdit->setText(fixedPass);
 
     // the options of the last session, unless the options of the command line / PACK decide
-    if (_ngPost->_quickOptionsSet && !_ngPost->_packAuto)
+    if (_ngPost->_packAuto)
+        _profileBar->showMatching(_ngPost->_quickProfile); // the options were set by "compress automatically": show the matching profile
+    else if (_ngPost->_quickOptionsSet)
         _profileBar->restore(_ngPost->_quickOptions, _ngPost->_quickProfile);
     else
         _profileBar->applyRecommendedIfNew(); // first start of a new installation
