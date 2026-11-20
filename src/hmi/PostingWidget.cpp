@@ -1062,7 +1062,7 @@ void PostingWidget::_buildLayout()
     bottom->setColumnStretch(0, 1);
     bottom->setColumnStretch(1, 0);
     bottom->setColumnStretch(2, 1);
-    root->addLayout(bottom);
+    // the bottom row is added under the scroll area (see below): the Post button is always in view
 
     _ui->aboutButton->hide(); // About is in the side bar
 
@@ -1086,7 +1086,13 @@ void PostingWidget::_buildLayout()
     scroll->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     page->setObjectName("pageContent");
     scroll->setWidget(page);
-    outer->addWidget(scroll);
+    outer->addWidget(scroll, 1);
+
+    // fixed bar under the scrolling page: the Post button must not disappear when the page gets taller than the window
+    QWidget *footer = new QWidget(this);
+    bottom->setContentsMargins(2, 4, 2, 2);
+    footer->setLayout(bottom);
+    outer->addWidget(footer);
 
     // a change made by hand: the profile is now "Custom"
     for (QAbstractButton *b : {static_cast<QAbstractButton*>(_ui->compressCB), static_cast<QAbstractButton*>(_ui->par2CB),

@@ -1935,9 +1935,19 @@ void PostingJob::onCompressionFinished(int exitCode)
         if (exitCode != 0)
             Diagnostics::instance().anomaly(QString("compression failed (exit code %1)").arg(exitCode));
         else if (_diagInputSize >= 20*1024*1024 && ms > 0 && _diagInputSize * 1000. / ms < 20.*1024*1024)
-            Diagnostics::instance().anomaly(QString("slow compression: %1 for %2 (expected more than 20 MB/s, "
-                                                    "check the temporary folder: synced folder, antivirus, network or slow disk)").arg(
-                                                Diagnostics::speed(_diagInputSize, ms), Diagnostics::humanSize(_diagInputSize)));
+        {
+            // the compressor said nothing for a long time before starting to pack: it was reading the source files
+            // (slow disk, antivirus scanning each file, network drive), the temporary folder is not the suspect
+            const qint64 silenceMs = _diagFirstOut >= 0 ? _diagFirstOut : ms;
+            const bool slowSource = silenceMs > 30000 && silenceMs * 2 > ms;
+            Diagnostics::instance().anomaly(QString("slow compression: %1 for %2 (expected more than 20 MB/s, %3)").arg(
+                                                Diagnostics::speed(_diagInputSize, ms), Diagnostics::humanSize(_diagInputSize),
+                                                slowSource
+                                                ? QString("the compressor waited %1 s before its first output: the SOURCE files are slow to read, "
+                                                          "check the disk (SMART), the antivirus (exclude the folder) or the network drive; "
+                                                          "copying the files to another disk can confirm it").arg(silenceMs / 1000.0, 0, 'f', 1)
+                                                : QString("check the temporary folder: synced folder, antivirus, network or slow disk")));
+        }
     }
     if (_ngPost->debugMode())
         _log(tr("=> rar exit code: %1\n").arg(exitCode));
