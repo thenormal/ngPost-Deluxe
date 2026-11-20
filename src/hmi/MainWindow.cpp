@@ -1093,7 +1093,9 @@ QString MainWindow::_diagnosticReport() const
         << ", socket timeout: " << _ngPost->_socketTimeOut / 1000 << " s\n"
         << "obfuscation: articles " << yesNo(_ngPost->_obfuscateArticles)
         << ", file names " << yesNo(_ngPost->_obfuscateFileName) << "\n"
-        << "prepare packing: " << yesNo(_ngPost->_preparePacking) << "\n";
+        << "prepare packing: " << yesNo(_ngPost->_preparePacking) << "\n"
+        << "speed limit: " << (_ngPost->_limitSpeed ? QString("%1 MB/s").arg(_ngPost->_maxSpeed, 0, 'f', 1) : QString("off"))
+        << " (max_speed " << QString::number(_ngPost->_maxSpeed, 'f', 1) << " MB/s)\n";
 
     title("Servers");
     int nbCons = 0;
