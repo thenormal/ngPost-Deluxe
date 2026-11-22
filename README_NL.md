@@ -33,81 +33,72 @@ Het is een fork van [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, li
 3. Open **Quick Post** en sleep je bestanden of mappen in het venster. Om voor elk bestand of elke map een aparte release te posten, gebruik je **Auto Posting**. Het profiel **Aanbevolen** is een goed begin (compressie, willekeurige naam en wachtwoord, par2 10 %).
 4. Druk op **Post Files**. Het NZB-bestand wordt weggeschreven in de map die je in de instellingen koos, en elke upload staat in **History**.
 
+> Nieuw bij ngPost Deluxe? Probeer **Begeleide post** in de zijbalk: het stelt een paar vragen en bereidt de post voor je voor.
+
 Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en je servers en instellingen zijn er weer.
 
 ### Schermafbeeldingen
-| Quick Post (licht thema) | Auto Posting (licht thema) |
+
+| Begeleide post (licht thema) | Quick Post (licht thema) |
 |---|---|
-| ![Quick Post (licht thema)](docs/screenshots/quick-post.png) | ![Auto Posting (licht thema)](docs/screenshots/auto-posting.png) |
-| **Geschiedenis** | **Instellingen (donker thema)** |
-| ![Geschiedenis](docs/screenshots/history.png) | ![Instellingen (donker thema)](docs/screenshots/settings-dark.png) |
+| ![Begeleide post (licht thema)](docs/screenshots/guided-post.png) | ![Quick Post (licht thema)](docs/screenshots/quick-post.png) |
+| **Auto Posting (licht thema)** | **Geschiedenis** |
+| ![Auto Posting (licht thema)](docs/screenshots/auto-posting.png) | ![Geschiedenis](docs/screenshots/history.png) |
+| **Statistieken (donker thema)** | **Instellingen (donker thema)** |
+| ![Statistieken (donker thema)](docs/screenshots/statistics-dark.png) | ![Instellingen (donker thema)](docs/screenshots/settings-dark.png) |
 | **Servers (donker thema)** |  |
 | ![Servers (donker thema)](docs/screenshots/servers-dark.png) |  |
 
 ### Wat is er anders in deze fork
 
-**Interface**
--   **Nieuwe interface**: zijbalk (Quick Post, Auto Posting, Servers, Instellingen, Geschiedenis), pagina's met kaarten, geavanceerde opties verborgen tot ze nodig zijn, een nieuw pictogram en een leeg scherm dat uitlegt wat te doen. **Licht en donker thema**, of automatisch zoals Windows (sleutel `theme`). Zet de omgevingsvariabele `NGPOST_NO_THEME` om het native uiterlijk terug te krijgen
--   **Italiaanse interface**: de GUI/CMD is nu ook in het Italiaans vertaald (al beschikbaar in het Chinees, Nederlands, Engels, Frans, Duits, Portugees en Spaans)
--   **ngPost Deluxe v1.0**: nieuwe naam en versie (het Windows-programma heet nu `ngPostDeluxe.exe`; het configuratiebestand verandert niet), vernieuwd Over-venster, de oorspronkelijke donatieknoppen zijn vervangen door een **Ko-fi**-knop voor deze fork (in het Over-venster en in de Instellingen)
--   **Nieuwe sectie Servers**: lijst van de servers met een statuslampje en een aan/uit-vakje, detailformulier (wachtwoord op verzoek zichtbaar) en een knop **Verbinding testen** die de aanmelding controleert. Servers wijzigen tijdens het posten kan ngPost niet meer laten crashen
--   **Tabblad Auto Posting**: nieuwe knoppen **Voltooide verwijderen**, **Alles verwijderen** en **Voltooide tabbladen sluiten**
--   **Pagina Geschiedenis**: elke upload wordt bewaard (`ngPost_history.csv` naast de configuratie, of `POST_HISTORY`) met status, aantal bestanden en duur. De pagina toont ze met zoeken, periodefilter, totalen, verborgen wachtwoorden, kopiëren, exporteren en de map van de NZB. Let op: het bestand bevat de archiefwachtwoorden in leesbare tekst
--   **Quick Post**: een opmerking herinnert eraan dat alle items van de lijst als één release worden gepost (één NZB, één archief)
-
-**Snelheid**
--   **ParPar** (een veel snellere par2-generator) wordt meegeleverd voor Windows 64bit (v0.4.6, publiek domein) en automatisch gebruikt als `parpar.exe` in de ngPost-map staat. De 64bit par2cmdline is uit het pakket verwijderd, de 32bit-versie blijft voor Windows 32bit
--   **Snellere compressie op Windows**: de uitvoer van 7-Zip / rar wordt nu gelezen zodra die binnenkomt (een post van 115 MB wachtte eerst 200 s, nu 1 s)
-
-**Windows-pakketten en Docker**
--   **ngPost Deluxe v1.1**: **Docker-image** van de opdrachtregelversie (bewaakt een map en post alles wat daar binnenkomt, met een sjabloon voor **Unraid**), de knop Post staat gecentreerd in Quick Post en Auto Posting, tabpictogrammen en voltooide tabs zijn leesbaar in het donkere thema
--   **Windows-installatieprogramma** (64 bit en 32 bit, met **7-Zip inbegrepen**) en draagbare ZIP-pakketten, automatisch gebouwd op GitHub en gepubliceerd in de Releases (`ngPostDeluxe.exe`)
--   **Windows**: het consolevenster sluit vanzelf wanneer ngPost met een dubbelklik wordt gestart; het pakket bevat OpenSSL 1.1.1w (nieuwste versie die Qt 5 ondersteunt)
-
-**Betrouwbaarheid en comfort (v1.2)**
--   **Mislukte artikelen**: een artikel dat mislukt wordt opnieuw geprobeerd op een andere server en in een tweede ronde; de knop **Repost missing Articles** post alleen de ontbrekende artikelen en herstelt de NZB; de originele bestanden blijven bewaard als er artikelen mislukt zijn
--   **Verkeerd wachtwoord**: de post stopt, met een duidelijke melding, als de server het inloggen op alle verbindingen weigert
--   **Wachtrij**: posts die niet klaar zijn worden bewaard en bij de volgende start opnieuw aangeboden (`--resume_queue` op de opdrachtregel)
--   **Voortgang en log**: voortgangsbalk met de fase, de resterende tijd en kleuren; gekleurd log met de duur van elke fase; latentiemetingen in het diagnoserapport
--   **Newsgroups**: een vak met "chips", suggesties en controles, en een menu om te kiezen waar de posts heen gaan als er meerdere groepen zijn
--   **Help**-pagina in het programma, handleiding voor Docker achter een VPN (gluetun) en automatische tests van het posten in de CI
-
-**Makkelijker te gebruiken (v1.3)**
+**Makkelijk te gebruiken**
+-   **Begeleide post**: een assistent in de zijbalk die vraagt wat je wilt doen (één release, elk item, een map scannen, een map bewaken), wat je wilt posten, de opties en waar, en daarna de post voorbereidt met dezelfde controles als Quick Post en Auto Posting. Hij onthoudt je laatste keuzes en kan meerdere posts tegelijk starten
 -   **Auto Posting, opnieuw ontworpen**: drie duidelijke keuzes (post wat ik kies, scan een map eenmalig, bewaak een map en post wat binnenkomt), voorbeeld van wat gepost wordt met de groottes, de status van het bewaken van de map altijd zichtbaar (map, posts van vandaag, pauzeknop) en de keuze wat er daarna met de bestanden gebeurt: niets (standaard), verplaatsen naar een map "Posted" of verwijderen
 -   **Profielen**: een kant-en-klaar profiel "Aanbevolen" (compressie, willekeurige naam en wachtwoord, par2 10 %) en je eigen profielen, opgeslagen via het menu van Quick Post en Auto Posting
 -   **Controles voor het posten**: een venster in gewone woorden met een oplossing met één klik (geen server of groep, mappen zonder compressie, rar / 7z of par2 niet gevonden, leeg wachtwoord, NZB-map niet beschrijfbaar...)
--   **Al gepost?** Een waarschuwing toont de items die al in de geschiedenis staan, met een vakje "Opnieuw posten", in plaats van één vraag per post
--   **NFO-bestand** naast het NZB-bestand (desgewenst mee gepost met de bestanden, desgewenst met het wachtwoord) en media-informatie met MediaInfo: duur, video, audio en ondertitels
--   **Meldingen** wanneer de posts klaar zijn of mislukken: systeemmelding, Discord, Telegram of een webhook, één bericht aan het eind of één per post
--   **Hulp bij de eerste start**: een balk zegt wat er ontbreekt (server, newsgroup) met een knop naar de juiste pagina; de **Instellingen** zijn nu in vijf categorieën
--   **Melding van een nieuwe versie**: één keer per dag vraagt het programma GitHub om de nieuwste versie en toont een knop "Versie X beschikbaar" in de zijbalk (er wordt niets gedownload; uit te zetten in de Instellingen)
--   **Help in 8 talen**, een knop **Feedback** in het Over-venster (opent een nieuw, al ingevuld GitHub-issue) en de meldingen in het diagnoserapport
--   **Kleine vensters**: Quick Post en Auto Posting scrollen in plaats van de kaarten op elkaar te drukken
--   Het verwijderprogramma vraagt of ook je instellingen en geschiedenis verwijderd moeten worden (standaard: bewaren)
-
-**Begeleid en geïnformeerd (v1.4)**
--   **Begeleide post**: een assistent in de zijbalk die vraagt wat je wilt doen (één release, elk item, een map scannen, een map bewaken), wat je wilt posten, de opties en waar, en daarna de post voorbereidt met dezelfde controles als Quick Post en Auto Posting. Hij onthoudt je laatste keuzes en kan meerdere posts tegelijk starten
--   **Statistieken** (pagina Geschiedenis, schakelaar Lijst / Statistieken): totalen en grafieken voor de gekozen periode (vandaag, 7 dagen, 30 dagen, 12 maanden, alles): geposte data, snelheid, resultaten, drukste dagen en uren, newsgroups, servers, hoe de posts zijn gestart en gebruikte opties, plus ranglijsten. Exporteren als PDF-document, webpagina, CSV-bestand of PNG-afbeeldingen van de grafieken
--   **Geschiedenis** bewaart meer gegevens: de gebruikte servers, de opties (compressie, wachtwoord, par2), hoe de post is gestart en de exacte grootte. Oude geschiedenissen blijven geldig
--   **Quick Post**: een profiel met een willekeurige naam vervangt nu de naam van het eerste bestand
--   **Snelheidslimiet**: een maximale uploadsnelheid in MB/s voor alle verbindingen en alle posts samen (Instellingen, Posts, Upload; `--max_speed` op de opdrachtregel), zodat de rest van uw verbinding bruikbaar blijft. Kan tijdens het posten worden gewijzigd
 -   **Onthoudt je keuzes**: Quick Post en Auto Posting bewaren de laatste opties en het gekozen profiel voor de volgende start, en de knop Posten blijft altijd zichtbaar onder de scrollende pagina
+-   **Hulp bij de eerste start**: een balk zegt wat er ontbreekt (server, newsgroup) met een knop naar de juiste pagina; de **Instellingen** zijn nu in vijf categorieën
+-   **Newsgroups**: een vak met "chips", suggesties en controles, en een menu om te kiezen waar de posts heen gaan als er meerdere groepen zijn
+-   **Nieuwe interface**: zijbalk (Quick Post, Auto Posting, Servers, Instellingen, Geschiedenis), pagina's met kaarten, geavanceerde opties verborgen tot ze nodig zijn, een nieuw pictogram en een leeg scherm dat uitlegt wat te doen. **Licht en donker thema**, of automatisch zoals Windows (sleutel `theme`). Zet de omgevingsvariabele `NGPOST_NO_THEME` om het native uiterlijk terug te krijgen
+-   **Nieuwe sectie Servers**: lijst van de servers met een statuslampje en een aan/uit-vakje, detailformulier (wachtwoord op verzoek zichtbaar) en een knop **Verbinding testen** die de aanmelding controleert. Servers wijzigen tijdens het posten kan ngPost niet meer laten crashen
+
+**Geïnformeerd**
+-   **Statistieken** (pagina Geschiedenis, schakelaar Lijst / Statistieken): totalen en grafieken voor de gekozen periode (vandaag, 7 dagen, 30 dagen, 12 maanden, alles): geposte data, snelheid, resultaten, drukste dagen en uren, newsgroups, servers, hoe de posts zijn gestart en gebruikte opties, plus ranglijsten. Exporteren als PDF-document, webpagina, CSV-bestand of PNG-afbeeldingen van de grafieken
+-   **Pagina Geschiedenis**: elke upload wordt bewaard (`ngPost_history.csv` naast de configuratie, of `POST_HISTORY`) met status, aantal bestanden en duur. De pagina toont ze met zoeken, periodefilter, totalen, verborgen wachtwoorden, kopiëren, exporteren en de map van de NZB. Let op: het bestand bevat de archiefwachtwoorden in leesbare tekst
+-   **Meldingen** wanneer de posts klaar zijn of mislukken: systeemmelding, Discord, Telegram of een webhook, één bericht aan het eind of één per post
+-   **NFO-bestand** naast het NZB-bestand (desgewenst mee gepost met de bestanden, desgewenst met het wachtwoord) en media-informatie met MediaInfo: duur, video, audio en ondertitels
+-   **Al gepost?** Een waarschuwing toont de items die al in de geschiedenis staan, met een vakje "Opnieuw posten", in plaats van één vraag per post
+-   **Diagnose**: ngPost registreert de duur en snelheid van elke fase (compressie, par2, upload), de fouten en het vastlopen, en de knop **Diagnoserapport** slaat een rapport op om een probleem te analyseren. Wachtwoorden, gebruikersnamen en bestandsnamen worden gemaskeerd, er wordt niets verstuurd
+
+**Betrouwbaar**
+-   **Mislukte artikelen**: een artikel dat mislukt wordt opnieuw geprobeerd op een andere server en in een tweede ronde; de knop **Repost missing Articles** post alleen de ontbrekende artikelen en herstelt de NZB; de originele bestanden blijven bewaard als er artikelen mislukt zijn
+-   **Wachtrij**: posts die niet klaar zijn worden bewaard en bij de volgende start opnieuw aangeboden (`--resume_queue` op de opdrachtregel)
+-   **Verkeerd wachtwoord**: de post stopt, met een duidelijke melding, als de server het inloggen op alle verbindingen weigert
 -   **Duidelijkere problemen**: een waarschuwing als de tijdelijke map wordt gesynchroniseerd (OneDrive en vergelijkbaar), een melding als de bronbestanden traag te lezen zijn en een duidelijke fout met de naam van een bestand of map die vóór de compressie is verplaatst (7-Zip zoekt die niet meer op alle schijven)
 
-**Beveiliging en correcties**
+**Snel en onder controle**
+-   **ParPar** (een veel snellere par2-generator) wordt meegeleverd voor Windows 64bit (v0.4.6, publiek domein) en automatisch gebruikt als `parpar.exe` in de ngPost-map staat. De 64bit par2cmdline is uit het pakket verwijderd, de 32bit-versie blijft voor Windows 32bit
+-   **Snellere compressie op Windows**: de uitvoer van 7-Zip / rar wordt nu gelezen zodra die binnenkomt (een post van 115 MB wachtte eerst 200 s, nu 1 s)
+-   **Snelheidslimiet**: een maximale uploadsnelheid in MB/s voor alle verbindingen en alle posts samen (Instellingen, Posts, Upload; `--max_speed` op de opdrachtregel), zodat de rest van uw verbinding bruikbaar blijft. Kan tijdens het posten worden gewijzigd
+
+**Beveiliging**
 -   **Beveiligingsfix**: mogelijke heap-overflow in de yEnc-codeerbuffer (bij bepaalde gegevens kon de uitvoer groter zijn dan de buffer)
--   **yEnc-fix**: een spatie of tab aan het einde van een regel wordt nu correct geëscaped (sommige servers verwijderden die, waardoor de gegevens beschadigd raakten)
--   **Veiligere wachtwoorden**: de gegenereerde archiefwachtwoorden en -namen gebruiken de cryptografische willekeurige generator van het besturingssysteem (Qt >= 5.10) in plaats van `std::rand()`
 -   **Archiefwachtwoord niet meer op de opdrachtregel**: 7-Zip krijgt het via de standaardinvoer en rar via de omgevingsvariabele `RAR`, zodat het niet meer zichtbaar is in de proceslijst
+
+**Pakketten en talen**
+-   **Docker-image** van de opdrachtregelversie: ze bewaakt een map en post alles wat erin aankomt, met een sjabloon voor **Unraid** en een handleiding voor gebruik achter een VPN
+-   **Windows-installatieprogramma** (64 bit en 32 bit, met **7-Zip inbegrepen**) en draagbare ZIP-pakketten, automatisch gebouwd op GitHub en gepubliceerd in de Releases (`ngPostDeluxe.exe`)
+-   **Melding van een nieuwe versie**: één keer per dag vraagt het programma GitHub om de nieuwste versie en toont een knop "Versie X beschikbaar" in de zijbalk (er wordt niets gedownload; uit te zetten in de Instellingen)
+-   **Help in 8 talen**, een knop **Feedback** in het Over-venster (opent een nieuw, al ingevuld GitHub-issue) en de meldingen in het diagnoserapport
 
 **Instellingen en hulpmiddelen**
 -   **NZB_POST_CMD**: de plaatshouders mogen spaties bevatten (een pad zoals `C:\Mijn mappen\bestand.nzb` blijft ÉÉN argument) en het commando wordt op de achtergrond gestart (ngPost wacht er niet meer op, dus de exitcode wordt niet meer gelogd)
 -   **RAR_EXTRA en PAR2_ARGS**: worden verwerkt met respect voor dubbele aanhalingstekens. 7-Zip wordt herkend aan de programmanaam en niet aan het hele pad
--   **Nieuwe README**: herschreven voor deze fork en beschikbaar in 8 talen (Engels, Frans, Duits, Italiaans, Spaans, Nederlands, Portugees, Chinees)
 -   **Automatisch opslaan**: elke wijziging van de instellingen wordt automatisch opgeslagen (het vorige bestand blijft bewaard als `ngPost.conf.bak`)
--   **Diagnose**: ngPost registreert de duur en snelheid van elke fase (compressie, par2, upload), de fouten en het vastlopen, en de knop **Diagnoserapport** slaat een rapport op om een probleem te analyseren. Wachtwoorden, gebruikersnamen en bestandsnamen worden gemaskeerd, er wordt niets verstuurd
 
 De Windows-installatieprogramma's, de draagbare pakketten en de Docker-image staan bij [Releases](https://github.com/thenormal/ngPost-Deluxe/releases/latest). Op andere systemen bouw je het vanaf de broncode (zie hieronder).<br/>
+
+De volledige lijst met wijzigingen per versie staat in de [release-notes](https://github.com/thenormal/ngPost-Deluxe/releases) en in de [roadmap](ROADMAP.md).
 
 ### Belangrijkste functies
 -   **Usenet-poster voor de opdrachtregel en met een mooie GUI** voor binaire bestanden, ontwikkeld in **C++11/Qt5**
@@ -121,6 +112,7 @@ De Windows-installatieprogramma's, de draagbare pakketten en de Docker-image sta
 -   hij kan na elke post **een COMMANDO of script uitvoeren** (zie NZB_POST_CMD in het configuratiebestand)
 -   hij kan **de computer uitschakelen** als alle posts klaar zijn
 -   **profielen** met opties, **NFO-bestand** met de media-informatie (MediaInfo), **controles voor het posten**, een waarschuwing voor wat al in de geschiedenis staat en **meldingen** (systeem, Discord, Telegram, webhook)
+-   assistent **Begeleide post** en **Statistieken** van je uploads (grafieken, export als PDF, webpagina, CSV of PNG)
 -   hij is **vertaald in het Chinees, Nederlands, Engels, Frans, Duits, Italiaans, Portugees en Spaans**.
 
 ### In deze fork gewijzigde configuratiesleutelwoorden
@@ -137,6 +129,7 @@ Het configuratiebestand werkt zoals in het oorspronkelijke project (standaard: *
 - **limit_speed** (`ON` / `OFF`) en **max_speed** (MB/s): maximale uploadsnelheid voor alle verbindingen samen, ook `--max_speed`; `max_speed` alleen schakelt de limiet in (handig met Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** en **nfo_text**: NFO-bestand naast het NZB-bestand, mee gepost met de bestanden, met het wachtwoord, met de MediaInfo-informatie; pad van MediaInfo; vrije tekst aan het eind
 - **profile**: de in de GUI opgeslagen profielen met opties, één regel per profiel (beheer ze liever via het menu van Quick Post en Auto Posting dan met de hand)
+- **quick_options**, **auto_options**, **quick_profile** en **auto_profile**: de opties en het profiel van Quick Post en Auto Posting bij het afsluiten van het programma, door het programma zelf geschreven (niet nodig om te bewerken)
 - **check_updates**: `ON` (standaard) of `OFF`, één keer per dag zoekt de interface op GitHub naar een nieuwe versie (de opdrachtregel en Docker doen dat nooit)
 - **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** en **notify_when** (`all_done` of `each`): meldingen wanneer de posts klaar zijn. Behandel de adressen en het token als wachtwoorden
 

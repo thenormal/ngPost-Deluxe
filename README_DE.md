@@ -33,81 +33,72 @@ Es ist ein Fork von [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, Li
 3. Öffne **Quick Post** und ziehe deine Dateien oder Ordner ins Fenster. Um für jede Datei oder jeden Ordner ein eigenes Release zu posten, nutzen Sie **Auto Posting**. Das Profil **Empfohlen** ist ein guter Anfang (Komprimierung, zufälliger Name und Passwort, par2 10 %).
 4. Drücke **Post Files**. Die NZB-Datei wird in den in den Einstellungen gewählten Ordner geschrieben, und jeder Upload erscheint in **History**.
 
+> Neu bei ngPost Deluxe? Probieren Sie **Geführter Post** in der Seitenleiste: Er stellt ein paar Fragen und bereitet den Post für Sie vor.
+
 Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Deluxe`, dann sind deine Server und Einstellungen da.
 
 ### Screenshots
-| Quick Post (helles Design) | Auto Posting (helles Design) |
+
+| Geführter Post (helles Design) | Quick Post (helles Design) |
 |---|---|
-| ![Quick Post (helles Design)](docs/screenshots/quick-post.png) | ![Auto Posting (helles Design)](docs/screenshots/auto-posting.png) |
-| **Verlauf** | **Einstellungen (dunkles Design)** |
-| ![Verlauf](docs/screenshots/history.png) | ![Einstellungen (dunkles Design)](docs/screenshots/settings-dark.png) |
+| ![Geführter Post (helles Design)](docs/screenshots/guided-post.png) | ![Quick Post (helles Design)](docs/screenshots/quick-post.png) |
+| **Auto Posting (helles Design)** | **Verlauf** |
+| ![Auto Posting (helles Design)](docs/screenshots/auto-posting.png) | ![Verlauf](docs/screenshots/history.png) |
+| **Statistik (dunkles Design)** | **Einstellungen (dunkles Design)** |
+| ![Statistik (dunkles Design)](docs/screenshots/statistics-dark.png) | ![Einstellungen (dunkles Design)](docs/screenshots/settings-dark.png) |
 | **Server (dunkles Design)** |  |
 | ![Server (dunkles Design)](docs/screenshots/servers-dark.png) |  |
 
 ### Was in diesem Fork anders ist
 
-**Oberfläche**
--   **Neue Oberfläche**: Seitenleiste (Quick Post, Auto Posting, Server, Einstellungen, Verlauf), Seiten mit Karten, erweiterte Optionen ausgeblendet, bis sie gebraucht werden, ein neues Symbol und ein leerer Bildschirm, der erklärt, was zu tun ist. **Helles und dunkles Design** oder automatisch wie Windows (Schlüssel `theme`). Setze die Umgebungsvariable `NGPOST_NO_THEME`, um das native Aussehen zurückzubekommen
--   **Italienische Oberfläche**: GUI/CMD sind jetzt auch auf Italienisch übersetzt (bereits verfügbar auf Chinesisch, Niederländisch, Englisch, Französisch, Deutsch, Portugiesisch und Spanisch)
--   **ngPost Deluxe v1.0**: neuer Name und neue Version (das Windows-Programm heißt jetzt `ngPostDeluxe.exe`; die Konfigurationsdatei bleibt gleich), neu gestaltetes Über-Fenster, die ursprünglichen Spenden-Schaltflächen wurden durch eine **Ko-fi**-Schaltfläche für diesen Fork ersetzt (im Über-Fenster und in den Einstellungen)
--   **Neuer Server-Bereich**: Liste der Server mit Statuspunkt und Ein/Aus-Kästchen, Detailformular (Passwort auf Wunsch sichtbar) und eine Schaltfläche **Verbindung testen**, die die Anmeldung prüft. Das Ändern der Server während eines Uploads kann ngPost nicht mehr abstürzen lassen
--   **Tab Auto Posting**: neue Schaltflächen **Abgeschlossene entfernen**, **Alle entfernen** und **Beendete Tabs schließen**
--   **Seite Verlauf**: jeder Upload wird gespeichert (`ngPost_history.csv` neben der Konfiguration oder `POST_HISTORY`) mit Status, Anzahl der Dateien und Dauer. Die Seite listet sie mit Suche, Zeitraumfilter, Summen, ausgeblendeten Passwörtern, Kopieren, Export und dem Ordner der NZB auf. Achtung: die Datei enthält die Archivpasswörter im Klartext
--   **Quick Post**: ein Hinweis erinnert daran, dass alle Einträge der Liste als ein einziges Release gepostet werden (eine NZB, ein Archiv)
-
-**Geschwindigkeit**
--   **ParPar** (ein viel schnellerer par2-Generator) wird für Windows 64bit mitgeliefert (v0.4.6, gemeinfrei) und automatisch verwendet, wenn sich `parpar.exe` im ngPost-Ordner befindet. Das 64bit-par2cmdline wurde aus dem Paket entfernt, das 32bit-Programm bleibt für Windows 32bit erhalten
--   **Schnellere Komprimierung unter Windows**: die Ausgabe von 7-Zip / rar wird jetzt laufend gelesen (ein Post mit 115 MB wartete vorher 200 s, jetzt 1 s)
-
-**Windows-Pakete und Docker**
--   **ngPost Deluxe v1.1**: **Docker-Image** der Kommandozeilenversion (überwacht einen Ordner und postet alles, was dort ankommt, mit einer Vorlage für **Unraid**), die Schaltfläche Post ist in Quick Post und Auto Posting zentriert, Tab-Symbole und beendete Tabs sind im dunklen Design lesbar
--   **Windows-Installer** (64 Bit und 32 Bit, **7-Zip inklusive**) und portable ZIP-Pakete, automatisch auf GitHub erstellt und in den Releases veröffentlicht (`ngPostDeluxe.exe`)
--   **Windows**: das Konsolenfenster schließt sich von selbst, wenn ngPost per Doppelklick gestartet wird; das Paket enthält OpenSSL 1.1.1w (neueste von Qt 5 unterstützte Version)
-
-**Zuverlässigkeit und Komfort (v1.2)**
--   **Fehlgeschlagene Artikel**: ein fehlgeschlagener Artikel wird auf einem anderen Server und in einer zweiten Runde erneut versucht; die Schaltfläche **Repost missing Articles** postet nur die fehlenden und korrigiert die NZB; die Originaldateien bleiben erhalten, wenn Artikel fehlgeschlagen sind
--   **Falsches Passwort**: der Post wird mit einer klaren Meldung gestoppt, wenn der Server den Login auf allen Verbindungen ablehnt
--   **Warteschlange**: nicht beendete Posts werden gespeichert und beim nächsten Start wieder angeboten (`--resume_queue` in der Kommandozeile)
--   **Fortschritt und Log**: Fortschrittsbalken mit Phase, Restzeit und Farben; farbiges Log mit der Dauer jeder Phase; Latenzmessungen im Diagnosebericht
--   **Newsgroups**: ein Feld mit „Chips“, Vorschlägen und Prüfungen sowie ein Menü, um bei mehreren Gruppen zu wählen, wohin die Posts gehen
--   **Hilfe**-Seite im Programm, Anleitung für Docker hinter einem VPN (gluetun) und automatische Tests des Postings in der CI
-
-**Einfacher zu bedienen (v1.3)**
+**Einfach zu bedienen**
+-   **Geführter Post**: ein Assistent in der Seitenleiste, der fragt, was Sie tun möchten (ein Release, jedes Element, einen Ordner durchsuchen, einen Ordner überwachen), was gepostet wird, die Optionen und wohin, und dann den Post mit denselben Prüfungen wie Quick Post und Auto Posting vorbereitet. Er merkt sich Ihre letzte Auswahl und kann mehrere Posts gemeinsam starten
 -   **Auto Posting, neu gestaltet**: drei klare Möglichkeiten (posten, was ich auswähle; einen Ordner einmal durchsuchen; einen Ordner überwachen und posten, was ankommt), Vorschau dessen, was gepostet wird, mit den Größen, der Zustand der Ordnerüberwachung immer sichtbar (Ordner, Posts des Tages, Pause-Schaltfläche) und die Wahl, was danach mit den Dateien geschieht: nichts (Standard), in einen Ordner "Posted" verschieben oder löschen
 -   **Profile**: ein fertiges Profil "Empfohlen" (Komprimierung, zufälliger Name und Passwort, par2 10 %) und eigene Profile, gespeichert über das Menü von Quick Post und Auto Posting
 -   **Prüfungen vor dem Posten**: ein Fenster in einfachen Worten mit Korrektur per Klick (kein Server oder keine Gruppe, Ordner ohne Komprimierung, rar / 7z oder par2 nicht gefunden, leeres Passwort, NZB-Ordner nicht beschreibbar...)
--   **Schon gepostet?** Eine Warnung listet die Einträge auf, die schon im Verlauf stehen, mit einem Kästchen "Erneut posten", statt einer Frage pro Post
--   **NFO-Datei** neben der NZB-Datei (auf Wunsch mit den Dateien gepostet, auf Wunsch mit Passwort) und Medieninformationen mit MediaInfo: Dauer, Video, Audio und Untertitel
--   **Benachrichtigungen**, wenn Posts fertig sind oder fehlschlagen: Systembenachrichtigung, Discord, Telegram oder ein Webhook, eine Nachricht am Ende oder eine pro Post
--   **Hilfe beim ersten Start**: eine Leiste sagt, was fehlt (Server, Newsgroup), mit einer Schaltfläche zur richtigen Seite; die **Einstellungen** sind jetzt in fünf Kategorien
--   **Hinweis auf neue Version**: einmal am Tag fragt das Programm GitHub nach der neuesten Version und zeigt in der Seitenleiste eine Schaltfläche "Version X verfügbar" (es wird nichts heruntergeladen; in den Einstellungen abschaltbar)
--   **Hilfe in 8 Sprachen**, eine **Feedback**-Schaltfläche im Über-Fenster (öffnet ein neues, schon ausgefülltes GitHub-Issue) und die Benachrichtigungen im Diagnosebericht
--   **Kleine Fenster**: Quick Post und Auto Posting scrollen, statt die Karten aufeinanderzudrücken
--   Das Deinstallationsprogramm fragt, ob auch Ihre Einstellungen und der Verlauf gelöscht werden sollen (Standard: behalten)
-
-**Geführt und informiert (v1.4)**
--   **Geführter Post**: ein Assistent in der Seitenleiste, der fragt, was Sie tun möchten (ein Release, jedes Element, einen Ordner durchsuchen, einen Ordner überwachen), was gepostet wird, die Optionen und wohin, und dann den Post mit denselben Prüfungen wie Quick Post und Auto Posting vorbereitet. Er merkt sich Ihre letzte Auswahl und kann mehrere Posts gemeinsam starten
--   **Statistik** (Seite Verlauf, Umschalter Liste / Statistik): Summen und Diagramme für den gewählten Zeitraum (heute, 7 Tage, 30 Tage, 12 Monate, alles): geposteter Datenumfang, Geschwindigkeit, Ergebnisse, aktivste Tage und Uhrzeiten, Newsgroups, Server, Art des Starts der Posts und verwendete Optionen, dazu Ranglisten. Export als PDF-Dokument, Webseite, CSV-Datei oder PNG-Bilder der Diagramme
--   **Verlauf** speichert mehr: die verwendeten Server, die Optionen (Komprimierung, Passwort, par2), wie der Post gestartet wurde und die genaue Größe. Alte Verläufe bleiben gültig
--   **Quick Post**: Ein Profil mit zufälligem Namen ersetzt jetzt den Namen der ersten Datei
--   **Geschwindigkeitsbegrenzung**: eine maximale Upload-Geschwindigkeit in MB/s für alle Verbindungen und alle Posts zusammen (Einstellungen, Posts, Upload; `--max_speed` in der Befehlszeile), damit der Rest Ihrer Internetverbindung nutzbar bleibt. Kann während des Postens geändert werden
 -   **Merkt sich Ihre Auswahl**: Quick Post und Auto Posting behalten die letzten Optionen und das gewählte Profil für den nächsten Start, und die Schaltfläche Posten bleibt unter der scrollenden Seite immer sichtbar
+-   **Hilfe beim ersten Start**: eine Leiste sagt, was fehlt (Server, Newsgroup), mit einer Schaltfläche zur richtigen Seite; die **Einstellungen** sind jetzt in fünf Kategorien
+-   **Newsgroups**: ein Feld mit „Chips“, Vorschlägen und Prüfungen sowie ein Menü, um bei mehreren Gruppen zu wählen, wohin die Posts gehen
+-   **Neue Oberfläche**: Seitenleiste (Quick Post, Auto Posting, Server, Einstellungen, Verlauf), Seiten mit Karten, erweiterte Optionen ausgeblendet, bis sie gebraucht werden, ein neues Symbol und ein leerer Bildschirm, der erklärt, was zu tun ist. **Helles und dunkles Design** oder automatisch wie Windows (Schlüssel `theme`). Setze die Umgebungsvariable `NGPOST_NO_THEME`, um das native Aussehen zurückzubekommen
+-   **Neuer Server-Bereich**: Liste der Server mit Statuspunkt und Ein/Aus-Kästchen, Detailformular (Passwort auf Wunsch sichtbar) und eine Schaltfläche **Verbindung testen**, die die Anmeldung prüft. Das Ändern der Server während eines Uploads kann ngPost nicht mehr abstürzen lassen
+
+**Informiert**
+-   **Statistik** (Seite Verlauf, Umschalter Liste / Statistik): Summen und Diagramme für den gewählten Zeitraum (heute, 7 Tage, 30 Tage, 12 Monate, alles): geposteter Datenumfang, Geschwindigkeit, Ergebnisse, aktivste Tage und Uhrzeiten, Newsgroups, Server, Art des Starts der Posts und verwendete Optionen, dazu Ranglisten. Export als PDF-Dokument, Webseite, CSV-Datei oder PNG-Bilder der Diagramme
+-   **Seite Verlauf**: jeder Upload wird gespeichert (`ngPost_history.csv` neben der Konfiguration oder `POST_HISTORY`) mit Status, Anzahl der Dateien und Dauer. Die Seite listet sie mit Suche, Zeitraumfilter, Summen, ausgeblendeten Passwörtern, Kopieren, Export und dem Ordner der NZB auf. Achtung: die Datei enthält die Archivpasswörter im Klartext
+-   **Benachrichtigungen**, wenn Posts fertig sind oder fehlschlagen: Systembenachrichtigung, Discord, Telegram oder ein Webhook, eine Nachricht am Ende oder eine pro Post
+-   **NFO-Datei** neben der NZB-Datei (auf Wunsch mit den Dateien gepostet, auf Wunsch mit Passwort) und Medieninformationen mit MediaInfo: Dauer, Video, Audio und Untertitel
+-   **Schon gepostet?** Eine Warnung listet die Einträge auf, die schon im Verlauf stehen, mit einem Kästchen "Erneut posten", statt einer Frage pro Post
+-   **Diagnose**: ngPost zeichnet Dauer und Geschwindigkeit jeder Phase (Kompression, par2, Upload), Fehler und Hänger auf, und die Schaltfläche **Diagnosebericht** speichert einen Bericht zur Fehleranalyse. Passwörter, Benutzernamen und Dateinamen werden maskiert, nichts wird versendet
+
+**Zuverlässig**
+-   **Fehlgeschlagene Artikel**: ein fehlgeschlagener Artikel wird auf einem anderen Server und in einer zweiten Runde erneut versucht; die Schaltfläche **Repost missing Articles** postet nur die fehlenden und korrigiert die NZB; die Originaldateien bleiben erhalten, wenn Artikel fehlgeschlagen sind
+-   **Warteschlange**: nicht beendete Posts werden gespeichert und beim nächsten Start wieder angeboten (`--resume_queue` in der Kommandozeile)
+-   **Falsches Passwort**: der Post wird mit einer klaren Meldung gestoppt, wenn der Server den Login auf allen Verbindungen ablehnt
 -   **Klarere Probleme**: eine Warnung bei synchronisiertem temporärem Ordner (OneDrive und ähnliche), eine Meldung, wenn die Quelldateien langsam gelesen werden, und ein klarer Fehler mit dem Namen einer Datei oder eines Ordners, die vor der Komprimierung verschoben wurden (7-Zip sucht sie nicht mehr auf allen Laufwerken)
 
-**Sicherheit und Korrekturen**
+**Schnell und unter Kontrolle**
+-   **ParPar** (ein viel schnellerer par2-Generator) wird für Windows 64bit mitgeliefert (v0.4.6, gemeinfrei) und automatisch verwendet, wenn sich `parpar.exe` im ngPost-Ordner befindet. Das 64bit-par2cmdline wurde aus dem Paket entfernt, das 32bit-Programm bleibt für Windows 32bit erhalten
+-   **Schnellere Komprimierung unter Windows**: die Ausgabe von 7-Zip / rar wird jetzt laufend gelesen (ein Post mit 115 MB wartete vorher 200 s, jetzt 1 s)
+-   **Geschwindigkeitsbegrenzung**: eine maximale Upload-Geschwindigkeit in MB/s für alle Verbindungen und alle Posts zusammen (Einstellungen, Posts, Upload; `--max_speed` in der Befehlszeile), damit der Rest Ihrer Internetverbindung nutzbar bleibt. Kann während des Postens geändert werden
+
+**Sicherheit**
 -   **Sicherheitskorrektur**: möglicher Heap-Überlauf im yEnc-Kodierungspuffer (die Ausgabe konnte bei bestimmten Daten größer als der Puffer sein)
--   **yEnc-Fix**: Ein Leerzeichen oder Tabulator am Zeilenende wird jetzt korrekt maskiert (manche Server entfernen ihn, wodurch die Daten beschädigt wurden)
--   **Sicherere Passwörter**: die erzeugten Archiv-Passwörter und -Namen verwenden den kryptografischen Zufallsgenerator des Betriebssystems (Qt >= 5.10) statt `std::rand()`
 -   **Archiv-Passwort nicht mehr in der Kommandozeile**: 7-Zip erhält es über die Standardeingabe und rar über die Umgebungsvariable `RAR`, es ist also nicht mehr in der Prozessliste sichtbar
+
+**Pakete und Sprachen**
+-   **Docker-Image** der Kommandozeilenversion: sie überwacht einen Ordner und postet alles, was darin ankommt, mit einer Vorlage für **Unraid** und einer Anleitung für den Betrieb hinter einem VPN
+-   **Windows-Installer** (64 Bit und 32 Bit, **7-Zip inklusive**) und portable ZIP-Pakete, automatisch auf GitHub erstellt und in den Releases veröffentlicht (`ngPostDeluxe.exe`)
+-   **Hinweis auf neue Version**: einmal am Tag fragt das Programm GitHub nach der neuesten Version und zeigt in der Seitenleiste eine Schaltfläche "Version X verfügbar" (es wird nichts heruntergeladen; in den Einstellungen abschaltbar)
+-   **Hilfe in 8 Sprachen**, eine **Feedback**-Schaltfläche im Über-Fenster (öffnet ein neues, schon ausgefülltes GitHub-Issue) und die Benachrichtigungen im Diagnosebericht
 
 **Einstellungen und Werkzeuge**
 -   **NZB_POST_CMD**: die Platzhalter dürfen Leerzeichen enthalten (ein Pfad wie `C:\Meine Ordner\datei.nzb` bleibt EIN Argument) und der Befehl wird im Hintergrund gestartet (ngPost wartet nicht mehr darauf, daher wird sein Exit-Code nicht mehr protokolliert)
 -   **RAR_EXTRA und PAR2_ARGS**: werden unter Beachtung der Anführungszeichen ausgewertet. 7-Zip wird am Programmnamen erkannt und nicht am gesamten Pfad
--   **Neue README**: für diesen Fork neu geschrieben und in 8 Sprachen verfügbar (Englisch, Französisch, Deutsch, Italienisch, Spanisch, Niederländisch, Portugiesisch, Chinesisch)
 -   **Automatisches Speichern**: jede Änderung der Einstellungen wird automatisch gespeichert (die vorherige Datei bleibt als `ngPost.conf.bak` erhalten)
--   **Diagnose**: ngPost zeichnet Dauer und Geschwindigkeit jeder Phase (Kompression, par2, Upload), Fehler und Hänger auf, und die Schaltfläche **Diagnosebericht** speichert einen Bericht zur Fehleranalyse. Passwörter, Benutzernamen und Dateinamen werden maskiert, nichts wird versendet
 
 Die Windows-Installer, die portablen Pakete und das Docker-Image findest du unter [Releases](https://github.com/thenormal/ngPost-Deluxe/releases/latest). Auf anderen Systemen aus den Quellen bauen (siehe unten).<br/>
+
+Die vollständige Liste der Änderungen jeder Version steht in den [Release-Notes](https://github.com/thenormal/ngPost-Deluxe/releases) und in der [Roadmap](ROADMAP.md).
 
 ### Hauptfunktionen
 -   **Usenet-Poster für die Kommandozeile und mit schicker GUI** für Binärdateien, entwickelt in **C++11/Qt5**
@@ -121,6 +112,7 @@ Die Windows-Installer, die portablen Pakete und das Docker-Image findest du unte
 -   er kann nach jedem Post **einen BEFEHL oder ein Skript ausführen** (siehe NZB_POST_CMD in der Konfigurationsdatei)
 -   er kann **den Computer ausschalten**, wenn alle Posts fertig sind
 -   **Profile** mit Optionen, **NFO-Datei** mit den Medieninformationen (MediaInfo), **Prüfungen vor dem Posten**, Warnung für das, was schon im Verlauf steht, und **Benachrichtigungen** (System, Discord, Telegram, Webhook)
+-   Assistent **Geführter Post** und **Statistik** Ihrer Uploads (Diagramme, Export als PDF, Webseite, CSV oder PNG)
 -   er ist **übersetzt in Chinesisch, Niederländisch, Englisch, Französisch, Deutsch, Italienisch, Portugiesisch und Spanisch**.
 
 ### In diesem Fork geänderte Konfigurations-Schlüsselwörter
@@ -137,6 +129,7 @@ Die Konfigurationsdatei funktioniert wie im Originalprojekt (Standard: **~/.ngPo
 - **limit_speed** (`ON` / `OFF`) und **max_speed** (MB/s): maximale Upload-Geschwindigkeit für alle Verbindungen zusammen, auch `--max_speed`; `max_speed` allein schaltet die Begrenzung ein (praktisch mit Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** und **nfo_text**: NFO-Datei neben der NZB-Datei, mit den Dateien gepostet, mit dem Passwort, mit den MediaInfo-Informationen; Pfad von MediaInfo; freier Text am Ende
 - **profile**: die in der GUI gespeicherten Options-Profile, eine Zeile pro Profil (besser über das Menü von Quick Post und Auto Posting verwalten als von Hand)
+- **quick_options**, **auto_options**, **quick_profile** und **auto_profile**: die Optionen und das Profil von Quick Post und Auto Posting beim Beenden des Programms, vom Programm selbst geschrieben (nicht zu bearbeiten)
 - **check_updates**: `ON` (Standard) oder `OFF`, einmal am Tag sucht die Oberfläche auf GitHub nach einer neuen Version (Kommandozeile und Docker tun das nie)
 - **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** und **notify_when** (`all_done` oder `each`): Benachrichtigungen, wenn die Posts fertig sind. Behandeln Sie die Adressen und das Token wie Passwörter
 
