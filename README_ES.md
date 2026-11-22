@@ -85,12 +85,14 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 -   **Ventanas pequeñas**: Quick Post y Publicación Automática se desplazan en lugar de aplastar las tarjetas unas contra otras
 -   El desinstalador pregunta si también hay que borrar tus ajustes y el historial (por defecto: conservarlos)
 
-**Novedades de la 1.4 (aún no publicada)**
+**Guiado e informado (v1.4)**
 -   **Publicación guiada**: un asistente en la barra lateral que pregunta qué quieres hacer (una release, cada elemento, analizar una carpeta, vigilar una carpeta), qué publicar, las opciones y dónde, y luego prepara la publicación con las mismas comprobaciones que Quick Post y la Publicación Automática. Recuerda tus últimas opciones y puede iniciar varias publicaciones a la vez
 -   **Estadísticas** (página Historial, selector Lista / Estadísticas): totales y gráficos del periodo elegido (hoy, 7 días, 30 días, 12 meses, todo): datos publicados, velocidad, resultados, días y horas más activos, grupos de noticias, servidores, cómo se iniciaron las publicaciones y opciones usadas, además de clasificaciones. Exportación a documento PDF, página web, archivo CSV o imágenes PNG de los gráficos
 -   **Historial** guarda más datos: los servidores usados, las opciones (compresión, contraseña, par2), cómo se inició la publicación y el tamaño exacto. Los historiales antiguos siguen siendo válidos
 -   **Quick Post**: un perfil con nombre aleatorio sustituye ahora al nombre tomado del primer archivo
 -   **Límite de velocidad**: una velocidad máxima de subida en MB/s para todas las conexiones y todas las publicaciones juntas (Ajustes, Publicaciones, Subida; `--max_speed` en la línea de comandos), para que el resto de tu conexión siga siendo usable. Se puede cambiar mientras se publica
+-   **Recuerda tus elecciones**: Quick Post y Auto Posting conservan las últimas opciones y el perfil seleccionado para el próximo inicio, y el botón Publicar queda siempre visible bajo la página con desplazamiento
+-   **Problemas más claros**: un aviso cuando la carpeta temporal está sincronizada (OneDrive y similares), un mensaje cuando los archivos de origen se leen despacio y un error claro con el nombre del archivo o carpeta movidos antes de la compresión (7-Zip ya no los busca en todos los discos)
 
 **Seguridad y correcciones**
 -   **Corrección de seguridad**: posible desbordamiento de memoria en el búfer de codificación yEnc (con ciertos datos la salida podía ser mayor que el búfer)

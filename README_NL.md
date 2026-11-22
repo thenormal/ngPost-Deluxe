@@ -85,12 +85,14 @@ Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en
 -   **Kleine vensters**: Quick Post en Auto Posting scrollen in plaats van de kaarten op elkaar te drukken
 -   Het verwijderprogramma vraagt of ook je instellingen en geschiedenis verwijderd moeten worden (standaard: bewaren)
 
-**Nieuw in 1.4 (nog niet uitgebracht)**
+**Begeleid en geïnformeerd (v1.4)**
 -   **Begeleide post**: een assistent in de zijbalk die vraagt wat je wilt doen (één release, elk item, een map scannen, een map bewaken), wat je wilt posten, de opties en waar, en daarna de post voorbereidt met dezelfde controles als Quick Post en Auto Posting. Hij onthoudt je laatste keuzes en kan meerdere posts tegelijk starten
 -   **Statistieken** (pagina Geschiedenis, schakelaar Lijst / Statistieken): totalen en grafieken voor de gekozen periode (vandaag, 7 dagen, 30 dagen, 12 maanden, alles): geposte data, snelheid, resultaten, drukste dagen en uren, newsgroups, servers, hoe de posts zijn gestart en gebruikte opties, plus ranglijsten. Exporteren als PDF-document, webpagina, CSV-bestand of PNG-afbeeldingen van de grafieken
 -   **Geschiedenis** bewaart meer gegevens: de gebruikte servers, de opties (compressie, wachtwoord, par2), hoe de post is gestart en de exacte grootte. Oude geschiedenissen blijven geldig
 -   **Quick Post**: een profiel met een willekeurige naam vervangt nu de naam van het eerste bestand
 -   **Snelheidslimiet**: een maximale uploadsnelheid in MB/s voor alle verbindingen en alle posts samen (Instellingen, Posts, Upload; `--max_speed` op de opdrachtregel), zodat de rest van uw verbinding bruikbaar blijft. Kan tijdens het posten worden gewijzigd
+-   **Onthoudt je keuzes**: Quick Post en Auto Posting bewaren de laatste opties en het gekozen profiel voor de volgende start, en de knop Posten blijft altijd zichtbaar onder de scrollende pagina
+-   **Duidelijkere problemen**: een waarschuwing als de tijdelijke map wordt gesynchroniseerd (OneDrive en vergelijkbaar), een melding als de bronbestanden traag te lezen zijn en een duidelijke fout met de naam van een bestand of map die vóór de compressie is verplaatst (7-Zip zoekt die niet meer op alle schijven)
 
 **Beveiliging en correcties**
 -   **Beveiligingsfix**: mogelijke heap-overflow in de yEnc-codeerbuffer (bij bepaalde gegevens kon de uitvoer groter zijn dan de buffer)

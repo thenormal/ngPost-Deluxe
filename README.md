@@ -85,12 +85,14 @@ Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and
 -   **Small windows**: Quick Post and Auto Posting scroll instead of squeezing the cards on top of each other
 -   The uninstaller asks whether to also delete your settings and history (default: keep them)
 
-**Coming in 1.4 (not released yet)**
+**Guided and informed (v1.4)**
 -   **Guided Post**: a wizard in the side bar that asks what you want to do (one release, each item, scan a folder, watch a folder), what to post, the options and where, then prepares the post with the same checks as Quick Post and Auto Posting. It remembers your last choices and can start several posts together
 -   **Statistics** (History page, switch List / Statistics): totals and charts for the period you choose (today, 7 days, 30 days, 12 months, all): data posted, speed, results, busiest days and hours, newsgroups, servers, how the posts were started and options used, plus rankings. Export as a PDF document, a web page, a CSV file or PNG images of the charts
 -   **History** records more: the servers used, the options (compression, password, par2), how the post was started and the exact size. Old histories stay valid
 -   **Quick Post**: a profile with a random name now replaces the name taken from the first file
 -   **Speed limit**: a maximum upload speed in MB/s for all the connections and all the posts together (Settings, Posts, Upload; `--max_speed` on the command line), so the rest of your connection stays usable. It can be changed while posting
+-   **Remembers your choices**: Quick Post and Auto Posting keep the last options and the selected profile for the next start, and the Post button always stays visible under the scrolling page
+-   **Clearer problems**: a warning when the temporary folder is synchronized (OneDrive and similar), a message when the source files are slow to read, and a clear error naming a file or folder that was moved before the compression started (7-Zip no longer searches for it on all the drives)
 
 **Security and fixes**
 -   **Security fix**: possible heap overflow in the yEnc encoding buffer (the output could be bigger than the buffer with specific data)

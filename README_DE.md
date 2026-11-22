@@ -85,12 +85,14 @@ Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Delu
 -   **Kleine Fenster**: Quick Post und Auto Posting scrollen, statt die Karten aufeinanderzudrücken
 -   Das Deinstallationsprogramm fragt, ob auch Ihre Einstellungen und der Verlauf gelöscht werden sollen (Standard: behalten)
 
-**Neu in 1.4 (noch nicht veröffentlicht)**
+**Geführt und informiert (v1.4)**
 -   **Geführter Post**: ein Assistent in der Seitenleiste, der fragt, was Sie tun möchten (ein Release, jedes Element, einen Ordner durchsuchen, einen Ordner überwachen), was gepostet wird, die Optionen und wohin, und dann den Post mit denselben Prüfungen wie Quick Post und Auto Posting vorbereitet. Er merkt sich Ihre letzte Auswahl und kann mehrere Posts gemeinsam starten
 -   **Statistik** (Seite Verlauf, Umschalter Liste / Statistik): Summen und Diagramme für den gewählten Zeitraum (heute, 7 Tage, 30 Tage, 12 Monate, alles): geposteter Datenumfang, Geschwindigkeit, Ergebnisse, aktivste Tage und Uhrzeiten, Newsgroups, Server, Art des Starts der Posts und verwendete Optionen, dazu Ranglisten. Export als PDF-Dokument, Webseite, CSV-Datei oder PNG-Bilder der Diagramme
 -   **Verlauf** speichert mehr: die verwendeten Server, die Optionen (Komprimierung, Passwort, par2), wie der Post gestartet wurde und die genaue Größe. Alte Verläufe bleiben gültig
 -   **Quick Post**: Ein Profil mit zufälligem Namen ersetzt jetzt den Namen der ersten Datei
 -   **Geschwindigkeitsbegrenzung**: eine maximale Upload-Geschwindigkeit in MB/s für alle Verbindungen und alle Posts zusammen (Einstellungen, Posts, Upload; `--max_speed` in der Befehlszeile), damit der Rest Ihrer Internetverbindung nutzbar bleibt. Kann während des Postens geändert werden
+-   **Merkt sich Ihre Auswahl**: Quick Post und Auto Posting behalten die letzten Optionen und das gewählte Profil für den nächsten Start, und die Schaltfläche Posten bleibt unter der scrollenden Seite immer sichtbar
+-   **Klarere Probleme**: eine Warnung bei synchronisiertem temporärem Ordner (OneDrive und ähnliche), eine Meldung, wenn die Quelldateien langsam gelesen werden, und ein klarer Fehler mit dem Namen einer Datei oder eines Ordners, die vor der Komprimierung verschoben wurden (7-Zip sucht sie nicht mehr auf allen Laufwerken)
 
 **Sicherheit und Korrekturen**
 -   **Sicherheitskorrektur**: möglicher Heap-Überlauf im yEnc-Kodierungspuffer (die Ausgabe konnte bei bestimmten Daten größer als der Puffer sein)
