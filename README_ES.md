@@ -33,81 +33,72 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 3. Abre **Quick Post** y arrastra tus archivos o carpetas a la ventana. Para publicar una release por cada archivo o carpeta usa **Publicación Automática**. El perfil **Recomendado** es un buen punto de partida (compresión, nombre y contraseña aleatorios, par2 10 %).
 4. Pulsa **Post Files**. El archivo NZB se escribe en la carpeta elegida en los ajustes y cada subida aparece en **History**.
 
+> ¿Primera vez con ngPost Deluxe? Prueba **Publicación guiada** en la barra lateral: te hace unas preguntas y prepara la publicación por ti.
+
 ¿Ya usas ngPost? Copia tu `ngPost.conf` en `%APPDATA%\ngPost Deluxe` y tendrás tus servidores y ajustes.
 
 ### Capturas de pantalla
-| Quick Post (tema claro) | Publicación Automática (tema claro) |
+
+| Publicación guiada (tema claro) | Quick Post (tema claro) |
 |---|---|
-| ![Quick Post (tema claro)](docs/screenshots/quick-post.png) | ![Publicación Automática (tema claro)](docs/screenshots/auto-posting.png) |
-| **Historial** | **Ajustes (tema oscuro)** |
-| ![Historial](docs/screenshots/history.png) | ![Ajustes (tema oscuro)](docs/screenshots/settings-dark.png) |
+| ![Publicación guiada (tema claro)](docs/screenshots/guided-post.png) | ![Quick Post (tema claro)](docs/screenshots/quick-post.png) |
+| **Publicación Automática (tema claro)** | **Historial** |
+| ![Publicación Automática (tema claro)](docs/screenshots/auto-posting.png) | ![Historial](docs/screenshots/history.png) |
+| **Estadísticas (tema oscuro)** | **Ajustes (tema oscuro)** |
+| ![Estadísticas (tema oscuro)](docs/screenshots/statistics-dark.png) | ![Ajustes (tema oscuro)](docs/screenshots/settings-dark.png) |
 | **Servidores (tema oscuro)** |  |
 | ![Servidores (tema oscuro)](docs/screenshots/servers-dark.png) |  |
 
 ### Qué cambia en este fork
 
-**Interfaz**
--   **Nueva interfaz**: barra lateral (Quick Post, Publicación Automática, Servidores, Ajustes, Historial), páginas con tarjetas, opciones avanzadas ocultas hasta que se necesitan, un nuevo icono y una pantalla vacía que explica qué hacer. **Temas claro y oscuro**, o automático como Windows (clave `theme`). Define la variable de entorno `NGPOST_NO_THEME` para volver al aspecto nativo
--   **Interfaz en italiano**: la GUI/CMD ahora también está traducida al italiano (ya estaba disponible en chino, neerlandés, inglés, francés, alemán, portugués y español)
--   **ngPost Deluxe v1.0**: nuevo nombre y nueva versión (el programa de Windows ahora es `ngPostDeluxe.exe`; el archivo de configuración no cambia), ventana Acerca de rediseñada, los botones de donación originales se sustituyen por un botón de **Ko-fi** para este fork (en la ventana Acerca de y en los Ajustes)
--   **Nueva sección Servidores**: lista de servidores con un indicador de estado y una casilla activado/desactivado, ficha de detalle (contraseña visible a petición) y un botón **Probar conexión** que comprueba el acceso. Modificar los servidores durante una subida ya no puede bloquear ngPost
--   **Pestaña Auto Posting**: nuevos botones **Quitar completados**, **Quitar todo** y **Cerrar pestañas terminadas**
--   **Página Historial**: cada subida se registra (`ngPost_history.csv` junto a la configuración, o `POST_HISTORY`) con su estado, número de archivos y duración. La página las muestra con búsqueda, filtro por periodo, totales, contraseñas ocultas hasta que se piden, copia, exportación y carpeta del NZB. Cuidado: el archivo contiene las contraseñas de los archivos comprimidos en texto claro
--   **Quick Post**: una nota recuerda que todos los elementos de la lista se publican como una sola release (un NZB, un archivo comprimido)
-
-**Velocidad**
--   **ParPar** (un generador de par2 mucho más rápido) se incluye para Windows de 64 bits (v0.4.6, dominio público) y se usa automáticamente cuando `parpar.exe` está en la carpeta de ngPost. Se ha quitado par2cmdline de 64 bits del paquete; el de 32 bits se mantiene para Windows de 32 bits
--   **Compresión más rápida en Windows**: la salida de 7-Zip / rar ahora se lee a medida que llega (un post de 115 MB esperaba 200 s, ahora 1 s)
-
-**Paquetes de Windows y Docker**
--   **ngPost Deluxe v1.1**: **imagen Docker** de la versión en línea de comandos (vigila una carpeta y publica todo lo que llega, con una plantilla para **Unraid**), el botón Post está centrado en Quick Post y Auto Posting, los iconos de las pestañas y las pestañas terminadas se leen bien en el tema oscuro
--   **Instalador de Windows** (64 y 32 bits, con **7-Zip incluido**) y paquetes ZIP portátiles, creados automáticamente en GitHub y publicados en las Releases (`ngPostDeluxe.exe`)
--   **Windows**: la ventana de consola se cierra sola cuando ngPost se inicia con doble clic; el paquete incluye OpenSSL 1.1.1w (última versión soportada por Qt 5)
-
-**Fiabilidad y comodidad (v1.2)**
--   **Artículos fallidos**: un artículo que falla se vuelve a intentar en otro servidor y en una segunda ronda; el botón **Repost missing Articles** publica solo los que faltan y corrige el NZB; los archivos originales se conservan cuando hay artículos fallidos
--   **Contraseña incorrecta**: la publicación se detiene, con un mensaje claro, cuando el servidor rechaza el inicio de sesión en todas las conexiones
--   **Cola**: las publicaciones sin terminar se guardan y se ofrecen de nuevo en el siguiente inicio (`--resume_queue` en línea de comandos)
--   **Progreso y registro**: barra de progreso con la fase, el tiempo restante y colores; registro en colores con la duración de cada fase; mediciones de latencia en el informe de diagnóstico
--   **Grupos de noticias**: un cuadro con «chips», sugerencias y comprobaciones, y un menú para elegir adónde van las publicaciones cuando hay varios grupos
--   Página de **Ayuda** en el programa, guía para Docker detrás de una VPN (gluetun) y pruebas automáticas de la publicación en CI
-
-**Más fácil de usar (v1.3)**
+**Fácil de usar**
+-   **Publicación guiada**: un asistente en la barra lateral que pregunta qué quieres hacer (una release, cada elemento, analizar una carpeta, vigilar una carpeta), qué publicar, las opciones y dónde, y luego prepara la publicación con las mismas comprobaciones que Quick Post y la Publicación Automática. Recuerda tus últimas opciones y puede iniciar varias publicaciones a la vez
 -   **Publicación Automática, rediseñada**: tres opciones claras (publicar lo que elijo, escanear una carpeta una vez, vigilar una carpeta y publicar lo que llega), vista previa de lo que se publicará con los tamaños, estado de la vigilancia de la carpeta siempre visible (carpeta, publicaciones de hoy, botón de pausa) y elección de qué pasa con los archivos después: nada (por defecto), moverlos a una carpeta «Posted» o borrarlos
 -   **Perfiles**: un perfil «Recomendado» ya listo (compresión, nombre y contraseña aleatorios, par2 10 %) y tus propios perfiles, guardados desde el menú de Quick Post y Publicación Automática
 -   **Comprobaciones antes de publicar**: una ventana en palabras sencillas con la corrección en un clic (sin servidor o grupo, carpetas sin compresión, rar / 7z o par2 no encontrados, contraseña vacía, carpeta NZB no escribible...)
--   **¿Ya publicado?** Un aviso lista los elementos que ya están en el historial, con una casilla «Publicar de nuevo», en lugar de una pregunta por cada publicación
--   **Archivo NFO** escrito junto al NZB (se puede publicar con los archivos, con la contraseña si quieres) e información del vídeo con MediaInfo: duración, vídeo, audio y subtítulos
--   **Notificaciones** cuando las publicaciones terminan o fallan: notificación del sistema, Discord, Telegram o un webhook, un mensaje al final o uno por cada publicación
--   **Ayuda en el primer inicio**: una barra dice qué falta (servidor, newsgroup) con un botón a la página correcta; los **Ajustes** ahora están en cinco categorías
--   **Aviso de nueva versión**: una vez al día el programa pregunta a GitHub por la última versión y muestra un botón «Versión X disponible» en la barra lateral (no descarga nada; se desactiva en los Ajustes)
--   **Ayuda en 8 idiomas**, un botón **Feedback** en la ventana Acerca de (abre una nueva incidencia de GitHub ya rellenada) y las notificaciones en el informe de diagnóstico
--   **Ventanas pequeñas**: Quick Post y Publicación Automática se desplazan en lugar de aplastar las tarjetas unas contra otras
--   El desinstalador pregunta si también hay que borrar tus ajustes y el historial (por defecto: conservarlos)
-
-**Guiado e informado (v1.4)**
--   **Publicación guiada**: un asistente en la barra lateral que pregunta qué quieres hacer (una release, cada elemento, analizar una carpeta, vigilar una carpeta), qué publicar, las opciones y dónde, y luego prepara la publicación con las mismas comprobaciones que Quick Post y la Publicación Automática. Recuerda tus últimas opciones y puede iniciar varias publicaciones a la vez
--   **Estadísticas** (página Historial, selector Lista / Estadísticas): totales y gráficos del periodo elegido (hoy, 7 días, 30 días, 12 meses, todo): datos publicados, velocidad, resultados, días y horas más activos, grupos de noticias, servidores, cómo se iniciaron las publicaciones y opciones usadas, además de clasificaciones. Exportación a documento PDF, página web, archivo CSV o imágenes PNG de los gráficos
--   **Historial** guarda más datos: los servidores usados, las opciones (compresión, contraseña, par2), cómo se inició la publicación y el tamaño exacto. Los historiales antiguos siguen siendo válidos
--   **Quick Post**: un perfil con nombre aleatorio sustituye ahora al nombre tomado del primer archivo
--   **Límite de velocidad**: una velocidad máxima de subida en MB/s para todas las conexiones y todas las publicaciones juntas (Ajustes, Publicaciones, Subida; `--max_speed` en la línea de comandos), para que el resto de tu conexión siga siendo usable. Se puede cambiar mientras se publica
 -   **Recuerda tus elecciones**: Quick Post y Auto Posting conservan las últimas opciones y el perfil seleccionado para el próximo inicio, y el botón Publicar queda siempre visible bajo la página con desplazamiento
+-   **Ayuda en el primer inicio**: una barra dice qué falta (servidor, newsgroup) con un botón a la página correcta; los **Ajustes** ahora están en cinco categorías
+-   **Grupos de noticias**: un cuadro con «chips», sugerencias y comprobaciones, y un menú para elegir adónde van las publicaciones cuando hay varios grupos
+-   **Nueva interfaz**: barra lateral (Quick Post, Publicación Automática, Servidores, Ajustes, Historial), páginas con tarjetas, opciones avanzadas ocultas hasta que se necesitan, un nuevo icono y una pantalla vacía que explica qué hacer. **Temas claro y oscuro**, o automático como Windows (clave `theme`). Define la variable de entorno `NGPOST_NO_THEME` para volver al aspecto nativo
+-   **Nueva sección Servidores**: lista de servidores con un indicador de estado y una casilla activado/desactivado, ficha de detalle (contraseña visible a petición) y un botón **Probar conexión** que comprueba el acceso. Modificar los servidores durante una subida ya no puede bloquear ngPost
+
+**Informado**
+-   **Estadísticas** (página Historial, selector Lista / Estadísticas): totales y gráficos del periodo elegido (hoy, 7 días, 30 días, 12 meses, todo): datos publicados, velocidad, resultados, días y horas más activos, grupos de noticias, servidores, cómo se iniciaron las publicaciones y opciones usadas, además de clasificaciones. Exportación a documento PDF, página web, archivo CSV o imágenes PNG de los gráficos
+-   **Página Historial**: cada subida se registra (`ngPost_history.csv` junto a la configuración, o `POST_HISTORY`) con su estado, número de archivos y duración. La página las muestra con búsqueda, filtro por periodo, totales, contraseñas ocultas hasta que se piden, copia, exportación y carpeta del NZB. Cuidado: el archivo contiene las contraseñas de los archivos comprimidos en texto claro
+-   **Notificaciones** cuando las publicaciones terminan o fallan: notificación del sistema, Discord, Telegram o un webhook, un mensaje al final o uno por cada publicación
+-   **Archivo NFO** escrito junto al NZB (se puede publicar con los archivos, con la contraseña si quieres) e información del vídeo con MediaInfo: duración, vídeo, audio y subtítulos
+-   **¿Ya publicado?** Un aviso lista los elementos que ya están en el historial, con una casilla «Publicar de nuevo», en lugar de una pregunta por cada publicación
+-   **Diagnóstico**: ngPost registra la duración y la velocidad de cada fase (compresión, par2, subida), los errores y los bloqueos, y el botón **Informe de diagnóstico** guarda un informe para analizar un problema. Contraseñas, usuarios y nombres de archivo se ocultan, no se envía nada
+
+**Fiable**
+-   **Artículos fallidos**: un artículo que falla se vuelve a intentar en otro servidor y en una segunda ronda; el botón **Repost missing Articles** publica solo los que faltan y corrige el NZB; los archivos originales se conservan cuando hay artículos fallidos
+-   **Cola**: las publicaciones sin terminar se guardan y se ofrecen de nuevo en el siguiente inicio (`--resume_queue` en línea de comandos)
+-   **Contraseña incorrecta**: la publicación se detiene, con un mensaje claro, cuando el servidor rechaza el inicio de sesión en todas las conexiones
 -   **Problemas más claros**: un aviso cuando la carpeta temporal está sincronizada (OneDrive y similares), un mensaje cuando los archivos de origen se leen despacio y un error claro con el nombre del archivo o carpeta movidos antes de la compresión (7-Zip ya no los busca en todos los discos)
 
-**Seguridad y correcciones**
+**Rápido y bajo control**
+-   **ParPar** (un generador de par2 mucho más rápido) se incluye para Windows de 64 bits (v0.4.6, dominio público) y se usa automáticamente cuando `parpar.exe` está en la carpeta de ngPost. Se ha quitado par2cmdline de 64 bits del paquete; el de 32 bits se mantiene para Windows de 32 bits
+-   **Compresión más rápida en Windows**: la salida de 7-Zip / rar ahora se lee a medida que llega (un post de 115 MB esperaba 200 s, ahora 1 s)
+-   **Límite de velocidad**: una velocidad máxima de subida en MB/s para todas las conexiones y todas las publicaciones juntas (Ajustes, Publicaciones, Subida; `--max_speed` en la línea de comandos), para que el resto de tu conexión siga siendo usable. Se puede cambiar mientras se publica
+
+**Seguridad**
 -   **Corrección de seguridad**: posible desbordamiento de memoria en el búfer de codificación yEnc (con ciertos datos la salida podía ser mayor que el búfer)
--   **Corrección yEnc**: un espacio o tabulador al final de una línea ahora se escapa correctamente (algunos servidores lo eliminaban y corrompían los datos)
--   **Contraseñas más seguras**: las contraseñas y nombres de archivo generados usan el generador aleatorio criptográfico del sistema operativo (Qt >= 5.10) en lugar de `std::rand()`
 -   **Contraseña del archivo fuera de la línea de comandos**: 7-Zip la recibe por su entrada estándar y rar mediante la variable de entorno `RAR`, así que ya no aparece en la lista de procesos
+
+**Paquetes e idiomas**
+-   **Imagen Docker** de la versión de línea de comandos: vigila una carpeta y publica todo lo que llega, con una plantilla para **Unraid** y una guía para usarla detrás de una VPN
+-   **Instalador de Windows** (64 y 32 bits, con **7-Zip incluido**) y paquetes ZIP portátiles, creados automáticamente en GitHub y publicados en las Releases (`ngPostDeluxe.exe`)
+-   **Aviso de nueva versión**: una vez al día el programa pregunta a GitHub por la última versión y muestra un botón «Versión X disponible» en la barra lateral (no descarga nada; se desactiva en los Ajustes)
+-   **Ayuda en 8 idiomas**, un botón **Feedback** en la ventana Acerca de (abre una nueva incidencia de GitHub ya rellenada) y las notificaciones en el informe de diagnóstico
 
 **Ajustes y herramientas**
 -   **NZB_POST_CMD**: los marcadores pueden contener espacios (una ruta como `C:\Mis carpetas\archivo.nzb` sigue siendo UN SOLO argumento) y el comando se lanza en segundo plano (ngPost ya no lo espera, así que su código de salida ya no se registra)
 -   **RAR_EXTRA y PAR2_ARGS**: se analizan respetando las comillas. 7-Zip se detecta por el nombre del programa y no por toda la ruta
--   **Nuevo README**: reescrito para este fork y disponible en 8 idiomas (inglés, francés, alemán, italiano, español, neerlandés, portugués, chino)
 -   **Guardado automático**: cada cambio de los ajustes se guarda automáticamente (el archivo anterior se conserva como `ngPost.conf.bak`)
--   **Diagnóstico**: ngPost registra la duración y la velocidad de cada fase (compresión, par2, subida), los errores y los bloqueos, y el botón **Informe de diagnóstico** guarda un informe para analizar un problema. Contraseñas, usuarios y nombres de archivo se ocultan, no se envía nada
 
 Los instaladores y paquetes portátiles para Windows y la imagen Docker están en [Releases](https://github.com/thenormal/ngPost-Deluxe/releases/latest). En los demás sistemas, compílalo desde el código fuente (ver abajo).<br/>
+
+La lista completa de cambios de cada versión está en las [notas de la versión](https://github.com/thenormal/ngPost-Deluxe/releases) y en la [hoja de ruta](ROADMAP.md).
 
 ### Funciones principales
 -   **Cargador de Usenet por línea de comandos y con una bonita interfaz gráfica** para binarios, desarrollado en **C++11/Qt5**
@@ -121,6 +112,7 @@ Los instaladores y paquetes portátiles para Windows y la imagen Docker están e
 -   puede **ejecutar un COMANDO o un script tras cada publicación** (ver NZB_POST_CMD en el archivo de configuración)
 -   puede **apagar el ordenador** cuando todas las publicaciones han terminado
 -   **perfiles** de opciones, **archivo NFO** con la información del vídeo (MediaInfo), **comprobaciones antes de publicar**, aviso de lo que ya está en el historial y **notificaciones** (sistema, Discord, Telegram, webhook)
+-   asistente **Publicación guiada** y **Estadísticas** de tus subidas (gráficos, exportación a PDF, página web, CSV o PNG)
 -   está **traducido al chino, neerlandés, inglés, francés, alemán, italiano, portugués y español**.
 
 ### Palabras clave de configuración modificadas en este fork
@@ -137,6 +129,7 @@ El archivo de configuración funciona como en el proyecto original (por defecto:
 - **limit_speed** (`ON` / `OFF`) y **max_speed** (MB/s): velocidad máxima de subida para todas las conexiones juntas, también `--max_speed`; `max_speed` solo activa el límite (cómodo con Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** y **nfo_text**: archivo NFO escrito junto al NZB, publicado con los archivos, con la contraseña, con la información de MediaInfo; ruta de MediaInfo; texto libre añadido al final
 - **profile**: los perfiles de opciones guardados desde la GUI, una línea por perfil (mejor gestionarlos desde el menú de Quick Post y Publicación Automática que a mano)
+- **quick_options**, **auto_options**, **quick_profile** y **auto_profile**: las opciones y el perfil de Quick Post y Auto Posting al cerrar el programa, escritos por el propio programa (no hace falta editarlos)
 - **check_updates**: `ON` (por defecto) o `OFF`, una vez al día la interfaz busca una versión nueva en GitHub (la línea de comandos y Docker nunca lo hacen)
 - **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** y **notify_when** (`all_done` o `each`): notificaciones cuando las publicaciones terminan. Trata las direcciones y el token como contraseñas
 

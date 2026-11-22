@@ -33,81 +33,72 @@ It is a fork of [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licenc
 3. Open **Quick Post** and drag your files or folders into the window. To post one release for each file or folder, use **Auto Posting**. The **Recommended** profile is a good start (compression, random name and password, par2 10 %).
 4. Press **Post Files**. The NZB file is written in the folder chosen in the Settings, and every upload is listed in **History**.
 
+> New to ngPost Deluxe? Try **Guided Post** in the side bar: it asks a few questions and prepares the post for you.
+
 Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and your servers and settings are there.
 
 ### Screenshots
-| Quick Post (light theme) | Auto Posting (light theme) |
+
+| Guided Post (light theme) | Quick Post (light theme) |
 |---|---|
-| ![Quick Post (light theme)](docs/screenshots/quick-post.png) | ![Auto Posting (light theme)](docs/screenshots/auto-posting.png) |
-| **History** | **Settings (dark theme)** |
-| ![History](docs/screenshots/history.png) | ![Settings (dark theme)](docs/screenshots/settings-dark.png) |
+| ![Guided Post (light theme)](docs/screenshots/guided-post.png) | ![Quick Post (light theme)](docs/screenshots/quick-post.png) |
+| **Auto Posting (light theme)** | **History** |
+| ![Auto Posting (light theme)](docs/screenshots/auto-posting.png) | ![History](docs/screenshots/history.png) |
+| **Statistics (dark theme)** | **Settings (dark theme)** |
+| ![Statistics (dark theme)](docs/screenshots/statistics-dark.png) | ![Settings (dark theme)](docs/screenshots/settings-dark.png) |
 | **Servers (dark theme)** |  |
 | ![Servers (dark theme)](docs/screenshots/servers-dark.png) |  |
 
 ### What is different in this fork
 
-**Interface**
--   **New interface**: side bar (Quick Post, Auto Posting, Servers, Settings, History), pages with cards, advanced options hidden until needed, a new icon and an empty screen that explains what to do. **Light and dark themes**, or automatic like Windows (`theme` key). Set the environment variable `NGPOST_NO_THEME` to get the native look back
--   **Italian interface**: the GUI/CMD is now also translated in Italian (it was already available in Chinese, Dutch, English, French, German, Portuguese and Spanish)
--   **ngPost Deluxe v1.0**: new name and version (the Windows program is now `ngPostDeluxe.exe`; the configuration file does not change), redesigned About window, the original donation buttons are replaced by a **Ko-fi** button for this fork (in the About window and in the Settings)
--   **New Servers section**: list of the servers with a status dot and an on/off box, details form (password shown on demand) and a **Test connection** button that checks the login. Editing the servers while posting can no longer crash ngPost
--   **Auto Posting tab**: new buttons **Remove completed**, **Remove All** and **Close finished Tabs**
--   **History page**: every upload is recorded (`ngPost_history.csv` next to the configuration, or `POST_HISTORY`) with its status, number of files and duration. The page lists them with search, period filter, totals, passwords hidden until asked, copy buttons, export and the folder of the NZB. Be careful: the file contains the archive passwords in clear text
--   **Quick Post**: a note reminds that all the items of the list are posted as one release (one NZB, one archive)
-
-**Speed**
--   **ParPar** (a much faster par2 generator) is shipped for Windows 64bit (v0.4.6, public domain) and used automatically when `parpar.exe` is in the ngPost folder. The 64bit par2cmdline has been removed from the package, the 32bit one is kept for Windows 32bit
--   **Faster compression on Windows**: the output of 7-Zip / rar is now read as it arrives (a 115 MB post waited 200 s before, 1 s now)
-
-**Windows packages and Docker**
--   **ngPost Deluxe v1.1**: **Docker image** of the command line version (it watches a folder and posts everything that arrives in it, with a template for **Unraid**), the Post button is centered in Quick Post and Auto Posting, tab icons and finished tabs are readable in the dark theme
--   **Windows installer** (64 bit and 32 bit, with **7-Zip included**) and portable ZIP packages, built automatically on GitHub and published in the Releases (`ngPostDeluxe.exe`)
--   **Windows**: the console window closes by itself when ngPost is started with a double click; the package ships OpenSSL 1.1.1w (latest version supported by Qt 5)
-
-**Reliability and comfort (v1.2)**
--   **Failed Articles**: an Article that fails is tried again on another server and in a second round; the button **Repost missing Articles** posts only the missing ones and fixes the NZB; the original files are kept when Articles failed
--   **Wrong password**: the post stops, with a clear message, when the server refuses the login on every connection
--   **Queue**: the posts that are not finished are saved and offered again at the next start (`--resume_queue` on the command line)
--   **Progress and log**: progress bar with the phase, the remaining time and colors; colored log with the duration of each phase; latency measures in the diagnostic report
--   **Newsgroups**: a box with "chips", suggestions and checks, and a menu to choose where the posts go when there are several groups
--   **Help** page in the program, guide for Docker behind a VPN (gluetun), and automatic tests of the posting in CI
-
-**Easier to use (v1.3)**
+**Easy to use**
+-   **Guided Post**: a wizard in the side bar that asks what you want to do (one release, each item, scan a folder, watch a folder), what to post, the options and where, then prepares the post with the same checks as Quick Post and Auto Posting. It remembers your last choices and can start several posts together
 -   **Auto Posting, redesigned**: three clear choices (post what I choose, scan a folder once, watch a folder and post what arrives), a preview of what will be posted with the sizes, the state of the folder watching always visible (folder, posts of the day, pause button), and the choice of what happens to the files afterwards: nothing (default), move them to a "Posted" folder or delete them
 -   **Profiles**: a ready "Recommended" profile (compression, random name and password, par2 10 %) and your own profiles, saved from the menu of Quick Post and Auto Posting
 -   **Checks before posting**: a window in plain words with a one-click fix (no server or group, folders without compression, rar / 7z or par2 not found, empty password, NZB folder not writable...)
--   **Already posted?** A warning lists the items that are already in the history, with a "Post again" box, instead of one question for each post
--   **NFO file** written next to the NZB (optionally posted with the files, with the password if you want) and the media information from MediaInfo: duration, video, audio and subtitles
--   **Notifications** when the posts are done or fail: system notification, Discord, Telegram or a webhook, one message at the end or one for each post
--   **First start help**: a bar tells what is missing (server, newsgroup) with a button to the right page; the **Settings** are now in five categories
--   **New version notice**: once a day the program asks GitHub for the latest release and shows a "Version X available" button in the side bar (nothing is downloaded; it can be turned off in the Settings)
--   **Help in 8 languages**, a **Feedback** button in the About window (opens a new GitHub issue already filled in) and the notifications in the diagnostic report
--   **Small windows**: Quick Post and Auto Posting scroll instead of squeezing the cards on top of each other
--   The uninstaller asks whether to also delete your settings and history (default: keep them)
-
-**Guided and informed (v1.4)**
--   **Guided Post**: a wizard in the side bar that asks what you want to do (one release, each item, scan a folder, watch a folder), what to post, the options and where, then prepares the post with the same checks as Quick Post and Auto Posting. It remembers your last choices and can start several posts together
--   **Statistics** (History page, switch List / Statistics): totals and charts for the period you choose (today, 7 days, 30 days, 12 months, all): data posted, speed, results, busiest days and hours, newsgroups, servers, how the posts were started and options used, plus rankings. Export as a PDF document, a web page, a CSV file or PNG images of the charts
--   **History** records more: the servers used, the options (compression, password, par2), how the post was started and the exact size. Old histories stay valid
--   **Quick Post**: a profile with a random name now replaces the name taken from the first file
--   **Speed limit**: a maximum upload speed in MB/s for all the connections and all the posts together (Settings, Posts, Upload; `--max_speed` on the command line), so the rest of your connection stays usable. It can be changed while posting
 -   **Remembers your choices**: Quick Post and Auto Posting keep the last options and the selected profile for the next start, and the Post button always stays visible under the scrolling page
+-   **First start help**: a bar tells what is missing (server, newsgroup) with a button to the right page; the **Settings** are now in five categories
+-   **Newsgroups**: a box with "chips", suggestions and checks, and a menu to choose where the posts go when there are several groups
+-   **New interface**: side bar (Quick Post, Auto Posting, Servers, Settings, History), pages with cards, advanced options hidden until needed, a new icon and an empty screen that explains what to do. **Light and dark themes**, or automatic like Windows (`theme` key). Set the environment variable `NGPOST_NO_THEME` to get the native look back
+-   **New Servers section**: list of the servers with a status dot and an on/off box, details form (password shown on demand) and a **Test connection** button that checks the login. Editing the servers while posting can no longer crash ngPost
+
+**Informed**
+-   **Statistics** (History page, switch List / Statistics): totals and charts for the period you choose (today, 7 days, 30 days, 12 months, all): data posted, speed, results, busiest days and hours, newsgroups, servers, how the posts were started and options used, plus rankings. Export as a PDF document, a web page, a CSV file or PNG images of the charts
+-   **History page**: every upload is recorded (`ngPost_history.csv` next to the configuration, or `POST_HISTORY`) with its status, number of files and duration. The page lists them with search, period filter, totals, passwords hidden until asked, copy buttons, export and the folder of the NZB. Be careful: the file contains the archive passwords in clear text
+-   **Notifications** when the posts are done or fail: system notification, Discord, Telegram or a webhook, one message at the end or one for each post
+-   **NFO file** written next to the NZB (optionally posted with the files, with the password if you want) and the media information from MediaInfo: duration, video, audio and subtitles
+-   **Already posted?** A warning lists the items that are already in the history, with a "Post again" box, instead of one question for each post
+-   **Diagnostics**: ngPost records the duration and speed of each phase (compression, par2, upload), the errors and the freezes, and the **Diagnostic report** button saves a report to analyse a problem. Passwords, usernames and file names are masked, nothing is sent anywhere
+
+**Reliable**
+-   **Failed Articles**: an Article that fails is tried again on another server and in a second round; the button **Repost missing Articles** posts only the missing ones and fixes the NZB; the original files are kept when Articles failed
+-   **Queue**: the posts that are not finished are saved and offered again at the next start (`--resume_queue` on the command line)
+-   **Wrong password**: the post stops, with a clear message, when the server refuses the login on every connection
 -   **Clearer problems**: a warning when the temporary folder is synchronized (OneDrive and similar), a message when the source files are slow to read, and a clear error naming a file or folder that was moved before the compression started (7-Zip no longer searches for it on all the drives)
 
-**Security and fixes**
+**Fast and in control**
+-   **ParPar** (a much faster par2 generator) is shipped for Windows 64bit (v0.4.6, public domain) and used automatically when `parpar.exe` is in the ngPost folder. The 64bit par2cmdline has been removed from the package, the 32bit one is kept for Windows 32bit
+-   **Faster compression on Windows**: the output of 7-Zip / rar is now read as it arrives (a 115 MB post waited 200 s before, 1 s now)
+-   **Speed limit**: a maximum upload speed in MB/s for all the connections and all the posts together (Settings, Posts, Upload; `--max_speed` on the command line), so the rest of your connection stays usable. It can be changed while posting
+
+**Security**
 -   **Security fix**: possible heap overflow in the yEnc encoding buffer (the output could be bigger than the buffer with specific data)
--   **yEnc fix**: a space or tab at the end of a line is now escaped correctly (some servers strip it, which corrupted the data)
--   **Safer passwords**: the generated archive passwords and names use the cryptographic random generator of the OS (Qt >= 5.10) instead of `std::rand()`
 -   **Archive password off the command line**: 7-Zip receives it on its standard input and rar through the `RAR` environment variable, so it is no longer visible in the list of processes
+
+**Packages and languages**
+-   **Docker image** of the command line version: it watches a folder and posts everything that arrives in it, with a template for **Unraid** and a guide for use behind a VPN
+-   **Windows installer** (64 bit and 32 bit, with **7-Zip included**) and portable ZIP packages, built automatically on GitHub and published in the Releases (`ngPostDeluxe.exe`)
+-   **New version notice**: once a day the program asks GitHub for the latest release and shows a "Version X available" button in the side bar (nothing is downloaded; it can be turned off in the Settings)
+-   **Help in 8 languages**, a **Feedback** button in the About window (opens a new GitHub issue already filled in) and the notifications in the diagnostic report
 
 **Settings and tools**
 -   **NZB_POST_CMD**: the placeholders can contain spaces (a path like `C:\My folder\file.nzb` stays ONE argument) and the command is started in background (ngPost doesn't wait for it anymore, so its exit code is no longer logged)
 -   **RAR_EXTRA and PAR2_ARGS**: parsed respecting the double quotes. 7-Zip is detected from the program name and not from the whole path
--   **New README**: rewritten for this fork and available in 8 languages (English, French, German, Italian, Spanish, Dutch, Portuguese, Chinese)
 -   **Autosave**: every change of the settings is saved automatically (the previous file is kept as `ngPost.conf.bak`)
--   **Diagnostics**: ngPost records the duration and speed of each phase (compression, par2, upload), the errors and the freezes, and the **Diagnostic report** button saves a report to analyse a problem. Passwords, usernames and file names are masked, nothing is sent anywhere
 
 The Windows installers and portable packages and the Docker image are in the [Releases](https://github.com/thenormal/ngPost-Deluxe/releases/latest). On the other systems, build it from the sources (see below).<br/>
+
+The full list of changes of each version is in the [release notes](https://github.com/thenormal/ngPost-Deluxe/releases) and in the [roadmap](ROADMAP.md).
 
 ### Main features
 -   **Command line and GUI Usenet poster** for binaries, developed in **C++11/Qt5**, designed to be as fast as possible
@@ -118,6 +109,7 @@ The Windows installers and portable packages and the Docker image are in the [Re
 -   **generates the nzb file** and writes a csv **history of the posts** (archive name and password included)
 -   can **delete files once posted**, **run a command or script** after each post (NZB_POST_CMD) and **switch off the computer**
 -   **profiles** of options, an **NFO file** with the media information (MediaInfo), **checks before posting**, a warning for what is already in the history and **notifications** (system, Discord, Telegram, webhook)
+-   **Guided Post** wizard and **Statistics** of your uploads (charts, export as PDF, web page, CSV or PNG)
 -   translated in **Chinese, Dutch, English, French, German, Italian, Portuguese and Spanish**
 
 ### Configuration keywords changed in this fork
@@ -134,6 +126,7 @@ The configuration file works as in the original project (default: **~/.ngPost** 
 - **limit_speed** (`ON` / `OFF`) and **max_speed** (MB/s): maximum upload speed for all the connections together, also `--max_speed`; `max_speed` alone turns the limit on (handy with Docker)
 - **gen_nfo**, **nfo_in_post**, **nfo_password**, **nfo_media** (`ON` / `OFF`), **mediainfo_path** and **nfo_text**: NFO file written next to the NZB, posted with the files, with the password, with the MediaInfo information; path of MediaInfo; free text added at the end
 - **profile**: the profiles of options saved from the GUI, one line for each (better managed from the menu of Quick Post and Auto Posting than by hand)
+- **quick_options**, **auto_options**, **quick_profile** and **auto_profile**: the options and the profile of Quick Post and Auto Posting when the program was closed, written by the program itself (no need to edit them)
 - **check_updates**: `ON` (default) or `OFF`, once a day the GUI looks for a new version on GitHub (the command line and Docker never do)
 - **notify_discord**, **notify_telegram_token**, **notify_telegram_chat**, **notify_webhook** and **notify_when** (`all_done` or `each`): notifications when the posts are done. Treat the addresses and the token like passwords
 
