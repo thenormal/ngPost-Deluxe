@@ -85,12 +85,14 @@ Vous utilisez déjà ngPost ? Copiez votre `ngPost.conf` dans `%APPDATA%\ngPost 
 -   **Petites fenêtres** : Quick Post et Post Auto défilent au lieu d'écraser les cartes les unes sur les autres
 -   Le désinstalleur demande s'il faut aussi supprimer vos paramètres et l'historique (par défaut : les garder)
 
-**Nouveautés de la 1.4 (pas encore publiée)**
+**Guidé et informé (v1.4)**
 -   **Post guidé** : un assistant dans la barre latérale qui demande ce que vous voulez faire (une release, chaque élément, analyser un dossier, surveiller un dossier), quoi poster, les options et où, puis prépare le post avec les mêmes vérifications que Quick Post et Post Auto. Il se souvient de vos derniers choix et peut démarrer plusieurs posts ensemble
 -   **Statistiques** (page Historique, bascule Liste / Statistiques) : totaux et graphiques pour la période choisie (aujourd'hui, 7 jours, 30 jours, 12 mois, tout) : données postées, vitesse, résultats, jours et heures les plus actifs, newsgroups, serveurs, façon dont les posts ont été lancés et options utilisées, plus des classements. Export en document PDF, page web, fichier CSV ou images PNG des graphiques
 -   **Historique** enregistre plus d'informations : les serveurs utilisés, les options (compression, mot de passe, par2), la façon dont le post a été lancé et la taille exacte. Les anciens historiques restent valides
 -   **Quick Post** : un profil avec un nom aléatoire remplace maintenant le nom pris sur le premier fichier
 -   **Limite de vitesse** : une vitesse d'envoi maximale en Mo/s pour toutes les connexions et tous les posts ensemble (Paramètres, Envois, Upload ; `--max_speed` en ligne de commande), pour que le reste de votre connexion reste utilisable. Modifiable pendant l'envoi
+-   **Se souvient de vos choix** : Quick Post et Auto Posting gardent les dernières options et le profil choisi pour le prochain démarrage, et le bouton Poster reste toujours visible sous la page défilante
+-   **Problèmes plus clairs** : un avertissement quand le dossier temporaire est synchronisé (OneDrive et similaires), un message quand les fichiers source sont lents à lire et une erreur claire indiquant le fichier ou le dossier déplacé avant la compression (7-Zip ne le cherche plus sur tous les disques)
 
 **Sécurité et correctifs**
 -   **Correctif de sécurité**: dépassement de mémoire possible dans le tampon d'encodage yEnc (la sortie pouvait être plus grande que le tampon avec certaines données)

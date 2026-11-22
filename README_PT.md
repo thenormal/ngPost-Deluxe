@@ -85,12 +85,14 @@ Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os 
 -   **Janelas pequenas**: Quick Post e Postagem Automática deslocam-se em vez de esmagar os cartões uns contra os outros
 -   O desinstalador pergunta se também deve apagar as suas definições e o histórico (por defeito: mantê-los)
 
-**Novidades da 1.4 (ainda não publicada)**
+**Guiado e informado (v1.4)**
 -   **Postagem guiada**: um assistente na barra lateral que pergunta o que quer fazer (uma release, cada item, examinar uma pasta, vigiar uma pasta), o que postar, as opções e onde, e depois prepara a postagem com as mesmas verificações do Quick Post e da Postagem Automática. Lembra-se das últimas escolhas e pode iniciar várias postagens em conjunto
 -   **Estatísticas** (página Histórico, alternador Lista / Estatísticas): totais e gráficos do período escolhido (hoje, 7 dias, 30 dias, 12 meses, tudo): dados postados, velocidade, resultados, dias e horas mais ativos, grupos de notícias, servidores, como as postagens foram iniciadas e opções usadas, além de classificações. Exportação em documento PDF, página web, ficheiro CSV ou imagens PNG dos gráficos
 -   **Histórico** guarda mais dados: os servidores usados, as opções (compressão, palavra-passe, par2), como a postagem foi iniciada e o tamanho exato. Os históricos antigos continuam válidos
 -   **Quick Post**: um perfil com nome aleatório passa a substituir o nome tirado do primeiro ficheiro
 -   **Limite de velocidade**: uma velocidade máxima de envio em MB/s para todas as ligações e todas as publicações em conjunto (Definições, Publicações, Upload; `--max_speed` na linha de comandos), para que o resto da sua ligação continue utilizável. Pode ser alterado durante a publicação
+-   **Lembra as suas escolhas**: o Quick Post e o Auto Posting guardam as últimas opções e o perfil selecionado para o próximo arranque, e o botão Publicar fica sempre visível sob a página com deslocamento
+-   **Problemas mais claros**: um aviso quando a pasta temporária está sincronizada (OneDrive e semelhantes), uma mensagem quando os ficheiros de origem são lentos a ler e um erro claro com o nome do ficheiro ou pasta movidos antes da compressão (o 7-Zip já não os procura em todos os discos)
 
 **Segurança e correções**
 -   **Correção de segurança**: possível estouro de heap no buffer de codificação yEnc (com certos dados, a saída podia exceder o buffer)

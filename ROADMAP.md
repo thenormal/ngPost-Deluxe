@@ -59,15 +59,37 @@ Goal: the program should be simple for someone who opens it for the first time, 
 | Done | Fix: the translations compiled in the program (`.qm`) were out of date, so some new texts were never shown translated; a test now checks them |
 | Done | **Notifications in the diagnostic report**: what is notified, system notification on/available and shown, which channels are set (yes/no only, never the addresses or tokens), messages sent and failed this session, last failure |
 
-## Version 1.4 - Verification and control (first thoughts)
+## Version 1.4 - Guided and informed (released)
 
-These are directions, not a list of promises. Version 1.3 is released; the points below will be decided now.
+Goal: help the user to post step by step, and show what was posted.
 
-- **One list of the posts** (state, progress, size, NZB, password) instead of one tab for each post: it changes how the whole interface handles the posts, so it was moved here from 1.3
+| | |
+|---|---|
+| Done | **Guided Post**: a wizard in the side bar (what to do, what to post, options, where) with the same checks as Quick Post and Auto Posting; it remembers the last choices and can start several posts together |
+| Done | **Statistics** in the History page (List / Statistics): totals and charts for a period, rankings, export as PDF, web page, CSV or PNG images |
+| Done | **History records more**: servers used, options, how the post was started, exact size (old histories stay valid) |
+| Done | **Speed limit**: one limit in MB/s for all the connections and all the posts together (Settings, Posts, Upload; `--max_speed`, keys `limit_speed` and `max_speed`), it can be changed while posting; shown in the diagnostic report. The time slots are in the ideas below |
+| Done | Quick Post: a profile with a random name replaces the name taken from the first file |
+| Done | **Remembers the last choices**: options and selected profile of Quick Post and Auto Posting, paths, Auto Posting mode and NFO text are saved automatically; with automatic compression (`PACK`) the matching profile is shown |
+| Done | The Post button is always visible (fixed bar under the scrolling page) |
+| Done | Compression: warning for a synchronized temporary folder, text of 7-Zip read in the console code page, message when the source files are slow to read, a missing source stops the compression with a clear error, no `-r` for 7-Zip (it searched missing paths on all the drives), at most 20 lines of messages from the compressor in the log |
+
+## Version 1.5 - Newsgroups and one list (not started)
+
+These are directions, not a list of promises.
+
+- **Newsgroups per post and favorites**, maybe the list of groups from the server
+- **One list of the posts** (state, progress, size, NZB, password) instead of one tab for each post: it changes how the whole interface handles the posts
+
+## Version 1.6 - Verification and resume (not started)
+
 - **A post is finished when it is verified**: check that the Articles are on the server (button, optional automatic), show the result in the history, and post again by itself what is missing
 - A post that stops **continues from the last Article sent** instead of starting again
-- Done: **Speed limit**, one limit in MB/s for all the connections and all the posts together (Settings, Posts, Upload; `--max_speed`, keys `limit_speed` and `max_speed`), it can be changed while posting. The time slots are moved to the ideas below
-- Newsgroups per post and favorites, maybe the list of groups from the server
+- **Backup servers and priority**: if a server fails, the posts continue on another one by themselves (it extends the second round of Articles, which already tries another server)
+
+## Version 1.7 - Web panel (not started)
+
+- **Web panel for Docker and NAS**: queue, progress, history and pause from a browser (access with password, local network only by default)
 
 ## Ideas, not committed
 
@@ -76,10 +98,8 @@ No order, no version. Some of them will probably be done, some will be dropped.
 **Control**
 - VPN guard: pause the posts when the VPN connection drops (the real kill-switch stays in the firewall or in the VPN application)
 - Notifications by **email** (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords
-- **Backup servers and priority**: if a server fails, the posts continue on another one by themselves (it extends the second round of Articles, which already tries another server)
 - Update from inside the program (the check for a new version exists since 1.3; this would download it, with a checksum, and ask before anything is installed)
 - Temporary files in RAM: easier on Windows, and chosen automatically when there is room
-- Web panel for Docker and NAS: queue, progress, history and pause from a browser (access with password, local network only by default)
 - Automatic tuning of the number of connections and of the Article size, from the measures of the latency
 - Speed limit with **time slots** (for example full speed at night, limited during the day), and a limit for each server or each post
 

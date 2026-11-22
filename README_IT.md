@@ -85,12 +85,14 @@ Usi già ngPost? Copia il tuo `ngPost.conf` in `%APPDATA%\ngPost Deluxe` e ritro
 -   **Finestre piccole**: Quick Post e Post automatico scorrono invece di schiacciare le carte una sull'altra
 -   Il disinstallatore chiede se eliminare anche impostazioni e cronologia (predefinito: conservarle)
 
-**In arrivo nella 1.4 (non ancora rilasciata)**
+**Guidato e informato (v1.4)**
 -   **Post guidato**: una procedura guidata nella barra laterale che chiede cosa vuoi fare (una release, ogni elemento, scansione di una cartella, monitoraggio di una cartella), cosa postare, le opzioni e dove, poi prepara il post con gli stessi controlli di Quick Post e Post automatico. Ricorda le ultime scelte e può avviare più post insieme
 -   **Statistiche** (pagina Cronologia, selettore Elenco / Statistiche): totali e grafici per il periodo scelto (oggi, 7 giorni, 30 giorni, 12 mesi, tutto): dati postati, velocità, risultati, giorni e ore più attivi, newsgroup, server, come sono stati avviati i post e opzioni usate, più le classifiche. Esportazione in documento PDF, pagina web, file CSV o immagini PNG dei grafici
 -   **Cronologia** registra più informazioni: i server usati, le opzioni (compressione, password, par2), come è stato avviato il post e la dimensione esatta. Le vecchie cronologie restano valide
 -   **Quick Post**: un profilo con nome casuale ora sostituisce il nome preso dal primo file
 -   **Limite di velocità**: una velocità massima di upload in MB/s per tutte le connessioni e tutti i post insieme (Impostazioni, Post, Upload; `--max_speed` da riga di comando), così il resto della connessione resta utilizzabile. Si può cambiare mentre si posta
+-   **Ricorda le tue scelte**: Quick Post e Post automatico conservano le ultime opzioni e il profilo selezionato per il prossimo avvio, e il pulsante Pubblica resta sempre visibile sotto la pagina che scorre
+-   **Problemi più chiari**: un avviso quando la cartella temporanea è sincronizzata (OneDrive e simili), un messaggio quando i file di origine sono lenti da leggere e un errore chiaro che indica il file o la cartella spostati prima della compressione (7-Zip non li cerca più su tutti i dischi)
 
 **Sicurezza e correzioni**
 -   **Correzione di sicurezza**: possibile overflow dell'heap nel buffer di codifica yEnc (con certi dati l'output poteva essere più grande del buffer)
