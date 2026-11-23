@@ -6291,5 +6291,61 @@ Les garder dans la liste ?</translation>
         <source>Pause the upload of this post (the other posts wait)</source>
         <translation>Mettre en pause l'envoi de ce post (les autres posts attendent)</translation>
     </message>
+    <message>
+        <source>Upload speed</source>
+        <translation>Vitesse d'envoi</translation>
+    </message>
+    <message>
+        <source>Search in the log</source>
+        <translation>Rechercher dans le journal</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Infos</translation>
+    </message>
+    <message>
+        <source>Phases</source>
+        <translation>Phases</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Warnings</source>
+        <translation>Avertissements</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>Débogage</translation>
+    </message>
+    <message>
+        <source>Errors</source>
+        <translation>Erreurs</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Copier</translation>
+    </message>
+    <message>
+        <source>Copy the lines shown in the log</source>
+        <translation>Copier les lignes affichées dans le journal</translation>
+    </message>
+    <message>
+        <source>%1 of %2 lines shown</source>
+        <translation>%1 lignes affichées sur %2</translation>
+    </message>
+    <message>
+        <source>The graph starts when the upload starts.</source>
+        <translation>Le graphique commence quand l'envoi démarre.</translation>
+    </message>
+    <message>
+        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
+        <translation>Pas de graphique pour ce post (seuls les posts envoyés depuis le démarrage du programme en ont un).</translation>
+    </message>
+    <message>
+        <source>Last %1/s - best %2/s - average %3/s</source>
+        <translation>Dernier %1/s - maximum %2/s - moyenne %3/s</translation>
+    </message>
 </context>
 </TS>

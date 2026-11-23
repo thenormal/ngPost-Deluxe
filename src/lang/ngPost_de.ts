@@ -6303,5 +6303,61 @@ In der Liste behalten?</translation>
         <source>Pause the upload of this post (the other posts wait)</source>
         <translation>Den Upload dieses Posts pausieren (die anderen Posts warten)</translation>
     </message>
+    <message>
+        <source>Upload speed</source>
+        <translation>Upload-Geschwindigkeit</translation>
+    </message>
+    <message>
+        <source>Search in the log</source>
+        <translation>Im Log suchen</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <source>Phases</source>
+        <translation>Phasen</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Warnings</source>
+        <translation>Warnungen</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>Debug</translation>
+    </message>
+    <message>
+        <source>Errors</source>
+        <translation>Fehler</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopieren</translation>
+    </message>
+    <message>
+        <source>Copy the lines shown in the log</source>
+        <translation>Die im Log angezeigten Zeilen kopieren</translation>
+    </message>
+    <message>
+        <source>%1 of %2 lines shown</source>
+        <translation>%1 von %2 Zeilen angezeigt</translation>
+    </message>
+    <message>
+        <source>The graph starts when the upload starts.</source>
+        <translation>Das Diagramm beginnt, wenn der Upload startet.</translation>
+    </message>
+    <message>
+        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
+        <translation>Kein Diagramm für diesen Post (nur Posts, die seit dem Programmstart hochgeladen wurden, haben eines).</translation>
+    </message>
+    <message>
+        <source>Last %1/s - best %2/s - average %3/s</source>
+        <translation>Zuletzt %1/s - Spitze %2/s - Durchschnitt %3/s</translation>
+    </message>
 </context>
 </TS>

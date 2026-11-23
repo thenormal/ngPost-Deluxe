@@ -6304,5 +6304,61 @@ Keep them in the list?</source>
         <source>Pause the upload of this post (the other posts wait)</source>
         <translation>暂停此发布的上传（其他发布等待）</translation>
     </message>
+    <message>
+        <source>Upload speed</source>
+        <translation>上传速度</translation>
+    </message>
+    <message>
+        <source>Search in the log</source>
+        <translation>在日志中搜索</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>信息</translation>
+    </message>
+    <message>
+        <source>Phases</source>
+        <translation>阶段</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <source>Warnings</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>调试</translation>
+    </message>
+    <message>
+        <source>Errors</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>复制</translation>
+    </message>
+    <message>
+        <source>Copy the lines shown in the log</source>
+        <translation>复制日志中显示的行</translation>
+    </message>
+    <message>
+        <source>%1 of %2 lines shown</source>
+        <translation>显示 %1 / %2 行</translation>
+    </message>
+    <message>
+        <source>The graph starts when the upload starts.</source>
+        <translation>上传开始后才会显示图表。</translation>
+    </message>
+    <message>
+        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
+        <translation>此发布没有图表（只有程序启动后上传的发布才有）。</translation>
+    </message>
+    <message>
+        <source>Last %1/s - best %2/s - average %3/s</source>
+        <translation>最近 %1/s - 最高 %2/s - 平均 %3/s</translation>
+    </message>
 </context>
 </TS>

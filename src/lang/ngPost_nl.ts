@@ -6309,5 +6309,61 @@ In de lijst houden?</translation>
         <source>Pause the upload of this post (the other posts wait)</source>
         <translation>De upload van deze post pauzeren (de andere posts wachten)</translation>
     </message>
+    <message>
+        <source>Upload speed</source>
+        <translation>Uploadsnelheid</translation>
+    </message>
+    <message>
+        <source>Search in the log</source>
+        <translation>Zoeken in het logboek</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <source>Phases</source>
+        <translation>Fasen</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Warnings</source>
+        <translation>Waarschuwingen</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>Debug</translation>
+    </message>
+    <message>
+        <source>Errors</source>
+        <translation>Fouten</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Kopiëren</translation>
+    </message>
+    <message>
+        <source>Copy the lines shown in the log</source>
+        <translation>De getoonde regels van het logboek kopiëren</translation>
+    </message>
+    <message>
+        <source>%1 of %2 lines shown</source>
+        <translation>%1 van %2 regels getoond</translation>
+    </message>
+    <message>
+        <source>The graph starts when the upload starts.</source>
+        <translation>De grafiek begint wanneer de upload start.</translation>
+    </message>
+    <message>
+        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
+        <translation>Geen grafiek voor deze post (alleen posts die sinds het starten van het programma zijn geüpload hebben er een).</translation>
+    </message>
+    <message>
+        <source>Last %1/s - best %2/s - average %3/s</source>
+        <translation>Laatste %1/s - hoogste %2/s - gemiddelde %3/s</translation>
+    </message>
 </context>
 </TS>

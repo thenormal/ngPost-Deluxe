@@ -21,6 +21,8 @@ El registro colorea las líneas: las fases, los éxitos, los avisos y los errore
 
 Cada publicación tiene también su propio registro, con la hora de cada línea: selecciónala en la página **Publicaciones**. Esa página muestra todas las publicaciones de la sesión con su progreso, tamaño, velocidad y tiempo restante; allí puedes detener una publicación, cancelar una que espera, abrir la carpeta del archivo NZB o copiar la contraseña.
 
+En la página **Posts** se puede filtrar el registro: escribe una palabra en el cuadro de búsqueda para ver solo las líneas que la contienen, y marca o desmarca las categorías (Info, Fases, OK, Avisos, Depuración, Errores). Las líneas de depuración están ocultas al principio. El botón **Copiar** copia las líneas mostradas. Debajo de los detalles de la publicación, un gráfico muestra la **velocidad de subida** segundo a segundo (las pausas no cuentan), con la velocidad última, la mejor y la media. El gráfico se conserva solo hasta cerrar el programa, así que una publicación de una sesión anterior solo tiene su velocidad media.
+
 ## Latencia
 
 Al final de una publicación el registro también muestra la **latencia**: el tiempo mediano de un viaje de ida y vuelta con el servidor (el comando POST y su respuesta, sin datos) y de la conexión. Se mide solo a partir de lo que ngPost ya hace, no se envía nada para ello. Un valor alto (más de medio segundo) significa que el retraso viene de la red, de la distancia al servidor o del propio servidor, por ejemplo una VPN, y no de tu ordenador.

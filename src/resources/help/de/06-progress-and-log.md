@@ -21,6 +21,8 @@ Das Protokoll färbt die Zeilen: Phasen, Erfolge, Warnungen und Fehler lassen si
 
 Jeder Post hat außerdem sein eigenes Protokoll, mit der Uhrzeit jeder Zeile: wählen Sie den Post auf der Seite **Posts**. Diese Seite listet alle Posts der Sitzung mit Fortschritt, Größe, Geschwindigkeit und verbleibender Zeit; dort können Sie einen Post stoppen, einen wartenden abbrechen, den Ordner der NZB-Datei öffnen oder das Passwort kopieren.
 
+Auf der Seite **Posts** lässt sich das Log filtern: Geben Sie ein Wort in das Suchfeld ein, um nur die Zeilen mit diesem Wort zu sehen, und setzen oder entfernen Sie die Häkchen der Kategorien (Info, Phasen, OK, Warnungen, Debug, Fehler). Die Debug-Zeilen sind zunächst ausgeblendet. Die Schaltfläche **Kopieren** kopiert die angezeigten Zeilen. Unter den Details des Posts zeigt ein Diagramm die **Upload-Geschwindigkeit** Sekunde für Sekunde (Pausen werden nicht gezählt), mit der letzten, der besten und der durchschnittlichen Geschwindigkeit. Das Diagramm bleibt nur bis zum Schließen des Programms erhalten; ein Post einer früheren Sitzung hat daher nur seine Durchschnittsgeschwindigkeit.
+
 ## Latenz
 
 Am Ende eines Posts zeigt das Protokoll auch die **Latenz**: die mittlere Zeit eines Hin und Zurück mit dem Server (der Befehl POST und seine Antwort, ohne Daten) und der Verbindung. Sie wird nur aus dem gemessen, was ngPost ohnehin tut, dafür wird nichts gesendet. Ein hoher Wert (mehr als eine halbe Sekunde) bedeutet, dass die Verzögerung vom Netzwerk, von der Entfernung zum Server oder vom Server selbst kommt, zum Beispiel durch ein VPN, und nicht von Ihrem Computer.

@@ -21,6 +21,8 @@ O registo colore as linhas: as fases, os sucessos, os avisos e os erros distingu
 
 Cada publicação tem também o seu próprio registo, com a hora de cada linha: selecione-a na página **Publicações**. Essa página mostra todas as publicações da sessão com progresso, tamanho, velocidade e tempo restante; aí pode parar uma publicação, cancelar uma que espera, abrir a pasta do ficheiro NZB ou copiar a palavra-passe.
 
+Na página **Posts** o registo pode ser filtrado: escreva uma palavra na caixa de pesquisa para ver só as linhas que a contêm, e marque ou desmarque as categorias (Info, Fases, OK, Avisos, Depuração, Erros). As linhas de depuração estão ocultas ao início. O botão **Copiar** copia as linhas mostradas. Por baixo dos detalhes da publicação, um gráfico mostra a **velocidade de envio** segundo a segundo (as pausas não contam), com a última velocidade, a melhor e a média. O gráfico só é guardado até fechar o programa, por isso uma publicação de uma sessão anterior só tem a velocidade média.
+
 ## Latência
 
 No fim de uma publicação o registo mostra também a **latência**: o tempo mediano de uma ida e volta com o servidor (o comando POST e a sua resposta, sem dados) e da ligação. É medida apenas a partir do que o ngPost já faz, não se envia nada para isso. Um valor alto (mais de meio segundo) significa que o atraso vem da rede, da distância ao servidor ou do próprio servidor, por exemplo uma VPN, e não do seu computador.

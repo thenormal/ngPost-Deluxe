@@ -10,6 +10,8 @@ static int failures = 0;
 
 using State = PostEntry::State;
 
+static void QTest_sleep(int ms) { QThread::msleep(ms); }
+
 int main(int argc, char *argv[])
 {
     QCoreApplication app(argc, argv);
@@ -108,6 +110,25 @@ int main(int argc, char *argv[])
     CHECK(list.removeFinished() == 2 && removed == 2);
     CHECK(list.count() == 1 && list.entries().first().id == idBig);
     CHECK(list.remove(idBig) == false);
+
+    // speed of the upload: one sample about each second, only while uploading (pauses are not counted)
+    PostEntry sp; sp.name = "speed";
+    int idSp = list.add(sp);
+    PostEntry u; u.id = idSp; u.state = State::UPLOADING; u.sizeTotal = 100000000; u.sizeDone = 0;
+    CHECK(list.update(u));
+    CHECK(list.entry(idSp)->speedSamples.isEmpty());      // the first update only starts the sampling
+    QTest_sleep(1000);
+    u.sizeDone = 2000000; list.update(u);
+    CHECK(list.entry(idSp)->speedSamples.size() == 1);
+    float v = list.entry(idSp)->speedSamples.first();
+    CHECK(v > 1500000.f && v < 2100000.f);                // about 2 MB in about 1 s
+    u.sizeDone = 2100000; list.update(u);                 // too soon: no new sample
+    CHECK(list.entry(idSp)->speedSamples.size() == 1);
+    u.state = State::PAUSED; list.update(u);
+    QTest_sleep(1000);
+    u.state = State::UPLOADING; list.update(u);           // restart after a pause: starts again, the pause is not a sample
+    CHECK(list.entry(idSp)->speedSamples.size() == 1);
+    CHECK(list.finish(idSp, State::STOPPED));
 
     if (failures)
         std::printf("%d check(s) failed\n", failures);
