@@ -21,6 +21,8 @@ The log colors the lines: phases, success, warnings and errors are easy to tell 
 
 Each post also has its own log, with the time of each line: select the post in the page **Posts**. That page lists all the posts of the session with their progress, size, speed and remaining time; there you can stop a post, cancel one that is waiting, open the folder of the NZB file or copy the password.
 
+In the page **Posts** the log can be filtered: type a word in the search box to see only the lines that contain it, and tick or untick the categories (Info, Phases, OK, Warnings, Debug, Errors). The Debug lines are hidden at first. The button **Copy** copies the lines shown. Under the details of the post, a graph shows the **upload speed** second by second (the pauses are not counted), with the last, the best and the average speed. The graph is kept only until the program is closed, so a post of an older session has only its average speed.
+
 ## Latency
 
 At the end of a post the log also shows the **latency**: the median time of a round trip with the server (the command POST and its answer, with no data) and of the connection. It is measured only from what ngPost already does, nothing is sent for it. A high value (more than half a second) means the delay comes from the network, the distance to the server or the server itself, for example a VPN, and not from your computer.

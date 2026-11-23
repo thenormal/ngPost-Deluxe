@@ -465,7 +465,7 @@ void ChartWidget::_draw(QPainter &p, bool print)
                 for (int i = 0; i < n; ++i)
                 {
                     double v = s.values.value(i);
-                    if (!qIsNaN(v))
+                    if (!qIsNaN(v) && (n <= 40 || i == _hover)) // a long line has no dots
                         p.drawEllipse(pointAt(i, v), i == _hover ? 4.5 : 2.5, i == _hover ? 4.5 : 2.5);
                 }
             }

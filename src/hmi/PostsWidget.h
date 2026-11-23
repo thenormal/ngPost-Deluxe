@@ -30,6 +30,9 @@ class QPushButton;
 class QTableWidget;
 class QTableWidgetItem;
 class QPlainTextEdit;
+class QLineEdit;
+class QCheckBox;
+class ChartWidget;
 class QSplitter;
 class QMenu;
 
@@ -77,6 +80,10 @@ private:
     int  _rowOf(int id) const;
     void _showDetails();
     void _showLog();
+    void _showSpeed();                         //!< graph of the speed of the selected post
+    bool _logVisible(const PostEntry::LogLine &line) const; //!< filters of the log
+    bool _logFiltered() const;                //!< some lines are hidden by the filters
+    void _refreshLog();                       //!< the filters changed: the log is shown again
     void _updateButtons();
     void _move(int move);                     //!< QueueOrder::Move of the selected post
     void _setPriority(int priority);
@@ -118,6 +125,13 @@ private:
     QLabel       *_logTitle;
     QPlainTextEdit *_log;
     int           _logOf = -1; //!< post whose log is shown
+    ChartWidget  *_speedChart;
+    QLabel       *_speedTitle;
+    QLabel       *_speedInfo;
+    QLineEdit    *_logSearch;
+    QCheckBox    *_logLevels[6]; //!< PostEntry::LogLevel: info, phase, ok, warn, debug, error
+    QPushButton  *_logCopy;
+    QLabel       *_logCount;
 
 };
 

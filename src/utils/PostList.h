@@ -67,6 +67,12 @@ struct PostEntry
     QDateTime started;
     QDateTime finished;
 
+    //! speed of the upload, one value (bytes per second) for each sampleStepSec seconds (pauses are not counted)
+    QVector<float>   speedSamples;
+    int              sampleStepSec = 1;
+    qint64           sampleMs      = 0;  //!< time of the last sample (0: no upload running)
+    quint64          sampleBytes   = 0;  //!< sizeDone at the last sample
+
     QVector<LogLine> log;
     bool             logLineOpen = false; //!< the last line is not finished (text written without a new line)
     int              logDropped  = 0;     //!< oldest lines removed to keep the log small
@@ -88,6 +94,7 @@ class PostList : public QObject
 
 public:
     static constexpr int sMaxLogLines = 3000; //!< lines kept for each post
+    static constexpr int sMaxSpeedSamples = 1200; //!< samples kept for each post (then two are merged in one)
 
     explicit PostList(QObject *parent = nullptr);
 
@@ -117,6 +124,7 @@ signals:
 
 private:
     PostEntry *_entry(int id);
+    static bool _sampleSpeed(PostEntry &e, const PostEntry &s); //!< true: a sample was added
 
     QVector<PostEntry> _entries;
     int                _nextId = 1;

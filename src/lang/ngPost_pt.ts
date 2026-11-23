@@ -6303,5 +6303,61 @@ Mantê-las na lista?</translation>
         <source>Pause the upload of this post (the other posts wait)</source>
         <translation>Pausar o envio desta publicação (as outras esperam)</translation>
     </message>
+    <message>
+        <source>Upload speed</source>
+        <translation>Velocidade de envio</translation>
+    </message>
+    <message>
+        <source>Search in the log</source>
+        <translation>Pesquisar no registo</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Info</translation>
+    </message>
+    <message>
+        <source>Phases</source>
+        <translation>Fases</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Warnings</source>
+        <translation>Avisos</translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation>Depuração</translation>
+    </message>
+    <message>
+        <source>Errors</source>
+        <translation>Erros</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Copiar</translation>
+    </message>
+    <message>
+        <source>Copy the lines shown in the log</source>
+        <translation>Copiar as linhas mostradas no registo</translation>
+    </message>
+    <message>
+        <source>%1 of %2 lines shown</source>
+        <translation>%1 de %2 linhas mostradas</translation>
+    </message>
+    <message>
+        <source>The graph starts when the upload starts.</source>
+        <translation>O gráfico começa quando o envio começa.</translation>
+    </message>
+    <message>
+        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
+        <translation>Sem gráfico para esta publicação (só as enviadas desde que o programa foi iniciado o têm).</translation>
+    </message>
+    <message>
+        <source>Last %1/s - best %2/s - average %3/s</source>
+        <translation>Último %1/s - máximo %2/s - média %3/s</translation>
+    </message>
 </context>
 </TS>

@@ -21,6 +21,8 @@ Il log colora le righe: fasi, successi, avvisi ed errori si distinguono facilmen
 
 Ogni post ha anche il suo log, con l'ora di ogni riga: seleziona il post nella pagina **Post**. Quella pagina elenca tutti i post della sessione con avanzamento, dimensione, velocità e tempo rimanente; lì puoi fermare un post, annullarne uno in attesa, aprire la cartella del file NZB o copiare la password.
 
+Nella pagina **Post** il log si può filtrare: scrivi una parola nella casella di ricerca per vedere solo le righe che la contengono, e spunta o togli le categorie (Info, Fasi, OK, Avvisi, Debug, Errori). Le righe di Debug sono nascoste all'inizio. Il pulsante **Copia** copia le righe mostrate. Sotto i dettagli del post un grafico mostra la **velocità di upload** secondo per secondo (le pause non sono contate), con la velocità ultima, la migliore e la media. Il grafico viene conservato solo fino alla chiusura del programma, quindi un post di una sessione precedente ha solo la velocità media.
+
 ## Latenza
 
 Alla fine di un post il log mostra anche la **latenza**: il tempo mediano di un giro completo con il server (il comando POST e la sua risposta, senza dati) e della connessione. Viene misurata solo da ciò che ngPost fa già, per questo non viene inviato nulla. Un valore alto (più di mezzo secondo) significa che il ritardo viene dalla rete, dalla distanza dal server o dal server stesso, per esempio una VPN, e non dal tuo computer.

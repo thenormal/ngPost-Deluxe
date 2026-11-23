@@ -21,9 +21,12 @@
 #include "NgPost.h"
 #include "PostingJob.h"
 #include "utils/QueueOrder.h"
+#include "StatsWidget.h"
 
 #include <QApplication>
+#include <QCheckBox>
 #include <QClipboard>
+#include <QLineEdit>
 #include <QDesktopServices>
 #include <QDragMoveEvent>
 #include <QDropEvent>
@@ -348,8 +351,19 @@ PostsWidget::PostsWidget(NgPost *ngPost, MainWindow *hmi, QWidget *parent) :
     _details->setTextFormat(Qt::RichText);
     _details->setTextInteractionFlags(Qt::TextSelectableByMouse);
     _details->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    _speedTitle = new QLabel(detailsBox);
+    _speedTitle->setObjectName("cardTitle");
+    _speedChart = new ChartWidget(ChartWidget::Type::Line, ngPost, detailsBox);
+    _speedChart->setBinaryScale(true);
+    _speedChart->setMinimumHeight(130);
+    _speedChart->setMaximumHeight(160);
+    _speedInfo = new QLabel(detailsBox);
+    _speedInfo->setWordWrap(true);
     detailsLayout->addWidget(_detailsTitle);
     detailsLayout->addWidget(_details, 1);
+    detailsLayout->addWidget(_speedTitle);
+    detailsLayout->addWidget(_speedChart);
+    detailsLayout->addWidget(_speedInfo);
     detailsBox->setMinimumWidth(260);
     detailsBox->setMaximumWidth(420);
     QWidget *logBox = new QWidget(bottom);
@@ -360,8 +374,28 @@ PostsWidget::PostsWidget(NgPost *ngPost, MainWindow *hmi, QWidget *parent) :
     _log = new QPlainTextEdit(logBox);
     _log->setReadOnly(true);
     _log->setMaximumBlockCount(PostList::sMaxLogLines + 1);
+    QHBoxLayout *filterLayout = new QHBoxLayout();
+    filterLayout->setSpacing(8);
+    _logSearch = new QLineEdit(logBox);
+    _logSearch->setClearButtonEnabled(true);
+    _logSearch->setMinimumWidth(140);
+    filterLayout->addWidget(_logSearch, 1);
+    for (int i = 0; i < 6; ++i)
+    {
+        _logLevels[i] = new QCheckBox(logBox);
+        _logLevels[i]->setChecked(i != PostEntry::LOG_DEBUG); // the debug lines are hidden by default
+        filterLayout->addWidget(_logLevels[i]);
+        connect(_logLevels[i], &QCheckBox::toggled, this, [this](){ _refreshLog(); });
+    }
+    _logCopy = new QPushButton(logBox);
+    filterLayout->addWidget(_logCopy);
+    _logCount = new QLabel(logBox);
+    connect(_logSearch, &QLineEdit::textChanged, this, [this](){ _refreshLog(); });
+    connect(_logCopy, &QAbstractButton::clicked, this, [this](){ QApplication::clipboard()->setText(_log->toPlainText()); });
     logLayout->addWidget(_logTitle);
+    logLayout->addLayout(filterLayout);
     logLayout->addWidget(_log, 1);
+    logLayout->addWidget(_logCount);
     bottomLayout->addWidget(detailsBox, 0);
     bottomLayout->addWidget(logBox, 1);
 
@@ -482,6 +516,14 @@ void PostsWidget::retranslate()
     _emptyLbl->setText(tr("No post yet.\nPrepare one in Guided Post, Quick Post or Auto Posting: it will appear here."));
     _detailsTitle->setText(tr("Details"));
     _logTitle->setText(tr("Log of the post"));
+    _speedTitle->setText(tr("Upload speed"));
+    _logSearch->setPlaceholderText(tr("Search in the log"));
+    // order of PostEntry::LogLevel: info, phase, ok, warn, debug, error
+    const QString names[6] = {tr("Info"), tr("Phases"), tr("OK"), tr("Warnings"), tr("Debug"), tr("Errors")};
+    for (int i = 0; i < 6; ++i)
+        _logLevels[i]->setText(names[i]);
+    _logCopy->setText(tr("Copy"));
+    _logCopy->setToolTip(tr("Copy the lines shown in the log"));
     for (int row = 0; row < _table->rowCount(); ++row)
         if (const PostEntry *e = _list->entry(_table->item(row, COL_NAME)->data(sIdRole).toInt()))
             _fillRow(row, *e);
@@ -706,6 +748,7 @@ void PostsWidget::_showDetails()
         html += row(tr("Finished"), e->finished.toString("HH:mm:ss"));
     html += "</table>";
     _details->setText(html);
+    _showSpeed();
 }
 
 QString PostsWidget::_logHtml(const PostEntry::LogLine &line) const
@@ -734,6 +777,36 @@ QString PostsWidget::_logHtml(const PostEntry::LogLine &line) const
     return time + QString("<span style='color:%1;%2'>%3</span>").arg(color, bold ? "font-weight:bold;" : "", text);
 }
 
+bool PostsWidget::_logVisible(const PostEntry::LogLine &line) const
+{
+    int level = qBound(0, line.level, 5);
+    if (!_logLevels[level]->isChecked())
+        return false;
+    const QString search = _logSearch->text().trimmed();
+    if (search.isEmpty())
+        return true;
+    QString text = line.text;
+    if (line.level == PostEntry::LOG_INFO)
+        text.remove(QRegularExpression("<[^>]*>"));
+    return text.contains(search, Qt::CaseInsensitive);
+}
+
+bool PostsWidget::_logFiltered() const
+{
+    if (!_logSearch->text().trimmed().isEmpty())
+        return true;
+    for (int i = 0; i < 6; ++i)
+        if (!_logLevels[i]->isChecked())
+            return true;
+    return false;
+}
+
+void PostsWidget::_refreshLog()
+{
+    _logOf = -2; // forces _showLog
+    _showLog();
+}
+
 void PostsWidget::_showLog()
 {
     int id = selectedId();
@@ -741,13 +814,20 @@ void PostsWidget::_showLog()
         return;
     _logOf = id;
     _log->clear();
+    _logCount->clear();
     const PostEntry *e = _list->entry(id);
     if (!e)
         return;
     if (e->logDropped)
         _log->appendHtml(QString("<i>%1</i>").arg(tr("(%1 older line(s) not kept)").arg(e->logDropped).toHtmlEscaped()));
+    int shown = 0;
     for (const PostEntry::LogLine &line : e->log)
-        _log->appendHtml(_logHtml(line));
+        if (_logVisible(line))
+        {
+            _log->appendHtml(_logHtml(line));
+            ++shown;
+        }
+    _logCount->setText(_logFiltered() ? tr("%1 of %2 lines shown").arg(shown).arg(e->log.size()) : QString());
     _log->verticalScrollBar()->setValue(_log->verticalScrollBar()->maximum());
 }
 
@@ -755,6 +835,18 @@ void PostsWidget::onLogAdded(int id, const PostEntry::LogLine &line, bool contin
 {
     if (id != _logOf)
         return;
+    if (_logFiltered())
+    {
+        if (continuesLine && !_logSearch->text().trimmed().isEmpty())
+        {   // the text of the line changed: it may start or stop matching
+            _refreshLog();
+            return;
+        }
+        if (!_logVisible(line))
+            return;
+        if (const PostEntry *e = _list->entry(id))
+            _logCount->setText(tr("%1 of %2 lines shown").arg(_log->document()->blockCount()).arg(e->log.size()));
+    }
     QScrollBar *sb = _log->verticalScrollBar();
     bool atEnd = sb->value() >= sb->maximum() - 4;
     if (continuesLine)
@@ -768,6 +860,45 @@ void PostsWidget::onLogAdded(int id, const PostEntry::LogLine &line, bool contin
     _log->appendHtml(_logHtml(line));
     if (atEnd)
         sb->setValue(sb->maximum());
+}
+
+void PostsWidget::_showSpeed()
+{
+    const PostEntry *e = _list->entry(selectedId());
+    const QVector<float> *samples = e ? &e->speedSamples : nullptr;
+    if (!samples || samples->size() < 2)
+    {
+        _speedChart->hide();
+        _speedInfo->setText(e && e->isActive() ? tr("The graph starts when the upload starts.")
+                                               : tr("No graph for this post (only the posts uploaded since the program started have one)."));
+        return;
+    }
+    _speedChart->show();
+    // at most 60 points: the samples are averaged in groups
+    const int n = samples->size();
+    const int group = qMax(1, (n + 59) / 60);
+    const int stepSec = e->sampleStepSec * group;
+    QStringList labels;
+    QVector<double> values;
+    double sum = 0, best = 0;
+    for (float v : *samples)
+    {
+        sum += v;
+        best = qMax(best, static_cast<double>(v));
+    }
+    for (int i = 0; i < n; i += group)
+    {
+        double g = 0;
+        int count = 0;
+        for (int j = i; j < qMin(n, i + group); ++j, ++count)
+            g += samples->at(j);
+        values.append(g / count);
+        int sec = (i / group) * stepSec;
+        labels.append(QString("%1:%2").arg(sec / 60).arg(sec % 60, 2, 10, QChar('0')));
+    }
+    _speedChart->setData(labels, {{QString(), values, 0}}, [](double v){ return QString("%1/s").arg(humanBytes(v)); });
+    _speedInfo->setText(tr("Last %1/s - best %2/s - average %3/s")
+                        .arg(humanBytes(samples->last()), humanBytes(best), humanBytes(sum / n)));
 }
 
 void PostsWidget::_updateButtons()

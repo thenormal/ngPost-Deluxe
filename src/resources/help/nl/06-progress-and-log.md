@@ -21,6 +21,8 @@ Het logboek kleurt de regels: fasen, successen, waarschuwingen en fouten zijn ge
 
 Elke post heeft ook een eigen logboek, met de tijd van elke regel: selecteer de post op de pagina **Posts**. Die pagina toont alle posts van de sessie met voortgang, grootte, snelheid en resterende tijd; daar kun je een post stoppen, een wachtende annuleren, de map van het NZB-bestand openen of het wachtwoord kopiëren.
 
+Op de pagina **Posts** kan het logboek gefilterd worden: typ een woord in het zoekvak om alleen de regels te zien die het bevatten, en vink de categorieën aan of uit (Info, Fasen, OK, Waarschuwingen, Debug, Fouten). De debugregels zijn eerst verborgen. De knop **Kopiëren** kopieert de getoonde regels. Onder de details van de post toont een grafiek de **uploadsnelheid** seconde per seconde (pauzes tellen niet mee), met de laatste, de hoogste en de gemiddelde snelheid. De grafiek wordt alleen bewaard tot het programma wordt gesloten, dus een post van een eerdere sessie heeft alleen zijn gemiddelde snelheid.
+
 ## Latentie
 
 Aan het einde van een post toont het logboek ook de **latentie**: de mediane tijd van een heen-en-terugreis met de server (het commando POST en het antwoord, zonder gegevens) en van de verbinding. Ze wordt alleen gemeten aan de hand van wat ngPost al doet, er wordt er niets voor verstuurd. Een hoge waarde (meer dan een halve seconde) betekent dat de vertraging van het netwerk komt, van de afstand tot de server of van de server zelf, bijvoorbeeld door een VPN, en niet van uw computer.

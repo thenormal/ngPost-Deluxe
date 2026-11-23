@@ -6258,5 +6258,61 @@ Keep them in the list?</source>
         <source>Pause the upload of this post (the other posts wait)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Upload speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in the log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy the lines shown in the log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 of %2 lines shown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The graph starts when the upload starts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last %1/s - best %2/s - average %3/s</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

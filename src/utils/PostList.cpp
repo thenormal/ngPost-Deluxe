@@ -130,6 +130,10 @@ int PostList::add(const PostEntry &entry)
     e.log.clear();
     e.logLineOpen = false;
     e.logDropped  = 0;
+    e.speedSamples.clear();
+    e.sampleStepSec = 1;
+    e.sampleMs = 0;
+    e.sampleBytes = 0;
     _entries.append(e);
     emit postAdded(e.id);
     return e.id;
@@ -148,6 +152,8 @@ bool PostList::update(const PostEntry &s)
             || (!s.archiveName.isEmpty() && e->archiveName != s.archiveName);
     if (e->state == PostEntry::State::WAITING && s.state != PostEntry::State::WAITING && !e->started.isValid())
         e->started = QDateTime::currentDateTime();
+    if (_sampleSpeed(*e, s))
+        changed = true;
     e->state      = s.state;
     e->sizeTotal  = s.sizeTotal;
     e->sizeDone   = s.sizeDone;
@@ -165,6 +171,40 @@ bool PostList::update(const PostEntry &s)
     if (!s.archiveName.isEmpty()) e->archiveName = s.archiveName;
     if (changed)
         emit postChanged(e->id);
+    return true;
+}
+
+bool PostList::_sampleSpeed(PostEntry &e, const PostEntry &s)
+{
+    if (s.state != PostEntry::State::UPLOADING)
+    {   // pauses and other phases are not in the graph: the next sample starts again from zero
+        e.sampleMs = 0;
+        return false;
+    }
+    const qint64 now = QDateTime::currentMSecsSinceEpoch();
+    if (!e.sampleMs || s.sizeDone < e.sampleBytes)
+    {
+        e.sampleMs    = now;
+        e.sampleBytes = s.sizeDone;
+        return false;
+    }
+    const qint64 dt = now - e.sampleMs;
+    if (dt < 900)
+        return false;
+    e.speedSamples.append(static_cast<float>((s.sizeDone - e.sampleBytes) * 1000.0 / dt));
+    e.sampleMs    = now;
+    e.sampleBytes = s.sizeDone;
+    if (e.speedSamples.size() > sMaxSpeedSamples)
+    {   // a long post: the oldest part keeps its shape with a coarser step
+        QVector<float> merged;
+        merged.reserve(e.speedSamples.size() / 2 + 1);
+        for (int i = 0; i + 1 < e.speedSamples.size(); i += 2)
+            merged.append((e.speedSamples.at(i) + e.speedSamples.at(i + 1)) / 2);
+        if (e.speedSamples.size() % 2)
+            merged.append(e.speedSamples.last());
+        e.speedSamples = merged;
+        e.sampleStepSec *= 2;
+    }
     return true;
 }
 

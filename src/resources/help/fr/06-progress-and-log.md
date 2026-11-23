@@ -21,6 +21,8 @@ Le journal colore les lignes : les phases, les succès, les avertissements et le
 
 Chaque post a aussi son propre journal, avec l'heure de chaque ligne : sélectionnez le post dans la page **Posts**. Cette page liste tous les posts de la session avec leur progression, taille, vitesse et temps restant ; vous pouvez y arrêter un post, annuler un post en attente, ouvrir le dossier du fichier NZB ou copier le mot de passe.
 
+Dans la page **Posts**, le journal peut être filtré : tapez un mot dans la zone de recherche pour ne voir que les lignes qui le contiennent, et cochez ou décochez les catégories (Infos, Phases, OK, Avertissements, Débogage, Erreurs). Les lignes de débogage sont masquées au départ. Le bouton **Copier** copie les lignes affichées. Sous les détails du post, un graphique montre la **vitesse d'envoi** seconde par seconde (les pauses ne comptent pas), avec la dernière vitesse, la meilleure et la moyenne. Le graphique n'est conservé que jusqu'à la fermeture du programme : un post d'une session précédente n'a donc que sa vitesse moyenne.
+
 ## Latence
 
 À la fin d'un envoi, le journal affiche aussi la **latence** : le temps médian d'un aller-retour avec le serveur (la commande POST et sa réponse, sans données) et de la connexion. Elle est mesurée uniquement à partir de ce que ngPost fait déjà, rien n'est envoyé pour cela. Une valeur élevée (plus d'une demi-seconde) signifie que le délai vient du réseau, de la distance au serveur ou du serveur lui-même, par exemple un VPN, et non de votre ordinateur.
