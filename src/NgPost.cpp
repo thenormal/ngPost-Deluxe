@@ -24,6 +24,7 @@
 #include "utils/Diagnostics.h"
 #include "PostingJob.h"
 #include "PostQueue.h"
+#include "utils/PostList.h"
 #include "FoldersMonitorForNewFiles.h"
 #include "nntp/NntpArticle.h"
 #include "nntp/NntpServerParams.h"
@@ -60,6 +61,8 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QDateTime>
 #include <QStandardPaths>
 #include <QNetworkProxy>
@@ -305,6 +308,7 @@ NgPost::NgPost(int &argc, char *argv[]):
     _rarName(), _rarPass(), _rarPassFixed(),
     _inputDir(),
     _activeJob(nullptr), _pendingJobs(), _packingJob(nullptr),
+    _postList(new PostList(this)), _postListTimer(new QTimer(this)),
     _historyFieldSeparator(sDefaultFieldSeparator),
     _postHistoryFile(), _historyEnabled(true), _historyKeyInConfig(false), _configPath(),
     _autoDirs(),
@@ -1137,6 +1141,7 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
     queueJobEnded(job); // no effect if done at the end of the post (PostingJob::_finishPosting)
     if (job == _activeJob)
     {
+        _postListFinish(job);
 #ifdef __USE_HMI__
         if (_hmi)
         {
@@ -1239,7 +1244,10 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
         _activeJob = nullptr;
 
         if (repostJob)
+        {
+            _postListAdd(repostJob);
             _pendingJobs.prepend(repostJob);
+        }
 
         _notifier.jobEnded(notifyResult, _pendingJobs.isEmpty());
 
@@ -1488,6 +1496,103 @@ QString NgPost::randomPass(uint length) const
     }
 
     return pass;
+}
+
+void NgPost::_postListAdd(PostingJob *job)
+{
+    if (!job || job->postId() >= 0)
+        return;
+    PostEntry e;
+    e.name        = job->nzbName();
+    e.nzbPath     = job->nzbFilePath();
+    e.archiveName = job->hasCompressed() ? job->rarName() : QString();
+    e.password    = job->rarPass();
+    e.groups      = job->groups();
+    for (const QFileInfo &fi : job->originalFiles())
+        e.files << QDir::toNativeSeparators(fi.absoluteFilePath());
+    e.isRepost    = job->isRepost();
+    e.origin      = job->isRepost() ? QString("repost") : (job->_resumed ? QString("queue") : historyKind(job));
+    job->setPostId(_postList->add(e));
+
+    connect(_postListTimer, &QTimer::timeout, this, &NgPost::_onPostListTimer, Qt::UniqueConnection);
+    if (!_postListTimer->isActive())
+        _postListTimer->start(1000);
+}
+
+void NgPost::_postListRefresh(PostingJob *job)
+{
+    if (!job || job->postId() < 0)
+        return;
+    PostEntry s;
+    s.id = job->postId();
+    switch (job->phase())
+    {
+    case PostingJob::Phase::WAITING:     s.state = PostEntry::State::WAITING;     break;
+    case PostingJob::Phase::COMPRESSING: s.state = PostEntry::State::COMPRESSING; break;
+    case PostingJob::Phase::PAR2:        s.state = PostEntry::State::PAR2;        break;
+    case PostingJob::Phase::UPLOADING:
+        s.state = job->isPaused() ? PostEntry::State::PAUSED : PostEntry::State::UPLOADING;
+        break;
+    case PostingJob::Phase::DONE:        s.state = PostEntry::State::UPLOADING;   break; // finish() gives the real end
+    }
+    s.sizeTotal   = job->totalSizeBytes();
+    s.sizeDone    = job->uploadedSizeBytes();
+    s.nbArticles  = job->nbArticlesTotal();
+    s.nbUploaded  = job->nbArticlesUploaded();
+    s.nbFailed    = job->nbArticlesFailed();
+    s.speed       = job->avgSpeedBytes();
+    s.etaSec      = s.state == PostEntry::State::UPLOADING ? job->etaSeconds() : -1;
+    s.durationMs  = job->jobDurationMs();
+    s.name        = job->nzbName();
+    s.nzbPath     = job->nzbFilePath();
+    if (job->hasCompressed())
+        s.archiveName = job->rarName();
+    _postList->update(s);
+}
+
+void NgPost::_postListFinish(PostingJob *job)
+{
+    if (!job || job->postId() < 0)
+        return;
+    _postListRefresh(job);
+    PostEntry::State state = !job->hasPostFinished() ? PostEntry::State::STOPPED :
+                             (job->nbArticlesFailed() ? PostEntry::State::DONE_WITH_ERRORS : PostEntry::State::DONE);
+    _postList->finish(job->postId(), state);
+    _dumpPostList();
+}
+
+void NgPost::postListJobGone(PostingJob *job)
+{
+    if (!job || job->postId() < 0)
+        return;
+    const PostEntry *e = _postList->entry(job->postId());
+    if (!e || e->isFinished())
+        return;
+    bool started = job->hasPostStarted() || job->phase() != PostingJob::Phase::WAITING;
+    _postList->finish(job->postId(), started ? PostEntry::State::STOPPED : PostEntry::State::CANCELLED);
+    _dumpPostList();
+}
+
+void NgPost::_onPostListTimer()
+{
+    _postListRefresh(_activeJob);
+    if (_packingJob && _packingJob != _activeJob)
+        _postListRefresh(_packingJob);
+    if (!_activeJob && !_packingJob)
+        _postListTimer->stop();
+}
+
+void NgPost::_dumpPostList() const
+{   // tests: NGPOST_POSTLIST_DUMP=<file> writes the list (with the log) each time a post ends
+    QString path = qEnvironmentVariable("NGPOST_POSTLIST_DUMP");
+    if (path.isEmpty())
+        return;
+    QJsonArray posts;
+    for (const PostEntry &e : _postList->entries())
+        posts.append(e.toJson(true, true));
+    QFile file(path);
+    if (file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+        file.write(QJsonDocument(QJsonObject{{"posts", posts}}).toJson());
 }
 
 void NgPost::closeAllPostingJobs()
@@ -3057,6 +3162,7 @@ bool NgPost::startPostingJob(PostingJob *job)
             queue->put(job->toQueueEntry());
         }
     }
+    _postListAdd(job);
 
 #ifdef __DEBUG__
 qDebug() << "[MB_TRACE][Issue#82][NgPost::startPostingJob] job: " << job
