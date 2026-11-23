@@ -27,6 +27,10 @@
 #include <QLabel>
 #include <QPushButton>
 #include "ProfileBar.h"
+#include "PostTargetsBox.h"
+#include "GroupsEdit.h"
+#include "nntp/NntpServerParams.h"
+#include <QDateTime>
 #include "PostCheckDialog.h"
 #include "NfoCard.h"
 #include "utils/PostProfile.h"
@@ -124,10 +128,24 @@ bool PostingWidget::_checkBeforePosting(const QFileInfoList &files, bool hasFold
 {
     auto makeInput = [this, &files, hasFolder]() {
         udatePostingParams();
-        QString nzbFile = _ngPost->nzbPath();
-        if (!nzbFile.endsWith(".nzb"))
-            nzbFile += ".nzb";
-        return _hmi->checkInput(files, hasFolder, nzbFile, _ui->nzbPassCB->isChecked(), _ui->nzbPassEdit->text());
+        PostChecker::Input in = _hmi->checkInput(files, hasFolder, _nzbFilePath(), _ui->nzbPassCB->isChecked(), _ui->nzbPassEdit->text());
+        // the newsgroups and the servers of this post, when they are not the ones of the Settings
+        const PostTargets t = _targets->targets();
+        if (!t.groups.isEmpty())
+        {
+            in.hasGroups     = true;
+            in.invalidGroups = _targets->groupsEdit()->invalidGroups().join(", ");
+        }
+        if (!t.servers.isEmpty())
+        {
+            int nb = 0;
+            for (NntpServerParams *srv : _ngPost->_nntpServers)
+                if (t.servers.contains(NgPost::serverKey(*srv)))
+                    ++nb;
+            if (nb > 0)
+                in.nbServers = nb;
+        }
+        return in;
     };
     return PostCheckDialog::run(isVisible() ? static_cast<QWidget*>(this) : _hmi, makeInput, [this](PostChecker::Code code){ return _applyFix(code); });
 }
@@ -200,9 +218,11 @@ int PostingWidget::postFiles(bool updateMainParams)
         udatePostingParams();
 
         // check if the nzb file name already exist
-        QString nzbPath = _ngPost->nzbPath();
-        if (!nzbPath.endsWith(".nzb"))
-            nzbPath += ".nzb";
+        QString nzbPath = _nzbFilePath();
+        const PostTargets targets = _targets->targets();
+        // the number of {n} is used only when the name was made by the program
+        const bool useCounter = PostTargets::usesCounter(targets.nameTemplate) && !_autoNzbFile.isEmpty()
+                && _ui->nzbFileEdit->text() == _autoNzbFile;
         QFileInfo fiNzb(nzbPath);
         if (!_fromAuto && fiNzb.exists())
         {
@@ -231,7 +251,7 @@ int PostingWidget::postFiles(bool updateMainParams)
         }
 
         PostingJob *job = new PostingJob(_ngPost, nzbPath, files, nullptr,
-                                         _ngPost->getPostingGroups(),
+                                         _ngPost->getPostingGroups(targets.groups),
                                          _ngPost->from(),
                                          _ngPost->_obfuscateArticles, _ngPost->_obfuscateFileName,
                                          _ngPost->_tmpPath, _ngPost->_rarPath, _ngPost->_rarArgs,
@@ -241,6 +261,12 @@ int PostingWidget::postFiles(bool updateMainParams)
                                          _ngPost->_keepRar, _afterAct, !_fromAuto);
         job->setMovePostedTo(_afterMoveTo);
         job->setOrigin(_fromAuto ? "auto" : "quick");
+        job->setServers(targets.servers);
+        if (useCounter)
+        {
+            ++_ngPost->_nameCounter;
+            _hmi->scheduleAutoSave(); // the counter is kept
+        }
         job->setHeld(_fromAuto ? _addPaused : (_addPausedCB && _addPausedCB->isChecked()));
         _ngPost->startPostingJob(job);
         int postId = job->postId(); // the post is in the list of the page Posts
@@ -302,6 +328,8 @@ void PostingWidget::onClearFilesClicked()
 {
     _ui->filesList->clear2();
     _ui->nzbFileEdit->clear();
+    _autoNzbFile.clear();
+    _nzbBase.clear();
     _ui->compressNameEdit->clear();
     _nameFromFile = false;
     if (_hmi->hasAutoCompress())
@@ -312,6 +340,67 @@ void PostingWidget::onClearFilesClicked()
     else
         _ui->compressNameEdit->clear();
 
+}
+
+QString PostingWidget::_nzbFilePath() const
+{
+    QString path = _nzbDir.isEmpty() ? _ngPost->nzbPath() : QDir::toNativeSeparators(QDir(_nzbDir).filePath(_ngPost->_nzbName));
+    if (!path.endsWith(".nzb"))
+        path += ".nzb";
+    return path;
+}
+
+void PostingWidget::_setAutoNzbFile()
+{
+    if (_nzbBase.isEmpty())
+        return;
+    _ngPost->_nzbName = PostTargets::applyTemplate(_targets->targets().nameTemplate, _nzbBase,
+                                                   QDateTime::currentDateTime(), _ngPost->_nameCounter + 1);
+    _autoNzbFile = _nzbFilePath();
+    _ui->nzbFileEdit->setText(_autoNzbFile);
+}
+
+void PostingWidget::_refreshAutoNames()
+{
+    if (_autoNzbFile.isEmpty() || _ui->nzbFileEdit->text() != _autoNzbFile)
+        return; // the user chose the NZB file: it is kept
+    _setAutoNzbFile();
+    if (_nameFromFile)
+        _ui->compressNameEdit->setText(_ngPost->_nzbName);
+}
+
+void PostingWidget::_setNzbDir(const QString &dir)
+{
+    _nzbDir = dir;
+    const QString field = _ui->nzbFileEdit->text();
+    if (field.isEmpty() || field == _autoNzbFile)
+        return; // empty, or made by the program (_refreshAutoNames)
+    if (!dir.isEmpty()) // a file chosen by the user goes in the folder of the profile
+        _ui->nzbFileEdit->setText(QDir::toNativeSeparators(QDir(dir).filePath(QFileInfo(field).fileName())));
+}
+
+void PostingWidget::_applyTargets(const PostTargets &t, bool onlyFilled)
+{
+    _targets->setTargets(t, onlyFilled);
+    if (!onlyFilled || !t.nzbDir.isEmpty())
+        _setNzbDir(t.nzbDir);
+    _refreshAutoNames();
+}
+
+PostProfile PostingWidget::_profileForSave() const
+{
+    PostProfile p = currentProfile();
+    const QString field = _ui->nzbFileEdit->text().trimmed();
+    if (!field.isEmpty())
+        p.targets.nzbDir = QDir::toNativeSeparators(QFileInfo(field).absolutePath());
+    return p;
+}
+
+void PostingWidget::showEvent(QShowEvent *event)
+{
+    QWidget::showEvent(event);
+    if (_targets)
+        _targets->refreshHints(); // the newsgroups and the NZB folder of the Settings may have changed
 }
 
 void PostingWidget::_resetForNextPost()
@@ -365,7 +454,7 @@ void PostingWidget::onNzbFileClicked()
     QString path = QFileDialog::getSaveFileName(
                 this,
                 tr("Create nzb file"),
-                _ngPost->_nzbPath,
+                _nzbDir.isEmpty() ? _ngPost->_nzbPath : _nzbDir,
                 "*.nzb"
                 );
 
@@ -548,6 +637,8 @@ void PostingWidget::init()
         _profileBar->restore(_ngPost->_quickOptions, _ngPost->_quickProfile);
     else
         _profileBar->applyRecommendedIfNew(); // first start of a new installation
+    // newsgroups, servers, NZB folder and name template of the last session
+    _applyTargets(_ngPost->_quickOptions.targets, false);
 }
 
 void PostingWidget::genNameAndPassword(bool genName, bool genPass, bool doPar2, bool useRarMax)
@@ -576,7 +667,14 @@ void PostingWidget::udatePostingParams()
     {
         QFileInfo nzb(_ui->nzbFileEdit->text());
         if (!nzb.absolutePath().isEmpty())
-            _ngPost->_nzbPath = nzb.absolutePath();
+        {
+            if (_nzbDir.isEmpty())
+                _ngPost->_nzbPath = nzb.absolutePath();
+            else if (QDir(nzb.absolutePath()) == QDir(_ngPost->_nzbPath))
+                _nzbDir.clear(); // back in the folder of the Settings
+            else
+                _nzbDir = nzb.absolutePath(); // the folder of a profile is not the one of the Settings
+        }
         _ngPost->setNzbName(nzb);
     }
 
@@ -616,6 +714,8 @@ void PostingWidget::retranslate()
     _retranslateLayout();
     if (_profileBar)
         _profileBar->retranslate();
+    if (_targets)
+        _targets->retranslate();
     if (_nfoCard)
         _nfoCard->retranslate();
     _ui->filesList->setEmptyState(tr("Drag files or folders here, or choose them with the buttons below."),
@@ -681,7 +781,8 @@ void PostingWidget::addPath(const QString &path, int currentNbFiles, int isDir)
         if (_ui->nzbFileEdit->text().isEmpty())
         {
             _ngPost->setNzbName(fileInfo);
-            _ui->nzbFileEdit->setText(QString("%1.nzb").arg(_ngPost->nzbPath()));
+            _nzbBase = _ngPost->_nzbName;
+            _setAutoNzbFile(); // template and folder of the profile
         }
         if (_ui->compressNameEdit->text().isEmpty())
         {
@@ -781,7 +882,7 @@ void PostingWidget::_buildLayout()
 
     // profiles of options (shared with Auto Posting)
     _profileBar = new ProfileBar(_ngPost, page);
-    _profileBar->setHandlers([this](){ return currentProfile(); }, [this](const PostProfile &p){ applyProfile(p); });
+    _profileBar->setHandlers([this](){ return _profileForSave(); }, [this](const PostProfile &p){ applyProfile(p); });
     root->addWidget(_profileBar);
 
     // NZB and Archive cards side by side
@@ -792,6 +893,8 @@ void PostingWidget::_buildLayout()
     QFrame *nzb = newCard(_nzbTitle, g);
     g->addWidget(_ui->nzbFileLbl, 0, 0);
     g->addLayout(row({_ui->nzbFileEdit, _ui->nzbFileButton}), 0, 1);
+    _targets = new PostTargetsBox(_ngPost, nzb, false);
+    _targets->addRows(g, 1);
     g->setColumnStretch(1, 1);
     _ui->nzbFileEdit->setMaximumWidth(QWIDGETSIZE_MAX);
     _ui->nzbPassEdit->setMaximumWidth(QWIDGETSIZE_MAX);
@@ -894,6 +997,20 @@ void PostingWidget::_buildLayout()
                                static_cast<QAbstractButton*>(_ui->keepRarCB), static_cast<QAbstractButton*>(_ui->nzbPassCB)})
         connect(b, &QAbstractButton::clicked, _profileBar, &ProfileBar::markCustom);
     connect(_ui->redundancySB, QOverload<int>::of(&QSpinBox::valueChanged), _profileBar, &ProfileBar::markCustom);
+    // name template, newsgroups or servers changed by hand: Custom if the profile sets them
+    connect(_targets, &PostTargetsBox::changed, this, [this](int part) {
+        if (part == PostTargetsBox::NAME)
+            _refreshAutoNames();
+        if (isVisible())
+            _hmi->autoSaveForm(0);
+        const PostProfile *p = _profileBar->selectedProfile();
+        if (!p)
+            return;
+        if ((part == PostTargetsBox::NAME && !p->targets.nameTemplate.isEmpty())
+                || (part == PostTargetsBox::GROUPS && !p->targets.groups.isEmpty())
+                || (part == PostTargetsBox::SERVERS && !p->targets.servers.isEmpty()))
+            _profileBar->markCustom();
+    });
 
     _showAdvanced(sShowAdvanced);
     _retranslateLayout();
@@ -907,6 +1024,8 @@ QString PostingWidget::profileName() const
 PostProfile PostingWidget::currentProfile() const
 {
     PostProfile p;
+    p.targets = _targets->targets();
+    p.targets.nzbDir = _nzbDir;
     p.compress = _ui->compressCB->isChecked();
     p.genName  = p.compress && !_ui->compressNameEdit->text().isEmpty();
     p.genPass  = _ui->nzbPassCB->isChecked();
@@ -963,6 +1082,7 @@ void PostingWidget::applyProfile(const PostProfile &p)
         if (p.genName && (_ui->compressNameEdit->text().isEmpty() || _nameFromFile))
             onGenCompressName();
     }
+    _applyTargets(p.targets, true); // the parts that the profile doesn't have are not changed
 }
 
 void PostingWidget::_showAdvanced(bool show)

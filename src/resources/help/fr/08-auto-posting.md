@@ -28,6 +28,10 @@ Si certains éléments cochés sont déjà dans l'historique (même nom et même
 
 Quand vous cliquez sur **Poster la liste** ou **Commencer la surveillance**, le programme vérifie les réglages une seule fois pour tout le groupe (un serveur et un newsgroup, la compression pour les dossiers, les programmes rar / 7z et par2, le dossier du NZB, le dossier temporaire). Les problèmes sont affichés en termes simples avec un bouton qui les corrige ; les avertissements peuvent être ignorés avec **Poster quand même**. C'est la même fenêtre que dans [Post Rapide](04-quick-post.md).
 
+## Nom, newsgroups et serveurs
+
+La carte **Nom, newsgroups et serveurs** fonctionne comme les lignes de [Quick Post](04-quick-post.md), avec une ligne de plus : **Dossier NZB**, où sont écrits les fichiers NZB de ces envois (vide : le dossier des Paramètres). Elle s'applique aussi aux dossiers surveillés. Un profil peut garder ces réglages.
+
 ## Conseils
 
 - Utilisez la compression, les noms aléatoires, les mots de passe aléatoires et par2 : c'est la configuration habituelle pour l'envoi automatisé. Le profil **Recommandé** (menu **Profil**) la règle en un clic.

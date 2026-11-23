@@ -28,6 +28,10 @@ Als sommige aangevinkte items al in de geschiedenis staan (zelfde naam en groott
 
 Als u op **Lijst posten** of **Bewaking starten** klikt, controleert het programma de instellingen eenmalig voor de hele groep (een server en een nieuwsgroep, compressie voor mappen, de programma's rar / 7z en par2, de map van de NZB, de tijdelijke map). Problemen worden in gewone woorden getoond met een knop die ze herstelt; waarschuwingen kunnen worden genegeerd met **Toch posten**. Het is hetzelfde venster als in [Quick Post](04-quick-post.md).
 
+## Naam, nieuwsgroepen en servers
+
+De kaart **Naam, nieuwsgroepen en servers** werkt zoals de regels van [Quick Post](04-quick-post.md), met één regel meer: **NZB-map**, waar de NZB-bestanden van deze posts worden geschreven (leeg: de map van de Instellingen). Ze geldt ook voor de bewaakte mappen. Een profiel kan deze instellingen bewaren.
+
 ## Tips
 
 - Gebruik compressie, willekeurige namen, willekeurige wachtwoorden en par2: dit is de gebruikelijke opzet voor geautomatiseerd posten. Het profiel **Aanbevolen** (menu **Profiel**) stelt het met één klik in.

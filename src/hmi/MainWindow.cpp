@@ -551,6 +551,12 @@ void MainWindow::_initPostingBox()
 
     _ui->fromEdit->setText(_ngPost->xml2txt(_ngPost->_from.c_str()));
     _groupsEdit->setGroups(_ngPost->_grpList);
+    // favorite newsgroups (stars), shared by all the newsgroups boxes
+    FavoriteGroups::instance()->setGroups(_ngPost->_favoriteGroups);
+    connect(FavoriteGroups::instance(), &FavoriteGroups::changed, this, [this]() {
+        _ngPost->_favoriteGroups = FavoriteGroups::instance()->groups();
+        scheduleAutoSave();
+    });
     _groupPolicyCB->setCurrentIndex(qMax(0, _groupPolicyCB->findData(static_cast<int>(_ngPost->_groupPolicy))));
     _ui->uniqueFromCB->setChecked(_ngPost->_genFrom);
     _ui->saveFromCB->setChecked(_ngPost->_saveFrom);
@@ -673,6 +679,7 @@ PostingWidget *MainWindow::newHiddenQuickPost(const QFileInfoList &files)
     PostingWidget *form = new PostingWidget(_ngPost, this, 0);
     form->hide();
     form->init();
+    form->setTargets(PostTargets()); // the Settings, not the newsgroups... of the Quick Post page (Auto Posting gives its own)
     for (const QFileInfo &file : files)
         form->addPath(file.absoluteFilePath(), 0, file.isDir());
     return form;
@@ -861,6 +868,15 @@ void MainWindow::scheduleAutoSave()
 {
     if (_autoSaveReady)
         _autoSaveTimer->start(); // restarted at each change: we save 1 sec after the last one
+}
+
+void MainWindow::autoSaveForm(int tab)
+{
+    if (tab == 0)
+        _autoSaveQuickTab = true;
+    else if (tab == 1)
+        _autoSaveAutoTab = true;
+    scheduleAutoSave();
 }
 
 void MainWindow::onAutoSave()

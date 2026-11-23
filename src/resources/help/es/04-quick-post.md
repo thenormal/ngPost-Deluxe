@@ -27,6 +27,16 @@ Cuando pulsas **Publicar Ficheros**, ngPost comprueba primero la publicación. S
 
 Tras un arreglo se vuelven a hacer las comprobaciones, así que un problema nuevo aparece enseguida en lugar de a mitad de la publicación. Publicación Automática todavía no tiene esta ventana.
 
+## Nombre, grupos y servidores
+
+La tarjeta **NZB** tiene tres filas más. Vacía, cada una usa lo que está en los Ajustes.
+
+- **Nombre**: una plantilla para el nombre de la publicación (el archivo NZB y, sin nombre aleatorio, el archivo comprimido): `{name}` es el nombre del archivo o carpeta, `{date}` la fecha (2026-11-23), `{time}` la hora (15-04) y `{n}` un número que sube uno en cada publicación. Ejemplo: `{name} [{date}]`.
+- **Grupos**: los grupos de esta publicación, con los favoritos (ver [Grupos de noticias](03-newsgroups.md)).
+- **Servidores**: todos los servidores activados (por defecto) o solo los que marques en el menú. Una publicación conserva sus servidores en la cola, también tras un reinicio.
+
+Estas filas se recuerdan al cerrar el programa.
+
 ## Perfiles
 
 El menú **Perfil** sobre las tarjetas ajusta todas las opciones de una vez.
@@ -36,6 +46,8 @@ El menú **Perfil** sobre las tarjetas ajusta todas las opciones de una vez.
 - **Tus propios perfiles**: ajusta las opciones, pulsa **Guardar como perfil...** y ponle un nombre. **Eliminar** borra el perfil elegido. Los perfiles se guardan en el archivo de configuración (clave `profile`) y son los mismos en Publicación Rápida y en Publicación Automática.
 
 La tarjeta **Archivo NFO** (consulta [Archivos NZB](09-nzb-files.md)) también es compartida: Publicación Rápida y Publicación Automática muestran los mismos ajustes.
+
+Al guardar un perfil también puedes guardar la plantilla de nombre, los grupos, los servidores y la carpeta NZB (marca lo que quieras en la ventana). Una parte que no se guarda no cambia al elegir el perfil. Pasa el ratón sobre un perfil del menú para ver lo que contiene.
 
 ## Después de Publicar Ficheros
 

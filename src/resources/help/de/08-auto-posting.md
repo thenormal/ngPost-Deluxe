@@ -28,6 +28,10 @@ Wenn einige markierte Elemente schon im Verlauf stehen (gleicher Name und gleich
 
 Wenn Sie auf **Liste posten** oder **Überwachung starten** klicken, prüft das Programm die Einstellungen einmal für die ganze Gruppe (ein Server und eine Newsgroup, Komprimierung für Ordner, die Programme rar / 7z und par2, der NZB-Ordner, der temporäre Ordner). Probleme werden in einfachen Worten mit einer Schaltfläche angezeigt, die sie behebt; Warnungen können mit **Trotzdem posten** ignoriert werden. Es ist dasselbe Fenster wie in [Quick Post](04-quick-post.md).
 
+## Name, Newsgroups und Server
+
+Die Karte **Name, Newsgroups und Server** funktioniert wie die Zeilen von [Quick Post](04-quick-post.md), mit einer weiteren Zeile: **NZB-Ordner**, in den die NZB-Dateien dieser Posts geschrieben werden (leer: der Ordner der Einstellungen). Sie gilt auch für die überwachten Ordner. Ein Profil kann diese Einstellungen speichern.
+
 ## Tipps
 
 - Verwenden Sie Komprimierung, zufällige Namen, zufällige Passwörter und par2: Das ist die übliche Einrichtung für automatisches Posten. Das Profil **Empfohlen** (Menü **Profil**) stellt sie mit einem Klick ein.

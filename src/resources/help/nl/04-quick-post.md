@@ -27,6 +27,16 @@ Als u op **Post Bestanden** klikt, controleert ngPost eerst de post. Als er iets
 
 Na een herstelactie worden de controles opnieuw uitgevoerd, zodat een nieuw probleem meteen opduikt in plaats van midden in de post. Auto Posting heeft dit venster nog niet.
 
+## Naam, nieuwsgroepen en servers
+
+De kaart **NZB** heeft drie regels meer. Leeg gebruikt elke regel wat in de Instellingen staat.
+
+- **Naam**: een sjabloon voor de naam van de post (het NZB-bestand en, zonder willekeurige naam, het archief): `{name}` is de naam van het bestand of de map, `{date}` de datum (2026-11-23), `{time}` de tijd (15-04) en `{n}` een nummer dat bij elke post met één stijgt. Voorbeeld: `{name} [{date}]`.
+- **Nieuwsgroepen**: de groepen van deze post, met de favorieten (zie [Nieuwsgroepen](03-newsgroups.md)).
+- **Servers**: alle ingeschakelde servers (standaard) of alleen de servers die je in het menu aanvinkt. Een post houdt zijn servers in de wachtrij, ook na een herstart.
+
+Deze regels worden onthouden als het programma wordt gesloten.
+
 ## Profielen
 
 Het menu **Profiel** boven de kaarten stelt alle opties in één keer in.
@@ -36,6 +46,8 @@ Het menu **Profiel** boven de kaarten stelt alle opties in één keer in.
 - **Uw eigen profielen**: stel de opties in, klik op **Opslaan als profiel...** en geef het een naam. **Verwijderen** verwijdert het gekozen profiel. De profielen worden in het configuratiebestand opgeslagen (sleutel `profile`) en zijn in Quick Post en Auto Posting dezelfde.
 
 De kaart **NFO-bestand** (zie [NZB-bestanden](09-nzb-files.md)) wordt ook gedeeld: Quick Post en Auto Posting tonen dezelfde instellingen.
+
+Als je een profiel opslaat, kun je ook het naamsjabloon, de nieuwsgroepen, de servers en de NZB-map opslaan (vink in het venster aan wat je wilt). Een onderdeel dat niet is opgeslagen, verandert niet als je het profiel kiest. Beweeg de muis over een profiel in het menu om te zien wat erin staat.
 
 ## Na Post Bestanden
 

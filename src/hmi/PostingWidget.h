@@ -28,6 +28,7 @@ class NgPost;
 class NntpFile;
 class MainWindow;
 class ProfileBar;
+class PostTargetsBox;
 class NfoCard;
 class PostingJob;
 class QLabel;
@@ -50,6 +51,10 @@ private:
     MainWindow        *_hmi;
     NgPost            *_ngPost;
     const uint         _jobNumber;
+    PostTargetsBox    *_targets = nullptr; //!< name template, newsgroups and servers of the post (in the NZB card)
+    QString            _nzbDir;        //!< folder of the NZB file chosen by a profile (empty: the one of the Settings)
+    QString            _nzbBase;       //!< name of the first file or folder (before the template)
+    QString            _autoNzbFile;   //!< the NZB file written by the program (not typed): the template can change it
     bool               _nameFromFile = false; //!< the archive name was taken from the first file (not typed, not random): a profile with a random name may replace it
 
     // ngPost Deluxe layout (built in code over the widgets of the .ui)
@@ -77,6 +82,15 @@ private:
     bool _applyFix(PostChecker::Code code); //!< false: the user has to continue elsewhere (the post is cancelled)
     void _updateReleaseInfo();
     void _resetForNextPost(); //!< after a post: empty list, new random name and password (as the profile says)
+    void _setAutoNzbFile();   //!< NZB file from the first file, the template and the folder
+    void _refreshAutoNames(); //!< the template or the folder changed: the names made by the program follow
+    void _applyTargets(const PostTargets &t, bool onlyFilled);
+    void _setNzbDir(const QString &dir);
+    QString _nzbFilePath() const; //!< the NZB file of the post (folder of the profile or of the Settings)
+    PostProfile _profileForSave() const; //!< currentProfile with the folder of the NZB file
+protected:
+    void showEvent(QShowEvent *event) override;
+private:
 
 public:
     explicit PostingWidget(NgPost *ngPost, MainWindow *hmi, uint jobNumber);
@@ -90,6 +104,7 @@ public:
     bool isFromAutoPosting() const { return _fromAuto; }
     void setAfterPost(bool act, const QString &moveTo) { _afterAct = act; _afterMoveTo = moveTo; }
     void setAddPaused(bool paused) { _addPaused = paused; } //!< (Auto Posting) the post waits until it is resumed
+    void setTargets(const PostTargets &targets) { _applyTargets(targets, false); } //!< (Auto Posting, hidden forms) all the parts
     inline uint jobNumber() const;
 
     void handleDropEvent(QDropEvent *e);

@@ -861,34 +861,46 @@ int PostingJob::_createNntpConnections()
 {
     _nbConnections    = 0;
     _nbEnabledServers = 0;
-    for (NntpServerParams *srvParams : _ngPost->_nntpServers)
+    // the servers chosen for this post (profile), else the enabled ones
+    QList<NntpServerParams*> servers;
+    if (!_serverKeys.isEmpty())
     {
-        if (srvParams->enabled)
-        {
-            _nbConnections += srvParams->nbCons;
-            ++_nbEnabledServers;
-            if (!_serverHosts.contains(srvParams->host))
-                _serverHosts << srvParams->host;
-        }
+        for (NntpServerParams *srvParams : _ngPost->_nntpServers)
+            if (_serverKeys.contains(NgPost::serverKey(*srvParams)))
+                servers << srvParams;
+        if (servers.isEmpty())
+            _logAs(NgPost::LOG_WARN, tr("The servers chosen for this post are not in the list of servers anymore (%1): the enabled servers are used").arg(
+                       _serverKeys.join(", ")));
+        else
+            _log(tr("Servers of this post: %1").arg(_serverKeys.join(", ")));
+    }
+    if (servers.isEmpty())
+        for (NntpServerParams *srvParams : _ngPost->_nntpServers)
+            if (srvParams->enabled)
+                servers << srvParams;
+
+    for (NntpServerParams *srvParams : servers)
+    {
+        _nbConnections += srvParams->nbCons;
+        ++_nbEnabledServers;
+        if (!_serverHosts.contains(srvParams->host))
+            _serverHosts << srvParams->host;
     }
     if (_nbEnabledServers == 0)
         _nbEnabledServers = 1;
 
     _nntpConnections.reserve(_nbConnections);
     int conIdx = 0;
-    for (NntpServerParams *srvParams : _ngPost->_nntpServers)
+    for (NntpServerParams *srvParams : servers)
     {
-        if (srvParams->enabled)
+        for (int k = 0 ; k < srvParams->nbCons ; ++k)
         {
-            for (int k = 0 ; k < srvParams->nbCons ; ++k)
-            {
-                NntpConnection *nntpCon = new NntpConnection(_ngPost, ++conIdx, *srvParams);
-                connect(nntpCon, &NntpConnection::log,   _ngPost, &NgPost::onLog, Qt::QueuedConnection);
-                connect(nntpCon, &NntpConnection::error, _ngPost, &NgPost::onError, Qt::QueuedConnection);
-                connect(nntpCon, &NntpConnection::errorConnecting, _ngPost, &NgPost::onErrorConnecting, Qt::QueuedConnection);
-                connect(nntpCon, &NntpConnection::disconnected, this, &PostingJob::onDisconnectedConnection, Qt::QueuedConnection);
-                _nntpConnections.append(nntpCon);
-            }
+            NntpConnection *nntpCon = new NntpConnection(_ngPost, ++conIdx, *srvParams);
+            connect(nntpCon, &NntpConnection::log,   _ngPost, &NgPost::onLog, Qt::QueuedConnection);
+            connect(nntpCon, &NntpConnection::error, _ngPost, &NgPost::onError, Qt::QueuedConnection);
+            connect(nntpCon, &NntpConnection::errorConnecting, _ngPost, &NgPost::onErrorConnecting, Qt::QueuedConnection);
+            connect(nntpCon, &NntpConnection::disconnected, this, &PostingJob::onDisconnectedConnection, Qt::QueuedConnection);
+            _nntpConnections.append(nntpCon);
         }
     }
 
@@ -1387,6 +1399,8 @@ QJsonObject PostingJob::toQueueEntry() const
     entry.insert("nzbFinal", _nzbPathFinal);
     entry.insert("overwriteNzb", _overwriteNzb);
     entry.insert("groups", sToJsonArray(_grpList));
+    if (!_serverKeys.isEmpty())
+        entry.insert("servers", sToJsonArray(_serverKeys));
     entry.insert("from", QString::fromStdString(_from));
     entry.insert("obfuscateArticles", _obfuscateArticles);
     entry.insert("obfuscateFileName", _obfuscateFileName);
@@ -1446,6 +1460,8 @@ PostingJob *PostingJob::fromQueueEntry(NgPost *ngPost, const QJsonObject &entry,
     job->_resumed  = true;
     job->_priority = QueueOrder::priorityFromKey(entry.value("priority").toString());
     job->_held     = entry.value("paused").toBool();
+    for (const QJsonValue &val : entry.value("servers").toArray())
+        job->_serverKeys << val.toString();
     return job;
 }
 

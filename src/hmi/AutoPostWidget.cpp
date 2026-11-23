@@ -20,6 +20,9 @@
 #include "AutoPostWidget.h"
 #include "utils/PostList.h"
 #include "ProfileBar.h"
+#include "PostTargetsBox.h"
+#include "GroupsEdit.h"
+#include "nntp/NntpServerParams.h"
 #include "NfoCard.h"
 #include "utils/PostProfile.h"
 #include "ui_AutoPostWidget.h"
@@ -158,6 +161,8 @@ void AutoPostWidget::init()
         _profileBar->restore(_ngPost->_autoOptions, _ngPost->_autoProfile);
     else
         _profileBar->applyRecommendedIfNew(); // first start of a new installation
+    // newsgroups, servers, NZB folder and name template of the last session
+    _targets->setTargets(_ngPost->_autoOptions.targets, false);
 
     Mode mode = _ngPost->_autoMode == "scan" ? Mode::Scan : _ngPost->_autoMode == "watch" ? Mode::Watch : Mode::Choose;
     _setMode(mode);
@@ -179,10 +184,27 @@ void AutoPostWidget::onGenQuickPosts()
     _postFiles(files, hasFolder, false);
 }
 
+void AutoPostWidget::showEvent(QShowEvent *event)
+{
+    QWidget::showEvent(event);
+    if (_targets)
+        _targets->refreshHints(); // the newsgroups and the NZB folder of the Settings may have changed
+}
+
 bool AutoPostWidget::_postFiles(QFileInfoList files, bool hasFolder, bool forceStart)
 {
-    if (!_hmi->checkGroups())
+    const PostTargets targets = _targets->targets();
+    if (targets.groups.isEmpty())
+    {
+        if (!_hmi->checkGroups())
+            return false;
+    }
+    else if (!_targets->groupsEdit()->invalidGroups().isEmpty())
+    {
+        _hmi->logError(tr("These newsgroups are not valid: %1. Fix them in the card %2.").arg(
+                           _targets->groupsEdit()->invalidGroups().join(", "), _targetsTitle->text()));
         return false;
+    }
     if (!_checkBeforeStart(files, hasFolder)) // the same checks as Quick Post, once for the whole group
         return false;
     _hmi->updateServers();
@@ -250,6 +272,7 @@ bool AutoPostWidget::_postFiles(QFileInfoList files, bool hasFolder, bool forceS
         form->setFromAutoPosting();
         form->setAfterPost(afterAct, afterMoveTo);
         form->setAddPaused(_ui->startJobsCB->isChecked());
+        form->setTargets(targets); // name template, newsgroups, servers and NZB folder of Auto Posting
         form->genNameAndPassword(_ngPost->_genName, _ngPost->_genPass, _ngPost->_doPar2, useRarMax);
         int postId = form->postFiles(false);
         form->deleteLater();
@@ -629,6 +652,8 @@ void AutoPostWidget::udatePostingParams()
         _ngPost->_inputDir = inputDir.absoluteFilePath();
 
 
+    _ngPost->_watchTargets = _targets->targets(); // the posts of the watched folders
+
     _ngPost->_monitorExtensions.clear();
     if (!_ui->extensionFilterEdit->text().isEmpty())
     {
@@ -725,6 +750,8 @@ void AutoPostWidget::retranslate()
     _retranslateLayout();
     if (_profileBar)
         _profileBar->retranslate();
+    if (_targets)
+        _targets->retranslate();
     if (_nfoCard)
         _nfoCard->retranslate();
     _ui->rarMaxCB->setToolTip(tr("limit the number of archive volume to %1 (cf config RAR_MAX)").arg(_ngPost->_rarMax));
@@ -743,6 +770,7 @@ QString AutoPostWidget::profileName() const
 PostProfile AutoPostWidget::currentProfile() const
 {
     PostProfile p;
+    p.targets = _targets->targets();
     p.compress = _ui->compressCB->isChecked();
     p.genName  = _ui->genNameCB->isChecked();
     p.genPass  = _ui->genPassCB->isChecked();
@@ -851,6 +879,7 @@ void AutoPostWidget::applyProfile(const PostProfile &p)
         _ui->redundancySB->setValue(static_cast<int>(p.par2Pct));
     _ui->keepRarCB->setChecked(p.keepRar);
     onCompressToggled(p.compress);
+    _targets->setTargets(p.targets, true); // the parts that the profile doesn't have are not changed
 }
 
 void AutoPostWidget::setPackingAuto(bool enabled, const QStringList &keys){
@@ -1064,6 +1093,13 @@ void AutoPostWidget::_buildLayout()
     cards->addWidget(archive, 3);
     root->addLayout(cards);
 
+    // name, newsgroups, servers and NZB folder of the posts (empty: the ones of the Settings)
+    QFrame *targetsCard = newAutoCard(_targetsTitle, g);
+    _targets = new PostTargetsBox(_ngPost, targetsCard, true);
+    _targets->addRows(g, 0);
+    g->setColumnStretch(1, 1);
+    root->addWidget(targetsCard);
+
     // NFO file (shared with Quick Post)
     _nfoCard = new NfoCard(_ngPost, page);
     root->addWidget(_nfoCard);
@@ -1116,6 +1152,15 @@ void AutoPostWidget::_buildLayout()
                                static_cast<QAbstractButton*>(_ui->keepRarCB)})
         connect(b, &QAbstractButton::clicked, _profileBar, &ProfileBar::markCustom);
     connect(_ui->redundancySB, QOverload<int>::of(&QSpinBox::valueChanged), _profileBar, &ProfileBar::markCustom);
+    connect(_targets, &PostTargetsBox::changed, this, [this](int part) {
+        const PostProfile *p = _profileBar->selectedProfile();
+        if (p && ((part == PostTargetsBox::NAME && !p->targets.nameTemplate.isEmpty())
+                  || (part == PostTargetsBox::GROUPS && !p->targets.groups.isEmpty())
+                  || (part == PostTargetsBox::SERVERS && !p->targets.servers.isEmpty())
+                  || (part == PostTargetsBox::NZB_DIR && !p->targets.nzbDir.isEmpty())))
+            _profileBar->markCustom();
+        _hmi->autoSaveForm(1);
+    });
 
     // bottom: advanced toggle, start option and Generate Posts
     QGridLayout *bottom = new QGridLayout();
@@ -1180,6 +1225,7 @@ void AutoPostWidget::_retranslateLayout()
     _monitorTitle->setText(tr("Watching"));
     _filesTitle->setText(tr("Files and folders to post"));
     _archiveTitle->setText(tr("Archive"));
+    _targetsTitle->setText(tr("Name, newsgroups and servers"));
     _advancedTitle->setText(tr("Advanced options"));
     _afterTitle->setText(tr("After posting:"));
     _afterCombo->setItemText(0, tr("Do nothing with the files"));
@@ -1395,11 +1441,29 @@ bool AutoPostWidget::_checkBeforeStart(const QFileInfoList &files, bool hasFolde
         _hmi->updateServers();
         _hmi->updateParams();
         udatePostingParams();
+        const PostTargets t = _targets->targets();
+        const QString nzbDir = t.nzbDir.isEmpty() ? _ngPost->_nzbPath : t.nzbDir;
         QString nzbFile;
-        if (!_ngPost->_nzbPath.isEmpty())
-            nzbFile = QDir(_ngPost->_nzbPath).filePath("ngpost.nzb");
+        if (!nzbDir.isEmpty())
+            nzbFile = QDir(nzbDir).filePath("ngpost.nzb");
         // each post has its own password; no files: a folder is watched
-        return _hmi->checkInput(files, hasFolder, nzbFile, false, QString(), files.isEmpty());
+        PostChecker::Input in = _hmi->checkInput(files, hasFolder, nzbFile, false, QString(), files.isEmpty());
+        // the newsgroups and the servers of these posts, when they are not the ones of the Settings
+        if (!t.groups.isEmpty())
+        {
+            in.hasGroups     = true;
+            in.invalidGroups = _targets->groupsEdit()->invalidGroups().join(", ");
+        }
+        if (!t.servers.isEmpty())
+        {
+            int nb = 0;
+            for (NntpServerParams *srv : _ngPost->_nntpServers)
+                if (t.servers.contains(NgPost::serverKey(*srv)))
+                    ++nb;
+            if (nb > 0)
+                in.nbServers = nb;
+        }
+        return in;
     };
     return PostCheckDialog::run(this, makeInput, [this](PostChecker::Code code){ return _applyFix(code); });
 }

@@ -13,6 +13,14 @@ Elke nieuwsgroep is een klein "chipje":
 
 Een geldige naam bestaat uit kleine letters, cijfers, `+`, `_` of `-`, gescheiden door punten, bijvoorbeeld `alt.binaries.test`.
 
+## Favorieten
+
+Klik op de ster van een groep om er een favoriet van te maken (nog een klik haalt hem weg). De favorieten staan in elk groepenvak als eerste in de suggesties. De sterknop rechts in het vak toont ze: klik op een groep om hem aan het vak toe te voegen of eruit te halen. Ze worden opgeslagen in het configuratiebestand (sleutel `favorite_groups`).
+
+## De groepen van één post
+
+Quick Post en automatisch posten hebben hun eigen vak **Nieuwsgroepen**. Leeg toont het de groepen van de Instellingen, en die worden gebruikt. Vul het in om in andere groepen te posten zonder de Instellingen te veranderen; een profiel kan deze groepen bewaren. Het menu "Waar de posts naartoe gaan" van de Instellingen geldt ook voor hen.
+
 ## Controles vóór het posten
 
 ngPost start geen post als er geen nieuwsgroep is, of als een ervan ongeldig is. Het bericht zegt dat u ze in de Instellingen moet herstellen.

@@ -1022,10 +1022,44 @@ qint64 NgPost::recursiveSize(const QFileInfo &fi)
 
 
 
+QStringList NgPost::getPostingGroups(const QStringList &groups) const
+{
+    if (groups.isEmpty())
+        return getPostingGroups();
+    if (_groupPolicy == GROUP_POLICY::EACH_POST && groups.size() > 1)
+        return QStringList(groups.at(std::rand() % groups.size()));
+    return groups;
+}
+
+QString NgPost::serverKey(const NntpServerParams &server)
+{
+    QString key = QString("%1:%2").arg(server.host).arg(server.port);
+    if (server.auth && !server.user.empty())
+        key.prepend(QString::fromStdString(server.user) + "@");
+    return key;
+}
+
 void NgPost::_post(const QFileInfo &fileInfo, const QString &monitorFolder)
 {
     setNzbName(fileInfo);
+    const PostTargets &targets = _watchTargets; // (empty on the command line)
+    if (!targets.nameTemplate.isEmpty())
+    {
+        if (PostTargets::usesCounter(targets.nameTemplate))
+        {
+            ++_nameCounter;
+#ifdef __USE_HMI__
+            if (_hmi)
+                _hmi->scheduleAutoSave(); // the counter is kept
+#endif
+        }
+        _nzbName = PostTargets::applyTemplate(targets.nameTemplate, _nzbName, QDateTime::currentDateTime(), _nameCounter);
+    }
+    const QString globalNzbPath = _nzbPath;
+    if (!targets.nzbDir.isEmpty())
+        _nzbPath = targets.nzbDir;
     QString nzbFilePath = nzbPath(monitorFolder);
+    _nzbPath = globalNzbPath;
     if (!nzbFilePath.endsWith(".nzb"))
         nzbFilePath += ".nzb";
 
@@ -1049,13 +1083,14 @@ void NgPost::_post(const QFileInfo &fileInfo, const QString &monitorFolder)
              << " (auto delete: " << _delAuto << ")";
 
     PostingJob *job = new PostingJob(this, nzbFilePath, {fileInfo}, nullptr,
-                                     getPostingGroups(), from(),
+                                     getPostingGroups(targets.groups), from(),
                                      _obfuscateArticles, _obfuscateFileName,
                                      _tmpPath, _rarPath, _rarArgs,
                                      _rarSize, _useRarMax, _par2Pct,
                                      _doCompress, _doPar2, _rarName, _rarPass,
                                      _keepRar, _delAuto || !_movePosted.isEmpty(), false);
     job->setMovePostedTo(_movePosted);
+    job->setServers(targets.servers);
     startPostingJob(job);
 }
 
@@ -3029,6 +3064,19 @@ QString NgPost::_parseConfig(const QString &configPath)
                         _autoProfile = PostProfile::cleanName(val);
                     else if (opt == "auto_options")
                         _autoOptionsSet = PostProfile::fromOptionsLine(val.trimmed(), _autoOptions);
+                    else if (opt == "quick_targets")
+                        _quickOptions.targets = PostTargets::fromLine(val.trimmed());
+                    else if (opt == "auto_targets")
+                        _autoOptions.targets = PostTargets::fromLine(val.trimmed());
+                    else if (opt == "favorite_groups")
+                    {
+                        _favoriteGroups.clear();
+                        for (const QString &g : val.split(',', Qt::SkipEmptyParts))
+                            if (!g.trimmed().isEmpty() && !_favoriteGroups.contains(g.trimmed().toLower()))
+                                _favoriteGroups << g.trimmed().toLower();
+                    }
+                    else if (opt == "name_counter")
+                        _nameCounter = val.trimmed().toUInt();
                     else if (opt == "auto_mode")
                     {
                         QString v = val.trimmed().toLower();
@@ -3671,6 +3719,7 @@ void NgPost::saveConfig(bool quiet)
                << tr("## by default the history is saved in ngPost_history.csv next to this file") << "\n"
                << "\n"
                << "## Profiles of options (GUI), one line each: profile = name|compress|random name|random password|par2|par2 %|keep the archives (1 or 0)" << "\n"
+               << "## optionally followed by |newsgroups|servers|NZB folder|name template (empty = not in the profile)" << "\n"
                << profilesText()
                << "\n"
                << tr("## Notifications when the posts end: events (notify_ok, notify_errors), system notification (notify_tray, GUI only),") << "\n"
@@ -3699,6 +3748,13 @@ void NgPost::saveConfig(bool quiet)
                << "## " << tr("Profile chosen when the program was closed (a name of the list of profiles, Recommended, or empty = Custom)") << "\n"
                << (_quickProfile.isEmpty() ? "#" : "") << "quick_profile = " << _quickProfile << "\n"
                << (_autoProfile.isEmpty() ? "#" : "") << "auto_profile = " << _autoProfile << "\n"
+               << "## " << tr("Newsgroups, servers, NZB folder and name template of the last session (groups|servers|NZB folder|template, empty = the ones of the Settings)") << "\n"
+               << (_quickOptions.targets.isEmpty() ? "#" : "") << "quick_targets = " << _quickOptions.targets.toLine() << "\n"
+               << (_autoOptions.targets.isEmpty() ? "#" : "") << "auto_targets = " << _autoOptions.targets.toLine() << "\n"
+               << "## " << tr("Newsgroups marked as favorites (shown first in the suggestions)") << "\n"
+               << (_favoriteGroups.isEmpty() ? "#" : "") << "favorite_groups = " << _favoriteGroups.join(",") << "\n"
+               << "## " << tr("Last number used by {n} in a name template") << "\n"
+               << "name_counter = " << _nameCounter << "\n"
                << "\n"
                << tr("## Auto Posting: last mode used (choose, scan or watch) and the folder where the posted files are moved") << "\n"
                << tr("## (a name like Posted is created next to each file/folder, a full path is used as it is; without it nothing is moved)") << "\n"

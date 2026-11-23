@@ -851,6 +851,34 @@ Add files or folders, or scan a folder, and keep checked what you want to post.<
         <source>The posts go in the queue (page Posts) but don't start: resume them there when you want</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Name, newsgroups and servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>These newsgroups are not valid: %1. Fix them in the card %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is already watched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 is also watched, with the options of the folders already watched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A folder is watched</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop watching the folder before scanning another one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3572,6 +3600,18 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Resumed</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Last number used by {n} in a name template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Newsgroups marked as favorites (shown first in the suggestions)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Newsgroups, servers, NZB folder and name template of the last session (groups|servers|NZB folder|template, empty = the ones of the Settings)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4170,6 +4210,14 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     </message>
     <message>
         <source>... more messages from the compression program are not shown (see the diagnostic report).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servers of this post: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The servers chosen for this post are not in the list of servers anymore (%1): the enabled servers are used</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4846,6 +4894,22 @@ Click on &quot;Add&quot; to configure your Usenet provider.</translation>
         <source>add...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add to the favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove from the favorites</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Favorite newsgroups: add one with a click. Click the star of a group to make it a favorite.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No favorite yet: click the star of a group to add it</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FeedbackDialog</name>
@@ -4985,6 +5049,78 @@ Click on &quot;Add&quot; to configure your Usenet provider.</translation>
     </message>
     <message>
         <source>Delete the profile "%1"?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save the current options (compression, random name and password, par2, keep the archives) under a name, and if you want the name template, the newsgroups, the servers and the NZB folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compress: %1, random name: %2, random password: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>par2: %1 %</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>par2: no</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the archives</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Newsgroups: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servers: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NZB folder: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The options of the archive are always saved. Also save in the profile:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty: the profile doesn't change it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NZB folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A part that is not saved is not changed when the profile is chosen.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6307,11 +6443,83 @@ Keep them in the list?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
+        <source>No graph for this post: its upload was too short or did not happen.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Last %1/s - best %2/s - average %3/s</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PostTargetsBox</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>{name} (the name of the file or folder)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Template of the name of the post (NZB file):
+{name} the name of the file or folder
+{date} the date (2026-11-23)
+{time} the time (15-04)
+{n} a number that grows by one at each post
+Example: {name} [{date}]. Empty: the name of the file or folder.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Newsgroups of this post. Empty: the newsgroups of the Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Servers used for this post. By default, all the servers enabled in the page Servers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NZB folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folder of the NZB files of these posts. Empty: the folder of the Settings.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select a Folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Settings: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add a newsgroup, for example alt.binaries.test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All the enabled servers (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All the enabled servers (page Servers)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (disabled in the page Servers)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (not in the list)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

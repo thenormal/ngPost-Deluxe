@@ -27,6 +27,16 @@ When you press **Post Files**, ngPost checks the post first. If something is wro
 
 After a fix the checks run again, so a new problem shows up at once instead of in the middle of the post. Auto Posting does not have this window yet.
 
+## Name, newsgroups and servers
+
+The **NZB** card has three more rows. Empty, each one uses what is set in the Settings.
+
+- **Name**: a template for the name of the post (the NZB file and, without random name, the archive): `{name}` is the name of the file or folder, `{date}` the date (2026-11-23), `{time}` the time (15-04) and `{n}` a number that grows by one at each post. Example: `{name} [{date}]`.
+- **Newsgroups**: the groups of this post, with the favorites (see [Newsgroups](03-newsgroups.md)).
+- **Servers**: all the enabled servers (default) or only the ones you check in the menu. A post keeps its servers in the queue, also after a restart.
+
+These rows are remembered when the program is closed.
+
 ## Profiles
 
 The **Profile** menu above the cards sets all the options at once.
@@ -36,6 +46,8 @@ The **Profile** menu above the cards sets all the options at once.
 - **Your own profiles**: set the options, press **Save as profile...** and give it a name. **Delete** removes the chosen profile. The profiles are saved in the configuration file (key `profile`) and are the same in Quick Post and Auto Posting.
 
 The **NFO file** card (see [NZB files](09-nzb-files.md)) is shared too: Quick Post and Auto Posting show the same settings.
+
+When you save a profile you can also save the name template, the newsgroups, the servers and the NZB folder (check what you want in the window). A part that is not saved is not changed when you choose the profile. Move the mouse on a profile of the menu to see what it contains.
 
 ## After Post Files
 

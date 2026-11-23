@@ -860,6 +860,34 @@ Fügen Sie Dateien oder Ordner hinzu oder scannen Sie einen Ordner und lassen Si
         <source>The posts go in the queue (page Posts) but don't start: resume them there when you want</source>
         <translation>Die Posts kommen in die Warteschlange (Seite Posts), starten aber nicht: setzen Sie sie dort fort, wann Sie wollen</translation>
     </message>
+    <message>
+        <source>Name, newsgroups and servers</source>
+        <translation>Name, Newsgroups und Server</translation>
+    </message>
+    <message>
+        <source>These newsgroups are not valid: %1. Fix them in the card %2.</source>
+        <translation>Diese Newsgroups sind ungültig: %1. Korrigieren Sie sie in der Karte %2.</translation>
+    </message>
+    <message>
+        <source>%1 is already watched</source>
+        <translation>%1 wird bereits überwacht</translation>
+    </message>
+    <message>
+        <source>%1 is also watched, with the options of the folders already watched</source>
+        <translation>%1 wird ebenfalls überwacht, mit den Optionen der bereits überwachten Ordner</translation>
+    </message>
+    <message>
+        <source>A folder is watched</source>
+        <translation>Ein Ordner wird überwacht</translation>
+    </message>
+    <message>
+        <source>Stop watching the folder before scanning another one.</source>
+        <translation>Beenden Sie die Überwachung des Ordners, bevor Sie einen anderen durchsuchen.</translation>
+    </message>
+    <message>
+        <source>The folder %1 is empty.</source>
+        <translation>Der Ordner %1 ist leer.</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3601,6 +3629,18 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Resumed</source>
         <translation>Fortgesetzt</translation>
     </message>
+    <message>
+        <source>Last number used by {n} in a name template</source>
+        <translation>Letzte von {n} in einer Namensvorlage verwendete Nummer</translation>
+    </message>
+    <message>
+        <source>Newsgroups marked as favorites (shown first in the suggestions)</source>
+        <translation>Als Favoriten markierte Newsgroups (zuerst in den Vorschlägen)</translation>
+    </message>
+    <message>
+        <source>Newsgroups, servers, NZB folder and name template of the last session (groups|servers|NZB folder|template, empty = the ones of the Settings)</source>
+        <translation>Newsgroups, Server, NZB-Ordner und Namensvorlage der letzten Sitzung (Gruppen|Server|NZB-Ordner|Vorlage, leer = die der Einstellungen)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4207,6 +4247,14 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     <message>
         <source>... more messages from the compression program are not shown (see the diagnostic report).</source>
         <translation>... weitere Meldungen des Komprimierungsprogramms werden nicht angezeigt (siehe Diagnosebericht).</translation>
+    </message>
+    <message>
+        <source>Servers of this post: %1</source>
+        <translation>Server dieses Posts: %1</translation>
+    </message>
+    <message>
+        <source>The servers chosen for this post are not in the list of servers anymore (%1): the enabled servers are used</source>
+        <translation>Die für diesen Post gewählten Server sind nicht mehr in der Serverliste (%1): die aktivierten Server werden verwendet</translation>
     </message>
 </context>
 <context>
@@ -4883,6 +4931,22 @@ Klicken Sie auf „Hinzufügen“, um Ihren Usenet-Anbieter einzurichten.</trans
         <source>add...</source>
         <translation>hinzufügen...</translation>
     </message>
+    <message>
+        <source>Add to the favorites</source>
+        <translation>Zu den Favoriten hinzufügen</translation>
+    </message>
+    <message>
+        <source>Remove from the favorites</source>
+        <translation>Aus den Favoriten entfernen</translation>
+    </message>
+    <message>
+        <source>Favorite newsgroups: add one with a click. Click the star of a group to make it a favorite.</source>
+        <translation>Favoriten-Newsgroups: mit einem Klick hinzufügen. Klicken Sie auf den Stern einer Gruppe, um sie zum Favoriten zu machen.</translation>
+    </message>
+    <message>
+        <source>No favorite yet: click the star of a group to add it</source>
+        <translation>Noch keine Favoriten: Klicken Sie auf den Stern einer Gruppe, um sie hinzuzufügen</translation>
+    </message>
 </context>
 <context>
     <name>FeedbackDialog</name>
@@ -5023,6 +5087,78 @@ Klicken Sie auf „Hinzufügen“, um Ihren Usenet-Anbieter einzurichten.</trans
     <message>
         <source>Delete the profile "%1"?</source>
         <translation>Das Profil "%1" löschen?</translation>
+    </message>
+    <message>
+        <source>Save the current options (compression, random name and password, par2, keep the archives) under a name, and if you want the name template, the newsgroups, the servers and the NZB folder</source>
+        <translation>Die aktuellen Optionen (Komprimierung, zufälliger Name und Passwort, par2, Archive behalten) unter einem Namen speichern, auf Wunsch auch Namensvorlage, Newsgroups, Server und NZB-Ordner</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>ja</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>nein</translation>
+    </message>
+    <message>
+        <source>Compress: %1, random name: %2, random password: %3</source>
+        <translation>Komprimieren: %1, zufälliger Name: %2, zufälliges Passwort: %3</translation>
+    </message>
+    <message>
+        <source>par2: %1 %</source>
+        <translation>par2: %1 %</translation>
+    </message>
+    <message>
+        <source>par2: no</source>
+        <translation>par2: nein</translation>
+    </message>
+    <message>
+        <source>Keep the archives</source>
+        <translation>Archive behalten</translation>
+    </message>
+    <message>
+        <source>Name: %1</source>
+        <translation>Name: %1</translation>
+    </message>
+    <message>
+        <source>Newsgroups: %1</source>
+        <translation>Newsgroups: %1</translation>
+    </message>
+    <message>
+        <source>Servers: %1</source>
+        <translation>Server: %1</translation>
+    </message>
+    <message>
+        <source>NZB folder: %1</source>
+        <translation>NZB-Ordner: %1</translation>
+    </message>
+    <message>
+        <source>The options of the archive are always saved. Also save in the profile:</source>
+        <translation>Die Archivoptionen werden immer gespeichert. Außerdem im Profil speichern:</translation>
+    </message>
+    <message>
+        <source>Empty: the profile doesn't change it</source>
+        <translation>Leer: das Profil ändert es nicht</translation>
+    </message>
+    <message>
+        <source>Name template</source>
+        <translation>Namensvorlage</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>Newsgroups</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>Server</translation>
+    </message>
+    <message>
+        <source>NZB folder</source>
+        <translation>NZB-Ordner</translation>
+    </message>
+    <message>
+        <source>A part that is not saved is not changed when the profile is chosen.</source>
+        <translation>Ein nicht gespeicherter Teil wird bei der Wahl des Profils nicht geändert.</translation>
     </message>
 </context>
 <context>
@@ -6352,12 +6488,89 @@ In der Liste behalten?</translation>
         <translation>Das Diagramm beginnt, wenn der Upload startet.</translation>
     </message>
     <message>
-        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
-        <translation>Kein Diagramm für diesen Post (nur Posts, die seit dem Programmstart hochgeladen wurden, haben eines).</translation>
+        <source>No graph for this post: its upload was too short or did not happen.</source>
+        <translation>Kein Diagramm für diesen Post: sein Upload war zu kurz oder hat nicht stattgefunden.</translation>
     </message>
     <message>
         <source>Last %1/s - best %2/s - average %3/s</source>
         <translation>Zuletzt %1/s - Spitze %2/s - Durchschnitt %3/s</translation>
+    </message>
+</context>
+<context>
+    <name>PostTargetsBox</name>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>{name} (the name of the file or folder)</source>
+        <translation>{name} (der Name der Datei oder des Ordners)</translation>
+    </message>
+    <message>
+        <source>Template of the name of the post (NZB file):
+{name} the name of the file or folder
+{date} the date (2026-11-23)
+{time} the time (15-04)
+{n} a number that grows by one at each post
+Example: {name} [{date}]. Empty: the name of the file or folder.</source>
+        <translation>Vorlage für den Namen des Posts (NZB-Datei):
+{name} der Name der Datei oder des Ordners
+{date} das Datum (2026-11-23)
+{time} die Uhrzeit (15-04)
+{n} eine Nummer, die bei jedem Post um eins steigt
+Beispiel: {name} [{date}]. Leer: der Name der Datei oder des Ordners.</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>Newsgroups</translation>
+    </message>
+    <message>
+        <source>Newsgroups of this post. Empty: the newsgroups of the Settings.</source>
+        <translation>Newsgroups dieses Posts. Leer: die Newsgroups der Einstellungen.</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>Server</translation>
+    </message>
+    <message>
+        <source>Servers used for this post. By default, all the servers enabled in the page Servers.</source>
+        <translation>Für diesen Post verwendete Server. Standardmäßig alle auf der Seite Server aktivierten Server.</translation>
+    </message>
+    <message>
+        <source>NZB folder</source>
+        <translation>NZB-Ordner</translation>
+    </message>
+    <message>
+        <source>Folder of the NZB files of these posts. Empty: the folder of the Settings.</source>
+        <translation>Ordner der NZB-Dateien dieser Posts. Leer: der Ordner der Einstellungen.</translation>
+    </message>
+    <message>
+        <source>Select a Folder</source>
+        <translation>Ordner auswählen</translation>
+    </message>
+    <message>
+        <source>Settings: %1</source>
+        <translation>Einstellungen: %1</translation>
+    </message>
+    <message>
+        <source>Add a newsgroup, for example alt.binaries.test</source>
+        <translation>Newsgroup hinzufügen, zum Beispiel alt.binaries.test</translation>
+    </message>
+    <message>
+        <source>All the enabled servers (%1)</source>
+        <translation>Alle aktivierten Server (%1)</translation>
+    </message>
+    <message>
+        <source>All the enabled servers (page Servers)</source>
+        <translation>Alle aktivierten Server (Seite Server)</translation>
+    </message>
+    <message>
+        <source>%1 (disabled in the page Servers)</source>
+        <translation>%1 (auf der Seite Server deaktiviert)</translation>
+    </message>
+    <message>
+        <source>%1 (not in the list)</source>
+        <translation>%1 (nicht in der Liste)</translation>
     </message>
 </context>
 </TS>

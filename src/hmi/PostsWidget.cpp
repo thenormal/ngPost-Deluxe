@@ -869,8 +869,8 @@ void PostsWidget::_showSpeed()
     if (!samples || samples->size() < 2)
     {
         _speedChart->hide();
-        _speedInfo->setText(e && e->isActive() ? tr("The graph starts when the upload starts.")
-                                               : tr("No graph for this post (only the posts uploaded since the program started have one)."));
+        _speedInfo->setText(e && !e->isFinished() ? tr("The graph starts when the upload starts.")
+                                                  : tr("No graph for this post: its upload was too short or did not happen."));
         return;
     }
     _speedChart->show();

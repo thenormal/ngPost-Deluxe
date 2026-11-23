@@ -859,6 +859,34 @@ Add files or folders, or scan a folder, and keep checked what you want to post.<
         <source>The posts go in the queue (page Posts) but don't start: resume them there when you want</source>
         <translation>发布进入队列（发布列表页面）但不开始：需要时在那里恢复</translation>
     </message>
+    <message>
+        <source>Name, newsgroups and servers</source>
+        <translation>名称、新闻组和服务器</translation>
+    </message>
+    <message>
+        <source>These newsgroups are not valid: %1. Fix them in the card %2.</source>
+        <translation>这些新闻组无效：%1。请在“%2”卡片中修改。</translation>
+    </message>
+    <message>
+        <source>%1 is already watched</source>
+        <translation>%1 已在监视中</translation>
+    </message>
+    <message>
+        <source>%1 is also watched, with the options of the folders already watched</source>
+        <translation>%1 也被监视，使用已监视文件夹的选项</translation>
+    </message>
+    <message>
+        <source>A folder is watched</source>
+        <translation>正在监视一个文件夹</translation>
+    </message>
+    <message>
+        <source>Stop watching the folder before scanning another one.</source>
+        <translation>请先停止监视该文件夹，再扫描其他文件夹。</translation>
+    </message>
+    <message>
+        <source>The folder %1 is empty.</source>
+        <translation>文件夹 %1 是空的。</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3601,6 +3629,18 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Resumed</source>
         <translation>已恢复</translation>
     </message>
+    <message>
+        <source>Last number used by {n} in a name template</source>
+        <translation>名称模板中 {n} 最后使用的编号</translation>
+    </message>
+    <message>
+        <source>Newsgroups marked as favorites (shown first in the suggestions)</source>
+        <translation>标记为收藏的新闻组（在建议中排在最前）</translation>
+    </message>
+    <message>
+        <source>Newsgroups, servers, NZB folder and name template of the last session (groups|servers|NZB folder|template, empty = the ones of the Settings)</source>
+        <translation>上次会话的新闻组、服务器、NZB 文件夹和名称模板（组|服务器|NZB 文件夹|模板，留空 = 使用设置中的值）</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4207,6 +4247,14 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     <message>
         <source>... more messages from the compression program are not shown (see the diagnostic report).</source>
         <translation>... 压缩程序的其余消息不再显示 (请参阅诊断报告)。</translation>
+    </message>
+    <message>
+        <source>Servers of this post: %1</source>
+        <translation>此发布使用的服务器：%1</translation>
+    </message>
+    <message>
+        <source>The servers chosen for this post are not in the list of servers anymore (%1): the enabled servers are used</source>
+        <translation>为此发布选择的服务器已不在服务器列表中（%1）：将使用已启用的服务器</translation>
     </message>
 </context>
 <context>
@@ -4884,6 +4932,22 @@ Click on &quot;Add&quot; to configure your Usenet provider.</source>
         <source>add...</source>
         <translation>添加...</translation>
     </message>
+    <message>
+        <source>Add to the favorites</source>
+        <translation>加入收藏</translation>
+    </message>
+    <message>
+        <source>Remove from the favorites</source>
+        <translation>从收藏中移除</translation>
+    </message>
+    <message>
+        <source>Favorite newsgroups: add one with a click. Click the star of a group to make it a favorite.</source>
+        <translation>收藏的新闻组：点击即可添加。点击组上的星标可将其设为收藏。</translation>
+    </message>
+    <message>
+        <source>No favorite yet: click the star of a group to add it</source>
+        <translation>还没有收藏：点击组上的星标即可添加</translation>
+    </message>
 </context>
 <context>
     <name>FeedbackDialog</name>
@@ -5024,6 +5088,78 @@ Click on &quot;Add&quot; to configure your Usenet provider.</source>
     <message>
         <source>Delete the profile "%1"?</source>
         <translation>删除配置"%1"？</translation>
+    </message>
+    <message>
+        <source>Save the current options (compression, random name and password, par2, keep the archives) under a name, and if you want the name template, the newsgroups, the servers and the NZB folder</source>
+        <translation>以一个名称保存当前选项（压缩、随机名称和密码、par2、保留压缩包），并可选择同时保存名称模板、新闻组、服务器和 NZB 文件夹</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>是</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>否</translation>
+    </message>
+    <message>
+        <source>Compress: %1, random name: %2, random password: %3</source>
+        <translation>压缩：%1，随机名称：%2，随机密码：%3</translation>
+    </message>
+    <message>
+        <source>par2: %1 %</source>
+        <translation>par2：%1 %</translation>
+    </message>
+    <message>
+        <source>par2: no</source>
+        <translation>par2：否</translation>
+    </message>
+    <message>
+        <source>Keep the archives</source>
+        <translation>保留压缩包</translation>
+    </message>
+    <message>
+        <source>Name: %1</source>
+        <translation>名称：%1</translation>
+    </message>
+    <message>
+        <source>Newsgroups: %1</source>
+        <translation>新闻组：%1</translation>
+    </message>
+    <message>
+        <source>Servers: %1</source>
+        <translation>服务器：%1</translation>
+    </message>
+    <message>
+        <source>NZB folder: %1</source>
+        <translation>NZB 文件夹：%1</translation>
+    </message>
+    <message>
+        <source>The options of the archive are always saved. Also save in the profile:</source>
+        <translation>压缩包选项总会保存。同时保存到配置中：</translation>
+    </message>
+    <message>
+        <source>Empty: the profile doesn't change it</source>
+        <translation>留空：此配置不会更改它</translation>
+    </message>
+    <message>
+        <source>Name template</source>
+        <translation>名称模板</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>新闻组</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>服务器</translation>
+    </message>
+    <message>
+        <source>NZB folder</source>
+        <translation>NZB 文件夹</translation>
+    </message>
+    <message>
+        <source>A part that is not saved is not changed when the profile is chosen.</source>
+        <translation>未保存的部分在选择此配置时不会被更改。</translation>
     </message>
 </context>
 <context>
@@ -6353,12 +6489,89 @@ Keep them in the list?</source>
         <translation>上传开始后才会显示图表。</translation>
     </message>
     <message>
-        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
-        <translation>此发布没有图表（只有程序启动后上传的发布才有）。</translation>
+        <source>No graph for this post: its upload was too short or did not happen.</source>
+        <translation>此发布没有图表：上传时间太短或没有进行。</translation>
     </message>
     <message>
         <source>Last %1/s - best %2/s - average %3/s</source>
         <translation>最近 %1/s - 最高 %2/s - 平均 %3/s</translation>
+    </message>
+</context>
+<context>
+    <name>PostTargetsBox</name>
+    <message>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <source>{name} (the name of the file or folder)</source>
+        <translation>{name}（文件或文件夹的名称）</translation>
+    </message>
+    <message>
+        <source>Template of the name of the post (NZB file):
+{name} the name of the file or folder
+{date} the date (2026-11-23)
+{time} the time (15-04)
+{n} a number that grows by one at each post
+Example: {name} [{date}]. Empty: the name of the file or folder.</source>
+        <translation>发布名称（NZB 文件）的模板：
+{name} 文件或文件夹的名称
+{date} 日期（2026-11-23）
+{time} 时间（15-04）
+{n} 每次发布加一的编号
+示例：{name} [{date}]。留空：使用文件或文件夹的名称。</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>新闻组</translation>
+    </message>
+    <message>
+        <source>Newsgroups of this post. Empty: the newsgroups of the Settings.</source>
+        <translation>此发布的新闻组。留空：使用设置中的新闻组。</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>服务器</translation>
+    </message>
+    <message>
+        <source>Servers used for this post. By default, all the servers enabled in the page Servers.</source>
+        <translation>此发布使用的服务器。默认使用“服务器”页面中所有已启用的服务器。</translation>
+    </message>
+    <message>
+        <source>NZB folder</source>
+        <translation>NZB 文件夹</translation>
+    </message>
+    <message>
+        <source>Folder of the NZB files of these posts. Empty: the folder of the Settings.</source>
+        <translation>这些发布的 NZB 文件所在的文件夹。留空：使用设置中的文件夹。</translation>
+    </message>
+    <message>
+        <source>Select a Folder</source>
+        <translation>选择文件夹</translation>
+    </message>
+    <message>
+        <source>Settings: %1</source>
+        <translation>设置：%1</translation>
+    </message>
+    <message>
+        <source>Add a newsgroup, for example alt.binaries.test</source>
+        <translation>添加新闻组，例如 alt.binaries.test</translation>
+    </message>
+    <message>
+        <source>All the enabled servers (%1)</source>
+        <translation>所有已启用的服务器（%1）</translation>
+    </message>
+    <message>
+        <source>All the enabled servers (page Servers)</source>
+        <translation>所有已启用的服务器（“服务器”页面）</translation>
+    </message>
+    <message>
+        <source>%1 (disabled in the page Servers)</source>
+        <translation>%1（在“服务器”页面中已禁用）</translation>
+    </message>
+    <message>
+        <source>%1 (not in the list)</source>
+        <translation>%1（不在列表中）</translation>
     </message>
 </context>
 </TS>

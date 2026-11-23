@@ -28,6 +28,10 @@ If some checked items are already in the history (same name and size), one windo
 
 When you press **Post the list** or **Start watching**, the program checks the settings once for the whole group (a server and a newsgroup, compression for folders, the rar / 7z and par2 programs, the folder of the NZB, the temporary folder). Problems are shown in plain words with a button that fixes them; warnings can be ignored with **Post anyway**. It is the same window as in [Quick Post](04-quick-post.md).
 
+## Name, newsgroups and servers
+
+The card **Name, newsgroups and servers** works like the rows of [Quick Post](04-quick-post.md), with one more row: **NZB folder**, where the NZB files of these posts are written (empty: the folder of the Settings). It also applies to the watched folders. A profile can keep these settings.
+
 ## Tips
 
 - Use compression, random names, random passwords and par2: this is the usual setup for automated posting. The **Recommended** profile (menu **Profile**) sets it with one click.

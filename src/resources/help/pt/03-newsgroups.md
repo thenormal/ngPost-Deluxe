@@ -13,6 +13,14 @@ Cada newsgroup é uma pequena «etiqueta»:
 
 Um nome válido tem letras minúsculas, algarismos, `+`, `_` ou `-`, separados por pontos, por exemplo `alt.binaries.test`.
 
+## Favoritos
+
+Clique na estrela de um grupo para o tornar favorito (outro clique remove-o). Os favoritos aparecem primeiro nas sugestões, em todas as caixas de grupos. O botão da estrela à direita da caixa mostra-os: clique num para o adicionar à caixa ou o remover. São guardados no ficheiro de configuração (chave `favorite_groups`).
+
+## Os grupos de uma só publicação
+
+O Quick Post e a publicação automática têm a sua própria caixa **Newsgroups**. Vazia, mostra os grupos das Definições, que são os usados. Preencha-a para publicar noutros grupos sem mudar as Definições; um perfil pode guardar estes grupos. O menu "Para onde vão as publicações" das Definições também se aplica a eles.
+
 ## Verificações antes de publicar
 
 O ngPost não inicia uma publicação se não houver nenhum newsgroup, ou se algum deles não for válido. A mensagem pede-lhe que os corrija nas Definições.

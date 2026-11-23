@@ -28,6 +28,10 @@ Se alguns elementos marcados já estão no histórico (mesmo nome e tamanho), um
 
 Quando carrega em **Publicar a lista** ou **Começar a vigiar**, o programa verifica as definições uma só vez para todo o grupo (um servidor e um newsgroup, compressão para as pastas, os programas rar / 7z e par2, a pasta do NZB, a pasta temporária). Os problemas são mostrados em palavras simples com um botão que os corrige; os avisos podem ser ignorados com **Postar mesmo assim**. É a mesma janela da [Postagem Rápida](04-quick-post.md).
 
+## Nome, newsgroups e servidores
+
+O cartão **Nome, newsgroups e servidores** funciona como as linhas do [Quick Post](04-quick-post.md), com mais uma linha: **Pasta NZB**, onde são escritos os ficheiros NZB destas publicações (vazia: a pasta das Definições). Também se aplica às pastas vigiadas. Um perfil pode guardar estas definições.
+
 ## Dicas
 
 - Use compressão, nomes aleatórios, palavras-passe aleatórias e par2: é a configuração habitual para a publicação automatizada. O perfil **Recomendado** (menu **Perfil**) define-a com um clique.

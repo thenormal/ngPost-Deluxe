@@ -28,6 +28,10 @@ Si algunos elementos marcados ya están en el historial (mismo nombre y tamaño)
 
 Cuando pulsas **Publicar la lista** o **Empezar a vigilar**, el programa comprueba los ajustes una sola vez para todo el grupo (un servidor y un grupo de noticias, compresión para las carpetas, los programas rar / 7z y par2, la carpeta del NZB, la carpeta temporal). Los problemas se muestran en palabras sencillas con un botón que los arregla; los avisos se pueden ignorar con **Publicar igualmente**. Es la misma ventana que en [Publicación Rápida](04-quick-post.md).
 
+## Nombre, grupos y servidores
+
+La tarjeta **Nombre, grupos y servidores** funciona como las filas de [Quick Post](04-quick-post.md), con una fila más: **Carpeta NZB**, donde se escriben los archivos NZB de estas publicaciones (vacía: la carpeta de los Ajustes). También se aplica a las carpetas vigiladas. Un perfil puede guardar estos ajustes.
+
 ## Consejos
 
 - Usa compresión, nombres aleatorios, contraseñas aleatorias y par2: es la configuración habitual para la publicación automatizada. El perfil **Recomendado** (menú **Perfil**) la ajusta con un clic.

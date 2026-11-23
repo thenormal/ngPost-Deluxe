@@ -27,6 +27,16 @@ Quando carrega em **Postar Arquivos**, o ngPost verifica primeiro a publicação
 
 Depois de uma correção, as verificações voltam a ser feitas, por isso um problema novo aparece logo em vez de surgir a meio da publicação. A Postagem Automática ainda não tem esta janela.
 
+## Nome, newsgroups e servidores
+
+O cartão **NZB** tem mais três linhas. Vazia, cada uma usa o que está nas Definições.
+
+- **Nome**: um modelo para o nome da publicação (o ficheiro NZB e, sem nome aleatório, o arquivo): `{name}` é o nome do ficheiro ou pasta, `{date}` a data (2026-11-23), `{time}` a hora (15-04) e `{n}` um número que sobe um em cada publicação. Exemplo: `{name} [{date}]`.
+- **Newsgroups**: os grupos desta publicação, com os favoritos (ver [Newsgroups](03-newsgroups.md)).
+- **Servidores**: todos os servidores ativos (por omissão) ou só os que marcar no menu. Uma publicação mantém os seus servidores na fila, mesmo depois de reiniciar.
+
+Estas linhas são lembradas ao fechar o programa.
+
 ## Perfis
 
 O menu **Perfil** por cima dos cartões define todas as opções de uma só vez.
@@ -36,6 +46,8 @@ O menu **Perfil** por cima dos cartões define todas as opções de uma só vez.
 - **Os seus próprios perfis**: defina as opções, carregue em **Salvar como perfil...** e dê-lhe um nome. **Excluir** remove o perfil escolhido. Os perfis são guardados no ficheiro de configuração (chave `profile`) e são os mesmos na Postagem Rápida e na Postagem Automática.
 
 O cartão **Arquivo NFO** (veja [Ficheiros NZB](09-nzb-files.md)) também é partilhado: a Postagem Rápida e a Postagem Automática mostram as mesmas definições.
+
+Ao guardar um perfil também pode guardar o modelo de nome, os newsgroups, os servidores e a pasta NZB (marque o que quiser na janela). Uma parte que não é guardada não é alterada quando escolhe o perfil. Passe o rato sobre um perfil do menu para ver o que contém.
 
 ## Depois de Postar Arquivos
 
