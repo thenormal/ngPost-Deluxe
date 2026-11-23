@@ -4,7 +4,7 @@ Publicación Automática publica muchos archivos y carpetas sin preparar cada un
 
 ## Publicar lo que elijo
 
-Añade los archivos y carpetas que quieras (arrástralos a la lista, o usa **Seleccionar archivos** / **Seleccione una carpeta**) y pulsa **Publicar la lista**: cada archivo o carpeta se convierte en una publicación independiente.
+Añade los archivos y carpetas que quieras (arrástralos a la lista, o usa **Seleccionar archivos** / **Seleccione una carpeta**) y pulsa **Publicar la lista**: cada archivo o carpeta se convierte en una publicación independiente. Con **Añadir en pausa** marcado (también para **Escanear una carpeta una vez**), las publicaciones esperan en la página **Publicaciones** hasta que las reanudes.
 
 ## Analizar una carpeta una vez
 

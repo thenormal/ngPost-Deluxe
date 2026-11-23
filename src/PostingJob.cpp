@@ -41,6 +41,7 @@
 #include <QProcess>
 #include <QThread>
 #include "utils/PostList.h"
+#include "utils/QueueOrder.h"
 #include <QLocale>
 #include "utils/SpeedLimiter.h"
 #include "utils/ProcessText.h"
@@ -480,6 +481,12 @@ void PostingJob::_postFiles()
         poster->unlockQueue();
 
     emit postingStarted();
+
+    if (_pauseRequested)
+    {   // paused by the user while it was compressed: it stops as soon as the upload starts
+        _pauseRequested = false;
+        _ngPost->pause();
+    }
 }
 
 
@@ -586,7 +593,7 @@ void PostingJob::onDisconnectedConnection(NntpConnection *con)
                 {
                     int sleepDurationInSec = _ngPost->waitDurationBeforeAutoResume();
                     _logAs(NgPost::LOG_WARN, tr("Sleep for %1 sec before trying to reconnect").arg(sleepDurationInSec));
-                    _ngPost->pause();
+                    _ngPost->pause(false);
                     _resumeTimer.start(sleepDurationInSec*1000);
                 }
                 else
@@ -1395,6 +1402,8 @@ QJsonObject PostingJob::toQueueEntry() const
     entry.insert("rarPass", _rarPass);
     entry.insert("keepRar", _keepRar);
     entry.insert("delFiles", MB_LoadAtomic(_delFilesAfterPost) ? true : false);
+    entry.insert("priority", QueueOrder::priorityKey(_priority));
+    entry.insert("paused", _held || _pauseRequested || (_isPaused && _pausedByUser));
     return entry;
 }
 
@@ -1433,8 +1442,10 @@ PostingJob *PostingJob::fromQueueEntry(NgPost *ngPost, const QJsonObject &entry,
                                      entry.value("keepRar").toBool(), entry.value("delFiles").toBool(),
                                      // the nzb of the interrupted post is ours: overwrite it
                                      nzbFinal ? true : entry.value("overwriteNzb").toBool(true));
-    job->_queueId = entry.value("id").toString();
-    job->_resumed = true;
+    job->_queueId  = entry.value("id").toString();
+    job->_resumed  = true;
+    job->_priority = QueueOrder::priorityFromKey(entry.value("priority").toString());
+    job->_held     = entry.value("paused").toBool();
     return job;
 }
 

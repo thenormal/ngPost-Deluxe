@@ -39,6 +39,6 @@ La tarjeta **Archivo NFO** (consulta [Archivos NZB](09-nzb-files.md)) también e
 
 ## Después de Publicar Ficheros
 
-La publicación entra en la cola y el programa muestra la página **Publicaciones**, donde sigues su progreso y su registro. Quick Post conserva tus opciones y crea un nuevo nombre y una nueva contraseña aleatorios, así puedes preparar enseguida la siguiente release.
+La publicación entra en la cola y el programa muestra la página **Publicaciones**, donde sigues su progreso y su registro. Quick Post conserva tus opciones y crea un nuevo nombre y una nueva contraseña aleatorios, así puedes preparar enseguida la siguiente release. Con **Añadir en pausa** marcado, la publicación espera en la cola hasta que la reanudes.
 
 Consulta también [Progreso y registro](06-progress-and-log.md).

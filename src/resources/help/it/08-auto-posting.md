@@ -4,7 +4,7 @@ Post automatico posta tanti file e cartelle senza preparare ciascuno a mano. Sce
 
 ## Posta ciò che scelgo
 
-Aggiungi i file e le cartelle che vuoi (trascinali nella lista, oppure usa **Seleziona file** / **Seleziona una cartella**), poi premi **Posta la lista**: ogni file o cartella diventa un post separato.
+Aggiungi i file e le cartelle che vuoi (trascinali nella lista, oppure usa **Seleziona file** / **Seleziona una cartella**), poi premi **Posta la lista**: ogni file o cartella diventa un post separato. Con **Aggiungi in pausa** spuntato (anche per **Scansiona una cartella una volta**), i post aspettano nella pagina **Post** finché non li riprendi.
 
 ## Analizza una cartella una volta
 

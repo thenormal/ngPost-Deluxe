@@ -4,7 +4,7 @@ Auto Posting post veel bestanden en mappen zonder dat u elk met de hand voorbere
 
 ## Post wat ik kies
 
-Voeg de gewenste bestanden en mappen toe (sleep ze naar de lijst, of gebruik **Bestanden kiezen** / **Selecteer een Map**) en klik op **Lijst posten**: elk bestand of elke map wordt een aparte post.
+Voeg de gewenste bestanden en mappen toe (sleep ze naar de lijst, of gebruik **Bestanden kiezen** / **Selecteer een Map**) en klik op **Lijst posten**: elk bestand of elke map wordt een aparte post. Met **Gepauzeerd toevoegen** aangevinkt (ook voor **Eén keer een map scannen**) wachten de posts op de pagina **Posts** tot je ze hervat.
 
 ## Een map eenmalig scannen
 

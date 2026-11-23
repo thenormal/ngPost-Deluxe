@@ -96,6 +96,7 @@ SOURCES += \
         utils/MediaInfoReader.cpp \
         utils/PostProfile.cpp \
         utils/PostList.cpp \
+        utils/QueueOrder.cpp \
         utils/PostRequest.cpp \
         utils/PostChecker.cpp \
         utils/PostedMover.cpp \
@@ -135,6 +136,7 @@ HEADERS += \
     utils/MediaInfoReader.h \
     utils/PostProfile.h \
     utils/PostList.h \
+    utils/QueueOrder.h \
     utils/PostRequest.h \
     utils/PostChecker.h \
     utils/PostedMover.h \

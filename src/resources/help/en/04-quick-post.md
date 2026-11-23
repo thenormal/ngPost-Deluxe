@@ -39,6 +39,6 @@ The **NFO file** card (see [NZB files](09-nzb-files.md)) is shared too: Quick Po
 
 ## After Post Files
 
-The post goes to the queue and the program shows the page **Posts**, where you follow its progress and its log. Quick Post keeps your options and makes a new random name and password, so you can prepare the next release at once.
+The post goes to the queue and the program shows the page **Posts**, where you follow its progress and its log. Quick Post keeps your options and makes a new random name and password, so you can prepare the next release at once. With **Add paused** checked, the post waits in the queue until you resume it.
 
 See also [Progress and log](06-progress-and-log.md).

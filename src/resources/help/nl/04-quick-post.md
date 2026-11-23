@@ -39,6 +39,6 @@ De kaart **NFO-bestand** (zie [NZB-bestanden](09-nzb-files.md)) wordt ook gedeel
 
 ## Na Post Bestanden
 
-De post komt in de wachtrij en het programma toont de pagina **Posts**, waar je de voortgang en het logboek volgt. Quick Post houdt je opties en maakt een nieuwe willekeurige naam en een nieuw wachtwoord, zodat je meteen de volgende release kunt voorbereiden.
+De post komt in de wachtrij en het programma toont de pagina **Posts**, waar je de voortgang en het logboek volgt. Quick Post houdt je opties en maakt een nieuwe willekeurige naam en een nieuw wachtwoord, zodat je meteen de volgende release kunt voorbereiden. Met **Gepauzeerd toevoegen** aangevinkt wacht de post in de wachtrij tot je hem hervat.
 
 Zie ook [Voortgang en logboek](06-progress-and-log.md).

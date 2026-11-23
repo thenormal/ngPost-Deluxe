@@ -39,6 +39,6 @@ Anche la scheda **File NFO** (vedi [File NZB](09-nzb-files.md)) è condivisa: Qu
 
 ## Dopo Posta i file
 
-Il post entra nella coda e il programma mostra la pagina **Post**, dove segui il suo avanzamento e il suo log. Quick Post conserva le tue opzioni e crea un nuovo nome e una nuova password casuali, così puoi preparare subito la release successiva.
+Il post entra nella coda e il programma mostra la pagina **Post**, dove segui il suo avanzamento e il suo log. Quick Post conserva le tue opzioni e crea un nuovo nome e una nuova password casuali, così puoi preparare subito la release successiva. Con **Aggiungi in pausa** spuntato, il post aspetta in coda finché non lo riprendi.
 
 Vedi anche [Avanzamento e log](06-progress-and-log.md).

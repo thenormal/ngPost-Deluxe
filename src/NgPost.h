@@ -41,6 +41,7 @@
 #include "utils/PostProfile.h"
 #include "utils/PostRequest.h"
 #include "RepostInfo.h"
+#include "utils/QueueOrder.h"
 #include <QHash>
 #include <functional>
 #include <QNetworkProxy>
@@ -415,6 +416,18 @@ public:
     int  nbMissingArticles(int postId) const; //!< Articles of a finished post that can be posted again (GUI)
     bool repostMissing(int postId);        //!< posts them again (a new post in the list)
     void forgetMissing(int postId);        //!< they won't be posted again (also removed from the queue)
+
+    // queue of the posts that wait (page Posts): priority, order and pause of each post
+    bool setPostPriority(int postId, int priority);           //!< a waiting post goes among the posts of its priority
+    bool canMovePost(int postId, QueueOrder::Move move) const;
+    bool movePost(int postId, QueueOrder::Move move);
+    bool canDragPost(int postId) const;                       //!< a waiting post that is not already being prepared
+    bool movePostBefore(int postId, int beforePostId);        //!< drag and drop (beforePostId -1: at the end)
+    bool canPausePost(int postId) const;
+    bool pausePost(int postId);   //!< a waiting post is skipped, the running one stops uploading (it pauses when its upload starts if it is compressed)
+    bool resumePost(int postId);
+    bool isPostPaused(int postId) const;
+    bool isPostPrepared(int postId) const; //!< the next post, already compressed while the current one is uploading: it stays first
     QString queueFile() const;
     void queueSaveJob(PostingJob *job);  //!< (re)write the entry of the job (if it has one)
     void queueJobEnded(PostingJob *job); //!< remove the entry, keep it, or turn it into "missing Articles"
@@ -439,7 +452,8 @@ public:
 
     QString parseDefaultConfig();
 
-    bool startPostingJob(PostingJob *job);
+    //! starts the post, or puts it in the queue (by priority, or at the end with \p atEnd: posts resumed from the queue file)
+    bool startPostingJob(PostingJob *job, bool atEnd = false);
 
     void updateGroups(const QString &groups);    
 
@@ -502,7 +516,7 @@ public:
     inline bool removeRarRootFolder() const;
 
     bool isPaused() const;
-    void pause() const;
+    void pause(bool byUser = true); //!< byUser false: lost connection (the pause is not saved in the queue)
     void resume();
 
     inline bool tryResumePostWhenConnectionLost() const;
@@ -583,6 +597,10 @@ private:
     void _onPostListTimer();
     void _dumpPostList() const;
     void _prepareNextPacking();
+    QVector<QueueSlot> _queueSlots() const;
+    bool _startNextJob();   //!< starts the first post of the queue that is not paused (false: none)
+    void _queueChanged();   //!< after a change of the queue: list order, queue file, preparation of the next post
+    void _refreshPost(PostingJob *job); //!< list and queue file of one post after a change of its priority or pause
 
 
     void _startMonitoring(const QString &folderPath);

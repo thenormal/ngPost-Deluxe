@@ -20,10 +20,17 @@
 #include "MainWindow.h"
 #include "NgPost.h"
 #include "PostingJob.h"
+#include "utils/QueueOrder.h"
 
 #include <QApplication>
 #include <QClipboard>
 #include <QDesktopServices>
+#include <QDragMoveEvent>
+#include <QDropEvent>
+#include <QEvent>
+#include <QMenu>
+#include <QPainterPath>
+#include <functional>
 #include <QDir>
 #include <QFileInfo>
 #include <QHBoxLayout>
@@ -110,6 +117,114 @@ public:
         painter->restore();
     }
 };
+//! the table of the page Posts: a waiting post can be dragged to another place of the queue
+//! (the rows are not moved by the table itself: the queue changes and the list gives the new order)
+class PostsTable : public QTableWidget
+{
+public:
+    std::function<bool(int row)>              canDrag;
+    std::function<void(int row, int before)>  dropped; //!< before: row the post goes before (rowCount(): at the end)
+
+    PostsTable(int rows, int columns, QWidget *parent) : QTableWidget(rows, columns, parent)
+    {
+        setDragEnabled(true);
+        setAcceptDrops(true);
+        viewport()->setAcceptDrops(true);
+        setDragDropMode(QAbstractItemView::InternalMove);
+        setDefaultDropAction(Qt::MoveAction);
+        setDropIndicatorShown(true);
+        setDragDropOverwriteMode(false);
+    }
+
+protected:
+    void startDrag(Qt::DropActions supportedActions) override
+    {
+        if (canDrag && canDrag(currentRow()))
+            QTableWidget::startDrag(supportedActions);
+    }
+
+    void dragMoveEvent(QDragMoveEvent *event) override
+    {
+        QTableWidget::dragMoveEvent(event); // auto scroll and drop indicator
+        if (event->source() != this)
+            event->ignore();
+        else
+            event->acceptProposedAction();
+    }
+
+    void dropEvent(QDropEvent *event) override
+    {
+        if (event->source() != this)
+        {
+            event->ignore();
+            return;
+        }
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        QPoint pos = event->position().toPoint();
+#else
+        QPoint pos = event->pos();
+#endif
+        QModelIndex index = indexAt(pos);
+        int before = rowCount();
+        if (index.isValid())
+        {
+            QRect rect = visualRect(index);
+            before = pos.y() < rect.center().y() ? index.row() : index.row() + 1;
+        }
+        int row = currentRow();
+        // nothing is moved by the table (the default drop would move the cells)
+        event->setDropAction(Qt::IgnoreAction);
+        event->accept();
+        setState(QAbstractItemView::NoState);
+        viewport()->update();
+        if (dropped && row >= 0)
+            dropped(row, before);
+    }
+};
+
+//! black icon of the resources in the color of the text (readable in the dark theme)
+QIcon tintedIcon(const QString &path, const QColor &color)
+{
+    QPixmap src(path);
+    QPixmap pix(src.size());
+    pix.fill(Qt::transparent);
+    QPainter p(&pix);
+    p.drawPixmap(0, 0, src);
+    p.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    p.fillRect(pix.rect(), color);
+    p.end();
+    return QIcon(pix);
+}
+
+//! arrow of the move buttons (bar: to the top or the bottom), drawn in the color of the text
+QIcon arrowIcon(bool up, bool bar, const QColor &color)
+{
+    QPixmap pix(32, 32);
+    pix.fill(Qt::transparent);
+    QPainter p(&pix);
+    p.setRenderHint(QPainter::Antialiasing);
+    p.setPen(Qt::NoPen);
+    p.setBrush(color);
+    QPainterPath tri;
+    if (up)
+    {
+        tri.moveTo(16, bar ? 10 : 7);
+        tri.lineTo(27, bar ? 24 : 22);
+        tri.lineTo(5, bar ? 24 : 22);
+    }
+    else
+    {
+        tri.moveTo(16, bar ? 22 : 25);
+        tri.lineTo(27, bar ? 8 : 10);
+        tri.lineTo(5, bar ? 8 : 10);
+    }
+    tri.closeSubpath();
+    p.drawPath(tri);
+    if (bar)
+        p.drawRoundedRect(QRectF(5, up ? 3 : 26, 22, 3.5), 1.5, 1.5);
+    p.end();
+    return QIcon(pix);
+}
 } // namespace
 
 
@@ -133,12 +248,43 @@ PostsWidget::PostsWidget(NgPost *ngPost, MainWindow *hmi, QWidget *parent) :
     QHBoxLayout *bar = new QHBoxLayout();
     bar->setSpacing(8);
     _stopButton   = new QPushButton(QIcon(":/icons/stop.png"), QString(), this);
+    _pauseButton  = new QPushButton(this);
+    _priorityButton = new QPushButton(this);
+    _priorityMenu = new QMenu(this);
+    for (int prio : {QueueOrder::HIGH, QueueOrder::NORMAL, QueueOrder::LOW})
+    {
+        QAction *act = _priorityMenu->addAction(QString());
+        act->setData(prio);
+        act->setCheckable(true);
+        connect(act, &QAction::triggered, this, [this, prio](){ _setPriority(prio); });
+    }
+    _priorityButton->setMenu(_priorityMenu);
+    _topButton    = new QPushButton(this);
+    _upButton     = new QPushButton(this);
+    _downButton   = new QPushButton(this);
+    _bottomButton = new QPushButton(this);
+    for (QPushButton *b : {_topButton, _upButton, _downButton, _bottomButton})
+    {
+        b->setIconSize(QSize(16, 16));
+        b->setFixedWidth(34);
+    }
+    _pauseButton->setMinimumWidth(100);
+    _stopButton->setMinimumWidth(90);
     _repostButton = new QPushButton(this);
     _folderButton = new QPushButton(QIcon(":/icons/folder.png"), QString(), this);
     _passButton   = new QPushButton(this);
     _removeButton = new QPushButton(QIcon(":/icons/clear.png"), QString(), this);
     _clearButton  = new QPushButton(QIcon(":/icons/clear.png"), QString(), this);
+    bar->addWidget(_pauseButton);
     bar->addWidget(_stopButton);
+    bar->addSpacing(8);
+    bar->addWidget(_priorityButton);
+    QHBoxLayout *moves = new QHBoxLayout();
+    moves->setSpacing(2);
+    for (QPushButton *b : {_topButton, _upButton, _downButton, _bottomButton})
+        moves->addWidget(b);
+    bar->addLayout(moves);
+    bar->addSpacing(8);
     bar->addWidget(_repostButton);
     bar->addWidget(_folderButton);
     bar->addWidget(_passButton);
@@ -156,7 +302,11 @@ PostsWidget::PostsWidget(NgPost *ngPost, MainWindow *hmi, QWidget *parent) :
     _splitter = new QSplitter(Qt::Vertical, this);
     _splitter->setChildrenCollapsible(false);
 
-    _table = new QTableWidget(0, NB_COLUMNS, _splitter);
+    PostsTable *table = new PostsTable(0, NB_COLUMNS, _splitter);
+    table->canDrag = [this](int row){ return _canDrag(_rowId(row)); };
+    table->dropped = [this](int row, int before){ _dropped(_rowId(row), before); };
+    _table = table;
+    _table->setContextMenuPolicy(Qt::CustomContextMenu);
     _table->setSelectionBehavior(QAbstractItemView::SelectRows);
     _table->setSelectionMode(QAbstractItemView::SingleSelection);
     _table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -169,6 +319,7 @@ PostsWidget::PostsWidget(NgPost *ngPost, MainWindow *hmi, QWidget *parent) :
     _table->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     _table->horizontalHeader()->setSectionResizeMode(COL_NAME, QHeaderView::Stretch);
     _table->setColumnWidth(COL_STATE, 150);
+    _table->setColumnWidth(COL_PRIORITY, 80);
     _table->setColumnWidth(COL_PROGRESS, 170);
     _table->setColumnWidth(COL_SIZE, 95);
     _table->setColumnWidth(COL_SPEED, 100);
@@ -224,6 +375,13 @@ PostsWidget::PostsWidget(NgPost *ngPost, MainWindow *hmi, QWidget *parent) :
     connect(_list, &PostList::postChanged, this, &PostsWidget::onPostChanged);
     connect(_list, &PostList::postRemoved, this, &PostsWidget::onPostRemoved);
     connect(_list, &PostList::logAdded,    this, &PostsWidget::onLogAdded);
+    connect(_list, &PostList::orderChanged, this, &PostsWidget::onOrderChanged);
+    connect(_table, &QWidget::customContextMenuRequested, this, &PostsWidget::onContextMenu);
+    connect(_pauseButton,  &QAbstractButton::clicked, this, &PostsWidget::onPauseResume);
+    connect(_topButton,    &QAbstractButton::clicked, this, [this](){ _move(static_cast<int>(QueueOrder::Move::TOP)); });
+    connect(_upButton,     &QAbstractButton::clicked, this, [this](){ _move(static_cast<int>(QueueOrder::Move::UP)); });
+    connect(_downButton,   &QAbstractButton::clicked, this, [this](){ _move(static_cast<int>(QueueOrder::Move::DOWN)); });
+    connect(_bottomButton, &QAbstractButton::clicked, this, [this](){ _move(static_cast<int>(QueueOrder::Move::BOTTOM)); });
     connect(_table, &QTableWidget::itemSelectionChanged, this, &PostsWidget::onSelectionChanged);
     connect(_stopButton,   &QAbstractButton::clicked, this, &PostsWidget::onStop);
     connect(_repostButton, &QAbstractButton::clicked, this, &PostsWidget::onRepost);
@@ -235,7 +393,40 @@ PostsWidget::PostsWidget(NgPost *ngPost, MainWindow *hmi, QWidget *parent) :
 
     for (const PostEntry &e : _list->entries())
         onPostAdded(e.id);
+    _makeIcons();
     retranslate();
+}
+
+void PostsWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::PaletteChange || event->type() == QEvent::StyleChange)
+    {   // light or dark theme
+        _makeIcons();
+        for (int row = 0; row < _table->rowCount(); ++row)
+            if (const PostEntry *e = _list->entry(_rowId(row)))
+                _fillRow(row, *e);
+        _updateButtons();
+    }
+    QWidget::changeEvent(event);
+}
+
+void PostsWidget::_makeIcons()
+{
+    QColor color = palette().color(QPalette::ButtonText);
+    _topButton->setIcon(arrowIcon(true, true, color));
+    _upButton->setIcon(arrowIcon(true, false, color));
+    _downButton->setIcon(arrowIcon(false, false, color));
+    _bottomButton->setIcon(arrowIcon(false, true, color));
+}
+
+QString PostsWidget::priorityText(int priority)
+{
+    switch (QueueOrder::clampPriority(priority))
+    {
+    case QueueOrder::HIGH: return tr("High");
+    case QueueOrder::LOW:  return tr("Low");
+    default:               return tr("Normal");
+    }
 }
 
 QString PostsWidget::stateText(PostEntry::State state)
@@ -272,8 +463,16 @@ void PostsWidget::retranslate()
     _title->setText(tr("Posts"));
     _subtitle->setText(tr("All the posts of this session: the ones waiting, the one being posted and the finished ones. "
                           "Select a post to see its details and its log."));
-    _table->setHorizontalHeaderLabels({tr("Name"), tr("State"), tr("Progress"), tr("Size"),
+    _table->setHorizontalHeaderLabels({tr("Name"), tr("State"), tr("Priority"), tr("Progress"), tr("Size"),
                                        tr("Speed"), tr("Remaining"), tr("Started by")});
+    _priorityButton->setText(tr("Priority"));
+    _priorityButton->setToolTip(tr("Priority of the selected waiting post: the posts with a higher priority start first"));
+    for (QAction *act : _priorityMenu->actions())
+        act->setText(priorityText(act->data().toInt()));
+    _topButton->setToolTip(tr("Move to the top of the queue"));
+    _upButton->setToolTip(tr("Move up"));
+    _downButton->setToolTip(tr("Move down"));
+    _bottomButton->setToolTip(tr("Move to the bottom of the queue"));
     _folderButton->setText(tr("Open NZB folder"));
     _passButton->setText(tr("Copy password"));
     _removeButton->setText(tr("Remove"));
@@ -370,13 +569,41 @@ void PostsWidget::_fillRow(int row, const PostEntry &e)
     QString icon = e.state == PostEntry::State::DONE ? ":/icons/ok.png"
                  : e.state == PostEntry::State::DONE_WITH_ERRORS || e.state == PostEntry::State::STOPPED
                    || e.state == PostEntry::State::CANCELLED ? ":/icons/ko.png"
+                 : e.paused ? QString()
                  : e.state == PostEntry::State::WAITING ? ":/icons/pending.png" : ":/icons/uploading.png";
-    name->setIcon(QIcon(icon));
+    name->setIcon(icon.isEmpty() ? tintedIcon(":/icons/nav_pause.png", _table->palette().color(QPalette::Text))
+                                 : QIcon(icon));
 
     QString state = stateText(e.state);
+    QString stateTip;
     if (e.state == PostEntry::State::DONE_WITH_ERRORS && e.nbFailed)
         state = tr("Done, %1 failed").arg(e.nbFailed);
+    else if (e.state == PostEntry::State::WAITING && e.paused)
+    {
+        state = tr("Paused");
+        stateTip = tr("The next posts go before it. Resume it to put it back in the queue.");
+    }
+    else if (e.state == PostEntry::State::WAITING && e.prepared == 1)
+    {
+        state = tr("Preparing (%1)").arg(e.queuePos + 1);
+        stateTip = tr("Compressed now, while the current post is uploading: it starts next");
+    }
+    else if (e.state == PostEntry::State::WAITING && e.prepared == 2)
+    {
+        state = tr("Ready (%1)").arg(e.queuePos + 1);
+        stateTip = tr("Already compressed: it starts next");
+    }
+    else if (e.state == PostEntry::State::WAITING && e.queuePos >= 0)
+        state = tr("Waiting (%1)").arg(e.queuePos + 1);
+    else if ((e.state == PostEntry::State::COMPRESSING || e.state == PostEntry::State::PAR2) && e.paused)
+    {
+        state = tr("%1, then paused").arg(stateText(e.state));
+        stateTip = tr("It pauses when the upload starts");
+    }
     _table->item(row, COL_STATE)->setText(state);
+    _table->item(row, COL_STATE)->setToolTip(stateTip);
+    bool waiting = e.queuePos >= 0;
+    _table->item(row, COL_PRIORITY)->setText(waiting || e.priority != QueueOrder::NORMAL ? priorityText(e.priority) : QString());
 
     QTableWidgetItem *progress = _table->item(row, COL_PROGRESS);
     progress->setData(sPercentRole, e.progressPercent());
@@ -391,7 +618,7 @@ void PostsWidget::_fillRow(int row, const PostEntry &e)
     QString eta;
     if (e.state == PostEntry::State::UPLOADING && e.etaSec >= 0)
         eta = PostingJob::humanDuration(e.etaSec * 1000);
-    else if (e.isFinished() && e.durationMs > 0)
+    else if (e.isFinished() && e.state != PostEntry::State::CANCELLED && e.durationMs > 0)
         eta = tr("took %1").arg(PostingJob::humanDuration(e.durationMs));
     _table->item(row, COL_ETA)->setText(eta);
     _table->item(row, COL_ORIGIN)->setText(originText(e.origin));
@@ -404,9 +631,11 @@ void PostsWidget::_updateEmpty()
     if (empty)
         _emptyLbl->setGeometry(_table->viewport()->rect().adjusted(20, 20, -20, -20));
 
-    int waiting = 0, running = 0, done = 0, errors = 0;
+    int waiting = 0, running = 0, done = 0, errors = 0, paused = 0;
     for (const PostEntry &e : _list->entries())
     {
+        if (e.paused && !e.isFinished())
+            ++paused;
         if (e.state == PostEntry::State::WAITING)
             ++waiting;
         else if (e.isActive())
@@ -417,9 +646,12 @@ void PostsWidget::_updateEmpty()
             ++errors;
     }
     const QString sep = QString::fromUtf8("  ·  ");
-    _summary->setText(QStringList({tr("%1 post(s)").arg(_list->count()), tr("%1 running").arg(running),
-                                   tr("%1 waiting").arg(waiting), tr("%1 done").arg(done),
-                                   tr("%1 with problems").arg(errors)}).join(sep));
+    QStringList parts({tr("%1 post(s)").arg(_list->count()), tr("%1 running").arg(running),
+                       tr("%1 waiting").arg(waiting)});
+    if (paused)
+        parts << tr("%1 paused").arg(paused);
+    parts << tr("%1 done").arg(done) << tr("%1 with problems").arg(errors);
+    _summary->setText(parts.join(sep));
     _clearButton->setEnabled(done + errors > 0);
 }
 
@@ -443,7 +675,9 @@ void PostsWidget::_showDetails()
                     label.toHtmlEscaped(), value.toHtmlEscaped());
     };
     QString html = "<table cellspacing='0' cellpadding='2'>";
-    html += row(tr("State"), stateText(e->state));
+    html += row(tr("State"), e->paused && !e->isFinished() ? tr("%1 (paused)").arg(stateText(e->state)) : stateText(e->state));
+    if (!e->isFinished())
+        html += row(tr("Priority"), priorityText(e->priority));
     if (!e->nzbPath.isEmpty())
         html += row(tr("NZB file"), QDir::toNativeSeparators(e->nzbPath));
     html += row(tr("Archive"), e->archiveName.isEmpty() ? tr("no compression") : e->archiveName);
@@ -550,6 +784,180 @@ void PostsWidget::_updateButtons()
     _folderButton->setEnabled(e && !e->nzbPath.isEmpty());
     _passButton->setEnabled(e && !e->password.isEmpty());
     _removeButton->setEnabled(finished);
+
+    int id = e ? e->id : -1;
+    bool paused = e && !finished && _ngPost->isPostPaused(id);
+    _pauseButton->setEnabled(e && !finished && (paused || _ngPost->canPausePost(id)));
+    _pauseButton->setText(paused ? tr("Resume") : tr("Pause"));
+    _pauseButton->setIcon(tintedIcon(paused ? ":/icons/nav_play.png" : ":/icons/nav_pause.png",
+                                     palette().color(QPalette::ButtonText)));
+    if (paused)
+        _pauseButton->setToolTip(tr("Resume this post"));
+    else if (e && _ngPost->isPostPrepared(id))
+        _pauseButton->setToolTip(tr("This post is already compressed for the next start: it can't be paused or moved"));
+    else if (e && e->state == PostEntry::State::WAITING)
+        _pauseButton->setToolTip(tr("Keep this post in the queue: the next posts go before it"));
+    else
+        _pauseButton->setToolTip(tr("Pause the upload of this post (the other posts wait)"));
+    _priorityButton->setEnabled(e && e->queuePos >= 0);
+    for (QAction *act : _priorityMenu->actions())
+        act->setChecked(e && act->data().toInt() == e->priority);
+    _topButton->setEnabled(e && _ngPost->canMovePost(id, QueueOrder::Move::TOP));
+    _upButton->setEnabled(e && _ngPost->canMovePost(id, QueueOrder::Move::UP));
+    _downButton->setEnabled(e && _ngPost->canMovePost(id, QueueOrder::Move::DOWN));
+    _bottomButton->setEnabled(e && _ngPost->canMovePost(id, QueueOrder::Move::BOTTOM));
+}
+
+int PostsWidget::_rowId(int row) const
+{
+    if (row < 0 || row >= _table->rowCount() || !_table->item(row, COL_NAME))
+        return -1;
+    return _table->item(row, COL_NAME)->data(sIdRole).toInt();
+}
+
+void PostsWidget::onPauseResume()
+{
+    int id = selectedId();
+    if (id < 0)
+        return;
+    if (_ngPost->isPostPaused(id))
+        _ngPost->resumePost(id);
+    else
+        _ngPost->pausePost(id);
+    _updateButtons();
+    _showDetails();
+}
+
+void PostsWidget::_move(int move)
+{
+    int id = selectedId();
+    if (id >= 0)
+        _ngPost->movePost(id, static_cast<QueueOrder::Move>(move));
+    _updateButtons();
+}
+
+void PostsWidget::_setPriority(int priority)
+{
+    int id = selectedId();
+    if (id >= 0)
+        _ngPost->setPostPriority(id, priority);
+    _updateButtons();
+    _showDetails();
+}
+
+bool PostsWidget::_canDrag(int id) const
+{
+    return id >= 0 && _ngPost->canDragPost(id);
+}
+
+void PostsWidget::_dropped(int id, int beforeRow)
+{
+    if (id < 0)
+        return;
+    // the post goes before the first waiting post at or after the row (none: at the end of the queue)
+    int beforeId = -1;
+    for (int row = qMax(0, beforeRow); row < _table->rowCount() && beforeId < 0; ++row)
+    {
+        int other = _rowId(row);
+        const PostEntry *e = _list->entry(other);
+        if (other != id && e && e->queuePos >= 0)
+            beforeId = other;
+    }
+    _ngPost->movePostBefore(id, beforeId);
+    selectPost(id);
+    _updateButtons();
+}
+
+void PostsWidget::onOrderChanged()
+{
+    // the rows follow the order of the list (the waiting posts at the end, in the order they will start)
+    int selected = selectedId();
+    _table->blockSignals(true);
+    QHash<int, QList<QTableWidgetItem*>> itemsOf;
+    for (int row = 0; row < _table->rowCount(); ++row)
+    {
+        QList<QTableWidgetItem*> items;
+        for (int col = 0; col < NB_COLUMNS; ++col)
+            items << _table->takeItem(row, col);
+        itemsOf.insert(items.first()->data(sIdRole).toInt(), items);
+    }
+    int row = 0;
+    for (const PostEntry &e : _list->entries())
+    {
+        auto it = itemsOf.find(e.id);
+        if (it == itemsOf.end() || row >= _table->rowCount())
+            continue;
+        for (int col = 0; col < NB_COLUMNS; ++col)
+            _table->setItem(row, col, it.value().at(col));
+        itemsOf.erase(it);
+        ++row;
+    }
+    for (const QList<QTableWidgetItem*> &items : itemsOf) // (should not happen: every row is in the list)
+    {
+        for (int col = 0; col < NB_COLUMNS && row < _table->rowCount(); ++col)
+            _table->setItem(row, col, items.at(col));
+        ++row;
+    }
+    _table->clearSelection();
+    _table->blockSignals(false);
+    if (selected >= 0)
+    {
+        int r = _rowOf(selected);
+        if (r >= 0)
+        {
+            _table->blockSignals(true);
+            _table->selectRow(r);
+            _table->blockSignals(false);
+        }
+    }
+    _updateButtons();
+}
+
+void PostsWidget::onContextMenu(const QPoint &pos)
+{
+    int row = _table->rowAt(pos.y());
+    if (row < 0)
+        return;
+    _table->selectRow(row);
+    const PostEntry *e = _list->entry(_rowId(row));
+    if (!e)
+        return;
+    _updateButtons();
+    QMenu menu(this);
+    auto addFrom = [&menu](QPushButton *b, const QString &text = QString()) {
+        QAction *act = menu.addAction(b->icon(), text.isEmpty() ? b->text() : text);
+        act->setEnabled(b->isEnabled() && b->isVisible());
+        act->setToolTip(b->toolTip());
+        QObject::connect(act, &QAction::triggered, b, &QAbstractButton::click);
+        return act;
+    };
+    if (!e->isFinished())
+    {
+        addFrom(_pauseButton);
+        addFrom(_stopButton);
+        if (_priorityButton->isEnabled())
+        {
+            QMenu *prio = menu.addMenu(tr("Priority"));
+            for (QAction *act : _priorityMenu->actions())
+                prio->addAction(act);
+        }
+        if (e->queuePos >= 0)
+        {
+            menu.addSeparator();
+            addFrom(_topButton, _topButton->toolTip());
+            addFrom(_upButton, _upButton->toolTip());
+            addFrom(_downButton, _downButton->toolTip());
+            addFrom(_bottomButton, _bottomButton->toolTip());
+        }
+        menu.addSeparator();
+    }
+    if (_repostButton->isVisible())
+        addFrom(_repostButton);
+    addFrom(_folderButton);
+    addFrom(_passButton);
+    if (e->isFinished())
+        addFrom(_removeButton);
+    menu.exec(_table->viewport()->mapToGlobal(pos));
 }
 
 void PostsWidget::onStop()

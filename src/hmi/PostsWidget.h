@@ -31,6 +31,7 @@ class QTableWidget;
 class QTableWidgetItem;
 class QPlainTextEdit;
 class QSplitter;
+class QMenu;
 
 //! page Posts: one list of all the posts of the session (waiting, running, finished),
 //! with the details and the log of the selected post
@@ -39,7 +40,7 @@ class PostsWidget : public QWidget
     Q_OBJECT
 
 public:
-    enum Column {COL_NAME = 0, COL_STATE, COL_PROGRESS, COL_SIZE, COL_SPEED, COL_ETA, COL_ORIGIN, NB_COLUMNS};
+    enum Column {COL_NAME = 0, COL_STATE, COL_PRIORITY, COL_PROGRESS, COL_SIZE, COL_SPEED, COL_ETA, COL_ORIGIN, NB_COLUMNS};
     static constexpr int sIdRole       = Qt::UserRole + 1; //!< id of the post (first column)
     static constexpr int sPercentRole  = Qt::UserRole + 2; //!< progress (column Progress)
     static constexpr int sStateRole    = Qt::UserRole + 3; //!< PostEntry::State (column Progress)
@@ -52,6 +53,7 @@ public:
 
     static QString stateText(PostEntry::State state);
     static QString originText(const QString &origin);
+    static QString priorityText(int priority);
 
 private slots:
     void onPostAdded(int id);
@@ -66,6 +68,9 @@ private slots:
     void onRemoveFinished();
     void onOpenFolder();
     void onCopyPassword();
+    void onPauseResume();
+    void onOrderChanged();
+    void onContextMenu(const QPoint &pos);
 
 private:
     void _fillRow(int row, const PostEntry &e);
@@ -73,6 +78,15 @@ private:
     void _showDetails();
     void _showLog();
     void _updateButtons();
+    void _move(int move);                     //!< QueueOrder::Move of the selected post
+    void _setPriority(int priority);
+    void _makeIcons();                        //!< arrows drawn in the color of the theme
+    void _dropped(int id, int beforeRow);     //!< drag and drop in the table
+    bool _canDrag(int id) const;
+    int  _rowId(int row) const;
+protected:
+    void changeEvent(QEvent *event) override;
+private:
     void _updateEmpty();
     QString _logHtml(const PostEntry::LogLine &line) const;
 
@@ -84,6 +98,13 @@ private:
     QLabel       *_subtitle;
     QLabel       *_summary;
     QPushButton  *_stopButton;
+    QPushButton  *_pauseButton;
+    QPushButton  *_priorityButton;
+    QPushButton  *_topButton;
+    QPushButton  *_upButton;
+    QPushButton  *_downButton;
+    QPushButton  *_bottomButton;
+    QMenu        *_priorityMenu;
     QPushButton  *_repostButton;
     QPushButton  *_folderButton;
     QPushButton  *_passButton;
@@ -97,6 +118,7 @@ private:
     QLabel       *_logTitle;
     QPlainTextEdit *_log;
     int           _logOf = -1; //!< post whose log is shown
+
 };
 
 #endif // POSTSWIDGET_H

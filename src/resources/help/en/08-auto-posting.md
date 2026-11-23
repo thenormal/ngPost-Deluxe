@@ -4,7 +4,7 @@ Auto Posting posts many files and folders without preparing each one by hand. Ch
 
 ## Post what I choose
 
-Add the files and folders you want (drag them into the list, or use **Select Files** / **Select a Folder**), then press **Post the list**: each file or folder becomes a separate post.
+Add the files and folders you want (drag them into the list, or use **Select Files** / **Select a Folder**), then press **Post the list**: each file or folder becomes a separate post. With **Add paused** checked (also for **Scan a folder once**), the posts wait in the page **Posts** until you resume them.
 
 ## Scan a folder once
 

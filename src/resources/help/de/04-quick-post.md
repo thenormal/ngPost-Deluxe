@@ -39,6 +39,6 @@ Auch die Karte **NFO-Datei** (siehe [NZB-Dateien](09-nzb-files.md)) wird gemeins
 
 ## Nach Post Dateien
 
-Der Post kommt in die Warteschlange und das Programm zeigt die Seite **Posts**, wo Sie seinen Fortschritt und sein Protokoll verfolgen. Quick Post behält Ihre Optionen und erzeugt einen neuen zufälligen Namen und ein neues Passwort, sodass Sie sofort das nächste Release vorbereiten können.
+Der Post kommt in die Warteschlange und das Programm zeigt die Seite **Posts**, wo Sie seinen Fortschritt und sein Protokoll verfolgen. Quick Post behält Ihre Optionen und erzeugt einen neuen zufälligen Namen und ein neues Passwort, sodass Sie sofort das nächste Release vorbereiten können. Mit **Pausiert hinzufügen** wartet der Post in der Warteschlange, bis Sie ihn fortsetzen.
 
 Siehe auch [Fortschritt und Protokoll](06-progress-and-log.md).

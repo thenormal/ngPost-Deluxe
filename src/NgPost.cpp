@@ -953,35 +953,44 @@ void NgPost::doNzbPostCMD(PostingJob *job)
 
 bool NgPost::isPaused() const
 {
-    if (_activeJob && _activeJob->isPaused())
-        return true;
-    else
-        return false;
+    return _activeJob && (_activeJob->isPaused() || _activeJob->isPauseRequested());
 }
 
-void NgPost::pause() const
+void NgPost::pause(bool byUser)
 {
-    if (_activeJob && !_activeJob->isPaused())
-    {
+    if (!_activeJob || _activeJob->isPaused())
+        return;
+    _activeJob->setPausedByUser(byUser);
+    if (!_activeJob->hasPostStarted())
+        _activeJob->setPauseRequested(true); // compression or par2: it pauses when the upload starts
+    else
         _activeJob->pause();
 #ifdef __USE_HMI__
-        if (_hmi)
-            _hmi->setPauseIcon(false);
+    if (_hmi)
+        _hmi->setPauseIcon(false);
 #endif
-    }
+    _refreshPost(_activeJob);
 }
 
 void NgPost::resume()
 {
-    if (_activeJob && _activeJob->isPaused())
+    if (!_activeJob)
+        return;
+    _activeJob->setPausedByUser(false);
+    if (_activeJob->isPauseRequested())
+        _activeJob->setPauseRequested(false);
+    else if (_activeJob->isPaused())
     {
         _activeJob->resume();
-#ifdef __USE_HMI__
-        if (_hmi)
-            _hmi->setPauseIcon(true);
-#endif
         _progressbarTimer.start(_refreshRate);
     }
+    else
+        return;
+#ifdef __USE_HMI__
+    if (_hmi)
+        _hmi->setPauseIcon(true);
+#endif
+    _refreshPost(_activeJob);
 }
 
 
@@ -1121,14 +1130,139 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPackingDone] job: " << job
 
 void NgPost::_prepareNextPacking()
 {
-    if (_pendingJobs.size())
-    {
-        _packingJob = _pendingJobs.first();
-        if (_packingJob->hasPacking())
-            emit _packingJob->startPosting(false);
-        else if (debugFull())
-            _log(tr("no packing needed for next pending job %1").arg(_packingJob->nzbName()));
+    if (_packingJob)
+        return; // already prepared (or being prepared)
+    int idx = -1;
+    for (int i = 0; i < _pendingJobs.size(); ++i)
+        if (!_pendingJobs.at(i)->isHeld())
+        {
+            idx = i;
+            break;
+        }
+    if (idx < 0)
+        return; // nothing waits (or only paused posts)
+    PostingJob *job = _pendingJobs.at(idx);
+    if (idx > 0)
+    {   // the paused posts before it: it goes first (it is the next one to start)
+        _pendingJobs.removeAt(idx);
+        _pendingJobs.prepend(job);
     }
+    _packingJob = job;
+    if (job->hasPacking())
+        emit job->startPosting(false);
+    else if (debugFull())
+        _log(tr("no packing needed for next pending job %1").arg(job->nzbName()));
+}
+
+QVector<QueueSlot> NgPost::_queueSlots() const
+{
+    QVector<QueueSlot> queue;
+    queue.reserve(_pendingJobs.size());
+    for (PostingJob *job : _pendingJobs)
+    {
+        QueueSlot slot;
+        slot.priority = job->priority();
+        slot.paused   = job->isHeld();
+        slot.locked   = job == _packingJob && job->hasPacking();
+        queue << slot;
+    }
+    return queue;
+}
+
+bool NgPost::_startNextJob()
+{
+    if (_activeJob)
+        return false;
+    int idx = QueueOrder::nextIndex(_queueSlots());
+    if (idx < 0)
+        return false;
+
+    _activeJob = _pendingJobs.takeAt(idx);
+    onPostingJobStarted();
+    if (_preparePacking)
+    {
+        if (_packingJob == _activeJob)
+        {
+            _packingJob = nullptr;
+            if (_activeJob->isPacked())
+            {
+                _activeJob->_postFiles();
+                _prepareNextPacking();
+            }
+            else if (!_activeJob->hasPacking())
+            {
+                if (debugFull())
+                    _log(tr("start non packing job..."));
+                emit _activeJob->startPosting(true);
+                _prepareNextPacking();
+            }
+            // otherwise it will be triggered automatically when the packing is finished
+            // as it is now the active job ;)
+        }
+        else
+        {
+            if (_packingJob && _packingJob->hasPacking())
+                _error("next active job different to the packing one..."); // should never happen (it stays first)
+            _packingJob = nullptr;
+            if (_activeJob->isPacked())
+            {
+                _activeJob->_postFiles();
+                _prepareNextPacking();
+            }
+            else
+            {
+                emit _activeJob->startPosting(true);
+                if (!_activeJob->hasPacking())
+                    _prepareNextPacking(); // otherwise when its packing is done (onPackingDone)
+            }
+        }
+    }
+    else
+        emit _activeJob->startPosting(true);
+    _queueChanged();
+    return true;
+}
+
+void NgPost::_queueChanged()
+{
+    // a next post without compression nor par2 is not started yet: it follows the order of the queue
+    if (_packingJob && !_packingJob->hasPacking())
+    {
+        int next = QueueOrder::nextIndex(_queueSlots());
+        if (next < 0 || _pendingJobs.at(next) != _packingJob)
+            _packingJob = nullptr;
+    }
+    if (_preparePacking && _activeJob && _activeJob->isPacked() && !_packingJob)
+        _prepareNextPacking();
+
+    QVector<int> ids;
+    QStringList  queueIds;
+    if (_activeJob && !_activeJob->queueId().isEmpty())
+        queueIds << _activeJob->queueId();
+    for (PostingJob *job : _pendingJobs)
+    {
+        if (job->postId() >= 0)
+            ids << job->postId();
+        if (!job->queueId().isEmpty())
+            queueIds << job->queueId();
+    }
+    _postList->setQueueOrder(ids);
+    if (_postQueue)
+        _postQueue->reorder(queueIds); // a restart posts them in the same order
+
+    if ((_activeJob || _packingJob) && !_postListTimer->isActive())
+    {   // (it stops when nothing runs, for example when all the posts are paused)
+        connect(_postListTimer, &QTimer::timeout, this, &NgPost::_onPostListTimer, Qt::UniqueConnection);
+        _postListTimer->start(1000);
+    }
+}
+
+void NgPost::_refreshPost(PostingJob *job)
+{
+    if (!job)
+        return;
+    _postListRefresh(job);
+    queueSaveJob(job);
 }
 
 void NgPost::onPostingJobFinished()
@@ -1246,44 +1380,16 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
         if (repostJob)
         {
             _postListAdd(repostJob);
-            _pendingJobs.prepend(repostJob);
+            _pendingJobs.insert(QueueOrder::nbLocked(_queueSlots()), repostJob);
         }
 
-        _notifier.jobEnded(notifyResult, _pendingJobs.isEmpty());
+        _notifier.jobEnded(notifyResult, QueueOrder::nextIndex(_queueSlots()) < 0);
 
-        if (_pendingJobs.size())
-        {
-            _activeJob = _pendingJobs.dequeue();
-            onPostingJobStarted();
-
-            if (_preparePacking)
-            {
-                if (_packingJob == _activeJob)
-                {
-                    _packingJob = nullptr;
-                    if (_activeJob->isPacked())
-                    {
-                        _activeJob->_postFiles();
-                        _prepareNextPacking();
-                    }
-                    else if (!_activeJob->hasPacking())
-                    {
-                        if (debugFull())
-                            _log(tr("start non packing job..."));
-                        emit _activeJob->startPosting(true);
-                        _prepareNextPacking();
-                    }
-                    // otherwise it will be triggered automatically when the packing is finished
-                    // as it is now the active job ;)
-                }
-                else
-                    _error("next active job different to the packing one..."); // should never happen...
-            }
-            else
-                emit _activeJob->startPosting(true);
-        }
-        else if (_doShutdownWhenDone && !_shutdownCmd.isEmpty())
-        {
+        if (_startNextJob())
+            return;
+        _queueChanged(); // only paused posts (or nothing) wait
+        if (_doShutdownWhenDone && !_shutdownCmd.isEmpty())
+        {   // the paused posts don't keep the computer on: they stay in the queue for the next start
             _whenNotificationsSent([this](){ _runShutdown(); });
         }
 #ifdef __USE_HMI__
@@ -1292,7 +1398,7 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
         else if (!_folderMonitor)
 #endif
         {
-	    if( debugFull())
+            if (debugFull())
                 _error(tr(" => closing application"));
             _whenNotificationsSent([](){ qApp->quit(); }); // the notifications of the last post are sent first
         }
@@ -1300,12 +1406,17 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
     else if (_preparePacking && job ==_packingJob)
     {
         _packingJob = nullptr;
-        _pendingJobs.dequeue(); // remove the packingJob
+        _pendingJobs.removeOne(job);
         if (job->postId() >= 0) // cancelled while its files were packed: never posted
+        {
+            _postList->appendLog(job->postId(), tr("Cancelled before it started"), PostEntry::LOG_WARN);
             _postList->finish(job->postId(), PostEntry::State::CANCELLED);
+            _dumpPostList();
+        }
         job->deleteLater();
-        _error(tr("packing job finished unexpectedly..."));
-        _prepareNextPacking();
+        _queueChanged(); // the following post is prepared
+        if (!_activeJob)
+            _startNextJob();
     }
     else
     {
@@ -1320,6 +1431,7 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
         }
         _pendingJobs.removeOne(job);
         job->deleteLater();
+        _queueChanged();
     }
 }
 
@@ -1516,6 +1628,8 @@ void NgPost::_postListAdd(PostingJob *job)
         e.files << QDir::toNativeSeparators(fi.absoluteFilePath());
     e.isRepost    = job->isRepost();
     e.origin      = job->isRepost() ? QString("repost") : (job->_resumed ? QString("queue") : historyKind(job));
+    e.priority    = job->priority();
+    e.paused      = job->isHeld() || job->isPaused() || job->isPauseRequested();
     job->setPostId(_postList->add(e));
 
     connect(_postListTimer, &QTimer::timeout, this, &NgPost::_onPostListTimer, Qt::UniqueConnection);
@@ -1539,6 +1653,11 @@ void NgPost::_postListRefresh(PostingJob *job)
         break;
     case PostingJob::Phase::DONE:        s.state = PostEntry::State::UPLOADING;   break; // finish() gives the real end
     }
+    if (job != _activeJob && !job->hasPostStarted())
+    {   // still in the queue: the next post can be compressed in advance, it is not started for the user
+        s.prepared = job->isPacked() ? 2 : (job == _packingJob && job->hasPacking() ? 1 : 0);
+        s.state    = PostEntry::State::WAITING;
+    }
     s.sizeTotal   = job->totalSizeBytes();
     s.sizeDone    = job->uploadedSizeBytes();
     s.nbArticles  = job->nbArticlesTotal();
@@ -1547,6 +1666,8 @@ void NgPost::_postListRefresh(PostingJob *job)
     s.speed       = job->avgSpeedBytes();
     s.etaSec      = s.state == PostEntry::State::UPLOADING ? job->etaSeconds() : -1;
     s.durationMs  = job->jobDurationMs();
+    s.priority    = job->priority();
+    s.paused      = job->isHeld() || job->isPaused() || job->isPauseRequested();
     s.name        = job->nzbName();
     s.nzbPath     = job->nzbFilePath();
     if (job->hasCompressed())
@@ -1661,11 +1782,145 @@ void NgPost::forgetMissing(int postId)
     _missingOfPost.erase(it);
 }
 
+bool NgPost::setPostPriority(int postId, int priority)
+{
+    PostingJob *job = _jobOfPost(postId);
+    int idx = job ? _pendingJobs.indexOf(job) : -1;
+    if (idx < 0)
+        return false; // only a waiting post
+    priority = QueueOrder::clampPriority(priority);
+    if (job->priority() == priority)
+        return true;
+    int to = QueueOrder::reprioritizeIndex(_queueSlots(), idx, priority);
+    job->setPriority(priority);
+    if (to != idx)
+    {
+        _pendingJobs.removeAt(idx);
+        _pendingJobs.insert(to, job);
+    }
+    _refreshPost(job);
+    _queueChanged();
+    return true;
+}
+
+bool NgPost::canMovePost(int postId, QueueOrder::Move move) const
+{
+    PostingJob *job = _jobOfPost(postId);
+    int idx = job ? _pendingJobs.indexOf(job) : -1;
+    return idx >= 0 && QueueOrder::moveIndex(_queueSlots(), idx, move) >= 0;
+}
+
+bool NgPost::movePost(int postId, QueueOrder::Move move)
+{
+    PostingJob *job = _jobOfPost(postId);
+    int idx = job ? _pendingJobs.indexOf(job) : -1;
+    if (idx < 0)
+        return false;
+    int to = QueueOrder::moveIndex(_queueSlots(), idx, move);
+    if (to < 0)
+        return false;
+    _pendingJobs.removeAt(idx);
+    _pendingJobs.insert(to, job);
+    _queueChanged();
+    return true;
+}
+
+bool NgPost::canDragPost(int postId) const
+{
+    PostingJob *job = _jobOfPost(postId);
+    int idx = job ? _pendingJobs.indexOf(job) : -1;
+    return idx >= 0 && !_queueSlots().at(idx).locked;
+}
+
+bool NgPost::movePostBefore(int postId, int beforePostId)
+{
+    PostingJob *job = _jobOfPost(postId);
+    int idx = job ? _pendingJobs.indexOf(job) : -1;
+    if (idx < 0)
+        return false;
+    PostingJob *before = beforePostId >= 0 ? _jobOfPost(beforePostId) : nullptr;
+    int beforeIdx = before ? _pendingJobs.indexOf(before) : -1;
+    if (beforeIdx < 0)
+        beforeIdx = _pendingJobs.size();
+    int to = QueueOrder::dropIndex(_queueSlots(), idx, beforeIdx);
+    if (to < 0)
+        return false;
+    _pendingJobs.removeAt(idx);
+    _pendingJobs.insert(to, job);
+    _queueChanged();
+    return true;
+}
+
+bool NgPost::isPostPrepared(int postId) const
+{
+    PostingJob *job = _jobOfPost(postId);
+    return job && job == _packingJob && job->hasPacking();
+}
+
+bool NgPost::isPostPaused(int postId) const
+{
+    PostingJob *job = _jobOfPost(postId);
+    if (!job)
+        return false;
+    if (job == _activeJob)
+        return job->isPaused() || job->isPauseRequested();
+    return job->isHeld();
+}
+
+bool NgPost::canPausePost(int postId) const
+{
+    PostingJob *job = _jobOfPost(postId);
+    if (!job || isPostPaused(postId))
+        return false;
+    if (job == _activeJob)
+        return true;
+    return !isPostPrepared(postId);
+}
+
+bool NgPost::pausePost(int postId)
+{
+    if (!canPausePost(postId))
+        return false;
+    PostingJob *job = _jobOfPost(postId);
+    if (job == _activeJob)
+    {
+        if (!job->hasPostStarted())
+            _postList->appendLog(postId, tr("Paused: it stops when the upload starts"), PostEntry::LOG_WARN);
+        pause(); // (the other posts wait: one post at a time)
+        return true;
+    }
+    job->setHeld(true);
+    _postList->appendLog(postId, tr("Paused: the next posts go before it"), PostEntry::LOG_WARN);
+    _refreshPost(job);
+    _queueChanged();
+    return true;
+}
+
+bool NgPost::resumePost(int postId)
+{
+    PostingJob *job = _jobOfPost(postId);
+    if (!job || !isPostPaused(postId))
+        return false;
+    if (job == _activeJob)
+    {
+        resume(); // (the post writes "Resume posting" in its log)
+        return true;
+    }
+    _postList->appendLog(postId, tr("Resumed"), PostEntry::LOG_INFO);
+    job->setHeld(false);
+    _refreshPost(job);
+    _queueChanged();
+    if (!_activeJob)
+        _startNextJob();
+    return true;
+}
+
 void NgPost::closeAllPostingJobs()
 {
     _closingApp = true; // the posts that are stopped now stay in the queue to be posted again at the next start
     qDeleteAll(_pendingJobs);
     _pendingJobs.clear();
+    _packingJob = nullptr;
     if (_activeJob)
         _activeJob->onStopPosting();
 }
@@ -1681,6 +1936,8 @@ void NgPost::closeAllMonitoringJobs()
             it = _pendingJobs.erase(it);
             if (_debug)
                 _error(tr("Cancelling monitoring job: %1").arg(job->getFirstOriginalFile()));
+            if (job == _packingJob)
+                _packingJob = nullptr;
             delete  job;
         }
         else
@@ -1693,6 +1950,7 @@ void NgPost::closeAllMonitoringJobs()
             _error(tr("Stopping monitoring job: %1").arg(_activeJob->getFirstOriginalFile()));
 
     }
+    _queueChanged();
 }
 
 void NgPost::pauseMonitoring()
@@ -3196,7 +3454,7 @@ QString NgPost::parseDefaultConfig()
     return err;
 }
 
-bool NgPost::startPostingJob(PostingJob *job)
+bool NgPost::startPostingJob(PostingJob *job, bool atEnd)
 {
     // a new post of the auto posting / command line that is already in the history is skipped
     // (Quick Post asks the user before creating its job, the queue and the reposts are never checked)
@@ -3243,14 +3501,13 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::startPostingJob] job: " << job
     }
 #endif
 
-    if (_activeJob)
-    {
-        _pendingJobs << job;
-        if (_preparePacking)
-        {
-            if (_activeJob->isPacked() && !_packingJob)
-                _prepareNextPacking();
-        }
+    if (_activeJob || job->isHeld())
+    {   // it waits: after the posts with the same or a higher priority (resumed posts keep their order)
+        int idx = atEnd ? _pendingJobs.size() : QueueOrder::insertIndex(_queueSlots(), job->priority());
+        _pendingJobs.insert(idx, job);
+        if (job->isHeld() && job->postId() >= 0)
+            _postList->appendLog(job->postId(), tr("Added paused: it starts when you resume it"), PostEntry::LOG_INFO);
+        _queueChanged(); // (prepares it if it is the next one)
         return false;
     }
     else
@@ -3258,6 +3515,7 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::startPostingJob] job: " << job
         _activeJob = job;
         onPostingJobStarted(); // the progress shows the compression and the par2 too
         emit job->startPosting(true);
+        _queueChanged();
         return true;
     }
 }
@@ -3915,7 +4173,7 @@ int NgPost::resumeQueue()
             }
             _log(tr("Queue: posting again the %1 missing Articles of %2").arg(info.nbArticles()).arg(
                      QFileInfo(info.nzbPath).fileName()));
-            startPostingJob(PostingJob::createRepostJob(this, info, nullptr));
+            startPostingJob(PostingJob::createRepostJob(this, info, nullptr), true);
             ++nbJobs;
         }
         else
@@ -3930,7 +4188,8 @@ int NgPost::resumeQueue()
                 continue;
             }
             _log(tr("Queue: posting again from the beginning %1").arg(job->nzbName()));
-            startPostingJob(job);
+            job->setHeld(false); // command line: nobody can resume a paused post, it is posted
+            startPostingJob(job, true); // same order as before (whatever the priorities)
             ++nbJobs;
         }
     }

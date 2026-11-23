@@ -241,6 +241,7 @@ int PostingWidget::postFiles(bool updateMainParams)
                                          _ngPost->_keepRar, _afterAct, !_fromAuto);
         job->setMovePostedTo(_afterMoveTo);
         job->setOrigin(_fromAuto ? "auto" : "quick");
+        job->setHeld(_fromAuto ? _addPaused : (_addPausedCB && _addPausedCB->isChecked()));
         _ngPost->startPostingJob(job);
         int postId = job->postId(); // the post is in the list of the page Posts
 
@@ -850,7 +851,9 @@ void PostingWidget::_buildLayout()
     _ui->postButton->setIcon(QIcon());
     _ui->postButton->setMinimumSize(170, 38);
     bottom->addWidget(_ui->postButton, 0, 1, Qt::AlignCenter);
-    bottom->setHorizontalSpacing(0); // nothing in the right column: no spacing, so the button is really in the middle
+    _addPausedCB = new QCheckBox(page);
+    bottom->addWidget(_addPausedCB, 0, 2, Qt::AlignRight | Qt::AlignVCenter);
+    bottom->setHorizontalSpacing(0); // the left and right columns have the same stretch: the button is really in the middle
     bottom->setColumnStretch(0, 1);
     bottom->setColumnStretch(1, 0);
     bottom->setColumnStretch(2, 1);
@@ -1004,4 +1007,9 @@ void PostingWidget::_retranslateLayout()
     _ui->rarMaxCB->setText(tr("limit the number of volumes"));
     _ui->clearFilesButton->setText(tr("Remove All"));
     _ui->postButton->setText(tr("Post Files"));
+    if (_addPausedCB)
+    {
+        _addPausedCB->setText(tr("Add paused"));
+        _addPausedCB->setToolTip(tr("The post goes in the queue (page Posts) but doesn't start: resume it there when you want"));
+    }
 }

@@ -2144,7 +2144,7 @@ void MainWindow::_offerQueue()
         if (!job)
             continue;
         job->setOrigin("quick");
-        _ngPost->startPostingJob(job);
+        _ngPost->startPostingJob(job, true); // same order, priority and pause as before
         if (lastId < 0)
             lastId = job->postId();
     }
