@@ -1,6 +1,6 @@
 # Roadmap
 
-This is a working plan, not a promise: there are no release dates, and what is listed under *Ideas* may change, move or never happen. Releases are numbered with two numbers (1.2, 1.3...).
+This is a working plan, not a promise: there are no release dates, and what is listed in the versions not released yet may change, move or never happen. Releases are numbered with two numbers (1.2, 1.3...).
 
 Your opinion counts: if an idea matters to you (or something is missing), say it in the [issues](https://github.com/thenormal/ngPost-Deluxe/issues).
 
@@ -74,41 +74,45 @@ Goal: help the user to post step by step, and show what was posted.
 | Done | The Post button is always visible (fixed bar under the scrolling page) |
 | Done | Compression: warning for a synchronized temporary folder, text of 7-Zip read in the console code page, message when the source files are slow to read, a missing source stops the compression with a clear error, no `-r` for 7-Zip (it searched missing paths on all the drives), at most 20 lines of messages from the compressor in the log |
 
-## Version 1.5 - Newsgroups and one list (not started)
+## Version 1.5 - One list and profiles (not started)
 
 These are directions, not a list of promises.
 
-- **Newsgroups per post and favorites**, maybe the list of groups from the server
-- **One list of the posts** (state, progress, size, NZB, password) instead of one tab for each post: it changes how the whole interface handles the posts
+- **One list of the posts** (state, progress, size, NZB, password) instead of one tab for each post, with **priority, reordering and pause for each post**: it changes how the whole interface handles the posts
+- **Complete profiles**: a profile also keeps the newsgroups, the servers, the NZB folder and a name template. **Newsgroups per post and favorites**, maybe the list of groups from the server
+- **A progress bar for each post** in the list and a **graph of the speed**
+- **Log for each post**, with filters by category and search
+- **More notifications**: email, ntfy, Gotify, Pushover and Slack (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords
+- **Export and import of the settings and the profiles** (to change computer or share a configuration)
 
 ## Version 1.6 - Verification and resume (not started)
 
-- **A post is finished when it is verified**: check that the Articles are on the server (button, optional automatic), show the result in the history, and post again by itself what is missing
+- **A post is finished when it is verified**: check that the Articles are on the server (button, optional automatic), also **on a different server** from the one used for the upload, show the result in the history, and post again by itself what is missing
+- **Availability check** of the old NZB files, by itself and from time to time (warns when a post starts to disappear from the servers), and a **"Check an NZB" tool**: drop any NZB and see the percentage that is still available
 - A post that stops **continues from the last Article sent** instead of starting again
 - **Backup servers and priority**: if a server fails, the posts continue on another one by themselves (it extends the second round of Articles, which already tries another server)
+- **Speed test for each server** and **automatic tuning** of the number of connections and of the Article size, from the measures of the speed and the latency
+- **Actions from the history**: check again, post again, write the NFO file again
 
-## Version 1.7 - Web panel (not started)
+## Version 1.7 - Web panel and automation (not started)
 
-- **Web panel for Docker and NAS**: queue, progress, history and pause from a browser (access with password, local network only by default)
+- **Web panel for Docker and NAS**: queue, progress, history and pause from a browser (access with password, local network only by default), with a **REST API, a health check and metrics** (for Grafana, Uptime Kuma and similar)
+- **VPN guard**: pause the posts when the VPN connection drops (the real kill-switch stays in the firewall or in the VPN application)
+- **Schedule**: post only at some hours or days, with a speed limit by **time slots** (for example full speed at night, limited during the day) and a limit for each server or each post
+- **Rules for each folder** in Auto Posting: another profile or newsgroups for each folder or extension, wait until the file is complete
+- **After the post**: send the NZB to a folder, to an address (URL) or to SABnzbd / NZBGet
+- **Temporary files in RAM**: easier on Windows, and chosen automatically when there is room
 
-## Ideas, not committed
+## Version 1.8 - Safety and reach (not started)
 
-No order, no version. Some of them will probably be done, some will be dropped.
+- **History with encrypted passwords** (from a main password) and the passwords of the servers in the credential store of the system, instead of clear text in the files
+- **More checks before posting**: free disk space, test of the archive, and a "simulate" that shows archive, parts and time
+- **Traffic counter** with a warning near the quota of the provider
+- **More languages**, with a simple way for the community to translate
+- **Digitally signed Windows installer** (Windows would stop warning about an unknown program)
 
-**Control**
-- VPN guard: pause the posts when the VPN connection drops (the real kill-switch stays in the firewall or in the VPN application)
-- Notifications by **email** (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords
-- Update from inside the program (the check for a new version exists since 1.3; this would download it, with a checksum, and ask before anything is installed)
-- Temporary files in RAM: easier on Windows, and chosen automatically when there is room
-- Automatic tuning of the number of connections and of the Article size, from the measures of the latency
-- Speed limit with **time slots** (for example full speed at night, limited during the day), and a limit for each server or each post
+## Later, no version
 
-**Check and comfort**
-- Log: filters by category, search, one log per post
-- **Availability check** of the old NZB files, by itself and from time to time: warns when a post starts to disappear from the servers (retention)
-- A progress bar for each post in the lists, a graph of the speed
+- Move to Qt 6 and split the biggest source file: a version of its own, because it changes the base of the program (it would also allow a newer OpenSSL on Windows)
+- Update from inside the program (the check for a new version exists since 1.3; this would download it, with a checksum, and ask before anything is installed): after the signed installer
 - Contextual help and search in the Help section
-
-**Maintenance**
-- Move to Qt 6 and split the biggest source file
-- Digitally signed Windows installer (Windows would stop warning about an unknown program)
