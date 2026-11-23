@@ -211,6 +211,8 @@ private:
     bool                _nzbPathFinal = false; //!< _nzbFilePath is the final one (posting started)
     bool                _keepInQueue = false; //!< the post was interrupted (connections lost): try it again at the next start
 
+    int                 _postId = -1;          //!< id of this post in NgPost::postList() (-1: not listed)
+
 
 #ifdef __COMPUTE_IMMEDIATE_SPEED__
     quint64    _immediateSize;       //!< bytes posted (to compute the avg speed)
@@ -249,6 +251,10 @@ public:
     void resume();
 
     inline QString avgSpeed() const;
+    double avgSpeedBytes() const; //!< average upload speed in bytes per second (0 before the upload)
+
+    inline int  postId() const { return _postId; }
+    inline void setPostId(int id) { _postId = id; }
 
     // recovery of failed Articles (thread safe: called from the connection threads)
     void recoverArticle(NntpArticle *article, const NntpServerParams *server, const QString &conPrefix);

@@ -40,6 +40,7 @@
 #include <QDebug>
 #include <QProcess>
 #include <QThread>
+#include "utils/PostList.h"
 #include <QLocale>
 #include "utils/SpeedLimiter.h"
 #include "utils/ProcessText.h"
@@ -157,6 +158,7 @@ PostingJob::PostingJob(NgPost *ngPost,
 PostingJob::~PostingJob()
 {
     delete _nfoDir;
+    _ngPost->postListJobGone(this); // a post deleted before its end (cancelled, or the program is closed)
 
 #ifdef __DEBUG__
     _logAs(NgPost::LOG_DEBUG, "Destructing PostingJob");
@@ -833,16 +835,30 @@ void PostingJob::onNntpErrorReading()
 void PostingJob::_log(const QString &aMsg, bool newline) const
 {
     emit _ngPost->log(aMsg, newline);
+    if (_postId >= 0)
+        _ngPost->postList()->appendLog(_postId, aMsg, PostEntry::LOG_INFO, newline);
 }
 
 void PostingJob::_logAs(int level, const QString &aMsg) const
 {
     emit _ngPost->logLevel(aMsg, level);
+    if (_postId >= 0)
+        _ngPost->postList()->appendLog(_postId, aMsg, level);
 }
 
 void PostingJob::_error(const QString &error) const
 {
     emit _ngPost->error(error);
+    if (_postId >= 0)
+        _ngPost->postList()->appendLog(_postId, error, PostEntry::LOG_ERROR);
+}
+
+double PostingJob::avgSpeedBytes() const
+{
+    if (!_timeStart.isValid())
+        return 0.;
+    double sec = (_timeStart.elapsed() - _pauseDuration) / 1000.;
+    return sec > 0. ? static_cast<double>(_uploadedSize) / sec : 0.;
 }
 
 int PostingJob::_createNntpConnections()

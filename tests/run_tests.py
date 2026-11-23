@@ -407,7 +407,7 @@ def _post_and_delete(work, repost):
         os.makedirs(tmp)
         src = os.path.join(folder, "del.bin")
         make_file(src, 200_000, 31)
-        env = {"NGPOST_SECOND_ROUND_DELAY_MS": "500"}
+        env = {"NGPOST_SECOND_ROUND_DELAY_MS": "500", "NGPOST_POSTLIST_DUMP": os.path.join(work, "postlist.json")}
         if repost:
             env["NGPOST_REPOST_MISSING"] = "1"
         r = run_ngpost_conf([stub], work, [], os.path.join(work, "out"), conns=2, threads=1,
@@ -429,6 +429,10 @@ def test_originals_kept_when_articles_failed(work):
     check(os.path.exists(src), "the original file was deleted although an article failed:\n" + out[-1500:])
     check(glob.glob(os.path.join(tmp, "*", "*.7z")), "the archive was deleted although an article failed")
     check("have NOT been deleted" in out, "no message about the files that were kept")
+    import json
+    posts = json.load(open(os.path.join(work, "postlist.json")))["posts"]
+    check([p["state"] for p in posts] == ["done_with_errors"], "list of the posts: %s" % [(p["name"], p["state"]) for p in posts])
+    check(posts[0]["failed"] > 0, "no failed Article in the list: %s" % posts[0])
 
 
 def test_repost_cleans_and_deletes_originals(work):
@@ -1383,6 +1387,61 @@ def test_7z_folder_without_recursion(work):
         stub.stop()
 
 
+def test_post_list(work):
+    # the list of the posts of the session (base of the page Posts and of the web panel): one entry for each post,
+    # its state at the end, its sizes and its own log (NGPOST_POSTLIST_DUMP writes it each time a post ends)
+    import json
+    if not shutil.which("7z"):
+        print("SKIP  (7z is not installed)")
+        return
+    tmp = os.path.join(work, "tmp")
+    os.makedirs(tmp)
+    dump = os.path.join(work, "postlist.json")
+    src = os.path.join(work, "listed.bin")
+    make_file(src, 300_000, 71)
+    stub = NntpStub().start()
+    try:
+        r = run_ngpost_conf([stub], work, [src], os.path.join(work, "listed.nzb"), conns=2, threads=1,
+                            extra=["--compress", "--rar_name", "listarch", "--rar_pass", "pw123"],
+                            env_extra={"NGPOST_POSTLIST_DUMP": dump},
+                            conf_extra="TMP_DIR = %s\nRAR_PATH = %s\nRAR_SIZE = 0\n" % (tmp, shutil.which("7z")))
+    finally:
+        stub.stop()
+    out = r.stdout + r.stderr
+    check(r.returncode == 0, "exit code %d:\n%s" % (r.returncode, out[-1500:]))
+    check(os.path.exists(dump), "the list of the posts was not written")
+    posts = json.load(open(dump))["posts"]
+    check(len(posts) == 1, "posts: %s" % posts)
+    p = posts[0]
+    check(p["state"] == "done", "state: %s" % p["state"])
+    check(p["origin"] == "cli", "origin: %s" % p["origin"])
+    check(p["progress"] == 100 and p["sizeTotal"] > 300_000 and p["sizeDone"] == p["sizeTotal"], "sizes: %s" % p)
+    check(p["articles"] > 0 and p["uploaded"] == p["articles"] and p["failed"] == 0, "articles: %s" % p)
+    check(p["password"] == "pw123" and p["archive"] == "listarch" and p["compressed"], "archive: %s" % p)
+    check(p["files"] and p["files"][0].endswith("listed.bin"), "files: %s" % p["files"])
+    check(p["started"] and p["finished"], "times: %s" % p)
+    texts = [l["text"] for l in p["log"]]
+    check(any("Compress" in t for t in texts), "no compression in the log of the post:\n" + "\n".join(texts[:40]))
+    check(len(texts) >= 3, "log too short: %s" % texts)
+
+
+def test_post_list_unit(work):
+    # PostList: states, progress, log of each post (also from another thread), JSON; a small program built with qmake
+    qmake = shutil.which("qmake") or shutil.which("qmake-qt5")
+    if not qmake:
+        print("      (qmake not found: this test is skipped)")
+        return
+    here = os.path.dirname(os.path.abspath(__file__))
+    build = os.path.join(work, "unit_post_list")
+    os.makedirs(build)
+    r = subprocess.run([qmake, os.path.join(here, "unit", "post_list_test.pro")], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "qmake failed\n" + r.stdout + r.stderr)
+    r = subprocess.run(["make", "-j4"], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "build failed\n" + r.stdout[-2000:] + r.stderr[-2000:])
+    r = subprocess.run([os.path.join(build, "post_list_test")], capture_output=True, text=True)
+    check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
+
+
 TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_retry_after_refusals, test_wrong_password, test_some_logins_refused,
          test_article_always_refused_on_one_connection, test_server_going_down,
@@ -1396,7 +1455,7 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_move_posted_kept_when_articles_failed, test_move_posted_options, test_posted_mover_unit, test_notifications,
          test_notification_when_all_done, test_version_number_unit, test_post_request_unit, test_translations_compiled,
          test_speed_limiter_unit, test_speed_limit, test_process_text_unit,
-         test_7z_folder_without_recursion]
+         test_7z_folder_without_recursion, test_post_list, test_post_list_unit]
 
 
 def main():
