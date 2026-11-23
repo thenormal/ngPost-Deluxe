@@ -1,6 +1,6 @@
 # Post Rapide
 
-Post Rapide envoie les fichiers et dossiers que vous choisissez. Chaque onglet est un envoi, ce qui permet de préparer plusieurs envois et de les exécuter à la suite.
+Quick Post prépare un post : les fichiers et dossiers de la liste forment une release. Quand vous cliquez sur **Poster Fichiers**, le post passe dans la page **Posts** et Quick Post est de nouveau vide, prêt pour la release suivante.
 
 ## Étapes
 
@@ -37,8 +37,8 @@ Le menu **Profil** au-dessus des cartes règle toutes les options d'un coup.
 
 La carte **Fichier NFO** (voir [Fichiers NZB](09-nzb-files.md)) est aussi partagée : Post Rapide et Post Auto affichent les mêmes réglages.
 
-## Onglets
+## Après Poster Fichiers
 
-L'onglet **+** ouvre un nouvel envoi. Un onglet indique son état par une icône : en attente, en cours de téléversement, terminé ou erreur.
+Le post entre dans la file et le programme affiche la page **Posts**, où vous suivez sa progression et son journal. Quick Post garde vos options et crée un nouveau nom et un nouveau mot de passe aléatoires, pour préparer tout de suite la release suivante.
 
 Voir aussi [Progression et journal](06-progress-and-log.md).

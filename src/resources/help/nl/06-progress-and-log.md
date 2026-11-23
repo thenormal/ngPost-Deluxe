@@ -19,6 +19,8 @@ Als u een snelheidslimiet instelt (**Instellingen**, categorie **Posts**, kaart 
 
 Het logboek kleurt de regels: fasen, successen, waarschuwingen en fouten zijn gemakkelijk te onderscheiden. Aan het einde van een post toont het een samenvatting met de tijd van elke fase (compressie, par2, upload) en het totaal.
 
+Elke post heeft ook een eigen logboek, met de tijd van elke regel: selecteer de post op de pagina **Posts**. Die pagina toont alle posts van de sessie met voortgang, grootte, snelheid en resterende tijd; daar kun je een post stoppen, een wachtende annuleren, de map van het NZB-bestand openen of het wachtwoord kopiëren.
+
 ## Latentie
 
 Aan het einde van een post toont het logboek ook de **latentie**: de mediane tijd van een heen-en-terugreis met de server (het commando POST en het antwoord, zonder gegevens) en van de verbinding. Ze wordt alleen gemeten aan de hand van wat ngPost al doet, er wordt er niets voor verstuurd. Een hoge waarde (meer dan een halve seconde) betekent dat de vertraging van het netwerk komt, van de afstand tot de server of van de server zelf, bijvoorbeeld door een VPN, en niet van uw computer.

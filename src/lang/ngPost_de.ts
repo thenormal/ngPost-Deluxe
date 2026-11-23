@@ -3569,6 +3569,14 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Profile chosen when the program was closed (a name of the list of profiles, Recommended, or empty = Custom)</source>
         <translation>Beim Beenden gewähltes Profil (ein Name aus der Profilliste, Recommended, oder leer = Custom)</translation>
     </message>
+    <message>
+        <source>Cancelled before it started</source>
+        <translation>Abgebrochen, bevor er begonnen hat</translation>
+    </message>
+    <message>
+        <source>Can't post again the missing Articles of %1: %2</source>
+        <translation>Die fehlenden Artikel von %1 können nicht erneut gepostet werden: %2</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4493,8 +4501,8 @@ Would you like to overwrite it ?</source>
     </message>
     <message>
         <location filename="../hmi/PostingWidget.cpp" line="806"/>
-        <source>&lt;b&gt;One release:&lt;/b&gt; all the files and folders of this list are posted together, with a single NZB file and, if Compress is on, a single archive. To post separate releases, use one tab per release (&lt;i&gt;%1&lt;/i&gt;) or the &lt;i&gt;%2&lt;/i&gt; tab, which makes one post for each file or folder.</source>
-        <translation>&lt;b&gt;Ein Release:&lt;/b&gt; alle Dateien und Ordner dieser Liste werden zusammen gepostet, mit einer einzigen NZB-Datei und, wenn Komprimieren aktiv ist, einem einzigen Archiv. Um getrennte Releases zu posten, nutze einen Tab pro Release (&lt;i&gt;%1&lt;/i&gt;) oder den Tab &lt;i&gt;%2&lt;/i&gt;, der für jede Datei bzw. jeden Ordner einen Post erstellt.</translation>
+        <source>&lt;b&gt;One release:&lt;/b&gt; all the files and folders of this list are posted together, with a single NZB file and, if Compress is on, a single archive. To post separate releases, post them one after the other (the page &lt;i&gt;Posts&lt;/i&gt; shows them all) or use the &lt;i&gt;%1&lt;/i&gt; tab, which makes one post for each file or folder.</source>
+        <translation>&lt;b&gt;Eine Veröffentlichung:&lt;/b&gt; alle Dateien und Ordner dieser Liste werden zusammen gepostet, mit einer einzigen NZB-Datei und, wenn Komprimieren aktiv ist, einem einzigen Archiv. Für getrennte Veröffentlichungen posten Sie sie nacheinander (die Seite &lt;i&gt;Posts&lt;/i&gt; zeigt alle) oder nutzen Sie den Tab &lt;i&gt;%1&lt;/i&gt;, der für jede Datei oder jeden Ordner einen Post erstellt.</translation>
     </message>
     <message>
         <location filename="../hmi/PostingWidget.cpp" line="812"/>
@@ -5855,6 +5863,313 @@ Es wird nicht mehr rückgängig zu machen sein...</translation>
     <message>
         <source>Page %1</source>
         <translation>Seite %1</translation>
+    </message>
+</context>
+<context>
+    <name>PostsWidget</name>
+    <message>
+        <source>Waiting</source>
+        <translation>Wartet</translation>
+    </message>
+    <message>
+        <source>Compressing</source>
+        <translation>Komprimiert</translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation>par2</translation>
+    </message>
+    <message>
+        <source>Uploading</source>
+        <translation>Wird hochgeladen</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation>Pausiert</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>Fertig</translation>
+    </message>
+    <message>
+        <source>Done with errors</source>
+        <translation>Fertig mit Fehlern</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translation>Gestoppt</translation>
+    </message>
+    <message>
+        <source>Cancelled</source>
+        <translation>Abgebrochen</translation>
+    </message>
+    <message>
+        <source>Quick Post</source>
+        <translation>Quick Post</translation>
+    </message>
+    <message>
+        <source>Auto Posting</source>
+        <translation>Auto Posting</translation>
+    </message>
+    <message>
+        <source>Folder scan</source>
+        <translation>Ordner-Scan</translation>
+    </message>
+    <message>
+        <source>Watched folder</source>
+        <translation>Überwachter Ordner</translation>
+    </message>
+    <message>
+        <source>Resumed</source>
+        <translation>Fortgesetzt</translation>
+    </message>
+    <message>
+        <source>Missing Articles</source>
+        <translation>Fehlende Artikel</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation>Kommandozeile</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Posts</translation>
+    </message>
+    <message>
+        <source>All the posts of this session: the ones waiting, the one being posted and the finished ones. Select a post to see its details and its log.</source>
+        <translation>Alle Posts dieser Sitzung: die wartenden, der laufende und die fertigen. Wählen Sie einen Post, um seine Details und sein Protokoll zu sehen.</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation>Fortschritt</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Größe</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Geschwindigkeit</translation>
+    </message>
+    <message>
+        <source>Remaining</source>
+        <translation>Verbleibend</translation>
+    </message>
+    <message>
+        <source>Started by</source>
+        <translation>Gestartet von</translation>
+    </message>
+    <message>
+        <source>Open NZB folder</source>
+        <translation>NZB-Ordner öffnen</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Passwort kopieren</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Entfernen</translation>
+    </message>
+    <message>
+        <source>Remove the selected post from the list (only a finished post)</source>
+        <translation>Den ausgewählten Post aus der Liste entfernen (nur ein fertiger Post)</translation>
+    </message>
+    <message>
+        <source>Remove finished</source>
+        <translation>Fertige entfernen</translation>
+    </message>
+    <message>
+        <source>Remove all the finished posts from the list</source>
+        <translation>Alle fertigen Posts aus der Liste entfernen</translation>
+    </message>
+    <message>
+        <source>No post yet.
+Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <translation>Noch kein Post.
+Bereiten Sie einen in Geführter Post, Quick Post oder Auto Posting vor: er erscheint hier.</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Details</translation>
+    </message>
+    <message>
+        <source>Log of the post</source>
+        <translation>Protokoll des Posts</translation>
+    </message>
+    <message>
+        <source>Done, %1 failed</source>
+        <translation>Fertig, %1 fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>%1 / %2 Articles</source>
+        <translation>%1 / %2 Artikel</translation>
+    </message>
+    <message>
+        <source>took %1</source>
+        <translation>dauerte %1</translation>
+    </message>
+    <message>
+        <source>%1 post(s)</source>
+        <translation>%1 Post(s)</translation>
+    </message>
+    <message>
+        <source>%1 running</source>
+        <translation>%1 laufend</translation>
+    </message>
+    <message>
+        <source>%1 waiting</source>
+        <translation>%1 wartend</translation>
+    </message>
+    <message>
+        <source>%1 done</source>
+        <translation>%1 fertig</translation>
+    </message>
+    <message>
+        <source>%1 with problems</source>
+        <translation>%1 mit Problemen</translation>
+    </message>
+    <message>
+        <source>Select a post in the list.</source>
+        <translation>Wählen Sie einen Post in der Liste.</translation>
+    </message>
+    <message>
+        <source>NZB file</source>
+        <translation>NZB-Datei</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>Archiv</translation>
+    </message>
+    <message>
+        <source>no compression</source>
+        <translation>keine Komprimierung</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Passwort</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>keins</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>Newsgroups</translation>
+    </message>
+    <message>
+        <source>and %1 more</source>
+        <translation>und %1 weitere</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Dateien</translation>
+    </message>
+    <message>
+        <source>Articles</source>
+        <translation>Artikel</translation>
+    </message>
+    <message>
+        <source>%1 / %2, %3 failed</source>
+        <translation>%1 / %2, %3 fehlgeschlagen</translation>
+    </message>
+    <message>
+        <source>%1 / %2</source>
+        <translation>%1 / %2</translation>
+    </message>
+    <message>
+        <source>To post again</source>
+        <translation>Erneut zu posten</translation>
+    </message>
+    <message>
+        <source>%1 Article(s)</source>
+        <translation>%1 Artikel</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation>Hinzugefügt</translation>
+    </message>
+    <message>
+        <source>Started</source>
+        <translation>Gestartet</translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation>Beendet</translation>
+    </message>
+    <message>
+        <source>(%1 older line(s) not kept)</source>
+        <translation>(%1 ältere Zeile(n) nicht behalten)</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stoppen</translation>
+    </message>
+    <message>
+        <source>Remove this post from the queue before it starts</source>
+        <translation>Diesen Post vor dem Start aus der Warteschlange entfernen</translation>
+    </message>
+    <message>
+        <source>Stop this post</source>
+        <translation>Diesen Post stoppen</translation>
+    </message>
+    <message>
+        <source>Post the missing Articles again (%1)</source>
+        <translation>Fehlende Artikel erneut posten (%1)</translation>
+    </message>
+    <message>
+        <source>Stop the post?</source>
+        <translation>Post stoppen?</translation>
+    </message>
+    <message>
+        <source>Stop the post %1?
+What was already uploaded stays on the server, the rest is not posted.</source>
+        <translation>Den Post %1 stoppen?
+Was bereits hochgeladen wurde, bleibt auf dem Server, der Rest wird nicht gepostet.</translation>
+    </message>
+    <message>
+        <source>Articles are missing</source>
+        <translation>Es fehlen Artikel</translation>
+    </message>
+    <message>
+        <source>%1 Article(s) of this post couldn't be posted and the nzb file points to them.
+If you remove it from the list you won't be able to post them again.
+
+Remove it anyway?</source>
+        <translation>%1 Artikel dieses Posts konnten nicht gepostet werden und die NZB-Datei verweist auf sie.
+Wenn Sie ihn aus der Liste entfernen, können Sie sie nicht mehr erneut posten.
+
+Trotzdem entfernen?</translation>
+    </message>
+    <message>
+        <source>Some finished posts have %1 Article(s) that can still be posted again.
+Keep them in the list?</source>
+        <translation>Einige fertige Posts haben %1 Artikel, die noch erneut gepostet werden können.
+In der Liste behalten?</translation>
+    </message>
+    <message>
+        <source>Keep them</source>
+        <translation>Behalten</translation>
+    </message>
+    <message>
+        <source>Remove them too</source>
+        <translation>Auch entfernen</translation>
+    </message>
+    <message>
+        <source>Remove from the page Posts the posts finished without errors</source>
+        <translation>Ohne Fehler beendete Posts von der Seite Posts entfernen</translation>
     </message>
 </context>
 </TS>

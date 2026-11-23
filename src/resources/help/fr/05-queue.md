@@ -2,7 +2,7 @@
 
 ## La file d'attente
 
-Quand vous cliquez sur **Poster Fichiers** dans plusieurs onglets, les envois attendent leur tour et sont téléversés l'un après l'autre. Le bouton **pause** arrête les téléversements et les relance.
+Quand vous postez plusieurs releases, elles attendent leur tour dans la page **Posts** et sont envoyées l'une après l'autre. Le bouton **pause** arrête les envois et les relance.
 
 ## File d'attente enregistrée
 
@@ -12,7 +12,7 @@ Par défaut, les envois non terminés sont enregistrés. Si vous fermez ngPost, 
 - **Abandonner** : ils sont supprimés.
 - **Décider plus tard** : ils restent enregistrés et seront proposés de nouveau au prochain démarrage.
 
-Les envois repris apparaissent comme des onglets de Post Rapide.
+Les posts repris apparaissent dans la page **Posts**.
 
 ## Bon à savoir
 

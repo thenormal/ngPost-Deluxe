@@ -12,7 +12,7 @@ O Histórico e a fila guardada guardam a palavra-passe de cada arquivo em texto 
 
 - Uma publicação retomada depois de um reinício recomeça do princípio.
 - A pausa não é recordada depois de um reinício.
-- As publicações retomadas voltam como separadores da Postagem Rápida.
+- A lista da página Publicações não é guardada após reiniciar (o Histórico guarda cada envio).
 - Os newsgroups que não são válidos ficam guardados no ficheiro de definições, mas bloqueiam a publicação até os corrigir.
 - Demasiados inícios de sessão errados podem levar o fornecedor a bloquear a conta durante algum tempo.
 - O instalador não está assinado digitalmente: o Windows pode mostrar um aviso. Escolha **Mais informações** e depois **Executar mesmo assim**.

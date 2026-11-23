@@ -19,6 +19,8 @@ Se imposti un limite di velocità (**Impostazioni**, categoria **Post**, scheda 
 
 Il log colora le righe: fasi, successi, avvisi ed errori si distinguono facilmente. Alla fine di un post mostra un riepilogo con il tempo di ogni fase (compressione, par2, upload) e il totale.
 
+Ogni post ha anche il suo log, con l'ora di ogni riga: seleziona il post nella pagina **Post**. Quella pagina elenca tutti i post della sessione con avanzamento, dimensione, velocità e tempo rimanente; lì puoi fermare un post, annullarne uno in attesa, aprire la cartella del file NZB o copiare la password.
+
 ## Latenza
 
 Alla fine di un post il log mostra anche la **latenza**: il tempo mediano di un giro completo con il server (il comando POST e la sua risposta, senza dati) e della connessione. Viene misurata solo da ciò che ngPost fa già, per questo non viene inviato nulla. Un valore alto (più di mezzo secondo) significa che il ritardo viene dalla rete, dalla distanza dal server o dal server stesso, per esempio una VPN, e non dal tuo computer.

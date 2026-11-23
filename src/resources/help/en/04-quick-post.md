@@ -1,6 +1,6 @@
 # Quick Post
 
-Quick Post sends the files and folders you choose. Each tab is one post, so you can prepare several posts and run them in a queue.
+Quick Post prepares one post: the files and folders of the list become one release. When you press **Post Files**, the post goes to the page **Posts** and Quick Post is empty again, ready for the next release.
 
 ## Steps
 
@@ -37,8 +37,8 @@ The **Profile** menu above the cards sets all the options at once.
 
 The **NFO file** card (see [NZB files](09-nzb-files.md)) is shared too: Quick Post and Auto Posting show the same settings.
 
-## Tabs
+## After Post Files
 
-The **+** tab opens a new post. A tab shows its state with an icon: pending, uploading, done or error.
+The post goes to the queue and the program shows the page **Posts**, where you follow its progress and its log. Quick Post keeps your options and makes a new random name and password, so you can prepare the next release at once.
 
 See also [Progress and log](06-progress-and-log.md).

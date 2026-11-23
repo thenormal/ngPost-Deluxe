@@ -46,6 +46,7 @@ class QDoubleSpinBox;
 class QPlainTextEdit;
 class QSystemTrayIcon;
 class HistoryWidget;
+class PostsWidget;
 class HelpWidget;
 class GuidedPostWidget;
 class GroupsEdit;
@@ -76,15 +77,16 @@ private:
     static constexpr int sAutoSaveDelayMs = 1000;
 
     // new layout of ngPost Deluxe: side bar + pages
-    enum Page {PAGE_POSTS = 0, PAGE_SERVERS, PAGE_SETTINGS, PAGE_HISTORY, PAGE_HELP, PAGE_GUIDED};
-    enum Nav  {NAV_GUIDED = 0, NAV_QUICK, NAV_AUTO, NAV_SERVERS, NAV_SETTINGS, NAV_HISTORY, NAV_HELP, NB_NAV};
+    enum Page {PAGE_POSTS = 0, PAGE_SERVERS, PAGE_SETTINGS, PAGE_HISTORY, PAGE_HELP, PAGE_GUIDED, PAGE_LIST}; //!< PAGE_POSTS: Quick Post and Auto Posting, PAGE_LIST: the page Posts
+    enum Nav  {NAV_GUIDED = 0, NAV_QUICK, NAV_AUTO, NAV_LIST, NAV_SERVERS, NAV_SETTINGS, NAV_HISTORY, NAV_HELP, NB_NAV};
     QStackedWidget *_pages;
     QButtonGroup   *_nav;
     QPushButton    *_navButtons[NB_NAV];
     HistoryWidget  *_history;
     HelpWidget     *_help;
     GuidedPostWidget *_guided = nullptr; //!< Guided Post wizard
-    int             _jobNumber;   //!< post shown in the bottom bar (-1: none)
+    PostsWidget    *_posts = nullptr;  //!< page Posts: all the posts of the session
+    QString         _jobName;     //!< post shown in the bottom bar (empty: none)
     bool            _pauseIcon;   //!< the pause button shows pause (true) or play
     QCheckBox      *_historyCB;
     QCheckBox      *_duplicatesCB;
@@ -162,7 +164,9 @@ public:
 
     QString fixedArchivePassword() const;
 
-    PostingWidget *addNewQuickTab(int lastTabIdx, const QFileInfoList &files = QFileInfoList());
+    //! a Quick Post form that is not shown: Auto Posting and Guided Post use it to prepare and start one post
+    PostingWidget *newHiddenQuickPost(const QFileInfoList &files = QFileInfoList());
+    void showPostsPage(int postId = -1); //!< page Posts, with \a postId selected (after a post was started)
 
     /*!
      * \brief starts what the user wants to post (Guided Post): one release in a new Quick Post tab,
@@ -180,11 +184,7 @@ public:
     PostChecker::Input checkInput(const QFileInfoList &files, bool hasFolder, const QString &nzbFile,
                                   bool passwordChecked, const QString &password, bool watching = false) const;
 
-    void setTab(QWidget *postWidget);
-    void clearJobTab(QWidget *postWidget);
-    void updateJobTab(QWidget *postWidget, const QColor &color, const QIcon &icon, const QString &tooltip = "");
-
-    void setJobLabel(int jobNumber);
+    void setJobLabel(const QString &postName); //!< name of the post in the bottom bar (empty: "Ready")
 
     void log(const QString &aMsg, bool newline = true, int level = 0) const; //!< log function for QString (level: NgPost::LOG_LEVEL)
     void logError(const QString &error) const; //!< log function for QString
@@ -193,10 +193,7 @@ public:
     bool hasAutoCompress() const;
 
 
-    bool hasFinishedPosts() const;
-
     inline AutoPostWidget *autoWidget() const;
-    void closeTab(PostingWidget *postWidget);
 
     void setPauseIcon(bool pause);
 
@@ -224,7 +221,6 @@ protected:
 
 public slots:
     void onSetProgressBarRange(int nbArticles);
-    void onCloseAllFinishedQuickTabs();
 
 
 public slots:
@@ -246,7 +242,6 @@ private slots:
 
     void onObfucateToggled(bool checked);
 
-    void onTabContextMenu(const QPoint &point);
 
 
 
@@ -262,8 +257,6 @@ private slots:
 
     void onSaveConfig();
 
-    void onJobTabClicked(int index);
-    void onCloseJob(int index);
 
     void toBeImplemented();
 
@@ -297,8 +290,6 @@ private:
     void _initServerBox();
     void _initPostingBox();
 
-    PostingWidget *_getPostWidget(int tabIndex) const;
-    int _getPostWidgetIndex(PostingWidget *postWidget) const;
 
 
 };

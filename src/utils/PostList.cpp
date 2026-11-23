@@ -37,10 +37,10 @@ int PostEntry::progressPercent() const
 {
     if (state == State::DONE || state == State::DONE_WITH_ERRORS)
         return 100;
+    if (nbArticles > 0) // same as the progress bar of the window
+        return static_cast<int>(qMin<uint>(100, nbUploaded * 100 / nbArticles));
     if (sizeTotal > 0)
         return static_cast<int>(qMin<quint64>(100, sizeDone * 100 / sizeTotal));
-    if (nbArticles > 0)
-        return static_cast<int>(qMin<uint>(100, nbUploaded * 100 / nbArticles));
     return 0;
 }
 

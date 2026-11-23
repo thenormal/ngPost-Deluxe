@@ -45,17 +45,11 @@ class PostingWidget : public QWidget
     Q_OBJECT
 
 private:
-    enum class STATE {IDLE, POSTING, STOPPING};
-
     Ui::PostingWidget *_ui;
     MainWindow        *_hmi;
     NgPost            *_ngPost;
     const uint         _jobNumber;
-    PostingJob        *_postingJob;
-    STATE              _state;
-    bool               _postingFinished;
     bool               _nameFromFile = false; //!< the archive name was taken from the first file (not typed, not random): a profile with a random name may replace it
-    bool               _filesAddedAfterPost; //!< files added to a finished tab: they make a new release, the reminder is shown again
 
     // ngPost Deluxe layout (built in code over the widgets of the .ui)
     QLabel            *_filesTitle;
@@ -69,8 +63,6 @@ private:
     ProfileBar        *_profileBar;
     NfoCard           *_nfoCard;
     QPushButton       *_advancedToggle;
-    QPushButton       *_repostButton;  //!< post again the Articles that failed (only after a post with errors)
-    RepostInfo         _repostInfo;    //!< what is missing after the last post (kept even if the PostingJob is deleted)
     static bool        sShowAdvanced; //!< same state for all the Quick Post tabs
     void _buildLayout();
     void _retranslateLayout();
@@ -81,16 +73,11 @@ private:
     bool _checkBeforePosting(const QFileInfoList &files, bool hasFolder); //!< checks (and fixes) before a post started with the button
     bool _applyFix(PostChecker::Code code); //!< false: the user has to continue elsewhere (the post is cancelled)
     void _updateReleaseInfo();
-    void _updateRepostButton();
-    void _refreshFileItems(const RepostInfo &postedAgain);
-    void _showJobStarted(bool hasStarted); //!< texts of the button and of the tab once the job is created
+    void _resetForNextPost(); //!< after a post: empty list, new random name and password (as the profile says)
 
 public:
     explicit PostingWidget(NgPost *ngPost, MainWindow *hmi, uint jobNumber);
     ~PostingWidget();
-
-    void setIDLE();
-    void setPosting();
 
     void init();
     void genNameAndPassword(bool genName, bool genPass, bool doPar2, bool useRarMax);
@@ -106,8 +93,6 @@ public:
 
     void addPath(const QString &path, int currentNbFiles, int isDir = false);
 
-    inline bool isPosting() const;
-    inline bool isPostingFinished() const;
     inline MainWindow *hmi() const;
 
     void udatePostingParams();
@@ -117,38 +102,24 @@ public:
     void setNzbPassword(const QString &pass);
     void setPackingAuto(bool enabled, const QStringList &keys);
 
-    void postFiles(bool updateMainParams);
+    //! creates the post and puts it in the queue (page Posts); returns its id in NgPost::postList(), -1 if nothing was started
+    int postFiles(bool updateMainParams);
 
-    bool isEmptyAndIdle() const; //!< nothing in the list and no post: the tab can be used for a new post
+    bool isEmptyAndIdle() const; //!< nothing in the list
     void applyRequest(const PostRequest &request); //!< files and options of a Guided Post (one release)
-    bool startFromRequest(); //!< posts like the button (checks, items already posted...); false if nothing started
+    int  startFromRequest(); //!< posts like the button (checks, items already posted...); id of the post, -1 if nothing started
 
-    //! tab rebuilt from the persistent queue: a post posted again from the beginning (started at once)
-    bool restoreFromQueue(const QJsonObject &entry, QString &error);
-    //! tab rebuilt from the persistent queue: Articles that couldn't be posted (shows the repost button)
-    void restoreMissing(const RepostInfo &info);
-    void forgetQueue(); //!< the user closes the tab: its missing Articles are removed from the queue
-
-    //! true if some Articles couldn't be posted and can still be posted again
-    inline bool hasMissingArticles() const;
-    inline int  nbMissingArticles() const;
 
 
 signals:
-    void postingDone(bool uploadedWithoutError); //!< emitted when the post is finished (used by the Auto Posting tab)
+    void postQueued(int postId); //!< (Quick Post) a post was started: the page Posts shows it
 
 public:
     PostProfile currentProfile() const;            //!< the options of the Archive card (to save them as a profile)
     QString profileName() const;                   //!< profile chosen in the bar (empty = Custom)
 
-public slots: // for PostingJob
-    void onFilePosted(QString filePath, uint nbArticles, uint nbFailed);
-    void onArchiveFileNames(QStringList paths);
-    void onArticlesNumber(int nbArticles);
-    void onPostingJobDone();
-
+public slots:
     void onPostFiles(); //!< for the post button but also can be used by the AutoPostWidget
-    void onRepostMissing(); //!< post again the Articles that failed and fix the nzb
 
 private slots: // for the HMI
 
@@ -176,10 +147,6 @@ private:
 };
 
 uint PostingWidget::jobNumber() const { return _jobNumber; }
-bool PostingWidget::isPosting() const { return _postingJob != nullptr; }
-bool PostingWidget::hasMissingArticles() const { return !_repostInfo.isEmpty(); }
-int  PostingWidget::nbMissingArticles() const { return _repostInfo.nbArticles(); }
-bool PostingWidget::isPostingFinished() const { return _postingFinished; }
 
 MainWindow *PostingWidget::hmi() const { return _hmi; }
 

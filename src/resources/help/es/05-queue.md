@@ -2,7 +2,7 @@
 
 ## La cola
 
-Cuando pulsas **Publicar Ficheros** en varias pestañas, las publicaciones esperan su turno y se suben una tras otra. El botón de **pausa** detiene las subidas y las vuelve a iniciar.
+Cuando publicas varias releases, esperan su turno en la página **Publicaciones** y se suben una tras otra. El botón **pausa** detiene las subidas y las reanuda.
 
 ## Cola guardada
 
@@ -12,7 +12,7 @@ De forma predeterminada se guardan las publicaciones que no han terminado. Si ci
 - **Descartar**: se eliminan.
 - **Decidir más tarde**: siguen guardadas y se ofrecerán de nuevo en el siguiente inicio.
 
-Las publicaciones reanudadas aparecen como pestañas de Publicación Rápida.
+Las publicaciones reanudadas aparecen en la página **Publicaciones**.
 
 ## Conviene saber
 

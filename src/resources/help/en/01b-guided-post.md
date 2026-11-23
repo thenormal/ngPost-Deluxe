@@ -20,7 +20,7 @@ Press **Add another post** in the summary to prepare one more post: the ones alr
 
 ## Good to know
 
-- One release opens a new tab in Quick Post; the other choices go to Auto Posting, where you follow them.
+- One release is prepared like in Quick Post, without touching what you prepared there; the other choices go to Auto Posting. Every post then appears in the page **Posts**.
 - The program remembers your last choices (not the files).
 - Items already in the history are reported as usual before they are posted again.
 - A folder can only be watched with compression.

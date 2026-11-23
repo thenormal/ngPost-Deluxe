@@ -19,6 +19,8 @@ Wenn Sie eine Geschwindigkeitsbegrenzung einstellen (**Einstellungen**, Kategori
 
 Das Protokoll färbt die Zeilen: Phasen, Erfolge, Warnungen und Fehler lassen sich leicht unterscheiden. Am Ende eines Posts zeigt es eine Zusammenfassung mit der Zeit jeder Phase (Komprimierung, par2, Upload) und der Gesamtzeit.
 
+Jeder Post hat außerdem sein eigenes Protokoll, mit der Uhrzeit jeder Zeile: wählen Sie den Post auf der Seite **Posts**. Diese Seite listet alle Posts der Sitzung mit Fortschritt, Größe, Geschwindigkeit und verbleibender Zeit; dort können Sie einen Post stoppen, einen wartenden abbrechen, den Ordner der NZB-Datei öffnen oder das Passwort kopieren.
+
 ## Latenz
 
 Am Ende eines Posts zeigt das Protokoll auch die **Latenz**: die mittlere Zeit eines Hin und Zurück mit dem Server (der Befehl POST und seine Antwort, ohne Daten) und der Verbindung. Sie wird nur aus dem gemessen, was ngPost ohnehin tut, dafür wird nichts gesendet. Ein hoher Wert (mehr als eine halbe Sekunde) bedeutet, dass die Verzögerung vom Netzwerk, von der Entfernung zum Server oder vom Server selbst kommt, zum Beispiel durch ein VPN, und nicht von Ihrem Computer.

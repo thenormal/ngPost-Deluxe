@@ -12,7 +12,7 @@ Der Verlauf und die gespeicherte Warteschlange bewahren das Passwort jedes Archi
 
 - Ein nach einem Neustart fortgesetzter Post beginnt wieder von vorn.
 - Die Pause wird nach einem Neustart nicht gemerkt.
-- Fortgesetzte Posts kommen als Quick-Post-Tabs zurück.
+- Die Liste der Seite Posts wird nach einem Neustart nicht behalten (der Verlauf behält jeden Upload).
 - Ungültige Newsgroups bleiben in der Einstellungsdatei erhalten, blockieren aber das Posten, bis Sie sie korrigieren.
 - Zu viele falsche Anmeldungen können dazu führen, dass der Anbieter das Konto eine Zeit lang sperrt.
 - Das Installationsprogramm ist nicht digital signiert: Windows kann eine Warnung anzeigen. Wählen Sie **Weitere Informationen** und dann **Trotzdem ausführen**.

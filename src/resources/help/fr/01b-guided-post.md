@@ -20,7 +20,7 @@ Appuyez sur **Ajouter un autre post** dans le résumé pour en préparer un de p
 
 ## Bon à savoir
 
-- Une seule publication ouvre un nouvel onglet dans Post Rapide ; les autres choix vont dans Post Auto, où vous les suivez.
+- Une release est préparée comme dans Quick Post, sans toucher à ce que vous y avez préparé ; les autres choix vont dans Auto Posting. Chaque post apparaît ensuite dans la page **Posts**.
 - Le programme se souvient de vos derniers choix (pas des fichiers).
 - Les éléments déjà dans l'historique sont signalés comme d'habitude avant d'être postés de nouveau.
 - Un dossier ne peut être surveillé qu'avec la compression.

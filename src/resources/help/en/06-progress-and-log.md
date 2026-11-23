@@ -19,6 +19,8 @@ If you set a speed limit (**Settings**, category **Posts**, card **Upload**), th
 
 The log colors the lines: phases, success, warnings and errors are easy to tell apart. At the end of a post it shows a summary with the time of each phase (compression, par2, upload) and the total.
 
+Each post also has its own log, with the time of each line: select the post in the page **Posts**. That page lists all the posts of the session with their progress, size, speed and remaining time; there you can stop a post, cancel one that is waiting, open the folder of the NZB file or copy the password.
+
 ## Latency
 
 At the end of a post the log also shows the **latency**: the median time of a round trip with the server (the command POST and its answer, with no data) and of the connection. It is measured only from what ngPost already does, nothing is sent for it. A high value (more than half a second) means the delay comes from the network, the distance to the server or the server itself, for example a VPN, and not from your computer.

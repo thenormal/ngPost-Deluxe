@@ -2,7 +2,7 @@
 
 ## La coda
 
-Quando premi **Posta i file** su più schede, i post aspettano il loro turno e vengono caricati uno dopo l'altro. Il pulsante **pausa** ferma gli upload e li fa ripartire.
+Quando pubblichi più release, aspettano il loro turno nella pagina **Post** e vengono caricate una dopo l'altra. Il pulsante **pausa** ferma gli upload e li fa ripartire.
 
 ## Coda salvata
 
@@ -12,7 +12,7 @@ Per impostazione predefinita i post non terminati vengono salvati. Se chiudi ngP
 - **Scarta**: vengono rimossi.
 - **Decidi dopo**: restano salvati e verranno riproposti al prossimo avvio.
 
-I post ripresi compaiono come schede di Quick Post.
+I post ripresi compaiono nella pagina **Post**.
 
 ## Da sapere
 

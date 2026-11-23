@@ -20,7 +20,7 @@ Klicken Sie in der Zusammenfassung auf **Weiteren Post hinzufügen**, um einen w
 
 ## Gut zu wissen
 
-- Ein einzelnes Release öffnet einen neuen Tab in Quick Post; die anderen Varianten gehen ins Auto Posting, wo Sie sie verfolgen.
+- Ein einzelnes Release wird wie in Quick Post vorbereitet, ohne das zu ändern, was Sie dort vorbereitet haben; die anderen Varianten gehen ins Auto Posting. Jeder Post erscheint dann auf der Seite **Posts**.
 - Das Programm merkt sich Ihre letzte Auswahl (nicht die Dateien).
 - Elemente, die schon im Verlauf stehen, werden wie üblich gemeldet, bevor sie erneut gepostet werden.
 - Ein Ordner kann nur mit Komprimierung überwacht werden.

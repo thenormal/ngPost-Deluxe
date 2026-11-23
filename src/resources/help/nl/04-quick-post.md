@@ -1,6 +1,6 @@
 # Quick Post
 
-Quick Post verstuurt de bestanden en mappen die u kiest. Elk tabblad is één post, zodat u meerdere posts kunt voorbereiden en in een wachtrij kunt uitvoeren.
+Quick Post bereidt één post voor: de bestanden en mappen van de lijst worden één release. Als je op **Post Bestanden** drukt, gaat de post naar de pagina **Posts** en is Quick Post weer leeg, klaar voor de volgende release.
 
 ## Stappen
 
@@ -37,8 +37,8 @@ Het menu **Profiel** boven de kaarten stelt alle opties in één keer in.
 
 De kaart **NFO-bestand** (zie [NZB-bestanden](09-nzb-files.md)) wordt ook gedeeld: Quick Post en Auto Posting tonen dezelfde instellingen.
 
-## Tabbladen
+## Na Post Bestanden
 
-Het tabblad **+** opent een nieuwe post. Een tabblad toont zijn status met een pictogram: wachtend, wordt geüpload, klaar of fout.
+De post komt in de wachtrij en het programma toont de pagina **Posts**, waar je de voortgang en het logboek volgt. Quick Post houdt je opties en maakt een nieuwe willekeurige naam en een nieuw wachtwoord, zodat je meteen de volgende release kunt voorbereiden.
 
 Zie ook [Voortgang en logboek](06-progress-and-log.md).

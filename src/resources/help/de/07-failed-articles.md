@@ -4,9 +4,9 @@ Bei einem Upload können einige Artikel fehlschlagen (eine Verbindung bricht ab,
 
 ## Fehlende Artikel erneut posten
 
-Wenn Artikel fehlgeschlagen sind, zeigt der Tab eine Schaltfläche **Fehlende Artikel neu posten**. Sie postet **nur diese Artikel** erneut und korrigiert die NZB-Datei. Sie müssen nicht den ganzen Post noch einmal senden.
+Wenn Artikel fehlgeschlagen sind, wählen Sie den Post auf der Seite **Posts**: die Schaltfläche **Fehlende Artikel erneut posten** postet **nur diese Artikel** erneut und korrigiert die NZB-Datei. Sie müssen nicht den ganzen Post noch einmal senden.
 
-Nach einem erfolgreichen erneuten Posten wird die Dateiliste aktualisiert und der Post wird grün.
+Das erneute Posten erscheint als neue Zeile in der Liste; endet es ohne Fehler, fehlt nichts mehr.
 
 ## Tipps
 

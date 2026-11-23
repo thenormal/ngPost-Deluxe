@@ -20,7 +20,7 @@ Premi **Aggiungi un altro post** nel riepilogo per prepararne un altro: quelli g
 
 ## Da sapere
 
-- Una singola release apre una nuova scheda in Quick Post; le altre scelte vanno nel Post automatico, dove le segui.
+- Una singola release viene preparata come in Quick Post, senza toccare quello che hai preparato lì; le altre scelte vanno nel Post automatico. Ogni post compare poi nella pagina **Post**.
 - Il programma ricorda le ultime scelte (non i file).
 - Gli elementi già presenti nella cronologia vengono segnalati come al solito prima di essere postati di nuovo.
 - Una cartella può essere monitorata solo con la compressione.

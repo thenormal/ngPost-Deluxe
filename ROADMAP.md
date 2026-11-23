@@ -74,14 +74,14 @@ Goal: help the user to post step by step, and show what was posted.
 | Done | The Post button is always visible (fixed bar under the scrolling page) |
 | Done | Compression: warning for a synchronized temporary folder, text of 7-Zip read in the console code page, message when the source files are slow to read, a missing source stops the compression with a clear error, no `-r` for 7-Zip (it searched missing paths on all the drives), at most 20 lines of messages from the compressor in the log |
 
-## Version 1.5 - One list and profiles (not started)
+## Version 1.5 - One list and profiles (in progress)
 
 These are directions, not a list of promises.
 
-- **One list of the posts** (state, progress, size, NZB, password) instead of one tab for each post, with **priority, reordering and pause for each post**: it changes how the whole interface handles the posts
+- Done: **One list of the posts**, a page Posts in the side bar (state, progress, size, speed, remaining time, NZB, password, details) instead of one tab for each post; Quick Post is a form that is empty again after each post. Still to do: **priority, reordering and pause for each post**
 - **Complete profiles**: a profile also keeps the newsgroups, the servers, the NZB folder and a name template. **Newsgroups per post and favorites**, maybe the list of groups from the server
-- **A progress bar for each post** in the list and a **graph of the speed**
-- **Log for each post**, with filters by category and search
+- **A progress bar for each post** in the list: done (page Posts). Still to do: a **graph of the speed**
+- **Log for each post**: done (in the page Posts, with the time of each line). Still to do: filters by category and search
 - **More notifications**: email, ntfy, Gotify, Pushover and Slack (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords
 - **Export and import of the settings and the profiles** (to change computer or share a configuration)
 

@@ -1,6 +1,6 @@
 # Quick Post
 
-Quick Post sendet die Dateien und Ordner, die Sie auswählen. Jeder Tab ist ein Post, sodass Sie mehrere Posts vorbereiten und in einer Warteschlange ausführen können.
+Quick Post bereitet einen Post vor: die Dateien und Ordner der Liste werden zu einem Release. Wenn Sie auf **Post Dateien** klicken, kommt der Post auf die Seite **Posts** und Quick Post ist wieder leer, bereit für das nächste Release.
 
 ## Schritte
 
@@ -37,8 +37,8 @@ Das Menü **Profil** über den Karten stellt alle Optionen auf einmal ein.
 
 Auch die Karte **NFO-Datei** (siehe [NZB-Dateien](09-nzb-files.md)) wird gemeinsam genutzt: Quick Post und Auto Posting zeigen dieselben Einstellungen.
 
-## Tabs
+## Nach Post Dateien
 
-Der Tab **+** öffnet einen neuen Post. Ein Tab zeigt seinen Zustand mit einem Symbol: wartend, wird hochgeladen, fertig oder Fehler.
+Der Post kommt in die Warteschlange und das Programm zeigt die Seite **Posts**, wo Sie seinen Fortschritt und sein Protokoll verfolgen. Quick Post behält Ihre Optionen und erzeugt einen neuen zufälligen Namen und ein neues Passwort, sodass Sie sofort das nächste Release vorbereiten können.
 
 Siehe auch [Fortschritt und Protokoll](06-progress-and-log.md).

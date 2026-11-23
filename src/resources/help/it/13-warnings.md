@@ -12,7 +12,7 @@ La Cronologia e la coda salvata conservano la password di ogni archivio in chiar
 
 - Un post ripreso dopo un riavvio ricomincia dall'inizio.
 - La pausa non viene ricordata dopo un riavvio.
-- I post ripresi tornano come schede di Quick Post.
+- La lista della pagina Post non viene conservata dopo un riavvio (la Cronologia conserva ogni upload).
 - I newsgroup non validi restano nel file delle impostazioni, ma bloccano la pubblicazione finché non li correggi.
 - Troppi login sbagliati possono far bloccare l'account dal provider per un po' di tempo.
 - L'installer non è firmato digitalmente: Windows può mostrare un avviso. Scegli **Ulteriori informazioni**, poi **Esegui comunque**.

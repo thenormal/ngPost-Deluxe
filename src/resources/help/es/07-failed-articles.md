@@ -4,9 +4,9 @@ Durante una subida algunos artículos pueden fallar (se corta una conexión, el 
 
 ## Republicar los artículos que faltan
 
-Cuando algunos artículos han fallado, la pestaña muestra un botón **Reponer artículos que faltan**. Publica de nuevo **solo esos artículos** y corrige el archivo NZB. No hace falta enviar otra vez toda la publicación.
+Cuando algunos artículos han fallado, selecciona la publicación en la página **Publicaciones**: el botón **Volver a publicar los artículos que faltan** publica de nuevo **solo esos artículos** y corrige el archivo NZB. No hace falta enviar de nuevo toda la publicación.
 
-Tras una republicación correcta se actualiza la lista de archivos y la publicación se pone en verde.
+La nueva publicación aparece como una línea nueva en la lista; si termina sin errores, ya no falta nada.
 
 ## Consejos
 

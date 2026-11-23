@@ -135,14 +135,6 @@ PostingJob::PostingJob(NgPost *ngPost,
 //    connect(this, &PostingJob::scheduleNextArticle, this, &PostingJob::onPrepareNextArticle, Qt::QueuedConnection);
 
 #ifdef __USE_HMI__
-    if (_postWidget)
-    {
-        connect(this, &PostingJob::filePosted,       _postWidget, &PostingWidget::onFilePosted,        Qt::QueuedConnection);
-        connect(this, &PostingJob::archiveFileNames, _postWidget, &PostingWidget::onArchiveFileNames,  Qt::QueuedConnection);
-        connect(this, &PostingJob::articlesNumber,   _postWidget, &PostingWidget::onArticlesNumber,    Qt::QueuedConnection);
-        connect(this, &PostingJob::postingFinished,  _postWidget, &PostingWidget::onPostingJobDone,    Qt::QueuedConnection);
-        connect(this, &PostingJob::noMoreConnection, _postWidget, &PostingWidget::onPostingJobDone,    Qt::QueuedConnection);
-    }
 #endif
 
     connect(&_resumeTimer, &QTimer::timeout, this, &PostingJob::onResumeTriggered);
@@ -265,12 +257,12 @@ qDebug() << "[MB_TRACE][Issue#82][PostingJob::onStartPosting] job: " << this
          << ", file: " << nzbName() << " (isActive: " << isActiveJob << ")";
 #endif
 #ifdef __USE_HMI__
-    if (_postWidget)
+    if (fromGuiForm())
     {
         if (_isRepost)
-            _log(tr("<h3>Post again the missing Articles #%1: %2</h3>").arg(_postWidget->jobNumber()).arg(_nzbName));
+            _log(tr("<h3>Post again the missing Articles #%1: %2</h3>").arg(_postId).arg(_nzbName));
         else
-            _log(tr("<h3>Start Post #%1: %2</h3>").arg(_postWidget->jobNumber()).arg(_nzbName));
+            _log(tr("<h3>Start Post #%1: %2</h3>").arg(_postId).arg(_nzbName));
     }
     else
 #endif
@@ -355,8 +347,6 @@ void PostingJob::_postFiles()
     Diagnostics::instance().event("UPLOAD", QString("start: %1 file(s) (nzb: %2)").arg(_files.size()).arg(_nzbFilePath));
 
 #ifdef __USE_HMI__
-    if (_postWidget) // in case we were in Pending mode
-        _postWidget->setPosting();
 #endif
 
     if (_doCompress)
@@ -769,7 +759,7 @@ void PostingJob::onNntpFilePosted()
     else
         _totalSize += static_cast<quint64>(nntpFile->fileSize());
     ++_nbPosted;
-    if (_postWidget && !_isRepost)
+    if (!_isRepost)
         emit filePosted(nntpFile->path(), nntpFile->nbArticles(), nntpFile->nbFailedArticles());
 
     if (_ngPost->_dispFilesPosting && !_ngPost->useHMI())
@@ -810,8 +800,7 @@ void PostingJob::onNntpErrorReading()
 {
     NntpFile *nntpFile = static_cast<NntpFile*>(sender());
     ++_nbPosted;
-    if (_postWidget)
-        emit filePosted(nntpFile->path(), nntpFile->nbArticles(), nntpFile->nbArticles());
+    emit filePosted(nntpFile->path(), nntpFile->nbArticles(), nntpFile->nbArticles());
 
     if (_ngPost->_dispFilesPosting && !_ngPost->useHMI())
         _log(tr("[avg. speed: %1] <<<<< %2").arg(avgSpeed()).arg(nntpFile->name()));
@@ -1887,7 +1876,7 @@ bool PostingJob::startCompressFiles(const QString &cmdRar,
         args << "-r";
 
     // 3.: launch rar
-    if (_ngPost->debugMode() || !_postWidget)
+    if (_ngPost->debugMode() || !fromGuiForm())
         _logAs(NgPost::LOG_PHASE, QString("[%1] %2: %3 %4\n").arg(timestamp()).arg(tr("Compressing files")).arg(cmdRar).arg(args.join(" ")));
     else
         _logAs(NgPost::LOG_PHASE, QString("%1...\n").arg(tr("Compressing files")));
@@ -2066,7 +2055,7 @@ bool PostingJob::startGenPar2(const QString &tmpFolder,
             else
                 args << QString("%1/%2*rar").arg(archiveTmpFolder, archiveName);
 
-            if (_ngPost->_par2Args.isEmpty() && (_ngPost->debugMode() || !_postWidget))
+            if (_ngPost->_par2Args.isEmpty() && (_ngPost->debugMode() || !fromGuiForm()))
                 args << "-q"; // remove the progressbar bar
         }
     }
@@ -2128,7 +2117,7 @@ bool PostingJob::startGenPar2(const QString &tmpFolder,
     connect(_extProc, static_cast<void(QProcess::*)(int, QProcess::ExitStatus)>(&QProcess::finished),
             this, &PostingJob::onGenPar2Finished, Qt::QueuedConnection);
 
-    if (_ngPost->debugMode() || !_postWidget)
+    if (_ngPost->debugMode() || !fromGuiForm())
         _logAs(NgPost::LOG_PHASE, QString("[%1] %2: %3 %4").arg(timestamp()).arg(tr("Generating par2")).arg(_ngPost->_par2Path).arg(args.join(" ")));
     else
         _logAs(NgPost::LOG_PHASE, QString("%1...\n").arg(tr("Generating par2")));

@@ -4,9 +4,9 @@ Pendant un téléversement, certains articles peuvent échouer (une connexion to
 
 ## Reposter les articles manquants
 
-Quand des articles ont échoué, l'onglet affiche un bouton **Reposter les Articles manquants**. Il reposte **uniquement ces articles** et corrige le fichier NZB. Il n'est pas nécessaire de renvoyer tout l'envoi.
+Quand des articles ont échoué, sélectionnez le post dans la page **Posts** : le bouton **Reposter les articles manquants** reposte **seulement ces articles** et corrige le fichier NZB. Pas besoin de renvoyer tout le post.
 
-Après un repostage réussi, la liste des fichiers est mise à jour et l'envoi passe au vert.
+Le repost apparaît comme une nouvelle ligne dans la liste ; s'il se termine sans erreur, plus rien ne manque.
 
 ## Conseils
 

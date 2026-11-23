@@ -2,7 +2,7 @@
 
 ## De wachtrij
 
-Als u op meerdere tabbladen op **Post Bestanden** klikt, wachten de posts op hun beurt en worden ze na elkaar geüpload. De knop **pauze** stopt de uploads en start ze weer.
+Als je meerdere releases post, wachten ze op hun beurt op de pagina **Posts** en worden ze na elkaar geüpload. De knop **pauze** stopt de uploads en start ze weer.
 
 ## Opgeslagen wachtrij
 
@@ -12,7 +12,7 @@ Standaard worden de posts die niet klaar zijn opgeslagen. Als u ngPost sluit, of
 - **Verwerpen**: ze worden verwijderd.
 - **Later beslissen**: ze blijven opgeslagen en worden bij de volgende start opnieuw aangeboden.
 
-De hervatte posts verschijnen als Quick Post-tabbladen.
+De hervatte posts verschijnen op de pagina **Posts**.
 
 ## Goed om te weten
 

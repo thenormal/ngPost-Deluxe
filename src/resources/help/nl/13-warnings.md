@@ -12,7 +12,7 @@ De Geschiedenis en de opgeslagen wachtrij bewaren het wachtwoord van elk archief
 
 - Een post die na een herstart wordt hervat, begint opnieuw vanaf het begin.
 - De pauze wordt na een herstart niet onthouden.
-- Hervatte posts komen terug als Quick Post-tabbladen.
+- De lijst van de pagina Posts wordt na een herstart niet bewaard (de Geschiedenis bewaart elke upload).
 - Ongeldige nieuwsgroepen blijven in het instellingenbestand staan, maar blokkeren het posten tot u ze herstelt.
 - Te veel onjuiste aanmeldingen kunnen ertoe leiden dat de provider het account een tijdje blokkeert.
 - Het installatieprogramma is niet digitaal ondertekend: Windows kan een waarschuwing tonen. Kies **Meer info** en dan **Toch uitvoeren**.
