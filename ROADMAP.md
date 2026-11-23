@@ -116,5 +116,3 @@ These are directions, not a list of promises.
 - Move to Qt 6 and split the biggest source file: a version of its own, because it changes the base of the program (it would also allow a newer OpenSSL on Windows)
 - Update from inside the program (the check for a new version exists since 1.3; this would download it, with a checksum, and ask before anything is installed): after the signed installer
 - Contextual help and search in the Help section
-
-Something is missing? Say it in the [issues](https://github.com/thenormal/ngPost-Deluxe/issues).
