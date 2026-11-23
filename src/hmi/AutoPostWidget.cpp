@@ -109,7 +109,7 @@ void AutoPostWidget::init()
     setPackingAuto(_ngPost->_packAuto, _ngPost->_packAutoKeywords);
     if (_ngPost->_keepRar)
         _ui->keepRarCB->setChecked(true);
-    _ui->startJobsCB->setChecked(true);
+    _ui->startJobsCB->setChecked(false); // "Add paused"
 
     _ui->latestFilesFirstCB->setChecked(true);
 
@@ -119,7 +119,6 @@ void AutoPostWidget::init()
     connect(_ui->removeCompletedButton, &QAbstractButton::clicked, this, &AutoPostWidget::onRemoveCompleted);
     connect(_ui->removeAllButton,       &QAbstractButton::clicked, this, &AutoPostWidget::onRemoveAll);
     _ui->closeTabsButton->hide();  // the posts have their own page (Posts)
-    _ui->startJobsCB->hide();      // the posts are always put in the queue at once
     connect(_ngPost->postList(), &PostList::postChanged, this, &AutoPostWidget::onPostChanged);
 
     connect(_ui->monitorButton, &QAbstractButton::clicked, this, &AutoPostWidget::onMonitoringClicked);
@@ -250,6 +249,7 @@ bool AutoPostWidget::_postFiles(QFileInfoList files, bool hasFolder, bool forceS
         PostingWidget *form = _hmi->newHiddenQuickPost({file});
         form->setFromAutoPosting();
         form->setAfterPost(afterAct, afterMoveTo);
+        form->setAddPaused(_ui->startJobsCB->isChecked());
         form->genNameAndPassword(_ngPost->_genName, _ngPost->_genPass, _ngPost->_doPar2, useRarMax);
         int postId = form->postFiles(false);
         form->deleteLater();
@@ -1206,7 +1206,8 @@ void AutoPostWidget::_retranslateLayout()
     _ui->rarLbl->setText(tr("rar / 7z program"));
     _ui->rarSizeLbl->setText(tr("Volume size (MB)"));
     _ui->rarMaxCB->setText(tr("limit the number of volumes"));
-    _ui->startJobsCB->setText(tr("start the posts directly"));
+    _ui->startJobsCB->setText(tr("Add paused"));
+    _ui->startJobsCB->setToolTip(tr("The posts go in the queue (page Posts) but don't start: resume them there when you want"));
     _applyMode();
 }
 
@@ -1267,7 +1268,7 @@ void AutoPostWidget::_applyMode()
     _ui->latestFilesFirstCB->setVisible(scan);
     _monitorCard->setVisible(watch);
     _ui->postButton->setVisible(!watch);
-    _ui->startJobsCB->setVisible(false); // the posts always go to the queue (page Posts)
+    _ui->startJobsCB->setVisible(!watch); // "Add paused" (the watched folder has its own pause)
     _ui->postButton->setText(tr("Post the list"));
     _filesTitle->setText(watch ? tr("Posts of the watched folder") : tr("Files and folders to post"));
     _ui->removeCompletedButton->setVisible(true);

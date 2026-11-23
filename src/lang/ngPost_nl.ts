@@ -854,6 +854,14 @@ Voeg bestanden of mappen toe, of scan een map, en laat aangevinkt wat je wilt po
         <source>%1 in progress or waiting</source>
         <translation>%1 bezig of wachtend</translation>
     </message>
+    <message>
+        <source>Add paused</source>
+        <translation>Gepauzeerd toevoegen</translation>
+    </message>
+    <message>
+        <source>The posts go in the queue (page Posts) but don't start: resume them there when you want</source>
+        <translation>De posts gaan in de wachtrij (pagina Posts) maar starten niet: hervat ze daar wanneer je wilt</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3582,6 +3590,22 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
         <source>Can't post again the missing Articles of %1: %2</source>
         <translation>Kan de ontbrekende artikelen van %1 niet opnieuw posten: %2</translation>
     </message>
+    <message>
+        <source>Added paused: it starts when you resume it</source>
+        <translation>Gepauzeerd toegevoegd: hij start wanneer je hem hervat</translation>
+    </message>
+    <message>
+        <source>Paused: it stops when the upload starts</source>
+        <translation>Gepauzeerd: hij stopt zodra de upload begint</translation>
+    </message>
+    <message>
+        <source>Paused: the next posts go before it</source>
+        <translation>Gepauzeerd: de volgende posts gaan voor</translation>
+    </message>
+    <message>
+        <source>Resumed</source>
+        <translation>Hervat</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4643,6 +4667,14 @@ Wilt u hem opnieuw posten?</translation>
     <message>
         <source>upload time: about %1</source>
         <translation>uploadtijd: ongeveer %1</translation>
+    </message>
+    <message>
+        <source>Add paused</source>
+        <translation>Gepauzeerd toevoegen</translation>
+    </message>
+    <message>
+        <source>The post goes in the queue (page Posts) but doesn't start: resume it there when you want</source>
+        <translation>De post gaat in de wachtrij (pagina Posts) maar start niet: hervat hem daar wanneer je wilt</translation>
     </message>
 </context>
 <context>
@@ -6176,6 +6208,106 @@ In de lijst houden?</translation>
     <message>
         <source>Remove from the page Posts the posts finished without errors</source>
         <translation>Zonder fouten voltooide posts van de pagina Posts verwijderen</translation>
+    </message>
+    <message>
+        <source>High</source>
+        <translation>Hoog</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Normaal</translation>
+    </message>
+    <message>
+        <source>Low</source>
+        <translation>Laag</translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation>Prioriteit</translation>
+    </message>
+    <message>
+        <source>Priority of the selected waiting post: the posts with a higher priority start first</source>
+        <translation>Prioriteit van de geselecteerde wachtende post: posts met een hogere prioriteit starten eerst</translation>
+    </message>
+    <message>
+        <source>Move to the top of the queue</source>
+        <translation>Bovenaan de wachtrij zetten</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation>Omhoog</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>Omlaag</translation>
+    </message>
+    <message>
+        <source>Move to the bottom of the queue</source>
+        <translation>Onderaan de wachtrij zetten</translation>
+    </message>
+    <message>
+        <source>The next posts go before it. Resume it to put it back in the queue.</source>
+        <translation>De volgende posts gaan voor. Hervat hem om hem terug in de wachtrij te zetten.</translation>
+    </message>
+    <message>
+        <source>Preparing (%1)</source>
+        <translation>Wordt voorbereid (%1)</translation>
+    </message>
+    <message>
+        <source>Compressed now, while the current post is uploading: it starts next</source>
+        <translation>Wordt nu gecomprimeerd terwijl de huidige post uploadt: hij start hierna</translation>
+    </message>
+    <message>
+        <source>Ready (%1)</source>
+        <translation>Klaar om te starten (%1)</translation>
+    </message>
+    <message>
+        <source>Already compressed: it starts next</source>
+        <translation>Al gecomprimeerd: hij start hierna</translation>
+    </message>
+    <message>
+        <source>Waiting (%1)</source>
+        <translation>Wachtend (%1)</translation>
+    </message>
+    <message>
+        <source>%1, then paused</source>
+        <translation>%1, daarna gepauzeerd</translation>
+    </message>
+    <message>
+        <source>It pauses when the upload starts</source>
+        <translation>Hij pauzeert zodra de upload begint</translation>
+    </message>
+    <message>
+        <source>%1 paused</source>
+        <translation>%1 gepauzeerd</translation>
+    </message>
+    <message>
+        <source>%1 (paused)</source>
+        <translation>%1 (gepauzeerd)</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation>Hervatten</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation>Pauze</translation>
+    </message>
+    <message>
+        <source>Resume this post</source>
+        <translation>Deze post hervatten</translation>
+    </message>
+    <message>
+        <source>This post is already compressed for the next start: it can't be paused or moved</source>
+        <translation>Deze post is al gecomprimeerd voor de volgende start: hij kan niet gepauzeerd of verplaatst worden</translation>
+    </message>
+    <message>
+        <source>Keep this post in the queue: the next posts go before it</source>
+        <translation>Deze post in de wachtrij houden: de volgende posts gaan voor</translation>
+    </message>
+    <message>
+        <source>Pause the upload of this post (the other posts wait)</source>
+        <translation>De upload van deze post pauzeren (de andere posts wachten)</translation>
     </message>
 </context>
 </TS>

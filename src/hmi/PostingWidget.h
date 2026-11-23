@@ -32,6 +32,7 @@ class NfoCard;
 class PostingJob;
 class QLabel;
 class QPushButton;
+class QCheckBox;
 #include <QFileInfoList>
 #include "RepostInfo.h"
 #include <QJsonObject>
@@ -63,6 +64,8 @@ private:
     ProfileBar        *_profileBar;
     NfoCard           *_nfoCard;
     QPushButton       *_advancedToggle;
+    QCheckBox         *_addPausedCB = nullptr; //!< the post goes in the queue paused (it starts when it is resumed)
+    bool               _addPaused   = false;   //!< same for the posts of Auto Posting
     static bool        sShowAdvanced; //!< same state for all the Quick Post tabs
     void _buildLayout();
     void _retranslateLayout();
@@ -86,6 +89,7 @@ public:
     void setFromAutoPosting() { _fromAuto = true; }
     bool isFromAutoPosting() const { return _fromAuto; }
     void setAfterPost(bool act, const QString &moveTo) { _afterAct = act; _afterMoveTo = moveTo; }
+    void setAddPaused(bool paused) { _addPaused = paused; } //!< (Auto Posting) the post waits until it is resumed
     inline uint jobNumber() const;
 
     void handleDropEvent(QDropEvent *e);

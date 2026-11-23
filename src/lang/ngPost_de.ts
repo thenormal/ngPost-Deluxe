@@ -852,6 +852,14 @@ Fügen Sie Dateien oder Ordner hinzu oder scannen Sie einen Ordner und lassen Si
         <source>%1 in progress or waiting</source>
         <translation>%1 in Arbeit oder wartend</translation>
     </message>
+    <message>
+        <source>Add paused</source>
+        <translation>Pausiert hinzufügen</translation>
+    </message>
+    <message>
+        <source>The posts go in the queue (page Posts) but don't start: resume them there when you want</source>
+        <translation>Die Posts kommen in die Warteschlange (Seite Posts), starten aber nicht: setzen Sie sie dort fort, wann Sie wollen</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3577,6 +3585,22 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Can't post again the missing Articles of %1: %2</source>
         <translation>Die fehlenden Artikel von %1 können nicht erneut gepostet werden: %2</translation>
     </message>
+    <message>
+        <source>Added paused: it starts when you resume it</source>
+        <translation>Pausiert hinzugefügt: er startet, wenn Sie ihn fortsetzen</translation>
+    </message>
+    <message>
+        <source>Paused: it stops when the upload starts</source>
+        <translation>Pausiert: er hält an, sobald der Upload beginnt</translation>
+    </message>
+    <message>
+        <source>Paused: the next posts go before it</source>
+        <translation>Pausiert: die nächsten Posts kommen vor ihm dran</translation>
+    </message>
+    <message>
+        <source>Resumed</source>
+        <translation>Fortgesetzt</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4637,6 +4661,14 @@ Möchten Sie ihn erneut posten?</translation>
     <message>
         <source>upload time: about %1</source>
         <translation>Upload-Dauer: etwa %1</translation>
+    </message>
+    <message>
+        <source>Add paused</source>
+        <translation>Pausiert hinzufügen</translation>
+    </message>
+    <message>
+        <source>The post goes in the queue (page Posts) but doesn't start: resume it there when you want</source>
+        <translation>Der Post kommt in die Warteschlange (Seite Posts), startet aber nicht: setzen Sie ihn dort fort, wann Sie wollen</translation>
     </message>
 </context>
 <context>
@@ -6170,6 +6202,106 @@ In der Liste behalten?</translation>
     <message>
         <source>Remove from the page Posts the posts finished without errors</source>
         <translation>Ohne Fehler beendete Posts von der Seite Posts entfernen</translation>
+    </message>
+    <message>
+        <source>High</source>
+        <translation>Hoch</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Normal</translation>
+    </message>
+    <message>
+        <source>Low</source>
+        <translation>Niedrig</translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation>Priorität</translation>
+    </message>
+    <message>
+        <source>Priority of the selected waiting post: the posts with a higher priority start first</source>
+        <translation>Priorität des ausgewählten wartenden Posts: Posts mit höherer Priorität starten zuerst</translation>
+    </message>
+    <message>
+        <source>Move to the top of the queue</source>
+        <translation>An den Anfang der Warteschlange</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation>Nach oben</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>Nach unten</translation>
+    </message>
+    <message>
+        <source>Move to the bottom of the queue</source>
+        <translation>An das Ende der Warteschlange</translation>
+    </message>
+    <message>
+        <source>The next posts go before it. Resume it to put it back in the queue.</source>
+        <translation>Die nächsten Posts kommen vor ihm dran. Setzen Sie ihn fort, um ihn wieder einzureihen.</translation>
+    </message>
+    <message>
+        <source>Preparing (%1)</source>
+        <translation>Wird vorbereitet (%1)</translation>
+    </message>
+    <message>
+        <source>Compressed now, while the current post is uploading: it starts next</source>
+        <translation>Wird jetzt komprimiert, während der aktuelle Post hochgeladen wird: er startet als Nächster</translation>
+    </message>
+    <message>
+        <source>Ready (%1)</source>
+        <translation>Bereit (%1)</translation>
+    </message>
+    <message>
+        <source>Already compressed: it starts next</source>
+        <translation>Bereits komprimiert: er startet als Nächster</translation>
+    </message>
+    <message>
+        <source>Waiting (%1)</source>
+        <translation>Wartet (%1)</translation>
+    </message>
+    <message>
+        <source>%1, then paused</source>
+        <translation>%1, dann pausiert</translation>
+    </message>
+    <message>
+        <source>It pauses when the upload starts</source>
+        <translation>Er pausiert, sobald der Upload beginnt</translation>
+    </message>
+    <message>
+        <source>%1 paused</source>
+        <translation>%1 pausiert</translation>
+    </message>
+    <message>
+        <source>%1 (paused)</source>
+        <translation>%1 (pausiert)</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation>Fortsetzen</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation>Pause</translation>
+    </message>
+    <message>
+        <source>Resume this post</source>
+        <translation>Diesen Post fortsetzen</translation>
+    </message>
+    <message>
+        <source>This post is already compressed for the next start: it can't be paused or moved</source>
+        <translation>Dieser Post ist für den nächsten Start bereits komprimiert: er kann nicht pausiert oder verschoben werden</translation>
+    </message>
+    <message>
+        <source>Keep this post in the queue: the next posts go before it</source>
+        <translation>Diesen Post in der Warteschlange halten: die nächsten Posts kommen vor ihm dran</translation>
+    </message>
+    <message>
+        <source>Pause the upload of this post (the other posts wait)</source>
+        <translation>Den Upload dieses Posts pausieren (die anderen Posts warten)</translation>
     </message>
 </context>
 </TS>

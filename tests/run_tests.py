@@ -1442,6 +1442,69 @@ def test_post_list_unit(work):
     check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
 
 
+def test_queue_order_unit(work):
+    # QueueOrder (priority, moves, drag and drop, pause, post being prepared) and the order of the page Posts
+    qmake = shutil.which("qmake") or shutil.which("qmake-qt5")
+    if not qmake:
+        print("      (qmake not found: this test is skipped)")
+        return
+    here = os.path.dirname(os.path.abspath(__file__))
+    build = os.path.join(work, "unit_queue_order")
+    os.makedirs(build)
+    r = subprocess.run([qmake, os.path.join(here, "unit", "queue_order_test.pro")], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "qmake failed\n" + r.stdout + r.stderr)
+    r = subprocess.run(["make", "-j4"], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "build failed\n" + r.stdout[-2000:] + r.stderr[-2000:])
+    r = subprocess.run([os.path.join(build, "queue_order_test")], capture_output=True, text=True)
+    check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
+
+
+def test_queue_keeps_order_priority_pause(work):
+    # the queue file keeps the priority and the pause of each post; resumed, the posts start in the order
+    # of the file (the order chosen by the user, whatever the priorities); the command line posts the paused ones too
+    import json
+    import re
+    stub = NntpStub(policy=slow).start()
+    first = os.path.join(work, "first.bin")
+    make_file(first, 400_000, 61)
+    try:
+        start_and_kill(stub, work, [first], os.path.join(work, "first.nzb"), after=2)
+    finally:
+        stub.stop()
+    entries = queue_entries(work)
+    check(len(entries) == 1, "the interrupted post is not in the queue: %s" % entries)
+    check(entries[0].get("priority") == "normal" and entries[0].get("paused") is False,
+          "priority / pause not saved: %s" % entries[0])
+
+    posts, datas = [], {}
+    for name, prio, paused, seed in [("cee", "low", False, 62), ("aye", "high", True, 63), ("bee", "normal", False, 64)]:
+        path = os.path.join(work, name + ".bin")
+        datas[name + ".bin"] = make_file(path, 60_000, seed)
+        entry = dict(entries[0])
+        entry.update({"id": "test-" + name, "files": [path], "nzb": os.path.join(work, name + ".nzb"),
+                      "nzbFinal": False, "priority": prio, "paused": paused})
+        posts.append(entry)
+    path = os.path.join(work, "ngPost_queue.json")
+    with open(path) as f:
+        root = json.load(f)
+    root["posts"] = posts
+    with open(path, "w") as f:
+        json.dump(root, f)
+
+    stub = NntpStub().start()
+    try:
+        r = run_ngpost_conf([stub], work, [], None, conns=2, threads=1, extra=["--resume_queue"])
+        out = r.stdout + r.stderr
+        check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, out[-2000:]))
+        order = re.findall(r"Start posting: (\w+)", out)
+        check(order == ["cee", "aye", "bee"], "posts started in the order %s\n%s" % (order, out[-2500:]))
+        check(queue_entries(work) == [], "the queue is not empty after the posts: %s" % queue_entries(work))
+        rebuilt = stub.rebuild_files()
+        check(set(rebuilt) == set(datas), "files on the server: %s" % sorted(rebuilt))
+    finally:
+        stub.stop()
+
+
 TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_retry_after_refusals, test_wrong_password, test_some_logins_refused,
          test_article_always_refused_on_one_connection, test_server_going_down,
@@ -1455,7 +1518,8 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_move_posted_kept_when_articles_failed, test_move_posted_options, test_posted_mover_unit, test_notifications,
          test_notification_when_all_done, test_version_number_unit, test_post_request_unit, test_translations_compiled,
          test_speed_limiter_unit, test_speed_limit, test_process_text_unit,
-         test_7z_folder_without_recursion, test_post_list, test_post_list_unit]
+         test_7z_folder_without_recursion, test_post_list, test_post_list_unit,
+         test_queue_order_unit, test_queue_keeps_order_priority_pause]
 
 
 def main():

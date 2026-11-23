@@ -213,6 +213,10 @@ private:
 
     int                 _postId = -1;          //!< id of this post in NgPost::postList() (-1: not listed)
     QString             _origin;               //!< page of the GUI that made it: "quick" or "auto" (empty: folder watching or command line)
+    int                 _priority = 1;         //!< QueueOrder::LOW, NORMAL or HIGH
+    bool                _held = false;         //!< paused by the user while it waits: the queue skips it
+    bool                _pauseRequested = false; //!< paused by the user while it is packed: it pauses when the upload starts
+    bool                _pausedByUser = false;   //!< the pause comes from the user (not from a lost connection): saved in the queue
 
 
 #ifdef __COMPUTE_IMMEDIATE_SPEED__
@@ -260,6 +264,13 @@ public:
     inline void setOrigin(const QString &origin) { _origin = origin; }
     inline const QString &origin() const { return _origin; }
     inline bool fromGuiForm() const { return !_origin.isEmpty(); }
+    inline int  priority() const { return _priority; }
+    inline void setPriority(int priority) { _priority = priority < 0 ? 0 : (priority > 2 ? 2 : priority); }
+    inline bool isHeld() const { return _held; }          //!< paused while it waits
+    inline void setHeld(bool held) { _held = held; }
+    inline bool isPauseRequested() const { return _pauseRequested; }
+    inline void setPauseRequested(bool requested) { _pauseRequested = requested; }
+    inline void setPausedByUser(bool byUser) { _pausedByUser = byUser; }
 
     // recovery of failed Articles (thread safe: called from the connection threads)
     void recoverArticle(NntpArticle *article, const NntpServerParams *server, const QString &conPrefix);

@@ -4,7 +4,7 @@ Post Auto poste de nombreux fichiers et dossiers sans préparer chacun à la mai
 
 ## Poster ce que je choisis
 
-Ajoutez les fichiers et dossiers voulus (glissez-les dans la liste, ou utilisez **Choisir des fichiers** / **Sélectionner un dossier**), puis cliquez sur **Poster la liste** : chaque fichier ou dossier devient un envoi distinct.
+Ajoutez les fichiers et dossiers voulus (glissez-les dans la liste, ou utilisez **Choisir des fichiers** / **Sélectionner un dossier**), puis cliquez sur **Poster la liste** : chaque fichier ou dossier devient un envoi distinct. Avec **Ajouter en pause** coché (aussi pour **Analyser un dossier une fois**), les posts attendent dans la page **Posts** jusqu'à ce que vous les repreniez.
 
 ## Analyser un dossier une fois
 

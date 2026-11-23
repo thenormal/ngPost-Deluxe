@@ -4,7 +4,7 @@ A Postagem Automática publica muitos ficheiros e pastas sem preparar cada um à
 
 ## Postar o que eu escolher
 
-Adicione os ficheiros e pastas que quer (arraste-os para a lista, ou use **Selecionar ficheiros** / **Selecione uma Pasta**) e carregue em **Publicar a lista**: cada ficheiro ou pasta torna-se uma publicação separada.
+Adicione os ficheiros e pastas que quer (arraste-os para a lista, ou use **Selecionar ficheiros** / **Selecione uma Pasta**) e carregue em **Publicar a lista**: cada ficheiro ou pasta torna-se uma publicação separada. Com **Adicionar em pausa** marcado (também para **Verificar uma pasta uma vez**), as publicações esperam na página **Publicações** até as retomar.
 
 ## Analisar uma pasta uma vez
 

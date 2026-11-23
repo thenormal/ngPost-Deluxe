@@ -852,6 +852,14 @@ Aggiungi file o cartelle, o scansiona una cartella, e lascia selezionato ciò ch
         <source>%1 in progress or waiting</source>
         <translation>%1 in corso o in attesa</translation>
     </message>
+    <message>
+        <source>Add paused</source>
+        <translation>Aggiungi in pausa</translation>
+    </message>
+    <message>
+        <source>The posts go in the queue (page Posts) but don't start: resume them there when you want</source>
+        <translation>I post vanno in coda (pagina Post) ma non partono: riprendili lì quando vuoi</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3578,6 +3586,22 @@ Usa --par2_pct oppure imposta PAR2_PCT o PAR2_ARGS nel file di configurazione.</
         <source>Can't post again the missing Articles of %1: %2</source>
         <translation>Impossibile ripubblicare gli articoli mancanti di %1: %2</translation>
     </message>
+    <message>
+        <source>Added paused: it starts when you resume it</source>
+        <translation>Aggiunto in pausa: parte quando lo riprendi</translation>
+    </message>
+    <message>
+        <source>Paused: it stops when the upload starts</source>
+        <translation>In pausa: si ferma quando inizia il caricamento</translation>
+    </message>
+    <message>
+        <source>Paused: the next posts go before it</source>
+        <translation>In pausa: i post successivi passano prima</translation>
+    </message>
+    <message>
+        <source>Resumed</source>
+        <translation>Ripreso</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4639,6 +4663,14 @@ Vuoi pubblicarlo di nuovo?</translation>
     <message>
         <source>upload time: about %1</source>
         <translation>tempo di caricamento: circa %1</translation>
+    </message>
+    <message>
+        <source>Add paused</source>
+        <translation>Aggiungi in pausa</translation>
+    </message>
+    <message>
+        <source>The post goes in the queue (page Posts) but doesn't start: resume it there when you want</source>
+        <translation>Il post va in coda (pagina Post) ma non parte: riprendilo lì quando vuoi</translation>
     </message>
 </context>
 <context>
@@ -6172,6 +6204,106 @@ Tenerli nella lista?</translation>
     <message>
         <source>Remove from the page Posts the posts finished without errors</source>
         <translation>Rimuovi dalla pagina Post i post finiti senza errori</translation>
+    </message>
+    <message>
+        <source>High</source>
+        <translation>Alta</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Normale</translation>
+    </message>
+    <message>
+        <source>Low</source>
+        <translation>Bassa</translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation>Priorità</translation>
+    </message>
+    <message>
+        <source>Priority of the selected waiting post: the posts with a higher priority start first</source>
+        <translation>Priorità del post in attesa selezionato: i post con priorità più alta partono prima</translation>
+    </message>
+    <message>
+        <source>Move to the top of the queue</source>
+        <translation>Sposta in cima alla coda</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation>Sposta su</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>Sposta giù</translation>
+    </message>
+    <message>
+        <source>Move to the bottom of the queue</source>
+        <translation>Sposta in fondo alla coda</translation>
+    </message>
+    <message>
+        <source>The next posts go before it. Resume it to put it back in the queue.</source>
+        <translation>I post successivi passano prima. Riprendilo per rimetterlo in coda.</translation>
+    </message>
+    <message>
+        <source>Preparing (%1)</source>
+        <translation>In preparazione (%1)</translation>
+    </message>
+    <message>
+        <source>Compressed now, while the current post is uploading: it starts next</source>
+        <translation>Viene compresso ora, mentre il post corrente si carica: parte subito dopo</translation>
+    </message>
+    <message>
+        <source>Ready (%1)</source>
+        <translation>Pronto (%1)</translation>
+    </message>
+    <message>
+        <source>Already compressed: it starts next</source>
+        <translation>Già compresso: parte subito dopo</translation>
+    </message>
+    <message>
+        <source>Waiting (%1)</source>
+        <translation>In attesa (%1)</translation>
+    </message>
+    <message>
+        <source>%1, then paused</source>
+        <translation>%1, poi in pausa</translation>
+    </message>
+    <message>
+        <source>It pauses when the upload starts</source>
+        <translation>Va in pausa quando inizia il caricamento</translation>
+    </message>
+    <message>
+        <source>%1 paused</source>
+        <translation>%1 in pausa</translation>
+    </message>
+    <message>
+        <source>%1 (paused)</source>
+        <translation>%1 (in pausa)</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation>Riprendi</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation>Pausa</translation>
+    </message>
+    <message>
+        <source>Resume this post</source>
+        <translation>Riprendi questo post</translation>
+    </message>
+    <message>
+        <source>This post is already compressed for the next start: it can't be paused or moved</source>
+        <translation>Questo post è già compresso per la prossima partenza: non si può mettere in pausa né spostare</translation>
+    </message>
+    <message>
+        <source>Keep this post in the queue: the next posts go before it</source>
+        <translation>Tieni questo post in coda: i post successivi passano prima</translation>
+    </message>
+    <message>
+        <source>Pause the upload of this post (the other posts wait)</source>
+        <translation>Metti in pausa il caricamento di questo post (gli altri post aspettano)</translation>
     </message>
 </context>
 </TS>

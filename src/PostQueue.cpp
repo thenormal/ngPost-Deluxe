@@ -116,6 +116,27 @@ void PostQueue::remove(const QString &id)
     }
 }
 
+void PostQueue::reorder(const QStringList &ids)
+{
+    if (!_isOpen)
+        return;
+    QList<QJsonObject> ordered;
+    for (const QString &id : ids)
+        for (const QJsonObject &entry : _entries)
+            if (entry.value("id").toString() == id)
+            {
+                ordered << entry;
+                break;
+            }
+    for (const QJsonObject &entry : _entries)
+        if (!ids.contains(entry.value("id").toString()))
+            ordered << entry;
+    if (ordered == _entries)
+        return;
+    _entries = ordered;
+    _save();
+}
+
 void PostQueue::clear()
 {
     if (!_isOpen)

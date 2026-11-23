@@ -4,7 +4,7 @@ Auto Posting postet viele Dateien und Ordner, ohne jeden einzeln von Hand vorzub
 
 ## Posten, was ich auswähle
 
-Fügen Sie die gewünschten Dateien und Ordner hinzu (ziehen Sie sie in die Liste oder verwenden Sie **Dateien auswählen** / **Ordner auswählen**) und klicken Sie auf **Liste posten**: Jede Datei und jeder Ordner wird ein eigener Post.
+Fügen Sie die gewünschten Dateien und Ordner hinzu (ziehen Sie sie in die Liste oder verwenden Sie **Dateien auswählen** / **Ordner auswählen**) und klicken Sie auf **Liste posten**: Jede Datei und jeder Ordner wird ein eigener Post. Mit **Pausiert hinzufügen** (auch für **Ordner einmal scannen**) warten die Posts auf der Seite **Posts**, bis Sie sie fortsetzen.
 
 ## Einen Ordner einmal durchsuchen
 

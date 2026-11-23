@@ -843,6 +843,14 @@ Add files or folders, or scan a folder, and keep checked what you want to post.<
         <source>%1 in progress or waiting</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The posts go in the queue (page Posts) but don't start: resume them there when you want</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3548,6 +3556,22 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Can't post again the missing Articles of %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Added paused: it starts when you resume it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused: it stops when the upload starts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused: the next posts go before it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resumed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4599,6 +4623,14 @@ Do you want to post it again?</source>
     </message>
     <message>
         <source>upload time: about %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The post goes in the queue (page Posts) but doesn't start: resume it there when you want</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6124,6 +6156,106 @@ Keep them in the list?</source>
     </message>
     <message>
         <source>Remove from the page Posts the posts finished without errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>High</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Low</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Priority of the selected waiting post: the posts with a higher priority start first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to the top of the queue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to the bottom of the queue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The next posts go before it. Resume it to put it back in the queue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preparing (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compressed now, while the current post is uploading: it starts next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ready (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already compressed: it starts next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Waiting (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1, then paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It pauses when the upload starts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (paused)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume this post</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This post is already compressed for the next start: it can't be paused or moved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep this post in the queue: the next posts go before it</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause the upload of this post (the other posts wait)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

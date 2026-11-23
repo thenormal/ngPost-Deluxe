@@ -79,6 +79,12 @@ QJsonObject PostEntry::toJson(bool withSecrets, bool withLog) const
     obj["groups"]     = groups;
     obj["origin"]     = origin;
     obj["repost"]     = isRepost;
+    obj["priority"]   = priority == 0 ? QString("low") : (priority == 2 ? QString("high") : QString("normal"));
+    obj["paused"]     = paused;
+    if (prepared)
+        obj["prepared"] = prepared == 2 ? QString("ready") : QString("compressing");
+    if (queuePos >= 0)
+        obj["queuePos"] = queuePos;
     obj["nbFiles"]    = files.size();
     obj["compressed"] = !archiveName.isEmpty();
     obj["hasPassword"]= !password.isEmpty();
@@ -137,6 +143,7 @@ bool PostList::update(const PostEntry &s)
     bool changed = e->state != s.state || e->sizeTotal != s.sizeTotal || e->sizeDone != s.sizeDone
             || e->nbArticles != s.nbArticles || e->nbUploaded != s.nbUploaded || e->nbFailed != s.nbFailed
             || e->etaSec != s.etaSec || qAbs(e->speed - s.speed) > 0.5
+            || e->priority != s.priority || e->paused != s.paused || e->prepared != s.prepared
             || (!s.name.isEmpty() && e->name != s.name) || (!s.nzbPath.isEmpty() && e->nzbPath != s.nzbPath)
             || (!s.archiveName.isEmpty() && e->archiveName != s.archiveName);
     if (e->state == PostEntry::State::WAITING && s.state != PostEntry::State::WAITING && !e->started.isValid())
@@ -150,6 +157,9 @@ bool PostList::update(const PostEntry &s)
     e->speed      = s.speed;
     e->etaSec     = s.etaSec;
     e->durationMs = s.durationMs;
+    e->priority   = s.priority;
+    e->paused     = s.paused;
+    e->prepared   = s.state == PostEntry::State::WAITING ? s.prepared : 0;
     if (!s.name.isEmpty())        e->name        = s.name;
     if (!s.nzbPath.isEmpty())     e->nzbPath     = s.nzbPath;
     if (!s.archiveName.isEmpty()) e->archiveName = s.archiveName;
@@ -168,6 +178,7 @@ bool PostList::finish(int id, PostEntry::State state)
         state = PostEntry::State::CANCELLED;
     e->state    = state;
     e->etaSec   = -1;
+    e->queuePos = -1;
     e->finished = QDateTime::currentDateTime();
     if (state == PostEntry::State::DONE || state == PostEntry::State::DONE_WITH_ERRORS)
     {
@@ -239,6 +250,44 @@ bool PostList::remove(int id)
     _entries.remove(idx);
     emit postRemoved(id);
     return true;
+}
+
+void PostList::setQueueOrder(const QVector<int> &waitingIds)
+{
+    QVector<PostEntry> others, waiting;
+    others.reserve(_entries.size());
+    for (const PostEntry &e : _entries)
+        if (!waitingIds.contains(e.id))
+        {
+            others.append(e);
+            others.last().queuePos = -1;
+        }
+    for (int i = 0; i < waitingIds.size(); ++i)
+    {
+        int idx = indexOf(waitingIds.at(i));
+        if (idx < 0)
+            continue;
+        waiting.append(_entries.at(idx));
+        waiting.last().queuePos = i;
+    }
+    QVector<PostEntry> ordered = others + waiting;
+
+    bool moved = ordered.size() != _entries.size();
+    QVector<int> posChanged;
+    for (int i = 0; i < ordered.size() && !moved; ++i)
+        if (ordered.at(i).id != _entries.at(i).id)
+            moved = true;
+    for (const PostEntry &e : ordered)
+    {
+        int idx = indexOf(e.id);
+        if (idx >= 0 && _entries.at(idx).queuePos != e.queuePos)
+            posChanged << e.id;
+    }
+    _entries = ordered;
+    if (moved)
+        emit orderChanged();
+    for (int id : posChanged)
+        emit postChanged(id);
 }
 
 int PostList::removeFinished()

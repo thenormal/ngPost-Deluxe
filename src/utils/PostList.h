@@ -48,6 +48,10 @@ struct PostEntry
     QStringList files;          //!< files and folders given to post
     QString     origin;         //!< quick, choose, scan, watch, guided, cli, queue
     bool        isRepost = false;
+    int         priority = 1;   //!< QueueOrder::LOW, NORMAL or HIGH
+    bool        paused   = false; //!< paused by the user (a waiting post is skipped, the running one stops uploading)
+    int         queuePos = -1;  //!< place in the queue of the posts that wait (0: next), -1: not waiting
+    int         prepared = 0;   //!< a waiting post compressed in advance (while the current one uploads): 1 being compressed, 2 ready
 
     State   state       = State::WAITING;
     quint64 sizeTotal   = 0;    //!< bytes to upload (0 until the files are packed)
@@ -93,6 +97,9 @@ public:
     void appendLog(int id, const QString &text, int level = PostEntry::LOG_INFO, bool newline = true);
     bool remove(int id);                                //!< only a finished post can be removed
     int  removeFinished();                              //!< returns the number of posts removed
+    //! the posts that wait, in the order they will start: they go at the end of the list in this order
+    //! (the other posts keep their place). Emits orderChanged when something moved.
+    void setQueueOrder(const QVector<int> &waitingIds);
 
     const QVector<PostEntry> &entries() const { return _entries; }
     const PostEntry *entry(int id) const;               //!< valid until the list changes (nullptr: unknown id)
@@ -105,6 +112,7 @@ signals:
     void postAdded(int id);
     void postChanged(int id);
     void postRemoved(int id);
+    void orderChanged();
     void logAdded(int id, const PostEntry::LogLine &line, bool continuesLine);
 
 private:

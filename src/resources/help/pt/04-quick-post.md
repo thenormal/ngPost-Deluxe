@@ -39,6 +39,6 @@ O cartão **Arquivo NFO** (veja [Ficheiros NZB](09-nzb-files.md)) também é par
 
 ## Depois de Postar Arquivos
 
-A publicação entra na fila e o programa mostra a página **Publicações**, onde acompanha o progresso e o registo. O Quick Post mantém as suas opções e cria um novo nome e uma nova palavra-passe aleatórios, para preparar logo a release seguinte.
+A publicação entra na fila e o programa mostra a página **Publicações**, onde acompanha o progresso e o registo. O Quick Post mantém as suas opções e cria um novo nome e uma nova palavra-passe aleatórios, para preparar logo a release seguinte. Com **Adicionar em pausa** marcado, a publicação espera na fila até a retomar.
 
 Veja também [Progresso e registo](06-progress-and-log.md).

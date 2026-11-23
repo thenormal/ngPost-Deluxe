@@ -39,6 +39,6 @@ La carte **Fichier NFO** (voir [Fichiers NZB](09-nzb-files.md)) est aussi partag
 
 ## Après Poster Fichiers
 
-Le post entre dans la file et le programme affiche la page **Posts**, où vous suivez sa progression et son journal. Quick Post garde vos options et crée un nouveau nom et un nouveau mot de passe aléatoires, pour préparer tout de suite la release suivante.
+Le post entre dans la file et le programme affiche la page **Posts**, où vous suivez sa progression et son journal. Quick Post garde vos options et crée un nouveau nom et un nouveau mot de passe aléatoires, pour préparer tout de suite la release suivante. Avec **Ajouter en pause** coché, le post attend dans la file jusqu'à ce que vous le repreniez.
 
 Voir aussi [Progression et journal](06-progress-and-log.md).

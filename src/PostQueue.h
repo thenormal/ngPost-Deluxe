@@ -21,6 +21,7 @@
 
 #include <QString>
 #include <QList>
+#include <QStringList>
 #include <QJsonObject>
 #include "RepostInfo.h"
 class QLockFile;
@@ -30,7 +31,9 @@ class QLockFile;
  * so they can be posted again after the program has been closed or has crashed.
  *
  * Each entry is a json object with an "id" and a "state":
- *  - "waiting": a post (in the queue or being posted). It is posted again from the beginning.
+ *  - "waiting": a post (in the queue or being posted). It is posted again from the beginning,
+ *    with its "priority" ("low", "normal", "high") and "paused" (true: it waits until the user resumes it).
+ *    The entries are in the order the posts start (the one being posted first).
  *  - "missing": a post that ended with Articles that couldn't be posted (key "missing": RepostInfo)
  * The file is rewritten atomically on each change and removed when the queue is empty.
  * A lock file prevents two instances of ngPost from using the same queue.
@@ -57,6 +60,8 @@ public:
 
     void put(const QJsonObject &entry); //!< add (at the end) or replace the entry with the same id
     void remove(const QString &id);
+    //! the entries of these ids first, in this order (the other ones after them, in their order)
+    void reorder(const QStringList &ids);
     void clear();
 
     static QString newId();

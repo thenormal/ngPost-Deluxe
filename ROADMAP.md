@@ -78,7 +78,8 @@ Goal: help the user to post step by step, and show what was posted.
 
 These are directions, not a list of promises.
 
-- Done: **One list of the posts**, a page Posts in the side bar (state, progress, size, speed, remaining time, NZB, password, details) instead of one tab for each post; Quick Post is a form that is empty again after each post. Still to do: **priority, reordering and pause for each post**
+- Done: **One list of the posts**, a page Posts in the side bar (state, progress, size, speed, remaining time, NZB, password, details) instead of one tab for each post; Quick Post is a form that is empty again after each post
+- Done: **Priority, reordering and pause for each post** (buttons, right click and drag and drop in the page Posts; "Add paused" in Quick Post and Auto Posting; kept in the saved queue after a restart)
 - **Complete profiles**: a profile also keeps the newsgroups, the servers, the NZB folder and a name template. **Newsgroups per post and favorites**, maybe the list of groups from the server
 - **A progress bar for each post** in the list: done (page Posts). Still to do: a **graph of the speed**
 - **Log for each post**: done (in the page Posts, with the time of each line). Still to do: filters by category and search
