@@ -194,6 +194,7 @@ private:
     bool                 _heldOverflow      = false; //!< too many failed Articles: no second round
     int                  _nbEnabledServers  = 1;
     QStringList          _serverHosts;      //!< hosts of the servers used by this post (for the history)
+    QStringList          _serverKeys;       //!< servers chosen for this post (NgPost::serverKey), empty: the enabled ones
 
     bool _isActiveJob;
 
@@ -313,6 +314,8 @@ public:
 
     inline void setDelFilesAfterPosted(bool delFiles);
     void setMovePostedTo(const QString &folder) { _movePostedTo = folder; }
+    void setServers(const QStringList &keys) { _serverKeys = keys; } //!< empty: the enabled servers
+    const QStringList &servers() const { return _serverKeys; }
 
     inline QString groups() const;
     inline QString from() const;

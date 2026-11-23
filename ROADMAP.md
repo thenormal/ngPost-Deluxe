@@ -80,7 +80,7 @@ These are directions, not a list of promises.
 
 - Done: **One list of the posts**, a page Posts in the side bar (state, progress, size, speed, remaining time, NZB, password, details) instead of one tab for each post; Quick Post is a form that is empty again after each post
 - Done: **Priority, reordering and pause for each post** (buttons, right click and drag and drop in the page Posts; "Add paused" in Quick Post and Auto Posting; kept in the saved queue after a restart)
-- **Complete profiles**: a profile also keeps the newsgroups, the servers, the NZB folder and a name template. **Newsgroups per post and favorites**, maybe the list of groups from the server
+- Done: **Complete profiles**: a profile can also keep the name template ({name}, {date}, {time}, {n}), the newsgroups, the servers and the NZB folder (each part is optional; old profiles work as before). **Newsgroups and servers for each post** in Quick Post and Auto Posting (also for the watched folders), **favorite newsgroups** (star)
 - Done: **A progress bar and a graph of the speed for each post** (page Posts; the graph is kept until the program is closed)
 - Done: **Log for each post** with the time of each line, filters by category (Debug hidden at first), search and copy
 - **More notifications**: email, ntfy, Gotify, Pushover and Slack (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords
@@ -117,3 +117,4 @@ These are directions, not a list of promises.
 - Move to Qt 6 and split the biggest source file: a version of its own, because it changes the base of the program (it would also allow a newer OpenSSL on Windows)
 - Update from inside the program (the check for a new version exists since 1.3; this would download it, with a checksum, and ask before anything is installed): after the signed installer
 - Contextual help and search in the Help section
+- The list of the newsgroups of a server (download it and choose in it): slow and different from one provider to another

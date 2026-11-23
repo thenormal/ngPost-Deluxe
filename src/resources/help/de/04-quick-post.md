@@ -27,6 +27,16 @@ Wenn Sie auf **Post Dateien** klicken, prüft ngPost den Post zuerst. Stimmt etw
 
 Nach einer Korrektur werden die Prüfungen erneut ausgeführt, sodass ein neues Problem sofort auftaucht statt mitten im Post. Auto Posting hat dieses Fenster noch nicht.
 
+## Name, Newsgroups und Server
+
+Die Karte **NZB** hat drei weitere Zeilen. Leer gilt jeweils die Einstellung der Einstellungen.
+
+- **Name**: eine Vorlage für den Namen des Posts (die NZB-Datei und, ohne zufälligen Namen, das Archiv): `{name}` ist der Name der Datei oder des Ordners, `{date}` das Datum (2026-11-23), `{time}` die Uhrzeit (15-04) und `{n}` eine Nummer, die bei jedem Post um eins steigt. Beispiel: `{name} [{date}]`.
+- **Newsgroups**: die Gruppen dieses Posts, mit den Favoriten (siehe [Newsgroups](03-newsgroups.md)).
+- **Server**: alle aktivierten Server (Standard) oder nur die im Menü angehakten. Ein Post behält seine Server in der Warteschlange, auch nach einem Neustart.
+
+Diese Zeilen werden beim Schließen des Programms gespeichert.
+
 ## Profile
 
 Das Menü **Profil** über den Karten stellt alle Optionen auf einmal ein.
@@ -36,6 +46,8 @@ Das Menü **Profil** über den Karten stellt alle Optionen auf einmal ein.
 - **Ihre eigenen Profile**: Stellen Sie die Optionen ein, klicken Sie auf **Als Profil speichern...** und geben Sie einen Namen ein. **Löschen** entfernt das gewählte Profil. Die Profile werden in der Konfigurationsdatei gespeichert (Schlüssel `profile`) und sind in Quick Post und Auto Posting dieselben.
 
 Auch die Karte **NFO-Datei** (siehe [NZB-Dateien](09-nzb-files.md)) wird gemeinsam genutzt: Quick Post und Auto Posting zeigen dieselben Einstellungen.
+
+Beim Speichern eines Profils können Sie auch die Namensvorlage, die Newsgroups, die Server und den NZB-Ordner speichern (haken Sie im Fenster an, was Sie möchten). Ein nicht gespeicherter Teil wird bei der Wahl des Profils nicht geändert. Fahren Sie mit der Maus über ein Profil im Menü, um seinen Inhalt zu sehen.
 
 ## Nach Post Dateien
 

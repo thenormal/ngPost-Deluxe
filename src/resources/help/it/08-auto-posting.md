@@ -28,6 +28,10 @@ Se alcuni elementi selezionati sono già nella cronologia (stesso nome e stessa 
 
 Quando premi **Posta la lista** o **Avvia il controllo**, il programma controlla le impostazioni una sola volta per tutto il gruppo (un server e un newsgroup, la compressione per le cartelle, i programmi rar / 7z e par2, la cartella dell'NZB, la cartella temporanea). I problemi sono mostrati in parole semplici con un pulsante che li risolve; gli avvisi si possono ignorare con **Pubblica comunque**. È la stessa finestra di [Quick Post](04-quick-post.md).
 
+## Nome, newsgroup e server
+
+La scheda **Nome, newsgroup e server** funziona come le righe di [Quick Post](04-quick-post.md), con una riga in più: **Cartella NZB**, dove vengono scritti i file NZB di questi post (vuota: la cartella delle Impostazioni). Vale anche per le cartelle monitorate. Un profilo può ricordare queste impostazioni.
+
 ## Consigli
 
 - Usa compressione, nomi casuali, password casuali e par2: è la configurazione tipica per la pubblicazione automatica. Il profilo **Consigliato** (menu **Profilo**) la imposta con un clic.

@@ -26,6 +26,7 @@ SOURCES += \
     hmi/PostCheckDialog.cpp \
     hmi/DuplicatesDialog.cpp \
     hmi/ProfileBar.cpp \
+    hmi/PostTargetsBox.cpp \
     hmi/PostingWidget.cpp \
     hmi/SignedListWidget.cpp \
     hmi/ServersWidget.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     hmi/PostCheckDialog.h \
     hmi/DuplicatesDialog.h \
     hmi/ProfileBar.h \
+    hmi/PostTargetsBox.h \
     hmi/HelpWidget.h \
     hmi/PostingWidget.h \
     hmi/SignedListWidget.h \

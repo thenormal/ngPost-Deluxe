@@ -456,6 +456,20 @@ QToolButton#groupChipClose {
 QToolButton#groupChipClose:hover {
     color: #d13438;
 }
+QToolButton#groupChipStar {
+    background: transparent;
+    border: none;
+    padding: 0px;
+}
+QToolButton#groupsFavButton {
+    background: transparent;
+    border: none;
+    padding: 0px;
+}
+QToolButton#groupsFavButton:hover {
+    background: @selection@;
+    border-radius: 4px;
+}
 
 /* ---------- progress bar ---------- */
 QProgressBar {

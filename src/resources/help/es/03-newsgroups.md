@@ -13,6 +13,14 @@ Cada grupo de noticias es una pequeña «etiqueta»:
 
 Un nombre válido tiene letras minúsculas, dígitos, `+`, `_` o `-`, separados por puntos, por ejemplo `alt.binaries.test`.
 
+## Favoritos
+
+Haz clic en la estrella de un grupo para hacerlo favorito (otro clic lo quita). Los favoritos aparecen primero en las sugerencias, en todos los cuadros de grupos. El botón de la estrella a la derecha del cuadro los muestra: haz clic en uno para añadirlo al cuadro o quitarlo. Se guardan en el archivo de configuración (clave `favorite_groups`).
+
+## Los grupos de una sola publicación
+
+Quick Post y la publicación automática tienen su propio cuadro **Grupos**. Vacío, muestra los grupos de los Ajustes, que son los que se usan. Rellénalo para publicar en otros grupos sin cambiar los Ajustes; un perfil puede guardar estos grupos. El menú "Adónde van las publicaciones" de los Ajustes también se aplica a ellos.
+
 ## Comprobaciones antes de publicar
 
 ngPost no inicia una publicación si no hay ningún grupo de noticias, o si alguno no es válido. El mensaje te indica que los corrijas en Ajustes.

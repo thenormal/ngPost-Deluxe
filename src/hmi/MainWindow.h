@@ -225,6 +225,7 @@ public slots:
 
 public slots:
     void scheduleAutoSave(); //!< to be called after any change of a setting (the save is delayed and grouped)
+    void autoSaveForm(int tab); //!< same for a change of the form of Quick Post (0) or Auto Posting (1)
 
 private slots:
     void onNavClicked(int id);

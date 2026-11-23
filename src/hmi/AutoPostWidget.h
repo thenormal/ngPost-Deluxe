@@ -30,6 +30,7 @@
 class NgPost;
 class MainWindow;
 class ProfileBar;
+class PostTargetsBox;
 class NfoCard;
 class QFileInfo;
 
@@ -62,6 +63,8 @@ private:
     QLabel             *_monitorTitle;
     QWidget            *_advancedCard;
     ProfileBar         *_profileBar;
+    PostTargetsBox     *_targets = nullptr; //!< name template, newsgroups, servers and NZB folder of the posts
+    QLabel             *_targetsTitle = nullptr;
     NfoCard            *_nfoCard;
     QPushButton        *_advancedToggle;
     bool                _showAdvanced;
@@ -102,6 +105,9 @@ private:
     void _buildLayout();
     void _retranslateLayout();
     int                 _currentPostIdx;
+protected:
+    void showEvent(QShowEvent *event) override;
+private:
 
     static constexpr int sCompletedRole = Qt::UserRole + 1; //!< set on the items uploaded without error
 

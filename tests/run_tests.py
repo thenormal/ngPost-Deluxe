@@ -1505,6 +1505,68 @@ def test_queue_keeps_order_priority_pause(work):
         stub.stop()
 
 
+def test_post_profile_unit(work):
+    # PostProfile / PostTargets: old and new profile lines of the config file, name templates
+    qmake = shutil.which("qmake") or shutil.which("qmake-qt5")
+    if not qmake:
+        print("      (qmake not found: this test is skipped)")
+        return
+    here = os.path.dirname(os.path.abspath(__file__))
+    build = os.path.join(work, "unit_post_profile")
+    os.makedirs(build)
+    r = subprocess.run([qmake, os.path.join(here, "unit", "post_profile_test.pro")], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "qmake failed\n" + r.stdout + r.stderr)
+    r = subprocess.run(["make", "-j4"], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "build failed\n" + r.stdout[-2000:] + r.stderr[-2000:])
+    r = subprocess.run([os.path.join(build, "post_profile_test")], capture_output=True, text=True)
+    check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
+
+
+def test_queue_post_uses_its_servers(work):
+    # a post that has its own servers (profile) keeps them in the queue file and only uses them;
+    # servers that are not in the configuration anymore: the enabled servers are used
+    import json
+    stub = NntpStub(policy=slow).start()
+    first = os.path.join(work, "first.bin")
+    make_file(first, 400_000, 71)
+    try:
+        start_and_kill(stub, work, [first], os.path.join(work, "first.nzb"), after=2)
+    finally:
+        stub.stop()
+    entries = queue_entries(work)
+    check(len(entries) == 1 and "servers" not in entries[0], "unexpected queue entry: %s" % entries)
+
+    a, b = NntpStub().start(), NntpStub().start()
+    try:
+        datas = {}
+        posts = []
+        for name, servers, seed in [("onb", ["user@127.0.0.1:%d" % b.port], 72), ("gone", ["nobody@10.9.9.9:119"], 73)]:
+            path = os.path.join(work, name + ".bin")
+            datas[name] = make_file(path, 600_000, seed)
+            entry = dict(entries[0])
+            entry.update({"id": "test-" + name, "files": [path], "nzb": os.path.join(work, name + ".nzb"),
+                          "nzbFinal": False, "servers": servers})
+            posts.append(entry)
+        path = os.path.join(work, "ngPost_queue.json")
+        with open(path) as f:
+            root = json.load(f)
+        root["posts"] = posts
+        with open(path, "w") as f:
+            json.dump(root, f)
+
+        r = run_ngpost_conf([a, b], work, [], None, conns=2, threads=1, extra=["--resume_queue"])
+        check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT[-2000:]))
+        on_a, on_b = set(a.rebuild_files()), set(b.rebuild_files())
+        check(b.rebuild_files().get("onb.bin") == datas["onb"], "the post with its own server is not complete on it")
+        check("onb.bin" in on_b and "onb.bin" not in on_a,
+              "the post with its own server went elsewhere: A %s, B %s" % (sorted(on_a), sorted(on_b)))
+        check("gone.bin" in on_a | on_b, "the post whose server is gone was not posted: A %s, B %s\n%s"
+              % (sorted(on_a), sorted(on_b), LAST_OUTPUT[-2000:]))
+    finally:
+        a.stop()
+        b.stop()
+
+
 TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_retry_after_refusals, test_wrong_password, test_some_logins_refused,
          test_article_always_refused_on_one_connection, test_server_going_down,
@@ -1519,7 +1581,8 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_notification_when_all_done, test_version_number_unit, test_post_request_unit, test_translations_compiled,
          test_speed_limiter_unit, test_speed_limit, test_process_text_unit,
          test_7z_folder_without_recursion, test_post_list, test_post_list_unit,
-         test_queue_order_unit, test_queue_keeps_order_priority_pause]
+         test_queue_order_unit, test_queue_keeps_order_priority_pause, test_post_profile_unit,
+         test_queue_post_uses_its_servers]
 
 
 def main():

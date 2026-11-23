@@ -13,6 +13,14 @@ Each newsgroup is a small "chip":
 
 A valid name has lowercase letters, digits, `+`, `_` or `-`, separated by dots, for example `alt.binaries.test`.
 
+## Favorites
+
+Click the star of a chip to make the group a favorite (click it again to remove it). The favorites come first in the suggestions, in every groups box. The star button on the right of the box lists them: click one to add it to the box or to remove it. They are saved in the configuration file (key `favorite_groups`).
+
+## The groups of one post
+
+Quick Post and Auto Posting have their own **Newsgroups** box. Empty, it shows the groups of the Settings, and those are used. Fill it to post in other groups without changing the Settings; a profile can keep these groups. The menu "Where the posts go" of the Settings applies to them too.
+
 ## Checks before posting
 
 ngPost does not start a post if there is no newsgroup, or if one of them is not valid. The message tells you to fix them in Settings.

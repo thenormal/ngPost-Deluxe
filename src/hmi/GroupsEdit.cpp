@@ -7,6 +7,11 @@
 #include <QLabel>
 #include <QLayout>
 #include <QLineEdit>
+#include <QMenu>
+#include <QPainter>
+#include <QPainterPath>
+#include <QtMath>
+#include <QResizeEvent>
 #include <QRegularExpression>
 #include <QStringListModel>
 #include <QStyle>
@@ -85,6 +90,67 @@ private:
 };
 
 
+namespace
+{
+//! a star drawn (the star of the fonts is missing or clipped on some systems)
+QIcon starIcon(bool filled, int size = 14)
+{
+    const qreal dpr = 2;
+    QPixmap pix(qRound(size * dpr), qRound(size * dpr));
+    pix.setDevicePixelRatio(dpr);
+    pix.fill(Qt::transparent);
+    QPainter p(&pix);
+    p.setRenderHint(QPainter::Antialiasing, true);
+    QPainterPath path;
+    const QPointF c(size / 2.0, size / 2.0 + 0.6);
+    const qreal outer = size / 2.0 - 0.8, inner = outer * 0.45;
+    for (int i = 0; i < 10; ++i)
+    {
+        qreal a = -M_PI / 2 + i * M_PI / 5;
+        qreal r = (i % 2) ? inner : outer;
+        QPointF pt(c.x() + r * qCos(a), c.y() + r * qSin(a));
+        if (i == 0)
+            path.moveTo(pt);
+        else
+            path.lineTo(pt);
+    }
+    path.closeSubpath();
+    const QColor gold("#e3a008");
+    p.setPen(QPen(filled ? gold : QColor("#8a8f98"), 1.1));
+    p.setBrush(filled ? QBrush(gold) : QBrush(Qt::NoBrush));
+    p.drawPath(path);
+    return QIcon(pix);
+}
+} // namespace
+
+FavoriteGroups *FavoriteGroups::instance()
+{
+    static FavoriteGroups *favorites = new FavoriteGroups();
+    return favorites;
+}
+
+void FavoriteGroups::setGroups(const QStringList &groups)
+{
+    QStringList list;
+    for (const QString &g : groups)
+        if (!g.trimmed().isEmpty() && !list.contains(g.trimmed().toLower()))
+            list << g.trimmed().toLower();
+    if (list == _groups)
+        return;
+    _groups = list;
+    emit changed();
+}
+
+void FavoriteGroups::toggle(const QString &group)
+{
+    QStringList list = _groups;
+    if (list.contains(group))
+        list.removeAll(group);
+    else
+        list << group;
+    setGroups(list);
+}
+
 QStringList GroupsEdit::suggestions()
 {
     return {
@@ -120,7 +186,8 @@ GroupsEdit::GroupsEdit(QWidget *parent) :
     _flow->addWidget(_input);
     setFocusProxy(_input);
 
-    _completer = new QCompleter(suggestions(), this);
+    _model = new QStringListModel(this);
+    _completer = new QCompleter(_model, this);
     _completer->setCaseSensitivity(Qt::CaseInsensitive);
     _completer->setFilterMode(Qt::MatchContains);
     _input->setCompleter(_completer);
@@ -133,6 +200,19 @@ GroupsEdit::GroupsEdit(QWidget *parent) :
         });
     });
 
+    // favorites: a button on the right opens the list of the groups with a star
+    _flow->setContentsMargins(5, 5, 32, 5);
+    _favButton = new QToolButton(this);
+    _favButton->setObjectName("groupsFavButton");
+    _favButton->setIcon(starIcon(true, 16));
+    _favButton->setIconSize(QSize(16, 16));
+    _favButton->setCursor(Qt::PointingHandCursor);
+    _favButton->setAutoRaise(true);
+    _favButton->setFixedSize(24, 22);
+    connect(_favButton, &QToolButton::clicked, this, &GroupsEdit::_showFavoritesMenu);
+    connect(FavoriteGroups::instance(), &FavoriteGroups::changed, this, &GroupsEdit::_refreshFavorites);
+    _refreshFavorites();
+
     connect(_input, &QLineEdit::textEdited, this, &GroupsEdit::onTextEdited);
     connect(_input, &QLineEdit::returnPressed, this, &GroupsEdit::commitText);
     _input->installEventFilter(this);
@@ -143,6 +223,8 @@ void GroupsEdit::retranslate()
 {
     _updatePlaceholder();
     _input->setToolTip(tr("Type a newsgroup and press Enter (or comma, or space). Suggestions appear while you type."));
+    _favButton->setToolTip(tr("Favorite newsgroups: add one with a click. Click the star of a group to make it a favorite."));
+    _refreshFavorites();
     for (QFrame *chip : _chips)
         if (chip->property("invalid").toBool())
             chip->setToolTip(tr("This does not look like a newsgroup name (for example alt.binaries.test)"));
@@ -150,7 +232,70 @@ void GroupsEdit::retranslate()
 
 void GroupsEdit::_updatePlaceholder()
 {
-    _input->setPlaceholderText(_chips.isEmpty() ? tr("Add a newsgroup, for example alt.binaries.test") : tr("add..."));
+    if (_chips.isEmpty())
+        _input->setPlaceholderText(_emptyHint.isEmpty() ? tr("Add a newsgroup, for example alt.binaries.test") : _emptyHint);
+    else
+        _input->setPlaceholderText(tr("add..."));
+}
+
+void GroupsEdit::setEmptyHint(const QString &hint)
+{
+    _emptyHint = hint;
+    _updatePlaceholder();
+}
+
+void GroupsEdit::_refreshFavorites()
+{
+    FavoriteGroups *fav = FavoriteGroups::instance();
+    QStringList list = fav->groups();
+    for (const QString &g : suggestions())
+        if (!list.contains(g))
+            list << g;
+    _model->setStringList(list);
+    for (QFrame *chip : _chips)
+    {
+        QToolButton *star = chip->findChild<QToolButton*>("groupChipStar");
+        if (!star)
+            continue;
+        bool on = fav->contains(chip->property("group").toString());
+        star->setIcon(starIcon(on));
+        star->setIconSize(QSize(14, 14));
+        star->setProperty("favorite", on);
+        star->setToolTip(on ? tr("Remove from the favorites") : tr("Add to the favorites"));
+        star->style()->unpolish(star);
+        star->style()->polish(star);
+    }
+}
+
+void GroupsEdit::_showFavoritesMenu()
+{
+    QMenu menu(this);
+    const QStringList favorites = FavoriteGroups::instance()->groups();
+    if (favorites.isEmpty())
+    {
+        QAction *none = menu.addAction(tr("No favorite yet: click the star of a group to add it"));
+        none->setEnabled(false);
+    }
+    for (const QString &g : favorites)
+    {
+        QAction *a = menu.addAction(g);
+        a->setCheckable(true);
+        a->setChecked(_findChip(g) != nullptr);
+        connect(a, &QAction::triggered, this, [this, g](bool checked) {
+            if (checked)
+                _addGroup(g);
+            else if (QFrame *chip = _findChip(g))
+                _removeChip(chip);
+            emit changed();
+        });
+    }
+    menu.exec(_favButton->mapToGlobal(QPoint(0, _favButton->height())));
+}
+
+void GroupsEdit::resizeEvent(QResizeEvent *event)
+{
+    QFrame::resizeEvent(event);
+    _favButton->move(width() - _favButton->width() - 5, 5);
 }
 
 QStringList GroupsEdit::groups() const
@@ -193,8 +338,14 @@ bool GroupsEdit::_addGroup(const QString &text)
         chip->setToolTip(tr("This does not look like a newsgroup name (for example alt.binaries.test)"));
 
     QHBoxLayout *lay = new QHBoxLayout(chip);
-    lay->setContentsMargins(8, 1, 3, 1);
+    lay->setContentsMargins(3, 1, 3, 1);
     lay->setSpacing(2);
+    QToolButton *star = new QToolButton(chip);
+    star->setObjectName("groupChipStar");
+    star->setCursor(Qt::PointingHandCursor);
+    star->setAutoRaise(true);
+    star->setVisible(!invalid);
+    connect(star, &QToolButton::clicked, this, [group]() { FavoriteGroups::instance()->toggle(group); });
     QLabel *label = new QLabel(group, chip);
     label->setObjectName("groupChipText");
     QToolButton *close = new QToolButton(chip);
@@ -202,6 +353,7 @@ bool GroupsEdit::_addGroup(const QString &text)
     close->setText(QString::fromUtf8("\xc3\x97")); // multiplication sign
     close->setCursor(Qt::PointingHandCursor);
     close->setAutoRaise(true);
+    lay->addWidget(star);
     lay->addWidget(label);
     lay->addWidget(close);
     connect(close, &QToolButton::clicked, this, [this, chip]() {
@@ -214,6 +366,7 @@ bool GroupsEdit::_addGroup(const QString &text)
     _chips << chip;
     chip->show();
     _updatePlaceholder();
+    _refreshFavorites();
     return true;
 }
 

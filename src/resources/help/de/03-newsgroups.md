@@ -13,6 +13,14 @@ Jede Newsgroup ist ein kleiner „Chip“:
 
 Ein gültiger Name besteht aus Kleinbuchstaben, Ziffern, `+`, `_` oder `-`, durch Punkte getrennt, zum Beispiel `alt.binaries.test`.
 
+## Favoriten
+
+Klicken Sie auf den Stern eines Chips, um die Gruppe zum Favoriten zu machen (erneut klicken entfernt ihn). Die Favoriten stehen in jedem Gruppenfeld zuerst in den Vorschlägen. Die Stern-Schaltfläche rechts im Feld listet sie auf: Ein Klick fügt eine Gruppe hinzu oder entfernt sie. Sie werden in der Konfigurationsdatei gespeichert (Schlüssel `favorite_groups`).
+
+## Die Gruppen eines einzelnen Posts
+
+Quick Post und Auto-Posting haben ein eigenes Feld **Newsgroups**. Leer zeigt es die Gruppen der Einstellungen, die dann verwendet werden. Füllen Sie es aus, um in anderen Gruppen zu posten, ohne die Einstellungen zu ändern; ein Profil kann diese Gruppen speichern. Das Menü "Wohin die Posts gehen" der Einstellungen gilt auch für sie.
+
 ## Prüfungen vor dem Posten
 
 ngPost startet keinen Post, wenn keine Newsgroup vorhanden ist oder eine davon ungültig ist. Die Meldung fordert Sie auf, sie in den Einstellungen zu korrigieren.

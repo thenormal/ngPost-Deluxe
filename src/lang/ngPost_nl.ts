@@ -862,6 +862,34 @@ Voeg bestanden of mappen toe, of scan een map, en laat aangevinkt wat je wilt po
         <source>The posts go in the queue (page Posts) but don't start: resume them there when you want</source>
         <translation>De posts gaan in de wachtrij (pagina Posts) maar starten niet: hervat ze daar wanneer je wilt</translation>
     </message>
+    <message>
+        <source>Name, newsgroups and servers</source>
+        <translation>Naam, nieuwsgroepen en servers</translation>
+    </message>
+    <message>
+        <source>These newsgroups are not valid: %1. Fix them in the card %2.</source>
+        <translation>Deze nieuwsgroepen zijn ongeldig: %1. Verbeter ze in de kaart %2.</translation>
+    </message>
+    <message>
+        <source>%1 is already watched</source>
+        <translation>%1 wordt al gevolgd</translation>
+    </message>
+    <message>
+        <source>%1 is also watched, with the options of the folders already watched</source>
+        <translation>%1 wordt ook gevolgd, met de opties van de al gevolgde mappen</translation>
+    </message>
+    <message>
+        <source>A folder is watched</source>
+        <translation>Er wordt een map gevolgd</translation>
+    </message>
+    <message>
+        <source>Stop watching the folder before scanning another one.</source>
+        <translation>Stop met het volgen van de map voordat je een andere doorzoekt.</translation>
+    </message>
+    <message>
+        <source>The folder %1 is empty.</source>
+        <translation>De map %1 is leeg.</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3606,6 +3634,18 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
         <source>Resumed</source>
         <translation>Hervat</translation>
     </message>
+    <message>
+        <source>Last number used by {n} in a name template</source>
+        <translation>Laatste nummer gebruikt door {n} in een naamsjabloon</translation>
+    </message>
+    <message>
+        <source>Newsgroups marked as favorites (shown first in the suggestions)</source>
+        <translation>Nieuwsgroepen gemarkeerd als favoriet (eerst in de suggesties)</translation>
+    </message>
+    <message>
+        <source>Newsgroups, servers, NZB folder and name template of the last session (groups|servers|NZB folder|template, empty = the ones of the Settings)</source>
+        <translation>Nieuwsgroepen, servers, NZB-map en naamsjabloon van de laatste sessie (groepen|servers|NZB-map|sjabloon, leeg = die van de Instellingen)</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4212,6 +4252,14 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
     <message>
         <source>... more messages from the compression program are not shown (see the diagnostic report).</source>
         <translation>... verdere meldingen van het compressieprogramma worden niet getoond (zie het diagnoserapport).</translation>
+    </message>
+    <message>
+        <source>Servers of this post: %1</source>
+        <translation>Servers van deze post: %1</translation>
+    </message>
+    <message>
+        <source>The servers chosen for this post are not in the list of servers anymore (%1): the enabled servers are used</source>
+        <translation>De servers die voor deze post gekozen zijn staan niet meer in de lijst (%1): de ingeschakelde servers worden gebruikt</translation>
     </message>
 </context>
 <context>
@@ -4889,6 +4937,22 @@ Klik op ‘Toevoegen’ om je Usenet-provider in te stellen.</translation>
         <source>add...</source>
         <translation>toevoegen...</translation>
     </message>
+    <message>
+        <source>Add to the favorites</source>
+        <translation>Aan favorieten toevoegen</translation>
+    </message>
+    <message>
+        <source>Remove from the favorites</source>
+        <translation>Uit favorieten verwijderen</translation>
+    </message>
+    <message>
+        <source>Favorite newsgroups: add one with a click. Click the star of a group to make it a favorite.</source>
+        <translation>Favoriete nieuwsgroepen: voeg er een toe met één klik. Klik op de ster van een groep om er een favoriet van te maken.</translation>
+    </message>
+    <message>
+        <source>No favorite yet: click the star of a group to add it</source>
+        <translation>Nog geen favorieten: klik op de ster van een groep om hem toe te voegen</translation>
+    </message>
 </context>
 <context>
     <name>FeedbackDialog</name>
@@ -5029,6 +5093,78 @@ Klik op ‘Toevoegen’ om je Usenet-provider in te stellen.</translation>
     <message>
         <source>Delete the profile "%1"?</source>
         <translation>Het profiel "%1" verwijderen?</translation>
+    </message>
+    <message>
+        <source>Save the current options (compression, random name and password, par2, keep the archives) under a name, and if you want the name template, the newsgroups, the servers and the NZB folder</source>
+        <translation>Sla de huidige opties (compressie, willekeurige naam en wachtwoord, par2, archieven bewaren) op onder een naam en, als je wilt, het naamsjabloon, de nieuwsgroepen, de servers en de NZB-map</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>ja</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>nee</translation>
+    </message>
+    <message>
+        <source>Compress: %1, random name: %2, random password: %3</source>
+        <translation>Comprimeren: %1, willekeurige naam: %2, willekeurig wachtwoord: %3</translation>
+    </message>
+    <message>
+        <source>par2: %1 %</source>
+        <translation>par2: %1 %</translation>
+    </message>
+    <message>
+        <source>par2: no</source>
+        <translation>par2: nee</translation>
+    </message>
+    <message>
+        <source>Keep the archives</source>
+        <translation>Archieven bewaren</translation>
+    </message>
+    <message>
+        <source>Name: %1</source>
+        <translation>Naam: %1</translation>
+    </message>
+    <message>
+        <source>Newsgroups: %1</source>
+        <translation>Nieuwsgroepen: %1</translation>
+    </message>
+    <message>
+        <source>Servers: %1</source>
+        <translation>Servers: %1</translation>
+    </message>
+    <message>
+        <source>NZB folder: %1</source>
+        <translation>NZB-map: %1</translation>
+    </message>
+    <message>
+        <source>The options of the archive are always saved. Also save in the profile:</source>
+        <translation>De opties van het archief worden altijd opgeslagen. Ook opslaan in het profiel:</translation>
+    </message>
+    <message>
+        <source>Empty: the profile doesn't change it</source>
+        <translation>Leeg: het profiel verandert het niet</translation>
+    </message>
+    <message>
+        <source>Name template</source>
+        <translation>Naamsjabloon</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>Nieuwsgroepen</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>Servers</translation>
+    </message>
+    <message>
+        <source>NZB folder</source>
+        <translation>NZB-map</translation>
+    </message>
+    <message>
+        <source>A part that is not saved is not changed when the profile is chosen.</source>
+        <translation>Een onderdeel dat niet is opgeslagen, verandert niet als het profiel wordt gekozen.</translation>
     </message>
 </context>
 <context>
@@ -6358,12 +6494,89 @@ In de lijst houden?</translation>
         <translation>De grafiek begint wanneer de upload start.</translation>
     </message>
     <message>
-        <source>No graph for this post (only the posts uploaded since the program started have one).</source>
-        <translation>Geen grafiek voor deze post (alleen posts die sinds het starten van het programma zijn geüpload hebben er een).</translation>
+        <source>No graph for this post: its upload was too short or did not happen.</source>
+        <translation>Geen grafiek voor deze post: de upload was te kort of vond niet plaats.</translation>
     </message>
     <message>
         <source>Last %1/s - best %2/s - average %3/s</source>
         <translation>Laatste %1/s - hoogste %2/s - gemiddelde %3/s</translation>
+    </message>
+</context>
+<context>
+    <name>PostTargetsBox</name>
+    <message>
+        <source>Name</source>
+        <translation>Naam</translation>
+    </message>
+    <message>
+        <source>{name} (the name of the file or folder)</source>
+        <translation>{name} (de naam van het bestand of de map)</translation>
+    </message>
+    <message>
+        <source>Template of the name of the post (NZB file):
+{name} the name of the file or folder
+{date} the date (2026-11-23)
+{time} the time (15-04)
+{n} a number that grows by one at each post
+Example: {name} [{date}]. Empty: the name of the file or folder.</source>
+        <translation>Sjabloon voor de naam van de post (NZB-bestand):
+{name} de naam van het bestand of de map
+{date} de datum (2026-11-23)
+{time} de tijd (15-04)
+{n} een nummer dat bij elke post met één stijgt
+Voorbeeld: {name} [{date}]. Leeg: de naam van het bestand of de map.</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>Nieuwsgroepen</translation>
+    </message>
+    <message>
+        <source>Newsgroups of this post. Empty: the newsgroups of the Settings.</source>
+        <translation>Nieuwsgroepen van deze post. Leeg: de nieuwsgroepen van de Instellingen.</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>Servers</translation>
+    </message>
+    <message>
+        <source>Servers used for this post. By default, all the servers enabled in the page Servers.</source>
+        <translation>Servers die voor deze post gebruikt worden. Standaard alle servers die op de pagina Servers zijn ingeschakeld.</translation>
+    </message>
+    <message>
+        <source>NZB folder</source>
+        <translation>NZB-map</translation>
+    </message>
+    <message>
+        <source>Folder of the NZB files of these posts. Empty: the folder of the Settings.</source>
+        <translation>Map van de NZB-bestanden van deze posts. Leeg: de map van de Instellingen.</translation>
+    </message>
+    <message>
+        <source>Select a Folder</source>
+        <translation>Kies een map</translation>
+    </message>
+    <message>
+        <source>Settings: %1</source>
+        <translation>Instellingen: %1</translation>
+    </message>
+    <message>
+        <source>Add a newsgroup, for example alt.binaries.test</source>
+        <translation>Voeg een nieuwsgroep toe, bijvoorbeeld alt.binaries.test</translation>
+    </message>
+    <message>
+        <source>All the enabled servers (%1)</source>
+        <translation>Alle ingeschakelde servers (%1)</translation>
+    </message>
+    <message>
+        <source>All the enabled servers (page Servers)</source>
+        <translation>Alle ingeschakelde servers (pagina Servers)</translation>
+    </message>
+    <message>
+        <source>%1 (disabled in the page Servers)</source>
+        <translation>%1 (uitgeschakeld op de pagina Servers)</translation>
+    </message>
+    <message>
+        <source>%1 (not in the list)</source>
+        <translation>%1 (niet in de lijst)</translation>
     </message>
 </context>
 </TS>

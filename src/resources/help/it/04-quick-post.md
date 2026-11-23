@@ -27,6 +27,16 @@ Quando premi **Posta i file**, ngPost controlla prima il post. Se qualcosa non v
 
 Dopo una correzione i controlli ripartono, così un nuovo problema salta fuori subito invece che a metà del post. Post automatico non ha ancora questa finestra.
 
+## Nome, newsgroup e server
+
+La scheda **NZB** ha tre righe in più. Se una è vuota, vale quello che è impostato nelle Impostazioni.
+
+- **Nome**: un modello per il nome del post (il file NZB e, senza nome casuale, l'archivio): `{name}` è il nome del file o della cartella, `{date}` la data (2026-11-23), `{time}` l'ora (15-04) e `{n}` un numero che cresce di uno a ogni post. Esempio: `{name} [{date}]`.
+- **Newsgroup**: i gruppi di questo post, con i preferiti (vedi [Newsgroup](03-newsgroups.md)).
+- **Server**: tutti i server attivi (predefinito) o solo quelli che spunti nel menu. Un post tiene i suoi server nella coda, anche dopo un riavvio.
+
+Queste righe vengono ricordate alla chiusura del programma.
+
 ## Profili
 
 Il menu **Profilo** sopra le schede imposta tutte le opzioni in una volta.
@@ -36,6 +46,8 @@ Il menu **Profilo** sopra le schede imposta tutte le opzioni in una volta.
 - **I tuoi profili**: imposta le opzioni, premi **Salva come profilo...** e dagli un nome. **Elimina** rimuove il profilo scelto. I profili sono salvati nel file di configurazione (chiave `profile`) e sono gli stessi in Quick Post e in Post automatico.
 
 Anche la scheda **File NFO** (vedi [File NZB](09-nzb-files.md)) è condivisa: Quick Post e Post automatico mostrano le stesse impostazioni.
+
+Quando salvi un profilo puoi salvare anche il modello del nome, i newsgroup, i server e la cartella NZB (spunta quello che vuoi nella finestra). Una parte non salvata non viene cambiata quando scegli il profilo. Passa il mouse su un profilo del menu per vedere cosa contiene.
 
 ## Dopo Posta i file
 

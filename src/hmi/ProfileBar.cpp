@@ -18,6 +18,14 @@
 
 #include "ProfileBar.h"
 #include "NgPost.h"
+#include "PostTargetsBox.h"
+#include <QCheckBox>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QDir>
+#include <QFormLayout>
+#include <QLineEdit>
+#include <QVBoxLayout>
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QInputDialog>
@@ -61,7 +69,8 @@ void ProfileBar::retranslate()
 {
     _label->setText(tr("Profile:"));
     _saveButton->setText(tr("Save as profile..."));
-    _saveButton->setToolTip(tr("Save the current options (compression, random name and password, par2, keep the archives) under a name"));
+    _saveButton->setToolTip(tr("Save the current options (compression, random name and password, par2, keep the archives) under a name, "
+                               "and if you want the name template, the newsgroups, the servers and the NZB folder"));
     _deleteButton->setText(tr("Delete"));
     _deleteButton->setToolTip(tr("Delete the chosen profile"));
     QString sel = _combo->currentIndex() >= 2 ? _combo->currentText() : QString();
@@ -79,7 +88,10 @@ void ProfileBar::_fill(const QString &select)
     _combo->addItem(tr("Custom"));
     _combo->addItem(tr("Recommended (compression, random name and password, par2 10 %)"));
     for (const PostProfile &p : _ngPost->_profiles)
+    {
         _combo->addItem(p.name);
+        _combo->setItemData(_combo->count() - 1, _describe(p), Qt::ToolTipRole);
+    }
     int idx = select.isEmpty() ? qMax(0, keep) : _combo->findText(select);
     _combo->setCurrentIndex(idx < 0 || idx >= _combo->count() ? 0 : idx);
     _deleteButton->setEnabled(_combo->currentIndex() >= 2);
@@ -116,6 +128,33 @@ static bool sameOptions(const PostProfile &a, const PostProfile &b)
 {
     return a.compress == b.compress && a.genName == b.genName && a.genPass == b.genPass
             && a.par2 == b.par2 && a.par2Pct == b.par2Pct && a.keepRar == b.keepRar;
+}
+
+QString ProfileBar::_describe(const PostProfile &p) const
+{
+    auto yesNo = [](bool on) { return on ? tr("yes") : tr("no"); };
+    QStringList lines;
+    lines << tr("Compress: %1, random name: %2, random password: %3").arg(yesNo(p.compress), yesNo(p.genName), yesNo(p.genPass));
+    lines << (p.par2 ? tr("par2: %1 %").arg(p.par2Pct) : tr("par2: no"));
+    if (p.keepRar)
+        lines << tr("Keep the archives");
+    if (!p.targets.nameTemplate.isEmpty())
+        lines << tr("Name: %1").arg(p.targets.nameTemplate);
+    if (!p.targets.groups.isEmpty())
+        lines << tr("Newsgroups: %1").arg(p.targets.groups.join(", "));
+    if (!p.targets.servers.isEmpty())
+        lines << tr("Servers: %1").arg(PostTargetsBox::serversText(_ngPost, p.targets.servers));
+    if (!p.targets.nzbDir.isEmpty())
+        lines << tr("NZB folder: %1").arg(QDir::toNativeSeparators(p.targets.nzbDir));
+    return lines.join("\n");
+}
+
+const PostProfile *ProfileBar::selectedProfile() const
+{
+    int idx = _combo->currentIndex();
+    if (idx >= 2 && idx - 2 < _ngPost->_profiles.size())
+        return &_ngPost->_profiles.at(idx - 2);
+    return nullptr;
 }
 
 QString ProfileBar::selectedName() const
@@ -209,30 +248,89 @@ void ProfileBar::_onSave()
 {
     if (!_current)
         return;
-    bool ok = false;
-    QString name = PostProfile::cleanName(QInputDialog::getText(this, tr("Save as profile"), tr("Name of the profile:"),
-                                                                 QLineEdit::Normal, _combo->currentIndex() >= 2 ? _combo->currentText() : QString(), &ok));
-    if (!ok || name.isEmpty())
-        return;
-    if (name.compare(tr("Custom"), Qt::CaseInsensitive) == 0 || name.compare("Custom", Qt::CaseInsensitive) == 0
-            || name.compare("Recommended", Qt::CaseInsensitive) == 0 || name.startsWith("Recommended ", Qt::CaseInsensitive))
+    const PostProfile now = _current();
+    const PostTargets &t = now.targets;
+
+    QDialog dlg(this);
+    dlg.setWindowTitle(tr("Save as profile"));
+    QVBoxLayout *v = new QVBoxLayout(&dlg);
+    QFormLayout *form = new QFormLayout();
+    QLineEdit *nameEdit = new QLineEdit(_combo->currentIndex() >= 2 ? _combo->currentText() : QString(), &dlg);
+    nameEdit->setMinimumWidth(320);
+    form->addRow(tr("Name of the profile:"), nameEdit);
+    v->addLayout(form);
+    QLabel *info = new QLabel(tr("The options of the archive are always saved. Also save in the profile:"), &dlg);
+    info->setWordWrap(true);
+    v->addWidget(info);
+    auto addPart = [&dlg, v](const QString &label, const QString &value) {
+        QCheckBox *cb = new QCheckBox(value.isEmpty() ? label : QString("%1: %2").arg(label, value), &dlg);
+        cb->setEnabled(!value.isEmpty());
+        if (value.isEmpty())
+            cb->setToolTip(tr("Empty: the profile doesn't change it"));
+        v->addWidget(cb);
+        return cb;
+    };
+    QCheckBox *nameCB    = addPart(tr("Name template"), t.nameTemplate);
+    QCheckBox *groupsCB  = addPart(tr("Newsgroups"), t.groups.join(", "));
+    QCheckBox *serversCB = addPart(tr("Servers"), t.servers.isEmpty() ? QString() : PostTargetsBox::serversText(_ngPost, t.servers));
+    QCheckBox *nzbCB     = addPart(tr("NZB folder"), QDir::toNativeSeparators(t.nzbDir));
+    QLabel *hint = new QLabel(tr("A part that is not saved is not changed when the profile is chosen."), &dlg);
+    hint->setObjectName("hint");
+    hint->setWordWrap(true);
+    v->addWidget(hint);
+    QDialogButtonBox *buttons = new QDialogButtonBox(QDialogButtonBox::Save | QDialogButtonBox::Cancel, &dlg);
+    v->addWidget(buttons);
+    connect(buttons, &QDialogButtonBox::accepted, &dlg, &QDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, &dlg, &QDialog::reject);
+
+    // what is checked: the parts of the profile that is replaced, else what is set (not the NZB folder)
+    auto setDefaults = [&]() {
+        const QString name = PostProfile::cleanName(nameEdit->text());
+        const PostProfile *old = nullptr;
+        for (const PostProfile &p : _ngPost->_profiles)
+            if (p.name.compare(name, Qt::CaseInsensitive) == 0)
+                old = &p;
+        nameCB->setChecked(nameCB->isEnabled() && (old ? !old->targets.nameTemplate.isEmpty() : true));
+        groupsCB->setChecked(groupsCB->isEnabled() && (old ? !old->targets.groups.isEmpty() : true));
+        serversCB->setChecked(serversCB->isEnabled() && (old ? !old->targets.servers.isEmpty() : true));
+        nzbCB->setChecked(nzbCB->isEnabled() && old && !old->targets.nzbDir.isEmpty());
+    };
+    setDefaults();
+    connect(nameEdit, &QLineEdit::textChanged, &dlg, setDefaults);
+
+    while (true)
     {
-        QMessageBox::information(this, tr("Save as profile"), tr("This name is reserved: choose another one."));
+        if (dlg.exec() != QDialog::Accepted)
+            return;
+        QString name = PostProfile::cleanName(nameEdit->text());
+        if (name.isEmpty())
+            continue;
+        if (name.compare(tr("Custom"), Qt::CaseInsensitive) == 0 || name.compare("Custom", Qt::CaseInsensitive) == 0
+                || name.compare("Recommended", Qt::CaseInsensitive) == 0 || name.startsWith("Recommended ", Qt::CaseInsensitive))
+        {
+            QMessageBox::information(this, tr("Save as profile"), tr("This name is reserved: choose another one."));
+            continue;
+        }
+        PostProfile p = now;
+        p.name = name;
+        p.targets = PostTargets();
+        if (nameCB->isChecked())    p.targets.nameTemplate = t.nameTemplate;
+        if (groupsCB->isChecked())  p.targets.groups       = t.groups;
+        if (serversCB->isChecked()) p.targets.servers      = t.servers;
+        if (nzbCB->isChecked())     p.targets.nzbDir       = t.nzbDir;
+        bool replaced = false;
+        for (PostProfile &old : _ngPost->_profiles)
+            if (old.name.compare(name, Qt::CaseInsensitive) == 0)
+            {
+                old = p;
+                replaced = true;
+            }
+        if (!replaced)
+            _ngPost->_profiles.append(p);
+        _fill(name);
+        emit _ngPost->profilesChanged();
         return;
     }
-    PostProfile p = _current();
-    p.name = name;
-    bool replaced = false;
-    for (PostProfile &old : _ngPost->_profiles)
-        if (old.name.compare(name, Qt::CaseInsensitive) == 0)
-        {
-            old = p;
-            replaced = true;
-        }
-    if (!replaced)
-        _ngPost->_profiles.append(p);
-    _fill(name);
-    emit _ngPost->profilesChanged();
 }
 
 void ProfileBar::_onDelete()

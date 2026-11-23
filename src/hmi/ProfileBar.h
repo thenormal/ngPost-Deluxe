@@ -43,6 +43,7 @@ public:
     void markCustom();         //!< the user changed an option by hand
     void applyRecommendedIfNew(); //!< first start of a new installation: "Recommended"
     QString selectedName() const; //!< name of the chosen profile, "Recommended", or empty for Custom
+    const PostProfile *selectedProfile() const; //!< the chosen saved profile (nullptr: Custom or Recommended)
     void showMatching(const QString &profileName); //!< the options are already set (compress automatically): shows the profile that matches them
     void restore(const PostProfile &options, const QString &profileName = QString()); //!< the options of the last session: shows the matching entry (saved profile, Recommended or Custom)
     void select(const PostProfile &profile); //!< applies the options and shows the matching entry (Guided Post)
@@ -65,6 +66,7 @@ private:
     bool          _busy;
 
     void _fill(const QString &select);
+    QString _describe(const PostProfile &p) const; //!< tooltip of a profile: its options and targets
     void _applyProfile(const PostProfile &profile);
 };
 
