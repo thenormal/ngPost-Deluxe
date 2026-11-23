@@ -3569,6 +3569,14 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Profile chosen when the program was closed (a name of the list of profiles, Recommended, or empty = Custom)</source>
         <translation>关闭程序时选择的配置文件 (配置文件列表中的名称, Recommended, 或留空 = Custom)</translation>
     </message>
+    <message>
+        <source>Cancelled before it started</source>
+        <translation>在开始前已取消</translation>
+    </message>
+    <message>
+        <source>Can't post again the missing Articles of %1: %2</source>
+        <translation>无法重新发布 %1 缺失的文章：%2</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4494,8 +4502,8 @@ Would you like to overwrite it ?</source>
     </message>
     <message>
         <location filename="../hmi/PostingWidget.cpp" line="806"/>
-        <source>&lt;b&gt;One release:&lt;/b&gt; all the files and folders of this list are posted together, with a single NZB file and, if Compress is on, a single archive. To post separate releases, use one tab per release (&lt;i&gt;%1&lt;/i&gt;) or the &lt;i&gt;%2&lt;/i&gt; tab, which makes one post for each file or folder.</source>
-        <translation>&lt;b&gt;一个发布：&lt;/b&gt;此列表中的所有文件和文件夹会一起发布，只生成一个 NZB 文件；如果开启了压缩，也只生成一个压缩包。要分别发布，请每个发布使用一个标签页（&lt;i&gt;%1&lt;/i&gt;），或使用 &lt;i&gt;%2&lt;/i&gt; 标签页，它会为每个文件或文件夹创建一个帖子。</translation>
+        <source>&lt;b&gt;One release:&lt;/b&gt; all the files and folders of this list are posted together, with a single NZB file and, if Compress is on, a single archive. To post separate releases, post them one after the other (the page &lt;i&gt;Posts&lt;/i&gt; shows them all) or use the &lt;i&gt;%1&lt;/i&gt; tab, which makes one post for each file or folder.</source>
+        <translation>&lt;b&gt;一个发布：&lt;/b&gt;此列表中的所有文件和文件夹会一起发布，只生成一个 NZB 文件，如果开启压缩则只生成一个压缩包。要分开发布，请逐个发布（&lt;i&gt;发布列表&lt;/i&gt;页面会显示全部），或使用 &lt;i&gt;%1&lt;/i&gt; 选项卡，它会为每个文件或文件夹分别发布。</translation>
     </message>
     <message>
         <location filename="../hmi/PostingWidget.cpp" line="812"/>
@@ -5856,6 +5864,313 @@ It will be irreversible...</source>
     <message>
         <source>Page %1</source>
         <translation>第 %1 页</translation>
+    </message>
+</context>
+<context>
+    <name>PostsWidget</name>
+    <message>
+        <source>Waiting</source>
+        <translation>等待中</translation>
+    </message>
+    <message>
+        <source>Compressing</source>
+        <translation>压缩中</translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation>par2</translation>
+    </message>
+    <message>
+        <source>Uploading</source>
+        <translation>上传中</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation>已暂停</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>已完成</translation>
+    </message>
+    <message>
+        <source>Done with errors</source>
+        <translation>完成但有错误</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translation>已停止</translation>
+    </message>
+    <message>
+        <source>Cancelled</source>
+        <translation>已取消</translation>
+    </message>
+    <message>
+        <source>Quick Post</source>
+        <translation>Quick Post</translation>
+    </message>
+    <message>
+        <source>Auto Posting</source>
+        <translation>自动发布</translation>
+    </message>
+    <message>
+        <source>Folder scan</source>
+        <translation>扫描文件夹</translation>
+    </message>
+    <message>
+        <source>Watched folder</source>
+        <translation>监视的文件夹</translation>
+    </message>
+    <message>
+        <source>Resumed</source>
+        <translation>已恢复</translation>
+    </message>
+    <message>
+        <source>Missing Articles</source>
+        <translation>缺失的文章</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation>命令行</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>发布列表</translation>
+    </message>
+    <message>
+        <source>All the posts of this session: the ones waiting, the one being posted and the finished ones. Select a post to see its details and its log.</source>
+        <translation>本次会话的所有发布：等待中的、正在发布的和已完成的。选择一个发布可查看其详情和日志。</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>状态</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation>进度</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>大小</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>速度</translation>
+    </message>
+    <message>
+        <source>Remaining</source>
+        <translation>剩余时间</translation>
+    </message>
+    <message>
+        <source>Started by</source>
+        <translation>来源</translation>
+    </message>
+    <message>
+        <source>Open NZB folder</source>
+        <translation>打开 NZB 文件夹</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>复制密码</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>移除</translation>
+    </message>
+    <message>
+        <source>Remove the selected post from the list (only a finished post)</source>
+        <translation>从列表中移除所选发布（仅限已结束的发布）</translation>
+    </message>
+    <message>
+        <source>Remove finished</source>
+        <translation>移除已结束的</translation>
+    </message>
+    <message>
+        <source>Remove all the finished posts from the list</source>
+        <translation>从列表中移除所有已结束的发布</translation>
+    </message>
+    <message>
+        <source>No post yet.
+Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <translation>还没有发布。
+请在引导发布、Quick Post 或自动发布中准备一个：它会显示在这里。</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>详情</translation>
+    </message>
+    <message>
+        <source>Log of the post</source>
+        <translation>发布日志</translation>
+    </message>
+    <message>
+        <source>Done, %1 failed</source>
+        <translation>已完成，%1 个失败</translation>
+    </message>
+    <message>
+        <source>%1 / %2 Articles</source>
+        <translation>%1 / %2 篇文章</translation>
+    </message>
+    <message>
+        <source>took %1</source>
+        <translation>用时 %1</translation>
+    </message>
+    <message>
+        <source>%1 post(s)</source>
+        <translation>%1 个发布</translation>
+    </message>
+    <message>
+        <source>%1 running</source>
+        <translation>%1 个进行中</translation>
+    </message>
+    <message>
+        <source>%1 waiting</source>
+        <translation>%1 个等待中</translation>
+    </message>
+    <message>
+        <source>%1 done</source>
+        <translation>%1 个已完成</translation>
+    </message>
+    <message>
+        <source>%1 with problems</source>
+        <translation>%1 个有问题</translation>
+    </message>
+    <message>
+        <source>Select a post in the list.</source>
+        <translation>请在列表中选择一个发布。</translation>
+    </message>
+    <message>
+        <source>NZB file</source>
+        <translation>NZB 文件</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>压缩包</translation>
+    </message>
+    <message>
+        <source>no compression</source>
+        <translation>不压缩</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>新闻组</translation>
+    </message>
+    <message>
+        <source>and %1 more</source>
+        <translation>还有 %1 个</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>文件</translation>
+    </message>
+    <message>
+        <source>Articles</source>
+        <translation>文章</translation>
+    </message>
+    <message>
+        <source>%1 / %2, %3 failed</source>
+        <translation>%1 / %2，%3 个失败</translation>
+    </message>
+    <message>
+        <source>%1 / %2</source>
+        <translation>%1 / %2</translation>
+    </message>
+    <message>
+        <source>To post again</source>
+        <translation>待重新发布</translation>
+    </message>
+    <message>
+        <source>%1 Article(s)</source>
+        <translation>%1 篇文章</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation>添加时间</translation>
+    </message>
+    <message>
+        <source>Started</source>
+        <translation>开始时间</translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation>结束时间</translation>
+    </message>
+    <message>
+        <source>(%1 older line(s) not kept)</source>
+        <translation>（未保留 %1 行较早的日志）</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>停止</translation>
+    </message>
+    <message>
+        <source>Remove this post from the queue before it starts</source>
+        <translation>在开始前将此发布从队列中移除</translation>
+    </message>
+    <message>
+        <source>Stop this post</source>
+        <translation>停止此发布</translation>
+    </message>
+    <message>
+        <source>Post the missing Articles again (%1)</source>
+        <translation>重新发布缺失的文章（%1）</translation>
+    </message>
+    <message>
+        <source>Stop the post?</source>
+        <translation>停止发布？</translation>
+    </message>
+    <message>
+        <source>Stop the post %1?
+What was already uploaded stays on the server, the rest is not posted.</source>
+        <translation>停止发布 %1？
+已上传的内容会留在服务器上，其余部分不会发布。</translation>
+    </message>
+    <message>
+        <source>Articles are missing</source>
+        <translation>缺少文章</translation>
+    </message>
+    <message>
+        <source>%1 Article(s) of this post couldn't be posted and the nzb file points to them.
+If you remove it from the list you won't be able to post them again.
+
+Remove it anyway?</source>
+        <translation>此发布有 %1 篇文章未能发布，而 NZB 文件指向它们。
+如果从列表中移除，将无法再重新发布它们。
+
+仍要移除吗？</translation>
+    </message>
+    <message>
+        <source>Some finished posts have %1 Article(s) that can still be posted again.
+Keep them in the list?</source>
+        <translation>部分已结束的发布还有 %1 篇文章可以重新发布。
+要把它们保留在列表中吗？</translation>
+    </message>
+    <message>
+        <source>Keep them</source>
+        <translation>保留</translation>
+    </message>
+    <message>
+        <source>Remove them too</source>
+        <translation>也移除</translation>
+    </message>
+    <message>
+        <source>Remove from the page Posts the posts finished without errors</source>
+        <translation>从发布列表页面移除无错误完成的发布</translation>
     </message>
 </context>
 </TS>

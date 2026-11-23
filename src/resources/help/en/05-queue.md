@@ -2,7 +2,7 @@
 
 ## The queue
 
-When you press **Post Files** on several tabs, the posts wait for their turn and are uploaded one after the other. The **pause** button stops the uploads and starts them again.
+When you post several releases, they wait for their turn in the page **Posts** and are uploaded one after the other. The **pause** button stops the uploads and starts them again.
 
 ## Saved queue
 
@@ -12,7 +12,7 @@ By default the posts that are not finished are saved. If you close ngPost, or th
 - **Discard**: they are removed.
 - **Decide later**: they stay saved and will be offered again at the next start.
 
-The resumed posts appear as Quick Post tabs.
+The resumed posts appear in the page **Posts**.
 
 ## Good to know
 

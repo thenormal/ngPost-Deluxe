@@ -2,7 +2,7 @@
 
 ## Die Warteschlange
 
-Wenn Sie in mehreren Tabs auf **Post Dateien** klicken, warten die Posts auf ihren Zeitpunkt und werden nacheinander hochgeladen. Die Schaltfläche **Pause** hält die Uploads an und startet sie wieder.
+Wenn Sie mehrere Releases posten, warten sie auf der Seite **Posts** auf ihren Zeitpunkt und werden nacheinander hochgeladen. Die Schaltfläche **Pause** hält die Uploads an und startet sie wieder.
 
 ## Gespeicherte Warteschlange
 
@@ -12,7 +12,7 @@ Standardmäßig werden Posts, die nicht fertig sind, gespeichert. Wenn Sie ngPos
 - **Verwerfen**: Sie werden entfernt.
 - **Später entscheiden**: Sie bleiben gespeichert und werden beim nächsten Start erneut angeboten.
 
-Die fortgesetzten Posts erscheinen als Quick-Post-Tabs.
+Die fortgesetzten Posts erscheinen auf der Seite **Posts**.
 
 ## Gut zu wissen
 

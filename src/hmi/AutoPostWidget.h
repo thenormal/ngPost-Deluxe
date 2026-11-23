@@ -21,6 +21,7 @@
 #define AUTOPOSTWIDGET_H
 
 #include <QWidget>
+#include <QHash>
 #include <QFileInfoList>
 #include <QStringList>
 #include "utils/PostProfile.h"
@@ -47,6 +48,7 @@ class AutoPostWidget : public QWidget
 {
     Q_OBJECT
 private:
+    QHash<int, QString> _itemOfPost; //!< id of a post (NgPost::postList) => item of the list that it posts
     Ui::AutoPostWidget *_ui;
     MainWindow         *_hmi;
     NgPost             *_ngPost;
@@ -135,6 +137,7 @@ public slots:
     void onMonitorJobStart();
 
 private slots:
+    void onPostChanged(int postId); //!< a post of the list is finished: its item is colored
     void onRemoveCompleted();
     void onRemoveAll();
     void onSelectFilesClicked();

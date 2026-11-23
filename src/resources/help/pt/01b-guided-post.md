@@ -20,7 +20,7 @@ Clique em **Adicionar outra postagem** no resumo para preparar mais uma: as já 
 
 ## Bom saber
 
-- Um único lançamento abre uma nova aba na Postagem Rápida; as outras opções vão para a Postagem Automática, onde você as acompanha.
+- Uma release é preparada como no Quick Post, sem mexer no que preparou lá; as outras opções vão para o Auto Posting. Cada publicação aparece depois na página **Publicações**.
 - O programa lembra suas últimas escolhas (não os arquivos).
 - Os itens que já estão no histórico são avisados como sempre antes de serem postados de novo.
 - Uma pasta só pode ser monitorada com compactação.

@@ -58,11 +58,8 @@ PostingWidget::PostingWidget(NgPost *ngPost, MainWindow *hmi, uint jobNumber) :
     _hmi(hmi),
     _ngPost(ngPost),
     _jobNumber(jobNumber),
-    _postingJob(nullptr),
-    _state(STATE::IDLE),
-    _postingFinished(false), _filesAddedAfterPost(false),
     _filesTitle(nullptr), _releaseInfo(nullptr), _nzbTitle(nullptr), _archiveTitle(nullptr), _advancedTitle(nullptr),
-    _advancedCard(nullptr), _profileBar(nullptr), _nfoCard(nullptr), _summary(nullptr), _sourceBytes(0), _advancedToggle(nullptr), _repostButton(nullptr), _repostInfo()
+    _advancedCard(nullptr), _profileBar(nullptr), _nfoCard(nullptr), _summary(nullptr), _sourceBytes(0), _advancedToggle(nullptr)
 {
     _ui->setupUi(this);
     _buildLayout();
@@ -83,75 +80,9 @@ PostingWidget::~PostingWidget()
     delete _ui;
 }
 
-void PostingWidget::onFilePosted(QString filePath, uint nbArticles, uint nbFailed)
-{
-    int nbFiles = _ui->filesList->count();
-    for (int i = 0 ; i < nbFiles ; ++i)
-    {
-        QListWidgetItem *item = _ui->filesList->item(i);
-        if (item->text() == filePath)
-        {
-            QColor color(_hmi->sDoneOKColor);
-            if (nbFailed == 0)
-                item->setText(QString("%1 [%2 ok]").arg(filePath).arg(nbArticles));
-            else
-            {
-                item->setText(QString("%1 [%2 err / %3]").arg(filePath).arg(nbFailed).arg(nbArticles));
-                if (nbFailed == nbArticles)
-                    color = _hmi->sDoneKOColor;
-                else
-                    color = _hmi->sArticlesFailedColor;
-            }
-            item->setForeground(color);
-            break;
-        }
-    }
-}
 
-void PostingWidget::onArchiveFileNames(QStringList paths)
-{
-    _ui->filesList->clear();
-    for (const QString & path : paths)
-        _ui->filesList->addPath(path);
-}
 
-void PostingWidget::onArticlesNumber(int nbArticles)
-{
-    Q_UNUSED(nbArticles);
-    _hmi->setJobLabel(static_cast<int>(_jobNumber));
-}
 
-void PostingWidget::onPostingJobDone()
-{
-    // we could arrive here twice: from PostingJob::postingFinished or PostingJob::noMoreConnection
-    // This could happen especially when we exceed the number of connections allowed by a provider
-    if (!_postingJob)
-        return;
-    _updateSummary(false); // the speed of this upload is known now
-
-    if (_postingJob->nbArticlesTotal() > 0)
-    {
-        if (_postingJob->nbArticlesFailed() > 0)
-            _hmi->updateJobTab(this, _hmi->sDoneKOColor, QIcon(_hmi->sDoneKOIcon));
-        else
-            _hmi->updateJobTab(this, _hmi->sDoneOKColor, QIcon(_hmi->sDoneOKIcon));
-    }
-    else
-        _hmi->clearJobTab(this);
-
-    bool uploadedOk = _postingJob->nbArticlesTotal() > 0 && _postingJob->nbArticlesFailed() == 0
-                      && _postingJob->nbArticlesUploaded() > 0;
-    RepostInfo previousInfo = _repostInfo;
-    _repostInfo = _postingJob->repostInfo(); // the job will be deleted, we keep what is needed to post the missing Articles again
-    if (_postingJob->isRepost())
-        _refreshFileItems(previousInfo);
-    disconnect(_postingJob);
-    _postingJob = nullptr; //!< we don't own it, NgPost will delete it
-    _postingFinished = true;
-    _filesAddedAfterPost = false;
-    setIDLE();
-    emit postingDone(uploadedOk);
-}
 
 bool PostingWidget::_applyFix(PostChecker::Code code)
 {
@@ -198,7 +129,7 @@ bool PostingWidget::_checkBeforePosting(const QFileInfoList &files, bool hasFold
             nzbFile += ".nzb";
         return _hmi->checkInput(files, hasFolder, nzbFile, _ui->nzbPassCB->isChecked(), _ui->nzbPassEdit->text());
     };
-    return PostCheckDialog::run(this, makeInput, [this](PostChecker::Code code){ return _applyFix(code); });
+    return PostCheckDialog::run(isVisible() ? static_cast<QWidget*>(this) : _hmi, makeInput, [this](PostChecker::Code code){ return _applyFix(code); });
 }
 
 void PostingWidget::_updateSummary(bool recomputeSize)
@@ -235,14 +166,13 @@ void PostingWidget::onPostFiles()
     postFiles(true);
 }
 
-void PostingWidget::postFiles(bool updateMainParams)
+int PostingWidget::postFiles(bool updateMainParams)
 {
-    if (_state == STATE::IDLE)
     {
         if (_ui->filesList->count() == 0)
         {
             _hmi->logError(tr("There are no selected files to post..."));
-            return;
+            return -1;
         }
 
         QFileInfoList files;
@@ -251,7 +181,7 @@ void PostingWidget::postFiles(bool updateMainParams)
         if (files.isEmpty())
         {
             _hmi->logError(tr("There are no existing files to post..."));
-            return;
+            return -1;
         }
 
         if (updateMainParams)
@@ -260,12 +190,12 @@ void PostingWidget::postFiles(bool updateMainParams)
             _hmi->updateServers();
             _hmi->updateParams();
             if (!_checkBeforePosting(files, hasFolder))
-                return;
+                return -1;
         }
         else if (hasFolder && !_ui->compressCB->isChecked())
         {
             _hmi->logError(tr("You can't post folders without using compression..."));
-            return;
+            return -1;
         }
         udatePostingParams();
 
@@ -276,13 +206,13 @@ void PostingWidget::postFiles(bool updateMainParams)
         QFileInfo fiNzb(nzbPath);
         if (!_fromAuto && fiNzb.exists())
         {
-            int overwrite = QMessageBox::question(nullptr,
+            int overwrite = QMessageBox::question(_hmi,
                                                   tr("Overwrite existing nzb file?"),
                                                   tr("The nzb file '%1' already exists.\nWould you like to overwrite it ?").arg(nzbPath),
                                                   QMessageBox::Yes,
                                                   QMessageBox::No);
             if (overwrite == QMessageBox::No)
-                return;
+                return -1;
         }
 
         // already posted (same name and size in the history)?
@@ -291,174 +221,45 @@ void PostingWidget::postFiles(bool updateMainParams)
         {
             QMessageBox box(QMessageBox::Question, tr("Already posted?"),
                             tr("This post is already in the history (%1, posted on %2).\nDo you want to post it again?").arg(fiNzb.fileName(), posted),
-                            QMessageBox::NoButton, this);
+                            QMessageBox::NoButton, isVisible() ? static_cast<QWidget*>(this) : _hmi);
             QPushButton *cancel = box.addButton(tr("Cancel"), QMessageBox::RejectRole);
             box.addButton(tr("Post anyway"), QMessageBox::AcceptRole);
             box.setDefaultButton(cancel);
             box.exec();
             if (box.clickedButton() == cancel)
-                return;
+                return -1;
         }
 
-        _postingFinished = false;
-        _state = STATE::POSTING;
-        forgetQueue();              // a new post: the missing Articles of the previous one are forgotten
-        _repostInfo = RepostInfo();
-        _postingJob = new PostingJob(_ngPost, nzbPath, files, this,
-                                     _ngPost->getPostingGroups(),
-                                     _ngPost->from(),
-                                     _ngPost->_obfuscateArticles, _ngPost->_obfuscateFileName,
-                                     _ngPost->_tmpPath, _ngPost->_rarPath, _ngPost->_rarArgs,
-                                     _ngPost->_rarSize, _ngPost->_useRarMax, _ngPost->_par2Pct,
-                                     _ngPost->_doCompress, _ngPost->_doPar2,
-                                     _ngPost->_rarName, _ngPost->_rarPass,
-                                     _ngPost->_keepRar, _afterAct, !_fromAuto);
-        _postingJob->setMovePostedTo(_afterMoveTo);
+        PostingJob *job = new PostingJob(_ngPost, nzbPath, files, nullptr,
+                                         _ngPost->getPostingGroups(),
+                                         _ngPost->from(),
+                                         _ngPost->_obfuscateArticles, _ngPost->_obfuscateFileName,
+                                         _ngPost->_tmpPath, _ngPost->_rarPath, _ngPost->_rarArgs,
+                                         _ngPost->_rarSize, _ngPost->_useRarMax, _ngPost->_par2Pct,
+                                         _ngPost->_doCompress, _ngPost->_doPar2,
+                                         _ngPost->_rarName, _ngPost->_rarPass,
+                                         _ngPost->_keepRar, _afterAct, !_fromAuto);
+        job->setMovePostedTo(_afterMoveTo);
+        job->setOrigin(_fromAuto ? "auto" : "quick");
+        _ngPost->startPostingJob(job);
+        int postId = job->postId(); // the post is in the list of the page Posts
 
-        _showJobStarted(_ngPost->startPostingJob(_postingJob));
-    }
-    else  if (_state == STATE::POSTING)
-    {
-        _state = STATE::STOPPING;
-        emit _postingJob->stopPosting();
-    }
-}
-
-
-bool PostingWidget::restoreFromQueue(const QJsonObject &entry, QString &error)
-{
-    PostingJob *job = PostingJob::fromQueueEntry(_ngPost, entry, this, error);
-    if (!job)
-        return false;
-
-    // show what is posted
-    _ui->filesList->clear();
-    for (const QJsonValue &val : entry.value("files").toArray())
-    {
-        QFileInfo fi(val.toString());
-        _ui->filesList->addPath(fi.absoluteFilePath(), fi.isDir());
-    }
-    _ui->nzbFileEdit->setText(entry.value("nzb").toString());
-    _ui->compressCB->setChecked(entry.value("compress").toBool());
-    _ui->par2CB->setChecked(entry.value("par2").toBool());
-    _ui->keepRarCB->setChecked(entry.value("keepRar").toBool());
-    if (entry.value("compress").toBool())
-        _ui->compressNameEdit->setText(entry.value("rarName").toString());
-    _nameFromFile = false;
-    const QString pass = entry.value("rarPass").toString();
-    _ui->nzbPassCB->setChecked(!pass.isEmpty());
-    _ui->nzbPassEdit->setText(pass);
-
-    _postingFinished = false;
-    _state = STATE::POSTING;
-    _repostInfo = RepostInfo();
-    _postingJob = job;
-    _showJobStarted(_ngPost->startPostingJob(job));
-    return true;
-}
-
-void PostingWidget::restoreMissing(const RepostInfo &info)
-{
-    _repostInfo = info;
-    _ui->filesList->clear();
-    for (const RepostFile &file : info.files)
-    {
-        _ui->filesList->addPath(file.path, false);
-        QListWidgetItem *item = _ui->filesList->item(_ui->filesList->count() - 1);
-        if (item)
-        {
-            item->setText(QString("%1 [%2 err / %3]").arg(file.path).arg(file.parts.size()).arg(file.nbArticles));
-            item->setForeground(QColor(file.parts.size() == static_cast<int>(file.nbArticles) ? _hmi->sDoneKOColor
-                                                                                               : _hmi->sArticlesFailedColor));
+        if (!_fromAuto)
+        {   // the form is ready for the next release
+            _resetForNextPost();
+            emit postQueued(postId);
         }
-    }
-    _ui->nzbFileEdit->setText(info.nzbPath);
-    _postingFinished = true;
-    _hmi->updateJobTab(this, _hmi->sDoneKOColor, QIcon(_hmi->sDoneKOIcon), QFileInfo(info.nzbPath).fileName());
-    _updateRepostButton();
-    _updateReleaseInfo();
-}
-
-void PostingWidget::forgetQueue()
-{
-    if (hasMissingArticles())
-        _ngPost->queueForget(_repostInfo.queueId);
-}
-
-void PostingWidget::_refreshFileItems(const RepostInfo &postedAgain)
-{
-    // the list shows "[x err / n]" for the files that had failed Articles: update it after the repost
-    for (const RepostFile &file : postedAgain.files)
-    {
-        int missing = 0;
-        for (const RepostFile &left : _repostInfo.files)
-            if (left.path == file.path)
-                missing = left.parts.size();
-
-        for (int i = 0 ; i < _ui->filesList->count() ; ++i)
-        {
-            QListWidgetItem *item = _ui->filesList->item(i);
-            if (!item->text().startsWith(file.path + " ["))
-                continue;
-            if (missing == 0)
-            {
-                item->setText(QString("%1 [%2 ok]").arg(file.path).arg(file.nbArticles));
-                item->setForeground(QColor(_hmi->sDoneOKColor));
-            }
-            else
-            {
-                item->setText(QString("%1 [%2 err / %3]").arg(file.path).arg(missing).arg(file.nbArticles));
-                item->setForeground(QColor(missing == static_cast<int>(file.nbArticles) ? _hmi->sDoneKOColor
-                                                                                         : _hmi->sArticlesFailedColor));
-            }
-            break;
-        }
+        return postId;
     }
 }
 
-void PostingWidget::_showJobStarted(bool hasStarted)
-{
-    QString buttonTxt;
-    QColor  tabColor;
-    QString tabIcon;
-    if (hasStarted)
-    {
-        buttonTxt = tr("Stop Posting");
-        tabColor  = _hmi->sPostingColor;
-        tabIcon   = _hmi->sPostingIcon;
-    }
-    else
-    {
-        buttonTxt = tr("Cancel Posting");
-        tabColor  = _hmi->sPendingColor;
-        tabIcon   = _hmi->sPendingIcon;
-    }
-    _ui->postButton->setText(buttonTxt);
-    _hmi->updateJobTab(this, tabColor, QIcon(tabIcon), _postingJob->nzbName());
-    _updateRepostButton();
-    _updateReleaseInfo();
-}
 
-void PostingWidget::onRepostMissing()
-{
-    if (_state != STATE::IDLE || _repostInfo.isEmpty())
-        return;
 
-    _postingFinished = false;
-    _state = STATE::POSTING;
-    _postingJob = PostingJob::createRepostJob(_ngPost, _repostInfo, this);
-    _showJobStarted(_ngPost->startPostingJob(_postingJob));
-}
 
-void PostingWidget::_updateRepostButton()
-{
-    if (!_repostButton)
-        return;
-    bool show = _state == STATE::IDLE && !_repostInfo.isEmpty();
-    _repostButton->setVisible(show);
-    if (show)
-        _repostButton->setText(tr("Repost missing Articles (%1)").arg(_repostInfo.nbArticles()));
-}
+
+
+
+
 
 void PostingWidget::onNzbPassToggled(bool checked)
 {
@@ -499,7 +300,6 @@ void PostingWidget::onSelectFolderClicked()
 void PostingWidget::onClearFilesClicked()
 {
     _ui->filesList->clear2();
-    _filesAddedAfterPost = false;
     _ui->nzbFileEdit->clear();
     _ui->compressNameEdit->clear();
     _nameFromFile = false;
@@ -511,7 +311,23 @@ void PostingWidget::onClearFilesClicked()
     else
         _ui->compressNameEdit->clear();
 
-    _hmi->clearJobTab(this);
+}
+
+void PostingWidget::_resetForNextPost()
+{
+    // the options stay; the list, the nzb and (when they were random) the archive name and password are new
+    bool compress   = _ui->compressCB->isChecked();
+    bool randomName = compress && !_nameFromFile && !_ui->compressNameEdit->text().isEmpty();
+    bool randomPass = _ui->nzbPassCB->isChecked() && !_hmi->useFixedPassword();
+    onClearFilesClicked();
+    _ui->compressNameEdit->clear();
+    _nameFromFile = false;
+    if (randomName)
+        onGenCompressName();
+    if (randomPass)
+        onGenNzbPassword();
+    _updateSummary();
+    _updateReleaseInfo();
 }
 
 void PostingWidget::onCompressCB(bool checked)
@@ -860,11 +676,6 @@ void PostingWidget::addPath(const QString &path, int currentNbFiles, int isDir)
 {
     if (_ui->filesList->addPathIfNotInList(path, currentNbFiles, isDir))
     {
-        if (_postingFinished)
-        {
-            _filesAddedAfterPost = true;
-            _updateReleaseInfo();
-        }
         QFileInfo fileInfo(path);
         if (_ui->nzbFileEdit->text().isEmpty())
         {
@@ -889,21 +700,7 @@ bool PostingWidget::_fileAlreadyInList(const QString &fileName, int currentNbFil
     return false;
 }
 
-void PostingWidget::setIDLE()
-{
-    _ui->postButton->setText(tr("Post Files"));
-    _state = STATE::IDLE;
-    _updateRepostButton();
-    _updateReleaseInfo();
-}
 
-void PostingWidget::setPosting()
-{
-    _hmi->updateJobTab(this, _hmi->sPostingColor, QIcon(_hmi->sPostingIcon), _postingJob->nzbName());
-    _ui->postButton->setText(tr("Stop Posting"));
-    _state = STATE::POSTING;
-    _updateReleaseInfo();
-}
 
 
 //========================================================================
@@ -1053,13 +850,6 @@ void PostingWidget::_buildLayout()
     _ui->postButton->setIcon(QIcon());
     _ui->postButton->setMinimumSize(170, 38);
     bottom->addWidget(_ui->postButton, 0, 1, Qt::AlignCenter);
-    _repostButton = new QPushButton(page);
-    _repostButton->setMinimumHeight(38);
-    _repostButton->setCursor(Qt::PointingHandCursor);
-    _repostButton->setToolTip(tr("Some Articles couldn't be posted. This posts only those ones again and fixes the nzb file."));
-    _repostButton->hide();
-    connect(_repostButton, &QAbstractButton::clicked, this, &PostingWidget::onRepostMissing);
-    bottom->addWidget(_repostButton, 0, 2, Qt::AlignRight | Qt::AlignVCenter);
     bottom->setHorizontalSpacing(0); // nothing in the right column: no spacing, so the button is really in the middle
     bottom->setColumnStretch(0, 1);
     bottom->setColumnStretch(1, 0);
@@ -1125,7 +915,7 @@ PostProfile PostingWidget::currentProfile() const
 
 bool PostingWidget::isEmptyAndIdle() const
 {
-    return _state == STATE::IDLE && !_postingFinished && _ui->filesList->count() == 0;
+    return _ui->filesList->count() == 0;
 }
 
 void PostingWidget::applyRequest(const PostRequest &request)
@@ -1142,12 +932,11 @@ void PostingWidget::applyRequest(const PostRequest &request)
     _updateSummary();
 }
 
-bool PostingWidget::startFromRequest()
+int PostingWidget::startFromRequest()
 {
-    if (_state != STATE::IDLE || _ui->filesList->count() == 0)
-        return false;
-    postFiles(true);
-    return _state != STATE::IDLE;
+    if (_ui->filesList->count() == 0)
+        return -1;
+    return postFiles(true);
 }
 
 void PostingWidget::applyProfile(const PostProfile &p)
@@ -1184,8 +973,7 @@ void PostingWidget::_updateReleaseInfo()
 {
     if (!_releaseInfo)
         return;
-    // only while the post is prepared: during and after the upload the list shows the volumes of the archive
-    _releaseInfo->setVisible(_ui->filesList->count() > 1 && _state == STATE::IDLE && (!_postingFinished || _filesAddedAfterPost));
+    _releaseInfo->setVisible(_ui->filesList->count() > 1);
 }
 
 void PostingWidget::_retranslateLayout()
@@ -1194,9 +982,9 @@ void PostingWidget::_retranslateLayout()
         return;
     _releaseInfo->setText(tr("<b>One release:</b> all the files and folders of this list are posted together, "
                              "with a single NZB file and, if Compress is on, a single archive. "
-                             "To post separate releases, use one tab per release (<i>%1</i>) "
-                             "or the <i>%2</i> tab, which makes one post for each file or folder.").arg(
-                              QCoreApplication::translate("MainWindow", "New"), _ngPost->folderMonitoringName()));
+                             "To post separate releases, post them one after the other (the page <i>Posts</i> shows them all) "
+                             "or use the <i>%1</i> tab, which makes one post for each file or folder.").arg(
+                              _ngPost->folderMonitoringName()));
     _updateReleaseInfo();
     _filesTitle->setText(tr("Files to post"));
     _nzbTitle->setText(tr("NZB"));
@@ -1215,7 +1003,5 @@ void PostingWidget::_retranslateLayout()
     _ui->rarSizeLbl->setText(tr("Volume size (MB)"));
     _ui->rarMaxCB->setText(tr("limit the number of volumes"));
     _ui->clearFilesButton->setText(tr("Remove All"));
-    _ui->postButton->setText(isPosting() ? _ui->postButton->text() : tr("Post Files"));
-    _repostButton->setToolTip(tr("Some Articles couldn't be posted. This posts only those ones again and fixes the nzb file."));
-    _updateRepostButton();
+    _ui->postButton->setText(tr("Post Files"));
 }

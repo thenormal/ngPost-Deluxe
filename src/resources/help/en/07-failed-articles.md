@@ -4,9 +4,9 @@ During an upload some articles can fail (a connection drops, the server refuses 
 
 ## Repost missing articles
 
-When some articles failed, the tab shows a button **Repost missing articles**. It posts **only those articles** again and fixes the NZB file. You do not need to send the whole post again.
+When some articles failed, select the post in the page **Posts**: the button **Post the missing Articles again** posts **only those articles** again and fixes the NZB file. You do not need to send the whole post again.
 
-After a successful repost the list of files is updated and the post turns green.
+The repost appears as a new line in the list; when it ends without errors, nothing is missing anymore.
 
 ## Tips
 

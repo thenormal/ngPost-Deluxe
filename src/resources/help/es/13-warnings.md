@@ -12,7 +12,7 @@ El Historial y la cola guardada conservan la contraseña de cada archivo comprim
 
 - Una publicación que se reanuda tras un reinicio empieza de nuevo desde el principio.
 - La pausa no se recuerda tras un reinicio.
-- Las publicaciones reanudadas vuelven como pestañas de Publicación Rápida.
+- La lista de la página Publicaciones no se conserva tras reiniciar (el Historial guarda cada subida).
 - Los grupos de noticias que no son válidos se conservan en el archivo de ajustes, pero bloquean la publicación hasta que los corrijas.
 - Demasiados inicios de sesión erróneos pueden hacer que el proveedor bloquee la cuenta durante un tiempo.
 - El instalador no está firmado digitalmente: Windows puede mostrar una advertencia. Elige **Más información** y después **Ejecutar de todas formas**.

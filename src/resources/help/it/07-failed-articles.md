@@ -4,9 +4,9 @@ Durante un upload alcuni articoli possono fallire (una connessione cade, il serv
 
 ## Riposta gli articoli mancanti
 
-Quando alcuni articoli sono falliti, la scheda mostra un pulsante **Riposta i mancanti**. Posta di nuovo **solo quegli articoli** e corregge il file NZB. Non serve inviare di nuovo tutto il post.
+Quando alcuni articoli sono falliti, seleziona il post nella pagina **Post**: il pulsante **Ripubblica gli articoli mancanti** posta di nuovo **solo quegli articoli** e corregge il file NZB. Non serve inviare di nuovo tutto il post.
 
-Dopo una ripubblicazione riuscita l'elenco dei file viene aggiornato e il post diventa verde.
+La ripubblicazione compare come una nuova riga nella lista; se finisce senza errori, non manca più nulla.
 
 ## Consigli
 

@@ -1,6 +1,6 @@
 # Publicación Rápida
 
-Publicación Rápida envía los archivos y carpetas que eliges. Cada pestaña es una publicación, así que puedes preparar varias y ejecutarlas en cola.
+Quick Post prepara una publicación: los archivos y carpetas de la lista forman una release. Al pulsar **Publicar Ficheros**, la publicación pasa a la página **Publicaciones** y Quick Post vuelve a estar vacío, listo para la siguiente release.
 
 ## Pasos
 
@@ -37,8 +37,8 @@ El menú **Perfil** sobre las tarjetas ajusta todas las opciones de una vez.
 
 La tarjeta **Archivo NFO** (consulta [Archivos NZB](09-nzb-files.md)) también es compartida: Publicación Rápida y Publicación Automática muestran los mismos ajustes.
 
-## Pestañas
+## Después de Publicar Ficheros
 
-La pestaña **+** abre una nueva publicación. Una pestaña muestra su estado con un icono: pendiente, subiendo, terminada o con error.
+La publicación entra en la cola y el programa muestra la página **Publicaciones**, donde sigues su progreso y su registro. Quick Post conserva tus opciones y crea un nuevo nombre y una nueva contraseña aleatorios, así puedes preparar enseguida la siguiente release.
 
 Consulta también [Progreso y registro](06-progress-and-log.md).

@@ -212,6 +212,7 @@ private:
     bool                _keepInQueue = false; //!< the post was interrupted (connections lost): try it again at the next start
 
     int                 _postId = -1;          //!< id of this post in NgPost::postList() (-1: not listed)
+    QString             _origin;               //!< page of the GUI that made it: "quick" or "auto" (empty: folder watching or command line)
 
 
 #ifdef __COMPUTE_IMMEDIATE_SPEED__
@@ -255,6 +256,10 @@ public:
 
     inline int  postId() const { return _postId; }
     inline void setPostId(int id) { _postId = id; }
+    //! the post was prepared in a page of the GUI (Quick Post, Auto Posting, Guided Post): \a origin "quick" or "auto"
+    inline void setOrigin(const QString &origin) { _origin = origin; }
+    inline const QString &origin() const { return _origin; }
+    inline bool fromGuiForm() const { return !_origin.isEmpty(); }
 
     // recovery of failed Articles (thread safe: called from the connection threads)
     void recoverArticle(NntpArticle *article, const NntpServerParams *server, const QString &conPrefix);
@@ -292,7 +297,6 @@ public:
     inline bool hasPostFinished() const;
     inline bool hasPostFinishedSuccessfully() const;
 
-    inline PostingWidget *widget() const;
 
     inline QString getFirstOriginalFile() const;
 
@@ -540,7 +544,6 @@ bool PostingJob::hasPostStarted() const { return _postStarted; }
 bool PostingJob::hasPostFinished() const { return _postFinished; }
 bool PostingJob::hasPostFinishedSuccessfully() const { return _postFinished && !_nbArticlesFailed; }
 
-PostingWidget *PostingJob::widget() const { return _postWidget; }
 
 QString PostingJob::getFirstOriginalFile() const
 {

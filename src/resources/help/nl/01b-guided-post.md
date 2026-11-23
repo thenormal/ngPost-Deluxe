@@ -20,7 +20,7 @@ Klik in de samenvatting op **Nog een post toevoegen** om er nog een voor te bere
 
 ## Goed om te weten
 
-- Eén release opent een nieuw tabblad in Quick Post; de andere keuzes gaan naar Auto Posting, waar u ze volgt.
+- Eén release wordt voorbereid zoals in Quick Post, zonder te raken aan wat je daar hebt voorbereid; de andere keuzes gaan naar Auto Posting. Elke post verschijnt daarna op de pagina **Posts**.
 - Het programma onthoudt uw laatste keuzes (niet de bestanden).
 - Items die al in de geschiedenis staan, worden zoals gewoonlijk gemeld voordat ze opnieuw worden gepost.
 - Een map kan alleen met compressie worden gevolgd.

@@ -1,6 +1,6 @@
 # Quick Post
 
-Quick Post invia i file e le cartelle che scegli. Ogni scheda è un post, così puoi preparare più post ed eseguirli in coda.
+Quick Post prepara un post: i file e le cartelle della lista diventano una release. Quando premi **Posta i file**, il post passa nella pagina **Post** e Quick Post torna vuoto, pronto per la release successiva.
 
 ## Passaggi
 
@@ -37,8 +37,8 @@ Il menu **Profilo** sopra le schede imposta tutte le opzioni in una volta.
 
 Anche la scheda **File NFO** (vedi [File NZB](09-nzb-files.md)) è condivisa: Quick Post e Post automatico mostrano le stesse impostazioni.
 
-## Schede
+## Dopo Posta i file
 
-La scheda **+** apre un nuovo post. Una scheda mostra il suo stato con un'icona: in attesa, in upload, completato o errore.
+Il post entra nella coda e il programma mostra la pagina **Post**, dove segui il suo avanzamento e il suo log. Quick Post conserva le tue opzioni e crea un nuovo nome e una nuova password casuali, così puoi preparare subito la release successiva.
 
 Vedi anche [Avanzamento e log](06-progress-and-log.md).

@@ -1,6 +1,6 @@
 # Postagem Rápida
 
-A Postagem Rápida envia os ficheiros e pastas que escolher. Cada separador é uma publicação, por isso pode preparar várias e executá-las em fila.
+O Quick Post prepara uma publicação: os ficheiros e pastas da lista formam uma release. Ao premir **Postar Arquivos**, a publicação passa para a página **Publicações** e o Quick Post fica de novo vazio, pronto para a release seguinte.
 
 ## Passos
 
@@ -37,8 +37,8 @@ O menu **Perfil** por cima dos cartões define todas as opções de uma só vez.
 
 O cartão **Arquivo NFO** (veja [Ficheiros NZB](09-nzb-files.md)) também é partilhado: a Postagem Rápida e a Postagem Automática mostram as mesmas definições.
 
-## Separadores
+## Depois de Postar Arquivos
 
-O separador **+** abre uma nova publicação. Um separador mostra o seu estado com um ícone: pendente, a enviar, concluído ou erro.
+A publicação entra na fila e o programa mostra a página **Publicações**, onde acompanha o progresso e o registo. O Quick Post mantém as suas opções e cria um novo nome e uma nova palavra-passe aleatórios, para preparar logo a release seguinte.
 
 Veja também [Progresso e registo](06-progress-and-log.md).

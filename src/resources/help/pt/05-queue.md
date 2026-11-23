@@ -2,7 +2,7 @@
 
 ## A fila
 
-Quando carrega em **Postar Arquivos** em vários separadores, as publicações esperam pela sua vez e são enviadas uma a seguir à outra. O botão de **pausa** pára os envios e volta a iniciá-los.
+Quando publica várias releases, esperam a sua vez na página **Publicações** e são enviadas uma após a outra. O botão **pausa** para os envios e retoma-os.
 
 ## Fila guardada
 
@@ -12,7 +12,7 @@ Por predefinição, as publicações que não terminaram são guardadas. Se fech
 - **Descartar**: são removidas.
 - **Decidir depois**: ficam guardadas e serão oferecidas outra vez no início seguinte.
 
-As publicações retomadas aparecem como separadores da Postagem Rápida.
+As publicações retomadas aparecem na página **Publicações**.
 
 ## Bom saber
 

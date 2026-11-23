@@ -19,6 +19,8 @@ Si fijas un límite de velocidad (**Ajustes**, categoría **Publicaciones**, tar
 
 El registro colorea las líneas: las fases, los éxitos, los avisos y los errores se distinguen fácilmente. Al final de una publicación muestra un resumen con el tiempo de cada fase (compresión, par2, subida) y el total.
 
+Cada publicación tiene también su propio registro, con la hora de cada línea: selecciónala en la página **Publicaciones**. Esa página muestra todas las publicaciones de la sesión con su progreso, tamaño, velocidad y tiempo restante; allí puedes detener una publicación, cancelar una que espera, abrir la carpeta del archivo NZB o copiar la contraseña.
+
 ## Latencia
 
 Al final de una publicación el registro también muestra la **latencia**: el tiempo mediano de un viaje de ida y vuelta con el servidor (el comando POST y su respuesta, sin datos) y de la conexión. Se mide solo a partir de lo que ngPost ya hace, no se envía nada para ello. Un valor alto (más de medio segundo) significa que el retraso viene de la red, de la distancia al servidor o del propio servidor, por ejemplo una VPN, y no de tu ordenador.

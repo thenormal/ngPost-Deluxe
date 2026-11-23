@@ -20,7 +20,7 @@ Pulsa **Añadir otra publicación** en el resumen para preparar una más: las ya
 
 ## Conviene saber
 
-- Una sola publicación abre una pestaña nueva en Publicación Rápida; las demás opciones van a Publicación Automática, donde las sigues.
+- Una release se prepara como en Quick Post, sin tocar lo que preparaste allí; las otras opciones van a Auto Posting. Cada publicación aparece luego en la página **Publicaciones**.
 - El programa recuerda tus últimas opciones (no los archivos).
 - Los elementos que ya están en el historial se avisan como siempre antes de publicarlos de nuevo.
 - Una carpeta solo se puede vigilar con compresión.

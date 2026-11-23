@@ -4,9 +4,9 @@ Tijdens een upload kunnen sommige artikelen mislukken (een verbinding valt weg, 
 
 ## Ontbrekende artikelen opnieuw posten
 
-Als er artikelen zijn mislukt, toont het tabblad een knop **Ontbrekende artikelen opnieuw**. Die post **alleen die artikelen** opnieuw en herstelt het NZB-bestand. U hoeft niet de hele post opnieuw te versturen.
+Als er artikelen zijn mislukt, selecteer je de post op de pagina **Posts**: de knop **Ontbrekende artikelen opnieuw posten** post **alleen die artikelen** opnieuw en herstelt het NZB-bestand. Je hoeft niet de hele post opnieuw te versturen.
 
-Na een geslaagde herpost wordt de bestandslijst bijgewerkt en wordt de post groen.
+Het opnieuw posten verschijnt als een nieuwe regel in de lijst; eindigt het zonder fouten, dan ontbreekt er niets meer.
 
 ## Tips
 

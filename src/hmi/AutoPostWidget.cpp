@@ -18,6 +18,7 @@
 //========================================================================
 
 #include "AutoPostWidget.h"
+#include "utils/PostList.h"
 #include "ProfileBar.h"
 #include "NfoCard.h"
 #include "utils/PostProfile.h"
@@ -117,7 +118,9 @@ void AutoPostWidget::init()
     _ui->aboutButton->hide(); // About is in the side bar
     connect(_ui->removeCompletedButton, &QAbstractButton::clicked, this, &AutoPostWidget::onRemoveCompleted);
     connect(_ui->removeAllButton,       &QAbstractButton::clicked, this, &AutoPostWidget::onRemoveAll);
-    connect(_ui->closeTabsButton,       &QAbstractButton::clicked, _hmi, &MainWindow::onCloseAllFinishedQuickTabs);
+    _ui->closeTabsButton->hide();  // the posts have their own page (Posts)
+    _ui->startJobsCB->hide();      // the posts are always put in the queue at once
+    connect(_ngPost->postList(), &PostList::postChanged, this, &AutoPostWidget::onPostChanged);
 
     connect(_ui->monitorButton, &QAbstractButton::clicked, this, &AutoPostWidget::onMonitoringClicked);
 
@@ -238,34 +241,51 @@ bool AutoPostWidget::_postFiles(QFileInfoList files, bool hasFolder, bool forceS
 
     const QString afterMoveTo = movePostedTo();
     const bool afterAct = deleteFilesOncePosted() || !afterMoveTo.isEmpty();
-    bool startPost = forceStart || _ui->startJobsCB->isChecked(),
-         useRarMax = _ui->rarMaxCB->isChecked();
+    Q_UNUSED(forceStart)
+    bool useRarMax = _ui->rarMaxCB->isChecked();
+    int firstPost = -1;
     for (const QFileInfo &file : files)
     {
-        PostingWidget *quickPostWidget = _hmi->addNewQuickTab(0, {file});
-        quickPostWidget->init();
-        quickPostWidget->setFromAutoPosting();
-        quickPostWidget->setAfterPost(afterAct, afterMoveTo);
-        quickPostWidget->genNameAndPassword(_ngPost->_genName, _ngPost->_genPass, _ngPost->_doPar2, useRarMax);
+        // a Quick Post form that is not shown prepares each post (same checks, names and options)
+        PostingWidget *form = _hmi->newHiddenQuickPost({file});
+        form->setFromAutoPosting();
+        form->setAfterPost(afterAct, afterMoveTo);
+        form->genNameAndPassword(_ngPost->_genName, _ngPost->_genPass, _ngPost->_doPar2, useRarMax);
+        int postId = form->postFiles(false);
+        form->deleteLater();
+        if (postId >= 0)
+        {
+            _itemOfPost.insert(postId, file.filePath()); // to color the item and "Remove completed"
+            if (firstPost < 0)
+                firstPost = postId;
+        }
+    }
+    if (firstPost >= 0)
+        _hmi->showPostsPage(firstPost);
+    return firstPost >= 0;
+}
 
-        // keep track of the result to be able to "Remove completed"
-        const QString srcPath = file.filePath();
-        connect(quickPostWidget, &PostingWidget::postingDone, this, [this, srcPath](bool uploadedOk) {
-            for (int i = 0; i < _ui->filesList->count(); ++i)
-            {
-                QListWidgetItem *item = _ui->filesList->item(i);
-                if (item->text() == srcPath)
-                {
-                    item->setForeground(uploadedOk ? _hmi->sDoneOKColor : _hmi->sDoneKOColor);
-                    item->setData(sCompletedRole, uploadedOk);
-                    break;
-                }
-            }
-        });
-
-        if (startPost)
-            quickPostWidget->postFiles(false);
-    }    return true;
+void AutoPostWidget::onPostChanged(int postId)
+{
+    auto it = _itemOfPost.find(postId);
+    if (it == _itemOfPost.end())
+        return;
+    const PostEntry *e = _ngPost->postList()->entry(postId);
+    if (!e || !e->isFinished())
+        return;
+    bool uploadedOk = e->state == PostEntry::State::DONE;
+    const QString srcPath = it.value();
+    _itemOfPost.erase(it);
+    for (int i = 0; i < _ui->filesList->count(); ++i)
+    {
+        QListWidgetItem *item = _ui->filesList->item(i);
+        if (item->text() == srcPath)
+        {
+            item->setForeground(uploadedOk ? _hmi->sDoneOKColor : _hmi->sDoneKOColor);
+            item->setData(sCompletedRole, uploadedOk);
+            break;
+        }
+    }
 }
 
 
@@ -1247,7 +1267,7 @@ void AutoPostWidget::_applyMode()
     _ui->latestFilesFirstCB->setVisible(scan);
     _monitorCard->setVisible(watch);
     _ui->postButton->setVisible(!watch);
-    _ui->startJobsCB->setVisible(!watch);
+    _ui->startJobsCB->setVisible(false); // the posts always go to the queue (page Posts)
     _ui->postButton->setText(tr("Post the list"));
     _filesTitle->setText(watch ? tr("Posts of the watched folder") : tr("Files and folders to post"));
     _ui->removeCompletedButton->setVisible(true);

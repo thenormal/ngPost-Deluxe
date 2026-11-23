@@ -3574,6 +3574,14 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
         <source>Profile chosen when the program was closed (a name of the list of profiles, Recommended, or empty = Custom)</source>
         <translation>Profiel gekozen bij het afsluiten van het programma (een naam uit de lijst met profielen, Recommended, of leeg = Custom)</translation>
     </message>
+    <message>
+        <source>Cancelled before it started</source>
+        <translation>Geannuleerd voordat hij begon</translation>
+    </message>
+    <message>
+        <source>Can't post again the missing Articles of %1: %2</source>
+        <translation>Kan de ontbrekende artikelen van %1 niet opnieuw posten: %2</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -4499,8 +4507,8 @@ Wil je het overschrijven?</translation>
     </message>
     <message>
         <location filename="../hmi/PostingWidget.cpp" line="806"/>
-        <source>&lt;b&gt;One release:&lt;/b&gt; all the files and folders of this list are posted together, with a single NZB file and, if Compress is on, a single archive. To post separate releases, use one tab per release (&lt;i&gt;%1&lt;/i&gt;) or the &lt;i&gt;%2&lt;/i&gt; tab, which makes one post for each file or folder.</source>
-        <translation>&lt;b&gt;Eén release:&lt;/b&gt; alle bestanden en mappen in deze lijst worden samen gepost, met één NZB-bestand en, als Comprimeren aan staat, één archief. Om aparte releases te posten, gebruik je één tab per release (&lt;i&gt;%1&lt;/i&gt;) of de tab &lt;i&gt;%2&lt;/i&gt;, die voor elk bestand of elke map een post maakt.</translation>
+        <source>&lt;b&gt;One release:&lt;/b&gt; all the files and folders of this list are posted together, with a single NZB file and, if Compress is on, a single archive. To post separate releases, post them one after the other (the page &lt;i&gt;Posts&lt;/i&gt; shows them all) or use the &lt;i&gt;%1&lt;/i&gt; tab, which makes one post for each file or folder.</source>
+        <translation>&lt;b&gt;Eén release:&lt;/b&gt; alle bestanden en mappen van deze lijst worden samen gepost, met één NZB-bestand en, als Comprimeren aan staat, één archief. Voor aparte releases post je ze na elkaar (de pagina &lt;i&gt;Posts&lt;/i&gt; toont ze allemaal) of gebruik je het tabblad &lt;i&gt;%1&lt;/i&gt;, dat voor elk bestand of elke map een post maakt.</translation>
     </message>
     <message>
         <location filename="../hmi/PostingWidget.cpp" line="812"/>
@@ -5861,6 +5869,313 @@ Bestanden worden definitief verwijderd...</translation>
     <message>
         <source>Page %1</source>
         <translation>Pagina %1</translation>
+    </message>
+</context>
+<context>
+    <name>PostsWidget</name>
+    <message>
+        <source>Waiting</source>
+        <translation>Wachtend</translation>
+    </message>
+    <message>
+        <source>Compressing</source>
+        <translation>Comprimeren</translation>
+    </message>
+    <message>
+        <source>par2</source>
+        <translation>par2</translation>
+    </message>
+    <message>
+        <source>Uploading</source>
+        <translation>Uploaden</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation>Gepauzeerd</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>Klaar</translation>
+    </message>
+    <message>
+        <source>Done with errors</source>
+        <translation>Klaar met fouten</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translation>Gestopt</translation>
+    </message>
+    <message>
+        <source>Cancelled</source>
+        <translation>Geannuleerd</translation>
+    </message>
+    <message>
+        <source>Quick Post</source>
+        <translation>Quick Post</translation>
+    </message>
+    <message>
+        <source>Auto Posting</source>
+        <translation>Auto Posting</translation>
+    </message>
+    <message>
+        <source>Folder scan</source>
+        <translation>Map scannen</translation>
+    </message>
+    <message>
+        <source>Watched folder</source>
+        <translation>Bewaakte map</translation>
+    </message>
+    <message>
+        <source>Resumed</source>
+        <translation>Hervat</translation>
+    </message>
+    <message>
+        <source>Missing Articles</source>
+        <translation>Ontbrekende artikelen</translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation>Opdrachtregel</translation>
+    </message>
+    <message>
+        <source>Posts</source>
+        <translation>Posts</translation>
+    </message>
+    <message>
+        <source>All the posts of this session: the ones waiting, the one being posted and the finished ones. Select a post to see its details and its log.</source>
+        <translation>Alle posts van deze sessie: de wachtende, de lopende en de voltooide. Selecteer een post om de details en het logboek te zien.</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Naam</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <source>Progress</source>
+        <translation>Voortgang</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Grootte</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Snelheid</translation>
+    </message>
+    <message>
+        <source>Remaining</source>
+        <translation>Resterend</translation>
+    </message>
+    <message>
+        <source>Started by</source>
+        <translation>Gestart via</translation>
+    </message>
+    <message>
+        <source>Open NZB folder</source>
+        <translation>NZB-map openen</translation>
+    </message>
+    <message>
+        <source>Copy password</source>
+        <translation>Wachtwoord kopiëren</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>Remove the selected post from the list (only a finished post)</source>
+        <translation>De geselecteerde post uit de lijst verwijderen (alleen een voltooide post)</translation>
+    </message>
+    <message>
+        <source>Remove finished</source>
+        <translation>Voltooide verwijderen</translation>
+    </message>
+    <message>
+        <source>Remove all the finished posts from the list</source>
+        <translation>Alle voltooide posts uit de lijst verwijderen</translation>
+    </message>
+    <message>
+        <source>No post yet.
+Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <translation>Nog geen post.
+Bereid er een voor in Begeleide post, Quick Post of Auto Posting: hij verschijnt hier.</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Details</translation>
+    </message>
+    <message>
+        <source>Log of the post</source>
+        <translation>Logboek van de post</translation>
+    </message>
+    <message>
+        <source>Done, %1 failed</source>
+        <translation>Klaar, %1 mislukt</translation>
+    </message>
+    <message>
+        <source>%1 / %2 Articles</source>
+        <translation>%1 / %2 artikelen</translation>
+    </message>
+    <message>
+        <source>took %1</source>
+        <translation>duurde %1</translation>
+    </message>
+    <message>
+        <source>%1 post(s)</source>
+        <translation>%1 post(s)</translation>
+    </message>
+    <message>
+        <source>%1 running</source>
+        <translation>%1 bezig</translation>
+    </message>
+    <message>
+        <source>%1 waiting</source>
+        <translation>%1 wachtend</translation>
+    </message>
+    <message>
+        <source>%1 done</source>
+        <translation>%1 klaar</translation>
+    </message>
+    <message>
+        <source>%1 with problems</source>
+        <translation>%1 met problemen</translation>
+    </message>
+    <message>
+        <source>Select a post in the list.</source>
+        <translation>Selecteer een post in de lijst.</translation>
+    </message>
+    <message>
+        <source>NZB file</source>
+        <translation>NZB-bestand</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>Archief</translation>
+    </message>
+    <message>
+        <source>no compression</source>
+        <translation>geen compressie</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Wachtwoord</translation>
+    </message>
+    <message>
+        <source>none</source>
+        <translation>geen</translation>
+    </message>
+    <message>
+        <source>Newsgroups</source>
+        <translation>Nieuwsgroepen</translation>
+    </message>
+    <message>
+        <source>and %1 more</source>
+        <translation>en nog %1</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Bestanden</translation>
+    </message>
+    <message>
+        <source>Articles</source>
+        <translation>Artikelen</translation>
+    </message>
+    <message>
+        <source>%1 / %2, %3 failed</source>
+        <translation>%1 / %2, %3 mislukt</translation>
+    </message>
+    <message>
+        <source>%1 / %2</source>
+        <translation>%1 / %2</translation>
+    </message>
+    <message>
+        <source>To post again</source>
+        <translation>Opnieuw te posten</translation>
+    </message>
+    <message>
+        <source>%1 Article(s)</source>
+        <translation>%1 artikel(en)</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation>Toegevoegd</translation>
+    </message>
+    <message>
+        <source>Started</source>
+        <translation>Gestart</translation>
+    </message>
+    <message>
+        <source>Finished</source>
+        <translation>Voltooid</translation>
+    </message>
+    <message>
+        <source>(%1 older line(s) not kept)</source>
+        <translation>(%1 oudere regel(s) niet bewaard)</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stoppen</translation>
+    </message>
+    <message>
+        <source>Remove this post from the queue before it starts</source>
+        <translation>Deze post uit de wachtrij halen voordat hij begint</translation>
+    </message>
+    <message>
+        <source>Stop this post</source>
+        <translation>Deze post stoppen</translation>
+    </message>
+    <message>
+        <source>Post the missing Articles again (%1)</source>
+        <translation>Ontbrekende artikelen opnieuw posten (%1)</translation>
+    </message>
+    <message>
+        <source>Stop the post?</source>
+        <translation>Post stoppen?</translation>
+    </message>
+    <message>
+        <source>Stop the post %1?
+What was already uploaded stays on the server, the rest is not posted.</source>
+        <translation>De post %1 stoppen?
+Wat al geüpload is blijft op de server, de rest wordt niet gepost.</translation>
+    </message>
+    <message>
+        <source>Articles are missing</source>
+        <translation>Er ontbreken artikelen</translation>
+    </message>
+    <message>
+        <source>%1 Article(s) of this post couldn't be posted and the nzb file points to them.
+If you remove it from the list you won't be able to post them again.
+
+Remove it anyway?</source>
+        <translation>%1 artikel(en) van deze post konden niet worden gepost en het NZB-bestand verwijst ernaar.
+Als je hem uit de lijst verwijdert, kun je ze niet meer opnieuw posten.
+
+Toch verwijderen?</translation>
+    </message>
+    <message>
+        <source>Some finished posts have %1 Article(s) that can still be posted again.
+Keep them in the list?</source>
+        <translation>Sommige voltooide posts hebben %1 artikel(en) die nog opnieuw gepost kunnen worden.
+In de lijst houden?</translation>
+    </message>
+    <message>
+        <source>Keep them</source>
+        <translation>Houden</translation>
+    </message>
+    <message>
+        <source>Remove them too</source>
+        <translation>Ook verwijderen</translation>
+    </message>
+    <message>
+        <source>Remove from the page Posts the posts finished without errors</source>
+        <translation>Zonder fouten voltooide posts van de pagina Posts verwijderen</translation>
     </message>
 </context>
 </TS>

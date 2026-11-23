@@ -819,7 +819,7 @@ void NgPost::onNewFileToProcess(const QFileInfo & fileInfo)
     if (_hmi)
     {
         _hmi->updateAutoPostingParams();
-        _hmi->setJobLabel(-1);
+        _hmi->setJobLabel(QString());
         _delAuto = _hmi->autoWidget()->deleteFilesOncePosted();
         _movePosted = _hmi->autoWidget()->movePostedTo();
         _hmi->autoWidget()->newFileToProcess(fileInfo);
@@ -1078,8 +1078,8 @@ void NgPost::onPostingJobStarted()
         _progressbarTimer.start(_refreshRate);
     }
 #ifdef __USE_HMI__
-    if (_hmi && _activeJob && _activeJob->widget())
-        _hmi->setJobLabel(static_cast<int>(_activeJob->widget()->jobNumber())); // not "Ready" while it is compressing
+    if (_hmi && _activeJob)
+        _hmi->setJobLabel(_activeJob->nzbName()); // not "Ready" while it is compressing
 #endif
 }
 
@@ -1150,7 +1150,7 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
         }
 #endif
 #ifdef __USE_HMI__
-        if (_hmi && !job->widget())
+        if (_hmi && !job->fromGuiForm())
         {
             int ok = 0, errors = 0;
             watchStatsToday(ok, errors); // (also starts a new day)
@@ -1159,7 +1159,7 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
             else
                 ++_watchErrors;
         }
-        if (_hmi && !job->widget())
+        if (_hmi && !job->fromGuiForm())
             _hmi->autoWidget()->updateFinishedJob(job->getFirstOriginalFile(),
                                                   job->nbArticlesTotal(),
                                                   job->nbArticlesUploaded(),
@@ -1214,8 +1214,8 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
         }
 
 #ifdef __USE_HMI__
-        if (_hmi && _autoCloseTabs && _activeJob->hasPostFinishedSuccessfully())
-            _hmi->closeTab(_activeJob->widget());
+        if (_hmi && _autoCloseTabs && _activeJob->hasPostFinishedSuccessfully() && _activeJob->postId() >= 0)
+            _postList->remove(_activeJob->postId()); // "remove the finished posts from the list"
 #endif
 
         // command line only: post again the Articles that failed (used by the tests, the GUI has a button)
@@ -1236,7 +1236,7 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
         }
 
         PostingJob *repostJob = nullptr;
-        if (!_activeJob->widget() && !_activeJob->isRepost() && !_activeJob->repostInfo().isEmpty()
+        if (!_activeJob->fromGuiForm() && !_activeJob->isRepost() && !_activeJob->repostInfo().isEmpty()
                 && !qgetenv("NGPOST_REPOST_MISSING").isEmpty())
             repostJob = PostingJob::createRepostJob(this, _activeJob->repostInfo(), nullptr);
 
@@ -1256,10 +1256,6 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
             _activeJob = _pendingJobs.dequeue();
             onPostingJobStarted();
 
-#ifdef __USE_HMI__
-            if (_hmi)
-                _hmi->setTab(_activeJob->widget());
-#endif
             if (_preparePacking)
             {
                 if (_packingJob == _activeJob)
@@ -1305,6 +1301,8 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
     {
         _packingJob = nullptr;
         _pendingJobs.dequeue(); // remove the packingJob
+        if (job->postId() >= 0) // cancelled while its files were packed: never posted
+            _postList->finish(job->postId(), PostEntry::State::CANCELLED);
         job->deleteLater();
         _error(tr("packing job finished unexpectedly..."));
         _prepareNextPacking();
@@ -1314,6 +1312,12 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::onPostingJobFinished] job: " << job
         // it was a Pending job that has been cancelled
         if (debugFull())
             _log(tr("Cancelled pending job?"));
+        if (job->postId() >= 0)
+        {
+            _postList->appendLog(job->postId(), tr("Cancelled before it started"), PostEntry::LOG_WARN);
+            _postList->finish(job->postId(), PostEntry::State::CANCELLED);
+            _dumpPostList();
+        }
         _pendingJobs.removeOne(job);
         job->deleteLater();
     }
@@ -1555,6 +1559,11 @@ void NgPost::_postListFinish(PostingJob *job)
     if (!job || job->postId() < 0)
         return;
     _postListRefresh(job);
+#ifdef __USE_HMI__
+    // GUI: the page Posts offers to post the missing Articles again (known before the list says the post is over)
+    if (_hmi && job->hasPostFinished() && !job->repostInfo().isEmpty())
+        _missingOfPost.insert(job->postId(), job->repostInfo());
+#endif
     PostEntry::State state = !job->hasPostFinished() ? PostEntry::State::STOPPED :
                              (job->nbArticlesFailed() ? PostEntry::State::DONE_WITH_ERRORS : PostEntry::State::DONE);
     _postList->finish(job->postId(), state);
@@ -1595,6 +1604,63 @@ void NgPost::_dumpPostList() const
         file.write(QJsonDocument(QJsonObject{{"posts", posts}}).toJson());
 }
 
+PostingJob *NgPost::_jobOfPost(int postId) const
+{
+    if (postId < 0)
+        return nullptr;
+    if (_activeJob && _activeJob->postId() == postId)
+        return _activeJob;
+    for (PostingJob *job : _pendingJobs)
+        if (job->postId() == postId)
+            return job;
+    return nullptr;
+}
+
+bool NgPost::stopPost(int postId)
+{
+    PostingJob *job = _jobOfPost(postId);
+    if (!job)
+        return false;
+    emit job->stopPosting(); // a waiting post is cancelled, a running one is stopped
+    return true;
+}
+
+int NgPost::nbMissingArticles(int postId) const
+{
+    auto it = _missingOfPost.constFind(postId);
+    return it == _missingOfPost.constEnd() ? 0 : it->nbArticles();
+}
+
+bool NgPost::repostMissing(int postId)
+{
+    auto it = _missingOfPost.find(postId);
+    if (it == _missingOfPost.end())
+        return false;
+    RepostInfo info = it.value();
+    QString problem = queueProblemMissing(info);
+    if (!problem.isEmpty())
+    {
+        _error(tr("Can't post again the missing Articles of %1: %2").arg(QFileInfo(info.nzbPath).fileName(), problem));
+        return false;
+    }
+    _missingOfPost.erase(it);
+    PostingJob *job = PostingJob::createRepostJob(this, info, nullptr);
+    if (!job)
+        return false;
+    job->setOrigin("quick");
+    startPostingJob(job);
+    return true;
+}
+
+void NgPost::forgetMissing(int postId)
+{
+    auto it = _missingOfPost.find(postId);
+    if (it == _missingOfPost.end())
+        return;
+    queueForget(it->queueId); // they can't be posted again anymore
+    _missingOfPost.erase(it);
+}
+
 void NgPost::closeAllPostingJobs()
 {
     _closingApp = true; // the posts that are stopped now stay in the queue to be posted again at the next start
@@ -1610,7 +1676,7 @@ void NgPost::closeAllMonitoringJobs()
     while (it != _pendingJobs.end())
     {
         PostingJob *job = *it;
-        if (!job->widget())
+        if (!job->fromGuiForm())
         {
             it = _pendingJobs.erase(it);
             if (_debug)
@@ -1620,7 +1686,7 @@ void NgPost::closeAllMonitoringJobs()
         else
             ++it;
     }
-    if (_activeJob && !_activeJob->widget())
+    if (_activeJob && !_activeJob->fromGuiForm())
     {
         emit _activeJob->stopPosting();
         if (_debug)
@@ -1659,10 +1725,10 @@ void NgPost::clearPausedMonitoring()
 int NgPost::nbMonitoringJobs() const
 {
     int nb = 0;
-    if (_activeJob && !_activeJob->widget())
+    if (_activeJob && !_activeJob->fromGuiForm())
         ++nb;
     for (PostingJob *job : _pendingJobs)
-        if (!job->widget())
+        if (!job->fromGuiForm())
             ++nb;
     return nb;
 }
@@ -1682,14 +1748,14 @@ bool NgPost::hasMonitoringPostingJobs() const
 {
     if (_activeJob)
     {
-        if (!_activeJob->widget())
+        if (!_activeJob->fromGuiForm())
             return true;
     }
     else if (_pendingJobs.size())
     {
         for (PostingJob *job : _pendingJobs)
         {
-            if (!job->widget())
+            if (!job->fromGuiForm())
                 return true;
         }
     }
@@ -3134,7 +3200,7 @@ bool NgPost::startPostingJob(PostingJob *job)
 {
     // a new post of the auto posting / command line that is already in the history is skipped
     // (Quick Post asks the user before creating its job, the queue and the reposts are never checked)
-    if (!job->isRepost() && job->queueId().isEmpty() && !job->widget())
+    if (!job->isRepost() && job->queueId().isEmpty() && !job->fromGuiForm())
     {
         QString posted = duplicateInPost(job->nzbName(), job->originalFiles());
         if (!posted.isEmpty())
@@ -3172,7 +3238,7 @@ qDebug() << "[MB_TRACE][Issue#82][NgPost::startPostingJob] job: " << job
     if (_hmi)
     {
         connect(job, &PostingJob::articlesNumber, _hmi, &MainWindow::onSetProgressBarRange,  Qt::QueuedConnection);
-        if (!job->widget())
+        if (!job->fromGuiForm())
             connect(job, &PostingJob::postingStarted,  _hmi->autoWidget(), &AutoPostWidget::onMonitorJobStart);
     }
 #endif
@@ -3693,7 +3759,7 @@ QString NgPost::historyKind(const PostingJob *job) const
 #ifdef __USE_HMI__
     if (_hmi)
     {
-        if (job->widget() && !job->widget()->isFromAutoPosting())
+        if (job->origin() == "quick")
             return "quick";
         return _autoMode == "scan" ? "scan" : _autoMode == "watch" ? "watch" : "choose";
     }

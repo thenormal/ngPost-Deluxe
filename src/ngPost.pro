@@ -30,6 +30,7 @@ SOURCES += \
     hmi/SignedListWidget.cpp \
     hmi/ServersWidget.cpp \
     hmi/HistoryWidget.cpp \
+    hmi/PostsWidget.cpp \
     hmi/StatsWidget.cpp \
     hmi/MainWindow.cpp
 
@@ -49,6 +50,7 @@ HEADERS += \
     hmi/SignedListWidget.h \
     hmi/ServersWidget.h \
     hmi/HistoryWidget.h \
+    hmi/PostsWidget.h \
     hmi/StatsWidget.h \
     hmi/MainWindow.h
 

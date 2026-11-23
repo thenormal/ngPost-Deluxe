@@ -12,7 +12,7 @@ The History and the saved queue keep the password of each archive in clear text,
 
 - A post that is resumed after a restart starts again from the beginning.
 - The pause is not remembered after a restart.
-- Resumed posts come back as Quick Post tabs.
+- The list of the page Posts is not kept after a restart (the History keeps every upload).
 - Newsgroups that are not valid are kept in the settings file, but block the posting until you fix them.
 - Too many wrong logins can get the account blocked by the provider for some time.
 - The installer is not digitally signed: Windows can show a warning. Choose **More info**, then **Run anyway**.

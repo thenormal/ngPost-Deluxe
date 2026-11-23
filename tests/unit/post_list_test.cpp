@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
     // progress: a change is signalled, the same values are not
     PostEntry s; s.id = idA; s.state = State::UPLOADING; s.sizeTotal = 1000; s.sizeDone = 250;
-    s.nbArticles = 4; s.nbUploaded = 1; s.speed = 100.;
+    s.nbArticles = 4; s.nbUploaded = 1; s.speed = 100.; // 25 %
     CHECK(list.update(s));
     CHECK(changed == 1);
     CHECK(list.entry(idA)->started.isValid());

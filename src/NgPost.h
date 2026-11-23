@@ -40,6 +40,8 @@
 #include "utils/UpdateChecker.h"
 #include "utils/PostProfile.h"
 #include "utils/PostRequest.h"
+#include "RepostInfo.h"
+#include <QHash>
 #include <functional>
 #include <QNetworkProxy>
 class QTranslator;
@@ -207,6 +209,7 @@ private:
     // the posts of the session as the user sees them (GUI page Posts, later the web panel and the API)
     PostList           *_postList;
     QTimer             *_postListTimer;   //!< refreshes the progress of the running posts
+    QHash<int, RepostInfo> _missingOfPost; //!< (GUI) Articles of the finished posts that can be posted again
 
     QString     _historyFieldSeparator;
     QString     _postHistoryFile;      //!< POST_HISTORY of the config (explicit file)
@@ -408,6 +411,10 @@ public:
 
     inline PostList *postList() const { return _postList; }
     void postListJobGone(PostingJob *job); //!< (PostingJob destructor) a post that ends without onPostingJobFinished
+    bool stopPost(int postId);             //!< stops a running post or cancels a waiting one (false: not running)
+    int  nbMissingArticles(int postId) const; //!< Articles of a finished post that can be posted again (GUI)
+    bool repostMissing(int postId);        //!< posts them again (a new post in the list)
+    void forgetMissing(int postId);        //!< they won't be posted again (also removed from the queue)
     QString queueFile() const;
     void queueSaveJob(PostingJob *job);  //!< (re)write the entry of the job (if it has one)
     void queueJobEnded(PostingJob *job); //!< remove the entry, keep it, or turn it into "missing Articles"
@@ -569,6 +576,7 @@ private:
     void _post(const QFileInfo &fileInfo, const QString &monitorFolder = "");
     void _finishPosting();
 
+    PostingJob *_jobOfPost(int postId) const;
     void _postListAdd(PostingJob *job);     //!< a new post (waiting or started)
     void _postListRefresh(PostingJob *job); //!< state and progress of a post
     void _postListFinish(PostingJob *job);  //!< the post is over (done, with errors or stopped)
