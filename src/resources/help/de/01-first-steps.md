@@ -36,4 +36,12 @@ Einmal am Tag, beim Start des Programms, fragt ngPost Deluxe bei GitHub nach, ob
 
 Zum Abschalten entfernen Sie das Häkchen bei **Beim Programmstart nach einer neuen Version suchen** unter **Einstellungen**, Kategorie **Allgemein**, Karte **Oberfläche**. Die Kommandozeilenversion und das Docker-Image prüfen nie.
 
+## Computer wechseln oder eine Konfiguration teilen
+
+Unter **Einstellungen**, Kategorie **Verlauf und Warteschlange**, Karte **Einstellungen exportieren und importieren**, schreibt **Einstellungen exportieren...** eine Textdatei mit den Einstellungen des Programms, den Profilen, den bevorzugten Newsgroups, den gewählten Benachrichtigungen und, wenn Sie möchten, den Servern. **Einstellungen importieren...** liest diese Datei auf einem anderen Computer und zeigt den Inhalt, bevor etwas geändert wird.
+
+Die Datei enthält nie ein Passwort, einen Token, die Adresse einer Benachrichtigung, das feste Archivpasswort oder einen Ordner des Computers. Importierte Server bleiben ausgeschaltet, bis Sie ihr Passwort unter **Server** eingeben. Server, die Sie schon haben, werden nicht verändert, und ein Profil mit gleichem Namen bleibt erhalten, außer Sie wählen das Ersetzen. Die alte Konfiguration bleibt neben der neuen erhalten (`.before-import`), und ngPost startet neu, um die neuen Einstellungen zu verwenden.
+
+Auf der Kommandozeile: `--export_settings Datei` und `--import_settings Datei` (danach beendet sich das Programm).
+
 Weiter: [Server und Verbindungen](02-servers.md).

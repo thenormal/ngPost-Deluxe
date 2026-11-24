@@ -2008,6 +2008,104 @@ Later beslissen: ze blijven in de wachtrij en worden bij de volgende start opnie
         <source>For all the connections and all the posts together, so the rest of your connection stays usable. It can be changed while posting. Compression and par2 are not limited.</source>
         <translation>Voor alle verbindingen en alle posts samen, zodat de rest van uw verbinding bruikbaar blijft. Kan tijdens het posten worden gewijzigd. Compressie en par2 worden niet beperkt.</translation>
     </message>
+    <message>
+        <source>Export the settings</source>
+        <translation>Instellingen exporteren</translation>
+    </message>
+    <message>
+        <source>What do you want in the file?</source>
+        <translation>Wat wil je in het bestand?</translation>
+    </message>
+    <message>
+        <source>The settings of the program and the options of Quick Post and Auto Posting</source>
+        <translation>De instellingen van het programma en de opties van Quick Post en Auto Posting</translation>
+    </message>
+    <message>
+        <source>The profiles and the favorite newsgroups</source>
+        <translation>De profielen en de favoriete newsgroups</translation>
+    </message>
+    <message>
+        <source>The notifications chosen (not the addresses nor the tokens)</source>
+        <translation>De gekozen meldingen (niet de adressen en tokens)</translation>
+    </message>
+    <message>
+        <source>The servers (host, port, user, connections: never the password)</source>
+        <translation>De servers (host, poort, gebruiker, verbindingen: nooit het wachtwoord)</translation>
+    </message>
+    <message>
+        <source>Settings exported in:
+%1</source>
+        <translation>Instellingen geëxporteerd naar:
+%1</translation>
+    </message>
+    <message>
+        <source>Import the settings</source>
+        <translation>Instellingen importeren</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt);;All files (*)</source>
+        <translation>Tekstbestanden (*.txt);;Alle bestanden (*)</translation>
+    </message>
+    <message>
+        <source>In the file: %1 settings, %2 notification settings, %3 new profiles (%4 with a name that you have already), %5 new servers (%6 already here).</source>
+        <translation>In het bestand: %1 instellingen, %2 meldingsinstellingen, %3 nieuwe profielen (%4 met een naam die je al hebt), %5 nieuwe servers (%6 al aanwezig).</translation>
+    </message>
+    <message>
+        <source>What do you want to import? The settings and the notifications replace the ones of this computer; the new servers are switched off until you type their password.</source>
+        <translation>Wat wil je importeren? De instellingen en meldingen vervangen die van deze computer; nieuwe servers blijven uit tot je hun wachtwoord invoert.</translation>
+    </message>
+    <message>
+        <source>The settings of the program</source>
+        <translation>De instellingen van het programma</translation>
+    </message>
+    <message>
+        <source>The notifications chosen</source>
+        <translation>De gekozen meldingen</translation>
+    </message>
+    <message>
+        <source>The servers that are not here yet</source>
+        <translation>De servers die er nog niet zijn</translation>
+    </message>
+    <message>
+        <source>Replace the profiles that have the same name (otherwise they are kept)</source>
+        <translation>Profielen met dezelfde naam vervangen (anders blijven ze behouden)</translation>
+    </message>
+    <message>
+        <source>Settings imported (the old config is kept as %1). To use them ngPost must restart.</source>
+        <translation>Instellingen geïmporteerd (de oude configuratie is bewaard als %1). Om ze te gebruiken moet ngPost opnieuw starten.</translation>
+    </message>
+    <message>
+        <source>%1 new server(s) are switched off: type the password in Servers and switch them on.</source>
+        <translation>%1 nieuwe server(s) staan uit: voer het wachtwoord in bij Servers en zet ze aan.</translation>
+    </message>
+    <message>
+        <source>Restart now</source>
+        <translation>Nu herstarten</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Later</translation>
+    </message>
+    <message>
+        <source>Can&apos;t restart: close ngPost and open it again.</source>
+        <translation>Herstarten is niet gelukt: sluit ngPost en open het opnieuw.</translation>
+    </message>
+    <message>
+        <source>Export and import the settings</source>
+        <translation>Instellingen exporteren en importeren</translation>
+    </message>
+    <message>
+        <source>Export the settings...</source>
+        <translation>Instellingen exporteren...</translation>
+    </message>
+    <message>
+        <source>Import the settings...</source>
+        <translation>Instellingen importeren...</translation>
+    </message>
+    <message>
+        <source>To change computer or to share a configuration: the file has the settings, the profiles, the notifications chosen and, if you want, the servers. It never has a password, a token, an address of a notification or a folder of this computer: the servers imported are switched off until you type their password.</source>
+        <translation>Om van computer te wisselen of een configuratie te delen: het bestand bevat de instellingen, de profielen, de gekozen meldingen en, als je wilt, de servers. Het bevat nooit een wachtwoord, token, meldingsadres of map van deze computer: geïmporteerde servers blijven uit tot je hun wachtwoord invoert.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3661,6 +3759,46 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
     <message>
         <source>## Look of the NFO file (nfo_style: classic, clean, box, scene, elegant or retro) and nfo_ascii to use only ASCII characters</source>
         <translation>## Uiterlijk van het NFO-bestand (nfo_style: classic, clean, box, scene, elegant of retro) en nfo_ascii voor alleen ASCII-tekens</translation>
+    </message>
+    <message>
+        <source>write the settings, the profiles, the notifications and the servers (without passwords) in this file, to use them on another computer, then exit</source>
+        <translation>schrijft de instellingen, profielen, meldingen en servers (zonder wachtwoorden) in dit bestand, om op een andere computer te gebruiken, en stopt daarna</translation>
+    </message>
+    <message>
+        <source>read a file written by --export_settings and add it to the config (the old config is kept as .before-import), then exit. Passwords are never in the file: new servers are switched off until you type their password</source>
+        <translation>leest een bestand dat met --export_settings is geschreven en voegt het toe aan de configuratie (de oude configuratie wordt bewaard als .before-import), en stopt daarna. Wachtwoorden staan nooit in het bestand: nieuwe servers blijven uit tot je hun wachtwoord invoert</translation>
+    </message>
+    <message>
+        <source>Settings exported in %1 (no password in it)</source>
+        <translation>Instellingen geëxporteerd naar %1 (zonder wachtwoord)</translation>
+    </message>
+    <message>
+        <source>Settings imported: %1 settings, %2 new profiles, %3 new servers (%4 to switch on after typing the password). The old config is kept as %5</source>
+        <translation>Instellingen geïmporteerd: %1 instellingen, %2 nieuwe profielen, %3 nieuwe servers (%4 aan te zetten na het invoeren van het wachtwoord). De oude configuratie is bewaard als %5</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read the config file %1</source>
+        <translation>Kan het configuratiebestand %1 niet lezen</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the file %1</source>
+        <translation>Kan het bestand %1 niet schrijven</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read the file %1</source>
+        <translation>Kan het bestand %1 niet lezen</translation>
+    </message>
+    <message>
+        <source>%1 is not a file of settings exported by ngPost Deluxe</source>
+        <translation>%1 is geen instellingenbestand dat door ngPost Deluxe is geëxporteerd</translation>
+    </message>
+    <message>
+        <source>Can&apos;t make a copy of the config file: nothing was changed</source>
+        <translation>Kan het configuratiebestand niet kopiëren: er is niets gewijzigd</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the config file %1</source>
+        <translation>Kan het configuratiebestand %1 niet schrijven</translation>
     </message>
 </context>
 <context>

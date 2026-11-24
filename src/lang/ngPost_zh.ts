@@ -2006,6 +2006,104 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>For all the connections and all the posts together, so the rest of your connection stays usable. It can be changed while posting. Compression and par2 are not limited.</source>
         <translation>适用于所有连接和所有发布的总和, 让您的网络其余部分仍可正常使用. 发布过程中也可以更改. 压缩和 par2 不受限制.</translation>
     </message>
+    <message>
+        <source>Export the settings</source>
+        <translation>导出设置</translation>
+    </message>
+    <message>
+        <source>What do you want in the file?</source>
+        <translation>文件中要包含什么？</translation>
+    </message>
+    <message>
+        <source>The settings of the program and the options of Quick Post and Auto Posting</source>
+        <translation>程序设置以及 Quick Post 和 Auto Posting 的选项</translation>
+    </message>
+    <message>
+        <source>The profiles and the favorite newsgroups</source>
+        <translation>配置文件（profile）和收藏的新闻组</translation>
+    </message>
+    <message>
+        <source>The notifications chosen (not the addresses nor the tokens)</source>
+        <translation>所选的通知（不含地址和令牌）</translation>
+    </message>
+    <message>
+        <source>The servers (host, port, user, connections: never the password)</source>
+        <translation>服务器（主机、端口、用户、连接数：绝不含密码）</translation>
+    </message>
+    <message>
+        <source>Settings exported in:
+%1</source>
+        <translation>设置已导出到：
+%1</translation>
+    </message>
+    <message>
+        <source>Import the settings</source>
+        <translation>导入设置</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt);;All files (*)</source>
+        <translation>文本文件 (*.txt);;所有文件 (*)</translation>
+    </message>
+    <message>
+        <source>In the file: %1 settings, %2 notification settings, %3 new profiles (%4 with a name that you have already), %5 new servers (%6 already here).</source>
+        <translation>文件中有：%1 项设置、%2 项通知设置、%3 个新配置文件（其中 %4 个与已有的同名）、%5 个新服务器（%6 个已存在）。</translation>
+    </message>
+    <message>
+        <source>What do you want to import? The settings and the notifications replace the ones of this computer; the new servers are switched off until you type their password.</source>
+        <translation>要导入什么？设置和通知将替换本机的设置；新服务器在您输入密码之前保持关闭。</translation>
+    </message>
+    <message>
+        <source>The settings of the program</source>
+        <translation>程序设置</translation>
+    </message>
+    <message>
+        <source>The notifications chosen</source>
+        <translation>所选的通知</translation>
+    </message>
+    <message>
+        <source>The servers that are not here yet</source>
+        <translation>尚未存在的服务器</translation>
+    </message>
+    <message>
+        <source>Replace the profiles that have the same name (otherwise they are kept)</source>
+        <translation>替换同名的配置文件（否则保留现有的）</translation>
+    </message>
+    <message>
+        <source>Settings imported (the old config is kept as %1). To use them ngPost must restart.</source>
+        <translation>设置已导入（旧配置保存为 %1）。要使用它们，ngPost 必须重新启动。</translation>
+    </message>
+    <message>
+        <source>%1 new server(s) are switched off: type the password in Servers and switch them on.</source>
+        <translation>%1 个新服务器已关闭：请在“服务器”中输入密码并启用它们。</translation>
+    </message>
+    <message>
+        <source>Restart now</source>
+        <translation>立即重新启动</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>稍后</translation>
+    </message>
+    <message>
+        <source>Can&apos;t restart: close ngPost and open it again.</source>
+        <translation>无法重新启动：请关闭 ngPost 后重新打开。</translation>
+    </message>
+    <message>
+        <source>Export and import the settings</source>
+        <translation>导出和导入设置</translation>
+    </message>
+    <message>
+        <source>Export the settings...</source>
+        <translation>导出设置...</translation>
+    </message>
+    <message>
+        <source>Import the settings...</source>
+        <translation>导入设置...</translation>
+    </message>
+    <message>
+        <source>To change computer or to share a configuration: the file has the settings, the profiles, the notifications chosen and, if you want, the servers. It never has a password, a token, an address of a notification or a folder of this computer: the servers imported are switched off until you type their password.</source>
+        <translation>用于更换电脑或分享配置：文件包含设置、配置文件、所选的通知，以及（如果您愿意）服务器。其中绝不包含密码、令牌、通知地址或本机的文件夹：导入的服务器在您输入密码之前保持关闭。</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3656,6 +3754,46 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     <message>
         <source>## Look of the NFO file (nfo_style: classic, clean, box, scene, elegant or retro) and nfo_ascii to use only ASCII characters</source>
         <translation>## NFO 文件的外观（nfo_style：classic、clean、box、scene、elegant 或 retro）以及仅使用 ASCII 字符的 nfo_ascii</translation>
+    </message>
+    <message>
+        <source>write the settings, the profiles, the notifications and the servers (without passwords) in this file, to use them on another computer, then exit</source>
+        <translation>将设置、配置文件、通知和服务器（不含密码）写入此文件，以便在另一台电脑上使用，然后退出</translation>
+    </message>
+    <message>
+        <source>read a file written by --export_settings and add it to the config (the old config is kept as .before-import), then exit. Passwords are never in the file: new servers are switched off until you type their password</source>
+        <translation>读取由 --export_settings 写入的文件并将其添加到配置中（旧配置保存为 .before-import），然后退出。密码绝不会出现在文件中：新服务器在您输入密码之前保持关闭</translation>
+    </message>
+    <message>
+        <source>Settings exported in %1 (no password in it)</source>
+        <translation>设置已导出到 %1（不含密码）</translation>
+    </message>
+    <message>
+        <source>Settings imported: %1 settings, %2 new profiles, %3 new servers (%4 to switch on after typing the password). The old config is kept as %5</source>
+        <translation>设置已导入：%1 项设置、%2 个新配置文件、%3 个新服务器（输入密码后需启用 %4 个）。旧配置保存为 %5</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read the config file %1</source>
+        <translation>无法读取配置文件 %1</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the file %1</source>
+        <translation>无法写入文件 %1</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read the file %1</source>
+        <translation>无法读取文件 %1</translation>
+    </message>
+    <message>
+        <source>%1 is not a file of settings exported by ngPost Deluxe</source>
+        <translation>%1 不是 ngPost Deluxe 导出的设置文件</translation>
+    </message>
+    <message>
+        <source>Can&apos;t make a copy of the config file: nothing was changed</source>
+        <translation>无法复制配置文件：未做任何更改</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the config file %1</source>
+        <translation>无法写入配置文件 %1</translation>
     </message>
 </context>
 <context>

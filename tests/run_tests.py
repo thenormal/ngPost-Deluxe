@@ -1593,6 +1593,64 @@ def test_nfo_writer_unit(work):
     check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
 
 
+def test_settings_transfer_unit(work):
+    # SettingsTransfer: what is exported (never a secret nor a path), how an import merges into a configuration
+    qmake = shutil.which("qmake") or shutil.which("qmake-qt5")
+    if not qmake:
+        print("      (qmake not found: this test is skipped)")
+        return
+    here = os.path.dirname(os.path.abspath(__file__))
+    build = os.path.join(work, "unit_settings_transfer")
+    os.makedirs(build)
+    r = subprocess.run([qmake, os.path.join(here, "unit", "settings_transfer_test.pro")], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "qmake failed\n" + r.stdout + r.stderr)
+    r = subprocess.run(["make", "-j4"], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "build failed\n" + r.stdout[-2000:] + r.stderr[-2000:])
+    r = subprocess.run([os.path.join(build, "settings_transfer_test")], capture_output=True, text=True)
+    check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
+
+
+def test_export_import_settings(work):
+    # --export_settings / --import_settings: no password in the file, the new servers are off, the old config is kept, nothing is posted
+    nzbdir = os.path.join(work, "nzb")
+    os.makedirs(nzbdir)
+    src = os.path.join(work, "a.conf")
+    with open(src, "w") as f:
+        f.write("lang = EN\nnzbPath = %s\nRAR_PASS = topsecretrar\nnfo_style = retro\nnotify_ok = ON\n"
+                "notify_discord = https://discord.com/api/webhooks/1/SECRETTOKEN\nprofile = Film|1|1|1|1|10|0\n\n"
+                "[server]\nhost = news.example.com\nport = 563\nssl = true\nuser = pino\npass = serverpass\nconnection = 20\nenabled = true\nnzbCheck = false\n" % nzbdir)
+    exported = os.path.join(work, "exported.txt")
+    r = subprocess.run([NGPOST, "--conf", src, "--export_settings", exported], capture_output=True, text=True,
+                       env=dict(os.environ, HOME=work), timeout=60)
+    check(r.returncode == 0, "export: exit code %d\n%s%s" % (r.returncode, r.stdout, r.stderr))
+    content = open(exported).read()
+    for needle in ("nfo_style = retro", "notify_ok = ON", "profile = Film|1|1|1|1|10|0", "host = news.example.com", "user = pino"):
+        check(needle in content, "export: '%s' is missing" % needle)
+    for secret in ("topsecretrar", "SECRETTOKEN", "serverpass", nzbdir, "pass ="):
+        check(secret not in content, "export: '%s' must not be in the file" % secret)
+
+    dst = os.path.join(work, "b.conf")
+    with open(dst, "w") as f:
+        f.write("lang = FR\nnzbPath = %s\n\n" % nzbdir)
+    r = subprocess.run([NGPOST, "--conf", dst, "--import_settings", exported], capture_output=True, text=True,
+                       env=dict(os.environ, HOME=work), timeout=60)
+    check(r.returncode == 0, "import: exit code %d\n%s%s" % (r.returncode, r.stdout, r.stderr))
+    merged = open(dst).read()
+    for needle in ("nfo_style = retro", "profile = Film|1|1|1|1|10|0", "host = news.example.com", "enabled = false", "lang = EN"):
+        check(needle in merged, "import: '%s' is missing in the config" % needle)
+    check("nzbPath = %s" % nzbdir in merged, "import: the folder of this computer must stay")
+    check(os.path.isfile(dst + ".before-import"), "import: the old config was not kept")
+    check("lang = FR" in open(dst + ".before-import").read(), "import: the copy is not the old config")
+
+    bad = os.path.join(work, "bad.txt")
+    with open(bad, "w") as f:
+        f.write("lang = DE\n")
+    r = subprocess.run([NGPOST, "--conf", dst, "--import_settings", bad], capture_output=True, text=True,
+                       env=dict(os.environ, HOME=work), timeout=60)
+    check(r.returncode != 0, "import: a file that is not a file of settings must be refused")
+    check("lang = EN" in open(dst).read(), "import: the config changed after a refused file")
+
+
 def test_queue_post_uses_its_servers(work):
     # a post that has its own servers (profile) keeps them in the queue file and only uses them;
     # servers that are not in the configuration anymore: the enabled servers are used
@@ -1653,7 +1711,7 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_speed_limiter_unit, test_speed_limit, test_process_text_unit,
          test_7z_folder_without_recursion, test_post_list, test_post_list_unit,
          test_queue_order_unit, test_queue_keeps_order_priority_pause, test_post_profile_unit, test_nfo_writer_unit, test_nfo_styles,
-         test_queue_post_uses_its_servers]
+         test_queue_post_uses_its_servers, test_settings_transfer_unit, test_export_import_settings]
 
 
 def main():

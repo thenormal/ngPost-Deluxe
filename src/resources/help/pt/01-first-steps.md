@@ -36,4 +36,12 @@ Uma vez por dia, ao iniciar o programa, o ngPost Deluxe pergunta ao GitHub se ex
 
 Para desativar, desmarque **Procurar uma nova versão ao iniciar o programa** em **Definições**, categoria **Geral**, cartão **Interface**. A versão de linha de comandos e a imagem Docker nunca fazem esta verificação.
 
+## Mudar de computador ou partilhar uma configuração
+
+Em **Definições**, categoria **Histórico e fila**, cartão **Exportar e importar as definições**, **Exportar as definições...** escreve um ficheiro de texto com as definições do programa, os perfis, os newsgroups favoritos, as notificações escolhidas e, se quiser, os servidores. **Importar as definições...** lê esse ficheiro noutro computador e mostra o que contém antes de alterar o que quer que seja.
+
+O ficheiro nunca tem uma palavra-passe, um token, o endereço de uma notificação, a palavra-passe fixa dos arquivos nem uma pasta do computador. Os servidores importados ficam desligados até escrever a palavra-passe em **Servidores**. Os servidores que já tem não são tocados, e um perfil com o mesmo nome mantém-se, a menos que peça para o substituir. A configuração anterior é guardada junto da nova (`.before-import`) e o ngPost reinicia para usar as novas definições.
+
+Na linha de comandos: `--export_settings ficheiro` e `--import_settings ficheiro` (depois o programa sai).
+
 Seguinte: [Servidores e ligações](02-servers.md).

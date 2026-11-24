@@ -27,7 +27,7 @@ These are directions, not a list of promises.
 - Done: **A progress bar and a graph of the speed for each post** (page Posts; the graph is kept until the program is closed)
 - Done: **Log for each post** with the time of each line, filters by category (Debug hidden at first), search and copy
 - Not started: **More notifications**: email, ntfy, Gotify, Pushover and Slack (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords
-- Not started: **Export and import of the settings and the profiles** (to change computer or share a configuration)
+- Done: **Export and import of the settings and the profiles** (Settings, History and queue; `--export_settings`, `--import_settings`): settings, profiles, favorite newsgroups, notifications chosen and, if wanted, servers; never passwords, tokens, notification addresses or folders of the computer; imported servers stay off until the password is typed; the old config is kept as `.before-import`
 
 ## Version 1.6 - Verification and resume (not started)
 

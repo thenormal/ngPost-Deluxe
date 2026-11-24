@@ -119,6 +119,8 @@ private:
     QLabel         *_notifyHint = nullptr;
     QSystemTrayIcon *_tray = nullptr;   //!< created when the first system notification is shown
     QLabel         *_queueHint;
+    QLabel         *_transferHint = nullptr;
+    QPushButton    *_exportSettingsButton = nullptr, *_importSettingsButton = nullptr;
     QLabel         *_supportHint;
     QPushButton    *_supportButton;
     QPushButton    *_themeButton;  //!< side bar: switch Auto / Light / Dark
@@ -239,6 +241,8 @@ private slots:
     void onHistoryPathClicked();
     void onAutoSave();
     void onDiagnosticReport();
+    void onExportSettings();
+    void onImportSettings();
     void _showTrayMessage(const QString &title, const QString &text);
 
     void onObfucateToggled(bool checked);

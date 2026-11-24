@@ -53,6 +53,10 @@
 #include <QSysInfo>
 #include <QThread>
 #include <QSaveFile>
+#include <QProcess>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QVBoxLayout>
 #include <QStackedWidget>
 #include "utils/Diagnostics.h"
 #include "utils/LatencyStats.h"
@@ -249,6 +253,8 @@ void MainWindow::init(NgPost *ngPost)
         });
         connect(&_ngPost->_notifier, &Notifier::trayMessage, this, &MainWindow::_showTrayMessage);
     }
+    connect(_exportSettingsButton, &QAbstractButton::clicked, this, &MainWindow::onExportSettings);
+    connect(_importSettingsButton, &QAbstractButton::clicked, this, &MainWindow::onImportSettings);
     _queueCB->setChecked(_ngPost->_queueEnabled);
     connect(_queueCB,           &QAbstractButton::toggled, this, &MainWindow::onQueueToggled);
     QTimer::singleShot(1500, this, &MainWindow::_offerQueue); // after the windows of the start
@@ -909,6 +915,114 @@ void MainWindow::_saveConfig(bool quickTab, bool autoTab)
     _ngPost->_quickProfile = _quickJobTab->profileName();
     _ngPost->_autoProfile  = _autoPostTab->profileName();
     _ngPost->saveConfig(true);
+}
+
+//! small dialog: a text and a list of check boxes (returns the checked state of each, empty if cancelled)
+static bool askParts(QWidget *parent, const QString &title, const QString &text,
+                     const QList<QPair<QString, bool>> &parts, QList<bool> &checked)
+{
+    QDialog dlg(parent);
+    dlg.setWindowTitle(title);
+    QVBoxLayout *v = new QVBoxLayout(&dlg);
+    QLabel *lbl = new QLabel(text, &dlg);
+    lbl->setWordWrap(true);
+    lbl->setMinimumWidth(420);
+    v->addWidget(lbl);
+    QList<QCheckBox*> boxes;
+    for (const auto &p : parts)
+    {
+        QCheckBox *cb = new QCheckBox(p.first, &dlg);
+        cb->setChecked(p.second);
+        v->addWidget(cb);
+        boxes << cb;
+    }
+    QDialogButtonBox *bb = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dlg);
+    QObject::connect(bb, &QDialogButtonBox::accepted, &dlg, &QDialog::accept);
+    QObject::connect(bb, &QDialogButtonBox::rejected, &dlg, &QDialog::reject);
+    v->addWidget(bb);
+    if (dlg.exec() != QDialog::Accepted)
+        return false;
+    checked.clear();
+    for (QCheckBox *cb : boxes)
+        checked << cb->isChecked();
+    return true;
+}
+
+void MainWindow::onExportSettings()
+{
+    QList<bool> c;
+    if (!askParts(this, tr("Export the settings"), tr("What do you want in the file?"),
+                  {{tr("The settings of the program and the options of Quick Post and Auto Posting"), true},
+                   {tr("The profiles and the favorite newsgroups"), true},
+                   {tr("The notifications chosen (not the addresses nor the tokens)"), true},
+                   {tr("The servers (host, port, user, connections: never the password)"), false}}, c))
+        return;
+    SettingsTransfer::ExportOptions o;
+    o.general = c[0]; o.profiles = c[1]; o.notifications = c[2]; o.servers = c[3];
+
+    QString path = QFileDialog::getSaveFileName(this, tr("Export the settings"),
+                       QString("%1/ngPost_settings_%2.txt").arg(QDir::homePath(), QDateTime::currentDateTime().toString("yyyyMMdd")),
+                       tr("Text files (*.txt)"));
+    if (path.isEmpty())
+        return;
+    _saveConfig(true, true); // the file is made from the config: save what is on the screen first
+    QString err;
+    if (_ngPost->exportSettings(path, o, err))
+        QMessageBox::information(this, tr("Export the settings"), tr("Settings exported in:\n%1").arg(path));
+    else
+        QMessageBox::warning(this, tr("Export the settings"), err);
+}
+
+void MainWindow::onImportSettings()
+{
+    QString path = QFileDialog::getOpenFileName(this, tr("Import the settings"), QDir::homePath(), tr("Text files (*.txt);;All files (*)"));
+    if (path.isEmpty())
+        return;
+    QString err;
+    SettingsTransfer::Summary sum;
+    SettingsTransfer::ImportOptions all;
+    if (!_ngPost->importSettings(path, all, false, sum, err))
+    {
+        QMessageBox::warning(this, tr("Import the settings"), err);
+        return;
+    }
+    QString text = tr("In the file: %1 settings, %2 notification settings, %3 new profiles (%4 with a name that you have already), %5 new servers (%6 already here).")
+            .arg(sum.settings).arg(sum.notifications).arg(sum.profilesNew).arg(sum.profilesSame).arg(sum.serversNew).arg(sum.serversPresent)
+            + "\n\n" + tr("What do you want to import? The settings and the notifications replace the ones of this computer; "
+                          "the new servers are switched off until you type their password.");
+    QList<bool> c;
+    if (!askParts(this, tr("Import the settings"), text,
+                  {{tr("The settings of the program"), true},
+                   {tr("The profiles and the favorite newsgroups"), true},
+                   {tr("The notifications chosen"), true},
+                   {tr("The servers that are not here yet"), true},
+                   {tr("Replace the profiles that have the same name (otherwise they are kept)"), false}}, c))
+        return;
+    SettingsTransfer::ImportOptions o;
+    o.general = c[0]; o.profiles = c[1]; o.notifications = c[2]; o.servers = c[3]; o.replaceProfiles = c[4];
+    if (!_ngPost->importSettings(path, o, true, sum, err))
+    {
+        QMessageBox::warning(this, tr("Import the settings"), err);
+        return;
+    }
+    // the window must not write its old settings over the new config: no more save, then a restart
+    _autoSaveTimer->stop();
+    _autoSaveReady = false;
+    _ngPost->_settingsImported = true;
+    QString done = tr("Settings imported (the old config is kept as %1). To use them ngPost must restart.").arg(_ngPost->configFilePath() + ".before-import");
+    if (sum.serversNeedPassword > 0)
+        done += "\n\n" + tr("%1 new server(s) are switched off: type the password in Servers and switch them on.").arg(sum.serversNeedPassword);
+    QMessageBox box(QMessageBox::Information, tr("Import the settings"), done, QMessageBox::NoButton, this);
+    QPushButton *now = box.addButton(tr("Restart now"), QMessageBox::AcceptRole);
+    box.addButton(tr("Later"), QMessageBox::RejectRole);
+    box.exec();
+    if (box.clickedButton() == now)
+    {
+        if (QProcess::startDetached(QCoreApplication::applicationFilePath(), QStringList()))
+            close();
+        else
+            QMessageBox::warning(this, tr("Import the settings"), tr("Can't restart: close ngPost and open it again."));
+    }
 }
 
 void MainWindow::onDiagnosticReport()
@@ -1690,6 +1804,17 @@ QWidget *MainWindow::_buildSettingsPage()
     g->setColumnStretch(0, 1);
     put(CAT_HISTORY, queue);
 
+    // export and import of the settings
+    QFrame *transfer = _card("transfer", g);
+    _exportSettingsButton = new QPushButton(transfer);
+    _importSettingsButton = new QPushButton(transfer);
+    _transferHint = newLabel("hint", transfer);
+    _transferHint->setWordWrap(true);
+    g->addLayout(hbox({_exportSettingsButton, _importSettingsButton}, true), 0, 0);
+    g->addWidget(_transferHint, 1, 0);
+    g->setColumnStretch(0, 1);
+    put(CAT_HISTORY, transfer);
+
     // interface
     QFrame *gui = _card("interface", g);
     _themeLbl = new QLabel(gui);
@@ -1792,6 +1917,12 @@ void MainWindow::_retranslateShell()
     _queueCB->setText(tr("Save the posts that are not finished, to post them again after a restart"));
     _queueHint->setText(tr("The queue also records the password of each archive in clear text (like the history). "
                            "Turning it off deletes the saved queue."));
+    _cardTitles["transfer"]->setText(tr("Export and import the settings"));
+    _exportSettingsButton->setText(tr("Export the settings..."));
+    _importSettingsButton->setText(tr("Import the settings..."));
+    _transferHint->setText(tr("To change computer or to share a configuration: the file has the settings, the profiles, the notifications chosen "
+                              "and, if you want, the servers. It never has a password, a token, an address of a notification or a folder of this computer: "
+                              "the servers imported are switched off until you type their password."));
     _cardTitles["support"]->setText(tr("Support the project"));
     _supportHint->setText(tr("%1 is free. If it is useful to you, you can support its development with a donation on Ko-fi.").arg(_ngPost ? _ngPost->appName() : "ngPost Deluxe"));
     _supportButton->setText(tr("Support on Ko-fi"));

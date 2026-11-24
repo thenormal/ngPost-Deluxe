@@ -36,4 +36,12 @@ Eén keer per dag, bij het starten van het programma, vraagt ngPost Deluxe aan G
 
 Om dit uit te zetten, schakelt u **Bij het starten naar een nieuwe versie zoeken** uit bij **Instellingen**, categorie **Algemeen**, kaart **Interface**. De opdrachtregelversie en de Docker-image controleren nooit.
 
+## Van computer wisselen of een configuratie delen
+
+Bij **Instellingen**, categorie **Geschiedenis en wachtrij**, kaart **Instellingen exporteren en importeren**, schrijft **Instellingen exporteren...** een tekstbestand met de instellingen van het programma, de profielen, de favoriete newsgroups, de gekozen meldingen en, als u wilt, de servers. **Instellingen importeren...** leest dit bestand op een andere computer en toont de inhoud voordat er iets verandert.
+
+Het bestand bevat nooit een wachtwoord, token, meldingsadres, het vaste archiefwachtwoord of een map van de computer. Geïmporteerde servers blijven uit tot u hun wachtwoord invoert bij **Servers**. Servers die u al hebt, worden niet aangeraakt, en een profiel met dezelfde naam blijft behouden tenzij u vervangen kiest. De oude configuratie wordt naast de nieuwe bewaard (`.before-import`) en ngPost start opnieuw op om de nieuwe instellingen te gebruiken.
+
+Vanaf de opdrachtregel: `--export_settings bestand` en `--import_settings bestand` (daarna stopt het programma).
+
 Volgende: [Servers en verbindingen](02-servers.md).

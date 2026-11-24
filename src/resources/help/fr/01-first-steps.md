@@ -36,4 +36,12 @@ Une fois par jour, au démarrage du programme, ngPost Deluxe demande à GitHub s
 
 Pour désactiver cette vérification, décochez **Chercher une nouvelle version au démarrage du programme** dans **Paramètres**, catégorie **Général**, carte **Interface**. La version en ligne de commande et l'image Docker ne vérifient jamais.
 
+## Changer d'ordinateur ou partager une configuration
+
+Dans **Paramètres**, catégorie **Historique et file d'attente**, carte **Exporter et importer les paramètres**, **Exporter les paramètres...** écrit un fichier texte avec les paramètres du programme, les profils, les newsgroups favoris, les notifications choisies et, si vous le voulez, les serveurs. **Importer les paramètres...** lit ce fichier sur un autre ordinateur et montre ce qu'il contient avant de changer quoi que ce soit.
+
+Le fichier ne contient jamais de mot de passe, de jeton, d'adresse de notification, le mot de passe fixe des archives ni de dossier de l'ordinateur. Les serveurs importés restent désactivés jusqu'à ce que vous saisissiez leur mot de passe dans **Serveurs**. Les serveurs que vous avez déjà ne sont pas touchés, et un profil du même nom est conservé sauf si vous demandez de le remplacer. L'ancienne configuration est conservée à côté de la nouvelle (`.before-import`) et ngPost redémarre pour utiliser les nouveaux paramètres.
+
+En ligne de commande : `--export_settings fichier` et `--import_settings fichier` (puis le programme quitte).
+
 Suite : [Serveurs et connexions](02-servers.md).
