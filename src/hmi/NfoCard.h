@@ -23,6 +23,7 @@
 
 class NgPost;
 class QCheckBox;
+class QComboBox;
 class QLabel;
 class QLineEdit;
 class QPlainTextEdit;
@@ -51,6 +52,9 @@ private:
     QCheckBox      *_mediaCB;
     QLineEdit      *_mediaPath;
     QPushButton    *_mediaButton;
+    QLabel         *_styleLbl;
+    QComboBox      *_style;
+    QPushButton    *_previewBtn;
     QLabel         *_textLbl;
     QPlainTextEdit *_text;
 

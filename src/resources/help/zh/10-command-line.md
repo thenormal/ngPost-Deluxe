@@ -28,7 +28,7 @@
 - `--resume_queue` 重新发布未完成的发布
 - `--allow_repost` 重新发布已在历史记录中的文件（默认会跳过它们）
 - `--max_speed MB/s` 限制所有连接合计的上传速度（0：不限制）；相当于配置文件中的 `limit_speed` 和 `max_speed` 键
-- `--gen_nfo` 在 nzb 旁边写入 NFO 文件；`--nfo_in_post` 同时发布它；`--nfo_password` 在其中写入压缩包密码；`--nfo_text file.txt` 在末尾添加文字；`--no_nfo_media` 省略媒体信息（MediaInfo）；`--mediainfo_path 路径` 选择 MediaInfo 程序
+- `--gen_nfo` 在 nzb 旁边写入 NFO 文件；`--nfo_in_post` 同时发布它；`--nfo_password` 在其中写入压缩包密码；`--nfo_text file.txt` 在末尾添加文字；`--no_nfo_media` 省略媒体信息（MediaInfo）；`--mediainfo_path 路径` 选择 MediaInfo 程序；`--nfo_style 名称` 选择外观（classic、clean、box、scene、elegant、retro）；`--nfo_ascii` 仅 ASCII 字符
 - `--notify_discord URL`、`--notify_telegram_token T` 配合 `--notify_telegram_chat ID`、`--notify_webhook URL` 和 `--notify_when each|all_done`：发布结束时的通知（参见[进度与日志](06-progress-and-log.md)）
 - `--help` 完整列表
 

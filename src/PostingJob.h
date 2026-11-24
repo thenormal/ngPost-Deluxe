@@ -21,6 +21,7 @@
 #define POSTINGJOB_H
 #include "utils/Macros.h"
 #include "RepostInfo.h"
+#include "utils/NfoWriter.h"
 
 #include <QFileInfoList>
 #include <QTemporaryDir>
@@ -161,7 +162,7 @@ private:
     AtomicBool  _delFilesAfterPost;     //!< the originals are deleted, or moved if _movePostedTo is set, once everything is posted
     QString     _movePostedTo;          //!< folder "Posted" (relative: next to each original)
     QFileInfoList       _originalFiles;
-    QString             _nfoMediaText; //!< media information read at the start of the post
+    QList<NfoWriter::MediaEntry> _nfoMedia; //!< media information read at the start of the post
     int                 _nfoMediaFiles = 0, _nfoMediaDescribed = 0;
     bool                _nfoMediaTimedOut = false;
     QString             _nfoContent;   //!< text of the NFO file (empty if none)

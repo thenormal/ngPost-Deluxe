@@ -28,7 +28,7 @@ Vigilar una carpeta y mover los archivos a una carpeta «Posted» una vez public
 - `--resume_queue` publicar de nuevo las publicaciones no terminadas
 - `--allow_repost` publicar de nuevo los archivos que ya están en el historial (de forma predeterminada se omiten)
 - `--max_speed MB/s` limita la velocidad de subida, para todas las conexiones juntas (0: sin límite); equivale a las claves `limit_speed` y `max_speed` del archivo de configuración
-- `--gen_nfo` escribir un archivo NFO junto al nzb; `--nfo_in_post` publicarlo también; `--nfo_password` escribir en él la contraseña del archivo comprimido; `--nfo_text file.txt` añadir un texto al final; `--no_nfo_media` omitir la información multimedia (MediaInfo); `--mediainfo_path ruta` elegir el programa MediaInfo
+- `--gen_nfo` escribir un archivo NFO junto al nzb; `--nfo_in_post` publicarlo también; `--nfo_password` escribir en él la contraseña del archivo comprimido; `--nfo_text file.txt` añadir un texto al final; `--no_nfo_media` omitir la información multimedia (MediaInfo); `--mediainfo_path ruta` elegir el programa MediaInfo; `--nfo_style nombre` elegir el aspecto (classic, clean, box, scene, elegant, retro); `--nfo_ascii` solo caracteres ASCII
 - `--notify_discord URL`, `--notify_telegram_token T` con `--notify_telegram_chat ID`, `--notify_webhook URL` y `--notify_when each|all_done`: notificaciones al final de las publicaciones (consulta [Progreso y registro](06-progress-and-log.md))
 - `--help` la lista completa
 

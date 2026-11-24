@@ -3641,6 +3641,22 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Newsgroups, servers, NZB folder and name template of the last session (groups|servers|NZB folder|template, empty = the ones of the Settings)</source>
         <translation>上次会话的新闻组、服务器、NZB 文件夹和名称模板（组|服务器|NZB 文件夹|模板，留空 = 使用设置中的值）</translation>
     </message>
+    <message>
+        <source>look of the NFO file: classic, clean, box, scene (default), elegant or retro</source>
+        <translation>NFO 文件的外观：classic、clean、box、scene（默认）、elegant 或 retro</translation>
+    </message>
+    <message>
+        <source>only ASCII characters in the NFO file (for old systems and viewers)</source>
+        <translation>NFO 文件中仅使用 ASCII 字符（适用于旧系统和查看器）</translation>
+    </message>
+    <message>
+        <source>Error: unknown value of the option --nfo_style: %1 (classic, clean, box, scene, elegant or retro)</source>
+        <translation>错误：选项 --nfo_style 的值未知：%1（classic、clean、box、scene、elegant 或 retro）</translation>
+    </message>
+    <message>
+        <source>## Look of the NFO file (nfo_style: classic, clean, box, scene, elegant or retro) and nfo_ascii to use only ASCII characters</source>
+        <translation>## NFO 文件的外观（nfo_style：classic、clean、box、scene、elegant 或 retro）以及仅使用 ASCII 字符的 nfo_ascii</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -6572,6 +6588,88 @@ Example: {name} [{date}]. Empty: the name of the file or folder.</source>
     <message>
         <source>%1 (not in the list)</source>
         <translation>%1（不在列表中）</translation>
+    </message>
+</context>
+<context>
+    <name>NfoCard</name>
+    <message>
+        <source>Style:</source>
+        <translation>样式：</translation>
+    </message>
+    <message>
+        <source>Preview...</source>
+        <translation>预览...</translation>
+    </message>
+    <message>
+        <source>See an example of each style and choose it (also the option for only ASCII characters).</source>
+        <translation>查看每种样式的示例并进行选择（也可选择仅使用 ASCII 字符）。</translation>
+    </message>
+    <message>
+        <source>The look of the NFO file</source>
+        <translation>NFO 文件的外观</translation>
+    </message>
+</context>
+<context>
+    <name>NfoPreview</name>
+    <message>
+        <source>NFO file: choose a style</source>
+        <translation>NFO 文件：选择样式</translation>
+    </message>
+    <message>
+        <source>The NFO file is a text file. Choose its look: the preview shows an example post. If the symbols look wrong in the program you open it with, use "Only ASCII characters".</source>
+        <translation>NFO 文件是文本文件。请选择其外观：预览显示一个示例发布。如果用来打开它的程序中符号显示不正确，请选择“仅 ASCII 字符”。</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation>样式：</translation>
+    </message>
+    <message>
+        <source>Only ASCII characters</source>
+        <translation>仅 ASCII 字符</translation>
+    </message>
+    <message>
+        <source>No blocks and no boxes: for old systems and programs that show wrong symbols.</source>
+        <translation>没有方块和边框：适用于旧系统以及符号显示不正确的程序。</translation>
+    </message>
+    <message>
+        <source>The example shows:</source>
+        <translation>示例显示：</translation>
+    </message>
+    <message>
+        <source>Media information</source>
+        <translation>媒体信息</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>Text at the end</source>
+        <translation>末尾文字</translation>
+    </message>
+    <message>
+        <source>File names hidden</source>
+        <translation>隐藏文件名</translation>
+    </message>
+    <message>
+        <source>What the NFO looks like when the names of the files are hidden (obfuscation).</source>
+        <translation>文件名被隐藏（混淆）时 NFO 的样子。</translation>
+    </message>
+    <message>
+        <source>Use this style</source>
+        <translation>使用此样式</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Copy the example</source>
+        <translation>复制示例</translation>
+    </message>
+    <message>
+        <source>Copies the example to the clipboard, to look at it in Notepad or in another program.</source>
+        <translation>将示例复制到剪贴板，以便在记事本或其他程序中查看。</translation>
     </message>
 </context>
 </TS>

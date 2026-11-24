@@ -141,6 +141,7 @@ HEADERS += \
     utils/PostChecker.h \
     utils/PostedMover.h \
     utils/NfoWriter.h \
+    utils/NfoBanners.h \
     utils/Notifier.h \
     utils/UpdateChecker.h \
     utils/SpeedLimiter.h \

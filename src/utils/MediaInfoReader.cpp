@@ -123,12 +123,13 @@ QString MediaInfoReader::findProgram(const QString &configured)
     return QStandardPaths::findExecutable("mediainfo");
 }
 
-QString MediaInfoReader::format(const QByteArray &json, const QString &displayName)
+NfoWriter::MediaEntry MediaInfoReader::parse(const QByteArray &json, const QString &displayName)
 {
+    NfoWriter::MediaEntry entry;
     QJsonObject media = QJsonDocument::fromJson(json).object().value("media").toObject();
     QJsonArray tracks = media.value("track").toArray();
     if (tracks.isEmpty())
-        return QString();
+        return entry;
 
     QString head;
     QStringList video, audio, subs;
@@ -170,14 +171,12 @@ QString MediaInfoReader::format(const QByteArray &json, const QString &displayNa
         }
     }
 
-    QString out = QString("   %1%2\n").arg(displayName, head.isEmpty() ? QString() : " - " + head);
-    for (const QString &v : video)
-        out += QString("     Video     : %1\n").arg(v);
-    for (const QString &a : audio)
-        out += QString("     Audio     : %1\n").arg(a);
-    if (!subs.isEmpty())
-        out += QString("     Subtitles : %1\n").arg(subs.join(", "));
-    return out;
+    entry.name = displayName;
+    entry.head = head;
+    entry.video = video;
+    entry.audio = audio;
+    entry.subtitles = subs;
+    return entry;
 }
 
 MediaInfoReader::Result MediaInfoReader::read(const QString &program, const QList<QPair<QString, QString>> &files)
@@ -212,10 +211,10 @@ MediaInfoReader::Result MediaInfoReader::read(const QString &program, const QLis
             res.timedOut = true;
             break;
         }
-        QString block = format(p.readAllStandardOutput(), f.first);
-        if (!block.isEmpty())
+        NfoWriter::MediaEntry entry = parse(p.readAllStandardOutput(), f.first);
+        if (!entry.name.isEmpty())
         {
-            res.text += block;
+            res.entries << entry;
             ++res.nbDescribed;
         }
     }

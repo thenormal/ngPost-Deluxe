@@ -28,7 +28,7 @@ Controlla una cartella e sposta i file in una cartella "Posted" una volta postat
 - `--resume_queue` posta di nuovo i post non terminati
 - `--allow_repost` posta di nuovo i file che sono già nella cronologia (per impostazione predefinita vengono saltati)
 - `--max_speed MB/s` limita la velocità di upload, per tutte le connessioni insieme (0: nessun limite); equivale alle chiavi `limit_speed` e `max_speed` del file di configurazione
-- `--gen_nfo` scrive un file NFO accanto all'nzb; `--nfo_in_post` lo posta anche; `--nfo_password` vi scrive la password dell'archivio; `--nfo_text file.txt` aggiunge un testo alla fine; `--no_nfo_media` esclude le informazioni multimediali (MediaInfo); `--mediainfo_path percorso` sceglie il programma MediaInfo
+- `--gen_nfo` scrive un file NFO accanto all'nzb; `--nfo_in_post` lo posta anche; `--nfo_password` vi scrive la password dell'archivio; `--nfo_text file.txt` aggiunge un testo alla fine; `--no_nfo_media` esclude le informazioni multimediali (MediaInfo); `--mediainfo_path percorso` sceglie il programma MediaInfo; `--nfo_style nome` sceglie l'aspetto (classic, clean, box, scene, elegant, retro); `--nfo_ascii` solo caratteri ASCII
 - `--notify_discord URL`, `--notify_telegram_token T` con `--notify_telegram_chat ID`, `--notify_webhook URL` e `--notify_when each|all_done`: notifiche alla fine dei post (vedi [Avanzamento e log](06-progress-and-log.md))
 - `--help` l'elenco completo
 

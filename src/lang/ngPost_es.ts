@@ -3641,6 +3641,22 @@ O bien usa --par2_pct o establece PAR2_PCT o PAR2_ARGS en el fichero de configur
         <source>Newsgroups, servers, NZB folder and name template of the last session (groups|servers|NZB folder|template, empty = the ones of the Settings)</source>
         <translation>Grupos, servidores, carpeta NZB y plantilla de nombre de la última sesión (grupos|servidores|carpeta NZB|plantilla, vacío = los de los Ajustes)</translation>
     </message>
+    <message>
+        <source>look of the NFO file: classic, clean, box, scene (default), elegant or retro</source>
+        <translation>aspecto del archivo NFO: classic, clean, box, scene (por defecto), elegant o retro</translation>
+    </message>
+    <message>
+        <source>only ASCII characters in the NFO file (for old systems and viewers)</source>
+        <translation>solo caracteres ASCII en el archivo NFO (para sistemas y visores antiguos)</translation>
+    </message>
+    <message>
+        <source>Error: unknown value of the option --nfo_style: %1 (classic, clean, box, scene, elegant or retro)</source>
+        <translation>Error: valor desconocido de la opción --nfo_style: %1 (classic, clean, box, scene, elegant o retro)</translation>
+    </message>
+    <message>
+        <source>## Look of the NFO file (nfo_style: classic, clean, box, scene, elegant or retro) and nfo_ascii to use only ASCII characters</source>
+        <translation>## Aspecto del archivo NFO (nfo_style: classic, clean, box, scene, elegant o retro) y nfo_ascii para usar solo caracteres ASCII</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -6572,6 +6588,88 @@ Ejemplo: {name} [{date}]. Vacío: el nombre del archivo o carpeta.</translation>
     <message>
         <source>%1 (not in the list)</source>
         <translation>%1 (no está en la lista)</translation>
+    </message>
+</context>
+<context>
+    <name>NfoCard</name>
+    <message>
+        <source>Style:</source>
+        <translation>Estilo:</translation>
+    </message>
+    <message>
+        <source>Preview...</source>
+        <translation>Vista previa...</translation>
+    </message>
+    <message>
+        <source>See an example of each style and choose it (also the option for only ASCII characters).</source>
+        <translation>Ver un ejemplo de cada estilo y elegirlo (también la opción de solo caracteres ASCII).</translation>
+    </message>
+    <message>
+        <source>The look of the NFO file</source>
+        <translation>El aspecto del archivo NFO</translation>
+    </message>
+</context>
+<context>
+    <name>NfoPreview</name>
+    <message>
+        <source>NFO file: choose a style</source>
+        <translation>Archivo NFO: elige un estilo</translation>
+    </message>
+    <message>
+        <source>The NFO file is a text file. Choose its look: the preview shows an example post. If the symbols look wrong in the program you open it with, use "Only ASCII characters".</source>
+        <translation>El archivo NFO es un archivo de texto. Elige su aspecto: la vista previa muestra una publicación de ejemplo. Si los símbolos se ven mal en el programa con el que lo abres, usa "Solo caracteres ASCII".</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation>Estilo:</translation>
+    </message>
+    <message>
+        <source>Only ASCII characters</source>
+        <translation>Solo caracteres ASCII</translation>
+    </message>
+    <message>
+        <source>No blocks and no boxes: for old systems and programs that show wrong symbols.</source>
+        <translation>Sin bloques ni recuadros: para sistemas antiguos y programas que muestran mal los símbolos.</translation>
+    </message>
+    <message>
+        <source>The example shows:</source>
+        <translation>El ejemplo muestra:</translation>
+    </message>
+    <message>
+        <source>Media information</source>
+        <translation>Información multimedia</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Contraseña</translation>
+    </message>
+    <message>
+        <source>Text at the end</source>
+        <translation>Texto al final</translation>
+    </message>
+    <message>
+        <source>File names hidden</source>
+        <translation>Nombres de archivo ocultos</translation>
+    </message>
+    <message>
+        <source>What the NFO looks like when the names of the files are hidden (obfuscation).</source>
+        <translation>Cómo queda el NFO cuando los nombres de los archivos están ocultos (ofuscación).</translation>
+    </message>
+    <message>
+        <source>Use this style</source>
+        <translation>Usar este estilo</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>Copy the example</source>
+        <translation>Copiar el ejemplo</translation>
+    </message>
+    <message>
+        <source>Copies the example to the clipboard, to look at it in Notepad or in another program.</source>
+        <translation>Copia el ejemplo al portapapeles, para verlo en el Bloc de notas o en otro programa.</translation>
     </message>
 </context>
 </TS>
