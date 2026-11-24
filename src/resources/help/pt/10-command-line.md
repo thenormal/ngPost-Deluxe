@@ -30,6 +30,7 @@ Vigiar uma pasta e mover os ficheiros para uma pasta «Posted» depois de public
 - `--max_speed MB/s` limita a velocidade de envio, para todas as ligações em conjunto (0: sem limite); equivale às chaves `limit_speed` e `max_speed` do ficheiro de configuração
 - `--gen_nfo` escrever um ficheiro NFO junto ao nzb; `--nfo_in_post` publicá-lo também; `--nfo_password` escrever nele a palavra-passe do arquivo; `--nfo_text file.txt` acrescentar um texto no fim; `--no_nfo_media` omitir a informação multimédia (MediaInfo); `--mediainfo_path caminho` escolher o programa MediaInfo; `--nfo_style nome` escolher o aspeto (classic, clean, box, scene, elegant, retro); `--nfo_ascii` só caracteres ASCII
 - `--notify_discord URL`, `--notify_telegram_token T` com `--notify_telegram_chat ID`, `--notify_webhook URL` e `--notify_when each|all_done`: notificações no fim das publicações (veja [Progresso e registo](06-progress-and-log.md))
+- `--export_settings ficheiro` escreve as definições, perfis, notificações e servidores (nunca as palavras-passe) num ficheiro; `--import_settings ficheiro` junta esse ficheiro à configuração (a anterior fica como `.before-import`); ambos saem sem publicar
 - `--help` a lista completa
 
 Veja [Postagem Automática](08-auto-posting.md).

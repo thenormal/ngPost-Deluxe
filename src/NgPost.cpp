@@ -120,6 +120,8 @@ const QMap<NgPost::Opt, QString> NgPost::sOptionNames =
     {Opt::MONITOR_DIR,  "monitor"},
     {Opt::DEL_AUTO,     "rm_posted"},
     {Opt::MOVE_POSTED,  "move_posted"},
+    {Opt::EXPORT_SETTINGS, "export_settings"},
+    {Opt::IMPORT_SETTINGS, "import_settings"},
     {Opt::OUTPUT,       "output"},
     {Opt::NZB_PATH,     "nzbpath"},
     {Opt::THREAD,       "thread"},
@@ -195,6 +197,8 @@ const QList<QCommandLineOption> NgPost::sCmdOptions = {
     { sOptionNames[Opt::MONITOR_DIR],         tr("monitor directory and post every new file/folder. You must use --compress, should add --gen_par2, --gen_name and --gen_pass"), sOptionNames[Opt::MONITOR_DIR]},
     { sOptionNames[Opt::DEL_AUTO],            tr("delete file/folder once posted. You must use --auto or --monitor with this option.")},
     { sOptionNames[Opt::MOVE_POSTED],         tr("move the file/folder to this folder once posted (a name like Posted is created next to each file/folder, a full path is used as it is). You must use --auto or --monitor with this option."), sOptionNames[Opt::MOVE_POSTED]},
+    { sOptionNames[Opt::EXPORT_SETTINGS],     tr("write the settings, the profiles, the notifications and the servers (without passwords) in this file, to use them on another computer, then exit"), "file"},
+    { sOptionNames[Opt::IMPORT_SETTINGS],     tr("read a file written by --export_settings and add it to the config (the old config is kept as .before-import), then exit. Passwords are never in the file: new servers are switched off until you type their password"), "file"},
     { "resume_queue",                         tr("post again the posts that were not finished (queue saved next to the config file)")},
     { "notify_discord",                       tr("send a notification to this Discord webhook address when the posts are done"), "notify_discord"},
     { "notify_telegram_token",                tr("token of the Telegram bot that sends the notifications (with --notify_telegram_chat)"), "notify_telegram_token"},
@@ -2122,6 +2126,36 @@ bool NgPost::parseCommandLine(int argc, char *argv[])
         return false;
     }
 
+    if (parser.isSet(sOptionNames[Opt::EXPORT_SETTINGS]) || parser.isSet(sOptionNames[Opt::IMPORT_SETTINGS]))
+    {
+        QString err;
+        if (parser.isSet(sOptionNames[Opt::EXPORT_SETTINGS]))
+        {
+            SettingsTransfer::ExportOptions all;
+            all.servers = true;
+            QString path = parser.value(sOptionNames[Opt::EXPORT_SETTINGS]);
+            if (!exportSettings(path, all, err))
+            {
+                _error(err, ERROR_CODE::ERR_CONF_FILE);
+                return false;
+            }
+            _cout << tr("Settings exported in %1 (no password in it)").arg(path) << "\n" << MB_FLUSH;
+        }
+        if (parser.isSet(sOptionNames[Opt::IMPORT_SETTINGS]))
+        {
+            SettingsTransfer::Summary sum;
+            if (!importSettings(parser.value(sOptionNames[Opt::IMPORT_SETTINGS]), SettingsTransfer::ImportOptions(), true, sum, err))
+            {
+                _error(err, ERROR_CODE::ERR_CONF_FILE);
+                return false;
+            }
+            _cout << tr("Settings imported: %1 settings, %2 new profiles, %3 new servers (%4 to switch on after typing the password). The old config is kept as %5")
+                     .arg(sum.settings + sum.notifications).arg(sum.profilesNew).arg(sum.serversNew).arg(sum.serversNeedPassword)
+                     .arg(configFilePath() + ".before-import") << "\n" << MB_FLUSH;
+        }
+        return false; // nothing to post: exit
+    }
+
     if (parser.isSet(sOptionNames[Opt::VERSION]))
     {
         _showVersionASCII();
@@ -3641,8 +3675,94 @@ void NgPost::_showVersionASCII() const
           << MB_FLUSH;
 }
 
+QString NgPost::configFilePath() const
+{
+    return _configPath.isEmpty() ? QFileInfo(defaultConfigPath()).absoluteFilePath() : _configPath;
+}
+
+bool NgPost::exportSettings(const QString &path, const SettingsTransfer::ExportOptions &options, QString &err) const
+{
+    QFile conf(configFilePath());
+    QString text;
+    if (conf.open(QIODevice::ReadOnly | QIODevice::Text))
+        text = QString::fromUtf8(conf.readAll());
+    else if (!_freshInstall)
+    {
+        err = tr("Can't read the config file %1").arg(conf.fileName());
+        return false;
+    }
+    QSaveFile out(path);
+    if (!out.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        err = tr("Can't write the file %1").arg(path);
+        return false;
+    }
+    out.write(SettingsTransfer::exportText(text, options, sAppName, versionLabel(), QDateTime::currentDateTime()).toUtf8());
+    if (!out.commit())
+    {
+        err = tr("Can't write the file %1").arg(path);
+        return false;
+    }
+    return true;
+}
+
+bool NgPost::importSettings(const QString &path, const SettingsTransfer::ImportOptions &options, bool apply,
+                            SettingsTransfer::Summary &summary, QString &err)
+{
+    QFile in(path);
+    if (!in.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        err = tr("Can't read the file %1").arg(path);
+        return false;
+    }
+    SettingsTransfer::Parsed parsed = SettingsTransfer::parse(QString::fromUtf8(in.readAll()));
+    if (!parsed.valid)
+    {
+        err = tr("%1 is not a file of settings exported by ngPost Deluxe").arg(path);
+        return false;
+    }
+    QString confPath = configFilePath();
+    QString text;
+    QFile conf(confPath);
+    if (conf.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        text = QString::fromUtf8(conf.readAll());
+        conf.close();
+    }
+    QString merged = SettingsTransfer::merge(text, parsed, options, &summary);
+    if (!apply)
+        return true;
+
+    if (QFileInfo::exists(confPath))
+    {
+        QString backup = confPath + ".before-import";
+        QFile::remove(backup);
+        if (!QFile::copy(confPath, backup))
+        {
+            err = tr("Can't make a copy of the config file: nothing was changed");
+            return false;
+        }
+    }
+    QDir().mkpath(QFileInfo(confPath).absolutePath());
+    QSaveFile out(confPath);
+    if (!out.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        err = tr("Can't write the config file %1").arg(confPath);
+        return false;
+    }
+    out.write(merged.toUtf8());
+    if (!out.commit())
+    {
+        err = tr("Can't write the config file %1").arg(confPath);
+        return false;
+    }
+    return true;
+}
+
 void NgPost::saveConfig(bool quiet)
 {
+    if (_settingsImported)
+        return;
     QString conf = defaultConfigPath();
     if (_configPath.isEmpty())
         _configPath = QFileInfo(conf).absoluteFilePath();

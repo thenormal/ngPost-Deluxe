@@ -36,4 +36,12 @@ Once a day, when the program starts, ngPost Deluxe asks GitHub whether a newer r
 
 To turn it off, clear **Look for a new version when the program starts** in **Settings**, category **General**, card **Interface**. The command line version and the Docker image never check.
 
+## Change computer or share a configuration
+
+In **Settings**, category **History and queue**, card **Export and import the settings**, **Export the settings...** writes a text file with the settings of the program, the profiles, the favorite newsgroups, the notifications chosen and, if you want, the servers. **Import the settings...** reads such a file on another computer and shows what it contains before changing anything.
+
+The file never has a password, a token, the address of a notification, the fixed archive password or a folder of the computer. The servers imported are switched off until you type their password in **Servers**. Servers you already have are not touched, and a profile with the same name is kept unless you ask to replace it. The old configuration is kept next to the new one (`.before-import`), and ngPost restarts to use the new settings.
+
+From the command line: `--export_settings file` and `--import_settings file` (then the program exits).
+
 Next: [Servers and connections](02-servers.md).

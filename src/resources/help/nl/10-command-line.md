@@ -30,6 +30,7 @@ Een map bewaken en de bestanden na het posten naar een map "Posted" verplaatsen:
 - `--max_speed MB/s` beperkt de uploadsnelheid voor alle verbindingen samen (0: geen limiet); gelijk aan de sleutels `limit_speed` en `max_speed` van het configuratiebestand
 - `--gen_nfo` een NFO-bestand naast de nzb schrijven; `--nfo_in_post` het ook posten; `--nfo_password` het wachtwoord van het archief erin schrijven; `--nfo_text file.txt` een tekst aan het eind toevoegen; `--no_nfo_media` de media-informatie (MediaInfo) weglaten; `--mediainfo_path pad` het MediaInfo-programma kiezen; `--nfo_style naam` het uiterlijk kiezen (classic, clean, box, scene, elegant, retro); `--nfo_ascii` alleen ASCII-tekens
 - `--notify_discord URL`, `--notify_telegram_token T` met `--notify_telegram_chat ID`, `--notify_webhook URL` en `--notify_when each|all_done`: meldingen aan het einde van de posts (zie [Voortgang en logboek](06-progress-and-log.md))
+- `--export_settings bestand` schrijft instellingen, profielen, meldingen en servers (nooit de wachtwoorden) in een bestand; `--import_settings bestand` voegt zo'n bestand toe aan de configuratie (de oude blijft als `.before-import`); beide stoppen zonder te posten
 - `--help` de volledige lijst
 
 Zie [Auto Posting](08-auto-posting.md).

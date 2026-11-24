@@ -36,4 +36,12 @@ Una vez al día, al iniciar el programa, ngPost Deluxe pregunta a GitHub si exis
 
 Para desactivarlo, desmarca **Buscar una nueva versión al iniciar el programa** en **Ajustes**, categoría **General**, tarjeta **Interfaz**. La versión de línea de comandos y la imagen de Docker nunca lo comprueban.
 
+## Cambiar de ordenador o compartir una configuración
+
+En **Ajustes**, categoría **Historial y cola**, tarjeta **Exportar e importar los ajustes**, **Exportar los ajustes...** escribe un archivo de texto con los ajustes del programa, los perfiles, los grupos de noticias favoritos, las notificaciones elegidas y, si quieres, los servidores. **Importar los ajustes...** lee ese archivo en otro ordenador y muestra lo que contiene antes de cambiar nada.
+
+El archivo nunca contiene una contraseña, un token, la dirección de una notificación, la contraseña fija de los archivos ni una carpeta del ordenador. Los servidores importados quedan desactivados hasta que escribas su contraseña en **Servidores**. Los servidores que ya tienes no se tocan, y un perfil con el mismo nombre se conserva salvo que pidas reemplazarlo. La configuración anterior se guarda junto a la nueva (`.before-import`) y ngPost se reinicia para usar los nuevos ajustes.
+
+Desde la línea de comandos: `--export_settings archivo` y `--import_settings archivo` (después el programa sale).
+
 Siguiente: [Servidores y conexiones](02-servers.md).

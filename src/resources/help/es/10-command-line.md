@@ -30,6 +30,7 @@ Vigilar una carpeta y mover los archivos a una carpeta «Posted» una vez public
 - `--max_speed MB/s` limita la velocidad de subida, para todas las conexiones juntas (0: sin límite); equivale a las claves `limit_speed` y `max_speed` del archivo de configuración
 - `--gen_nfo` escribir un archivo NFO junto al nzb; `--nfo_in_post` publicarlo también; `--nfo_password` escribir en él la contraseña del archivo comprimido; `--nfo_text file.txt` añadir un texto al final; `--no_nfo_media` omitir la información multimedia (MediaInfo); `--mediainfo_path ruta` elegir el programa MediaInfo; `--nfo_style nombre` elegir el aspecto (classic, clean, box, scene, elegant, retro); `--nfo_ascii` solo caracteres ASCII
 - `--notify_discord URL`, `--notify_telegram_token T` con `--notify_telegram_chat ID`, `--notify_webhook URL` y `--notify_when each|all_done`: notificaciones al final de las publicaciones (consulta [Progreso y registro](06-progress-and-log.md))
+- `--export_settings archivo` escribe los ajustes, perfiles, notificaciones y servidores (nunca las contraseñas) en un archivo; `--import_settings archivo` añade ese archivo a la configuración (la anterior se conserva como `.before-import`); ambos salen sin publicar
 - `--help` la lista completa
 
 Consulta [Publicación Automática](08-auto-posting.md).

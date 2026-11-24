@@ -2005,6 +2005,104 @@ Decidir depois: permanecem na fila e serão oferecidos novamente na próxima ini
         <source>For all the connections and all the posts together, so the rest of your connection stays usable. It can be changed while posting. Compression and par2 are not limited.</source>
         <translation>Para todas as ligações e todas as publicações em conjunto, para que o resto da sua ligação continue utilizável. Pode ser alterado durante a publicação. A compactação e o par2 não são limitados.</translation>
     </message>
+    <message>
+        <source>Export the settings</source>
+        <translation>Exportar as definições</translation>
+    </message>
+    <message>
+        <source>What do you want in the file?</source>
+        <translation>O que quer no ficheiro?</translation>
+    </message>
+    <message>
+        <source>The settings of the program and the options of Quick Post and Auto Posting</source>
+        <translation>As definições do programa e as opções de Quick Post e Auto Posting</translation>
+    </message>
+    <message>
+        <source>The profiles and the favorite newsgroups</source>
+        <translation>Os perfis e os newsgroups favoritos</translation>
+    </message>
+    <message>
+        <source>The notifications chosen (not the addresses nor the tokens)</source>
+        <translation>As notificações escolhidas (não os endereços nem os tokens)</translation>
+    </message>
+    <message>
+        <source>The servers (host, port, user, connections: never the password)</source>
+        <translation>Os servidores (host, porta, utilizador, ligações: nunca a palavra-passe)</translation>
+    </message>
+    <message>
+        <source>Settings exported in:
+%1</source>
+        <translation>Definições exportadas para:
+%1</translation>
+    </message>
+    <message>
+        <source>Import the settings</source>
+        <translation>Importar as definições</translation>
+    </message>
+    <message>
+        <source>Text files (*.txt);;All files (*)</source>
+        <translation>Ficheiros de texto (*.txt);;Todos os ficheiros (*)</translation>
+    </message>
+    <message>
+        <source>In the file: %1 settings, %2 notification settings, %3 new profiles (%4 with a name that you have already), %5 new servers (%6 already here).</source>
+        <translation>No ficheiro: %1 definições, %2 definições de notificações, %3 perfis novos (%4 com um nome que já tem), %5 servidores novos (%6 já presentes).</translation>
+    </message>
+    <message>
+        <source>What do you want to import? The settings and the notifications replace the ones of this computer; the new servers are switched off until you type their password.</source>
+        <translation>O que quer importar? As definições e as notificações substituem as deste computador; os servidores novos ficam desligados até escrever a palavra-passe.</translation>
+    </message>
+    <message>
+        <source>The settings of the program</source>
+        <translation>As definições do programa</translation>
+    </message>
+    <message>
+        <source>The notifications chosen</source>
+        <translation>As notificações escolhidas</translation>
+    </message>
+    <message>
+        <source>The servers that are not here yet</source>
+        <translation>Os servidores que ainda não existem</translation>
+    </message>
+    <message>
+        <source>Replace the profiles that have the same name (otherwise they are kept)</source>
+        <translation>Substituir os perfis com o mesmo nome (caso contrário, ficam os atuais)</translation>
+    </message>
+    <message>
+        <source>Settings imported (the old config is kept as %1). To use them ngPost must restart.</source>
+        <translation>Definições importadas (a configuração anterior foi guardada como %1). Para as usar, o ngPost tem de reiniciar.</translation>
+    </message>
+    <message>
+        <source>%1 new server(s) are switched off: type the password in Servers and switch them on.</source>
+        <translation>%1 servidor(es) novo(s) desligado(s): escreva a palavra-passe em Servidores e ligue-os.</translation>
+    </message>
+    <message>
+        <source>Restart now</source>
+        <translation>Reiniciar agora</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Mais tarde</translation>
+    </message>
+    <message>
+        <source>Can&apos;t restart: close ngPost and open it again.</source>
+        <translation>Não foi possível reiniciar: feche o ngPost e abra-o de novo.</translation>
+    </message>
+    <message>
+        <source>Export and import the settings</source>
+        <translation>Exportar e importar as definições</translation>
+    </message>
+    <message>
+        <source>Export the settings...</source>
+        <translation>Exportar as definições...</translation>
+    </message>
+    <message>
+        <source>Import the settings...</source>
+        <translation>Importar as definições...</translation>
+    </message>
+    <message>
+        <source>To change computer or to share a configuration: the file has the settings, the profiles, the notifications chosen and, if you want, the servers. It never has a password, a token, an address of a notification or a folder of this computer: the servers imported are switched off until you type their password.</source>
+        <translation>Para mudar de computador ou partilhar uma configuração: o ficheiro tem as definições, os perfis, as notificações escolhidas e, se quiser, os servidores. Nunca tem uma palavra-passe, um token, um endereço de notificação nem uma pasta deste computador: os servidores importados ficam desligados até escrever a palavra-passe.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3655,6 +3753,46 @@ OU use --par2_pct ou coloque PAR2_PCT ou PAR2_ARGS na configuração de arquivo.
     <message>
         <source>## Look of the NFO file (nfo_style: classic, clean, box, scene, elegant or retro) and nfo_ascii to use only ASCII characters</source>
         <translation>## Aspeto do ficheiro NFO (nfo_style: classic, clean, box, scene, elegant ou retro) e nfo_ascii para usar só caracteres ASCII</translation>
+    </message>
+    <message>
+        <source>write the settings, the profiles, the notifications and the servers (without passwords) in this file, to use them on another computer, then exit</source>
+        <translation>escreve as definições, os perfis, as notificações e os servidores (sem palavras-passe) neste ficheiro, para usar noutro computador, e sai</translation>
+    </message>
+    <message>
+        <source>read a file written by --export_settings and add it to the config (the old config is kept as .before-import), then exit. Passwords are never in the file: new servers are switched off until you type their password</source>
+        <translation>lê um ficheiro escrito por --export_settings e junta-o à configuração (a configuração anterior é guardada como .before-import), e sai. As palavras-passe nunca estão no ficheiro: os servidores novos ficam desligados até escrever a palavra-passe</translation>
+    </message>
+    <message>
+        <source>Settings exported in %1 (no password in it)</source>
+        <translation>Definições exportadas para %1 (sem palavras-passe)</translation>
+    </message>
+    <message>
+        <source>Settings imported: %1 settings, %2 new profiles, %3 new servers (%4 to switch on after typing the password). The old config is kept as %5</source>
+        <translation>Definições importadas: %1 definições, %2 perfis novos, %3 servidores novos (%4 a ligar depois de escrever a palavra-passe). A configuração anterior foi guardada como %5</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read the config file %1</source>
+        <translation>Não foi possível ler o ficheiro de configuração %1</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the file %1</source>
+        <translation>Não foi possível escrever o ficheiro %1</translation>
+    </message>
+    <message>
+        <source>Can&apos;t read the file %1</source>
+        <translation>Não foi possível ler o ficheiro %1</translation>
+    </message>
+    <message>
+        <source>%1 is not a file of settings exported by ngPost Deluxe</source>
+        <translation>%1 não é um ficheiro de definições exportado pelo ngPost Deluxe</translation>
+    </message>
+    <message>
+        <source>Can&apos;t make a copy of the config file: nothing was changed</source>
+        <translation>Não foi possível copiar o ficheiro de configuração: nada foi alterado</translation>
+    </message>
+    <message>
+        <source>Can&apos;t write the config file %1</source>
+        <translation>Não foi possível escrever o ficheiro de configuração %1</translation>
     </message>
 </context>
 <context>

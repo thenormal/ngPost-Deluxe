@@ -43,6 +43,7 @@
 #include "RepostInfo.h"
 #include "utils/NfoWriter.h"
 #include "utils/QueueOrder.h"
+#include "utils/SettingsTransfer.h"
 #include <QHash>
 #include <functional>
 #include <QNetworkProxy>
@@ -104,7 +105,7 @@ public:
                     INPUT, OUTPUT, NZB_PATH, THREAD, NZB_UPLOAD_URL, NZB_POST_CMD,
                     MONITOR_FOLDERS, MONITOR_EXT, MONITOR_IGNORE_DIR, MONITOR_SEC_DELAY_SCAN,
                     MSG_ID, META, ARTICLE_SIZE, FROM, GROUPS, NB_RETRY, GEN_FROM,
-                    OBFUSCATE, INPUT_DIR, AUTO_DIR, MONITOR_DIR, DEL_AUTO, MOVE_POSTED,
+                    OBFUSCATE, INPUT_DIR, AUTO_DIR, MONITOR_DIR, DEL_AUTO, MOVE_POSTED, EXPORT_SETTINGS, IMPORT_SETTINGS,
                     TMP_DIR, RAR_PATH, RAR_EXTRA, RAR_SIZE, RAR_MAX, KEEP_RAR,
             #ifdef __USE_TMP_RAM__
                     TMP_RAM, TMP_RAM_RATIO,
@@ -218,6 +219,7 @@ private:
     QString     _postHistoryFile;      //!< POST_HISTORY of the config (explicit file)
     bool        _historyEnabled;       //!< history of the uploads (on by default, key "history" in the config)
     bool        _historyKeyInConfig;   //!< false the first time: the user is informed that the history is on
+    bool        _settingsImported = false; //!< a file of settings was imported by the window: the config on disk is the new one, saveConfig() must not overwrite it before the restart
     QString     _configPath;           //!< config file in use (the default history file is created next to it)
 
     // persistent queue of the posts (ngPost_queue.json next to the config)
@@ -505,6 +507,13 @@ public:
     inline bool dispPostingFile() const;
 
     void saveConfig(bool quiet = false);
+
+    QString configFilePath() const; //!< the config file in use (--conf or the default one)
+    //! writes the settings and profiles that can move to another computer (never a password nor a path), from the config file on disk
+    bool exportSettings(const QString &path, const SettingsTransfer::ExportOptions &options, QString &err) const;
+    //! reads an exported file and merges it in the config file on disk (\a apply false: only the summary). The old config is kept as ...before-import
+    bool importSettings(const QString &path, const SettingsTransfer::ImportOptions &options, bool apply,
+                        SettingsTransfer::Summary &summary, QString &err);
 
     void setDelFilesAfterPosted(bool delFiles);
     void setMovePosted(const QString &folder); //!< empty: no move (the jobs not finished follow)

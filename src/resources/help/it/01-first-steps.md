@@ -36,4 +36,12 @@ Una volta al giorno, all'avvio del programma, ngPost Deluxe chiede a GitHub se e
 
 Per disattivarlo, togli la spunta a **Cerca una nuova versione all'avvio del programma** in **Impostazioni**, categoria **Generale**, scheda **Interfaccia**. La versione da riga di comando e l'immagine Docker non fanno mai questo controllo.
 
+## Cambiare computer o condividere una configurazione
+
+In **Impostazioni**, categoria **Cronologia e coda**, scheda **Esporta e importa le impostazioni**, **Esporta le impostazioni...** scrive un file di testo con le impostazioni del programma, i profili, i newsgroup preferiti, le notifiche scelte e, se vuoi, i server. **Importa le impostazioni...** legge questo file su un altro computer e mostra cosa contiene prima di cambiare qualcosa.
+
+Il file non contiene mai una password, un token, l'indirizzo di una notifica, la password fissa degli archivi o una cartella del computer. I server importati restano spenti finché non scrivi la password in **Server**. I server che hai già non vengono toccati e un profilo con lo stesso nome resta quello attuale, a meno che tu non chieda di sostituirlo. La vecchia configurazione viene conservata accanto alla nuova (`.before-import`) e ngPost si riavvia per usare le nuove impostazioni.
+
+Da riga di comando: `--export_settings file` e `--import_settings file` (poi il programma esce).
+
 Avanti: [Server e connessioni](02-servers.md).

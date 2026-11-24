@@ -101,6 +101,7 @@ SOURCES += \
         utils/PostChecker.cpp \
         utils/PostedMover.cpp \
         utils/NfoWriter.cpp \
+        utils/SettingsTransfer.cpp \
         utils/Notifier.cpp \
         utils/UpdateChecker.cpp \
         utils/SpeedLimiter.cpp \
@@ -141,6 +142,7 @@ HEADERS += \
     utils/PostChecker.h \
     utils/PostedMover.h \
     utils/NfoWriter.h \
+    utils/SettingsTransfer.h \
     utils/NfoBanners.h \
     utils/Notifier.h \
     utils/UpdateChecker.h \
