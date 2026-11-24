@@ -21,6 +21,8 @@
 
 #include <QString>
 #include <QStringList>
+#include <QList>
+#include "NfoWriter.h"
 
 /*!
  * \brief Reads the technical information of video and audio files with the program MediaInfo
@@ -35,7 +37,7 @@ public:
     static constexpr int TOTAL_BUDGET_MS = 20000;  //!< for all the files
 
     struct Result {
-        QString text;            //!< the block for the NFO (empty if nothing was read)
+        QList<NfoWriter::MediaEntry> entries; //!< what was read (empty if nothing was read)
         int     nbMediaFiles = 0; //!< media files found in the post
         int     nbDescribed  = 0;
         bool    timedOut     = false;
@@ -50,8 +52,8 @@ public:
     //! reads the given files (relative name shown in the NFO, absolute path)
     static Result read(const QString &program, const QList<QPair<QString, QString>> &files);
 
-    //! converts the JSON of MediaInfo to the lines of the NFO ("" if it can't be parsed). Public to be testable
-    static QString format(const QByteArray &json, const QString &displayName);
+    //! converts the JSON of MediaInfo to the description of the file (empty name if it can't be parsed). Public to be testable
+    static NfoWriter::MediaEntry parse(const QByteArray &json, const QString &displayName);
 };
 
 #endif // MEDIAINFOREADER_H

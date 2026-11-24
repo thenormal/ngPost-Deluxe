@@ -23,6 +23,7 @@ SOURCES += \
     hmi/GuidedPostWidget.cpp \
     hmi/HelpWidget.cpp \
     hmi/NfoCard.cpp \
+    hmi/NfoPreviewDialog.cpp \
     hmi/PostCheckDialog.cpp \
     hmi/DuplicatesDialog.cpp \
     hmi/ProfileBar.cpp \
@@ -43,6 +44,7 @@ HEADERS += \
     hmi/GroupsEdit.h \
     hmi/GuidedPostWidget.h \
     hmi/NfoCard.h \
+    hmi/NfoPreviewDialog.h \
     hmi/PostCheckDialog.h \
     hmi/DuplicatesDialog.h \
     hmi/ProfileBar.h \

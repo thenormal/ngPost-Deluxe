@@ -28,7 +28,7 @@ Watch a folder and move the files to a "Posted" folder once posted:
 - `--resume_queue` post again the posts not finished
 - `--allow_repost` post again the files that are already in the history (by default they are skipped)
 - `--max_speed MB/s` limit the upload speed, for all the connections together (0: no limit); the same as the keys `limit_speed` and `max_speed` of the configuration file
-- `--gen_nfo` write an NFO file next to the nzb; `--nfo_in_post` also post it; `--nfo_password` write the archive password in it; `--nfo_text file.txt` add a text at the end; `--no_nfo_media` leave out the media information (MediaInfo); `--mediainfo_path path` choose the MediaInfo program
+- `--gen_nfo` write an NFO file next to the nzb; `--nfo_in_post` also post it; `--nfo_password` write the archive password in it; `--nfo_text file.txt` add a text at the end; `--no_nfo_media` leave out the media information (MediaInfo); `--mediainfo_path path` choose the MediaInfo program; `--nfo_style name` choose the look (classic, clean, box, scene, elegant, retro); `--nfo_ascii` only ASCII characters
 - `--notify_discord URL`, `--notify_telegram_token T` with `--notify_telegram_chat ID`, `--notify_webhook URL` and `--notify_when each|all_done`: notifications at the end of the posts (see [Progress and log](06-progress-and-log.md))
 - `--help` the full list
 

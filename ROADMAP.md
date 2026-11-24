@@ -23,6 +23,7 @@ These are directions, not a list of promises.
 - Done: **One list of the posts**, a page Posts in the side bar (state, progress, size, speed, remaining time, NZB, password, details) instead of one tab for each post; Quick Post is a form that is empty again after each post
 - Done: **Priority, reordering and pause for each post** (buttons, right click and drag and drop in the page Posts; "Add paused" in Quick Post and Auto Posting; kept in the saved queue after a restart)
 - Done: **Complete profiles**: a profile can also keep the name template ({name}, {date}, {time}, {n}), the newsgroups, the servers and the NZB folder (each part is optional; old profiles work as before). **Newsgroups and servers for each post** in Quick Post and Auto Posting (also for the watched folders), **favorite newsgroups** (star)
+- Done: **NFO file in six styles** (Scene, Clean, Box, Elegant, Retro and the old Classic) with a banner of the program, a preview of an example post in the program to choose the style, and an option for only ASCII characters (`--nfo_style`, `--nfo_ascii`)
 - Done: **A progress bar and a graph of the speed for each post** (page Posts; the graph is kept until the program is closed)
 - Done: **Log for each post** with the time of each line, filters by category (Debug hidden at first), search and copy
 - Not started: **More notifications**: email, ntfy, Gotify, Pushover and Slack (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords

@@ -20,17 +20,30 @@
 #define NFOWRITER_H
 
 #include <QString>
+#include <QStringList>
 #include <QList>
 #include <QDateTime>
 
 /*!
  * \brief Builds the text of the NFO file of a post: name, date, files, how it was prepared
- * (archive, par2), optionally the password, and a free text of the user.
+ * (archive, par2), optionally the password, and a free text of the user, in one of the styles
+ * (Classic, Clean, Box, Scene, Elegant, Retro). The new styles never go over 80 columns (long names are shortened in the
+ * middle); Classic is the format of the versions up to 1.4.
  * No access to the program state: everything comes from NfoInfo, so it is easy to test.
  */
 class NfoWriter
 {
 public:
+    enum Style { Classic, Clean, Box, Scene, Elegant, Retro };
+    static constexpr Style DEFAULT_STYLE = Scene;
+
+    //! what MediaInfo told about one media file
+    struct MediaEntry {
+        QString     name;    //!< path relative to the post
+        QString     head;    //!< "duration, size" (may be empty)
+        QStringList video, audio, subtitles;
+    };
+
     struct File {
         QString name;   //!< path relative to the post (folders are listed file by file)
         qint64  size = 0;
@@ -52,7 +65,9 @@ public:
         QString        password;       //!< empty = not written
         QString        freeText;
         bool           mediaEnabled = false; //!< "Include media information" is on
-        QString        media;          //!< text read by MediaInfo (empty = nothing read)
+        QList<MediaEntry> media;       //!< what MediaInfo read (empty = nothing read)
+        Style          style = DEFAULT_STYLE;
+        bool           ascii = false;  //!< only ASCII characters (no blocks nor boxes): for old systems and viewers
         int            mediaFiles = 0;     //!< media files in the post
         int            mediaDescribed = 0; //!< files described in \a media
         bool           mediaTimedOut = false; //!< the time limit stopped the reading
@@ -60,6 +75,17 @@ public:
 
     static QString build(const NfoInfo &info);
     static QString humanSize(qint64 bytes);
+
+    static QStringList styleKeys();                  //!< "classic", "clean", "box", "scene", "elegant", "retro"
+    static QString     styleKey(Style style);
+    static QString     styleName(Style style);       //!< "Classic", "Clean"... (names, not translated)
+    static Style       styleFromKey(const QString &key, bool *ok = nullptr);
+
+    //! an example post (the preview in the program and the tests)
+    static NfoInfo sample(const QString &appName, const QString &appVersion);
+
+    //! the bytes to write in the file: UTF-8, with a BOM when there are characters out of ASCII (Notepad needs it)
+    static QByteArray encode(const QString &text);
 };
 
 #endif // NFOWRITER_H

@@ -205,6 +205,8 @@ const QList<QCommandLineOption> NgPost::sCmdOptions = {
     { "nfo_in_post",                          tr("also post the NFO file with the files (implies --gen_nfo)")},
     { "nfo_password",                         tr("write the password of the archive in the NFO file")},
     { "no_nfo_media",                         tr("don't write the media information (MediaInfo) in the NFO file")},
+    { "nfo_style",                            tr("look of the NFO file: classic, clean, box, scene (default), elegant or retro"), "nfo_style"},
+    { "nfo_ascii",                            tr("only ASCII characters in the NFO file (for old systems and viewers)")},
     { "mediainfo_path",                       tr("path of the MediaInfo program (default: automatic)"), "mediainfo_path"},
     { "nfo_text",                             tr("text file whose content is added at the end of the NFO file"), "nfo_text"},
     { "allow_repost",                         tr("post again the files that are already in the history (by default they are skipped)")},
@@ -2212,6 +2214,19 @@ bool NgPost::parseCommandLine(int argc, char *argv[])
         _nfoPassword = true;
     if (parser.isSet("no_nfo_media"))
         _nfoMedia = false;
+    if (parser.isSet("nfo_style"))
+    {
+        bool known = false;
+        NfoWriter::Style style = NfoWriter::styleFromKey(parser.value("nfo_style"), &known);
+        if (!known)
+        {
+            _error(tr("Error: unknown value of the option --nfo_style: %1 (classic, clean, box, scene, elegant or retro)").arg(parser.value("nfo_style")), ERROR_CODE::ERR_WRONG_ARG);
+            return false;
+        }
+        _nfoStyle = NfoWriter::styleKey(style);
+    }
+    if (parser.isSet("nfo_ascii"))
+        _nfoAscii = true;
     if (parser.isSet("mediainfo_path"))
         _mediaInfoPath = parser.value("mediainfo_path");
     if (parser.isSet("nfo_text"))
@@ -3083,11 +3098,18 @@ QString NgPost::_parseConfig(const QString &configPath)
                         if (v == "choose" || v == "scan" || v == "watch")
                             _autoMode = v;
                     }
-                    else if (opt == "gen_nfo" || opt == "nfo_in_post" || opt == "nfo_password" || opt == "nfo_media")
+                    else if (opt == "nfo_style")
+                    {
+                        bool known = false;
+                        NfoWriter::Style style = NfoWriter::styleFromKey(val, &known);
+                        if (known)
+                            _nfoStyle = NfoWriter::styleKey(style);
+                    }
+                    else if (opt == "gen_nfo" || opt == "nfo_in_post" || opt == "nfo_password" || opt == "nfo_media" || opt == "nfo_ascii")
                     {
                         val = val.toLower();
                         bool on = (val == "on" || val == "true" || val == "1" || val == "yes");
-                        (opt == "gen_nfo" ? _genNfo : opt == "nfo_in_post" ? _nfoInPost : opt == "nfo_media" ? _nfoMedia : _nfoPassword) = on;
+                        (opt == "gen_nfo" ? _genNfo : opt == "nfo_in_post" ? _nfoInPost : opt == "nfo_media" ? _nfoMedia : opt == "nfo_ascii" ? _nfoAscii : _nfoPassword) = on;
                     }
                     else if (opt == "profile")
                     {
@@ -3767,6 +3789,9 @@ void NgPost::saveConfig(bool quiet)
                << "nfo_in_post = " << (_nfoInPost ? "ON" : "OFF") << "\n"
                << "nfo_password = " << (_nfoPassword ? "ON" : "OFF") << "\n"
                << "nfo_media = " << (_nfoMedia ? "ON" : "OFF") << "\n"
+               << tr("## Look of the NFO file (nfo_style: classic, clean, box, scene, elegant or retro) and nfo_ascii to use only ASCII characters") << "\n"
+               << "nfo_style = " << _nfoStyle << "\n"
+               << "nfo_ascii = " << (_nfoAscii ? "ON" : "OFF") << "\n"
                << (_mediaInfoPath.isEmpty() ? "#" : "") << "mediainfo_path = " << _mediaInfoPath << "\n"
                << (_nfoText.trimmed().isEmpty() ? "#" : "") << "nfo_text = " << QString(_nfoText).replace("\r", "").replace("\n", "\\n") << "\n"
                << "\n"

@@ -1169,7 +1169,7 @@ void PostingJob::_readMediaInfo()
             files.append({fi.fileName(), fi.absoluteFilePath()});
     }
     MediaInfoReader::Result res = MediaInfoReader::read(program, files);
-    _nfoMediaText      = res.text;
+    _nfoMedia          = res.entries;
     _nfoMediaFiles     = res.nbMediaFiles;
     _nfoMediaDescribed = res.nbDescribed;
     _nfoMediaTimedOut  = res.timedOut;
@@ -1215,8 +1215,10 @@ void PostingJob::_prepareNfo()
     if (_ngPost->_nfoPassword)
         info.password = _rarPass;
     info.freeText = _ngPost->_nfoText;
+    info.style          = NfoWriter::styleFromKey(_ngPost->_nfoStyle);
+    info.ascii          = _ngPost->_nfoAscii;
     info.mediaEnabled   = _ngPost->_nfoMedia;
-    info.media          = _nfoMediaText;
+    info.media          = _nfoMedia;
     info.mediaFiles     = _nfoMediaFiles;
     info.mediaDescribed = _nfoMediaDescribed;
     info.mediaTimedOut  = _nfoMediaTimedOut;
@@ -1235,7 +1237,7 @@ void PostingJob::_prepareNfo()
     QFile nfo(_nfoDir->filePath(name + ".nfo"));
     if (nfo.open(QIODevice::WriteOnly))
     {
-        nfo.write(_nfoContent.toUtf8());
+        nfo.write(NfoWriter::encode(_nfoContent));
         nfo.close();
         _files << QFileInfo(nfo.fileName());
     }
@@ -1254,7 +1256,7 @@ void PostingJob::_saveNfoNextToNzb()
         return;
     QFileInfo nzb(_nzbFilePath);
     QSaveFile file(QString("%1/%2.nfo").arg(nzb.absolutePath(), nzb.completeBaseName()));
-    if (file.open(QIODevice::WriteOnly) && file.write(_nfoContent.toUtf8()) >= 0 && file.commit())
+    if (file.open(QIODevice::WriteOnly) && file.write(NfoWriter::encode(_nfoContent)) >= 0 && file.commit())
         _log(tr("NFO file written: %1").arg(QDir::toNativeSeparators(QFileInfo(file.fileName()).absoluteFilePath())));
     else
         _error(tr("Couldn't write the NFO file next to the nzb: %1").arg(QDir::toNativeSeparators(file.fileName())));

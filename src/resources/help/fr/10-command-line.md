@@ -28,7 +28,7 @@ Surveiller un dossier et déplacer les fichiers dans un dossier « Posted » une
 - `--resume_queue` reposter les envois non terminés
 - `--allow_repost` reposter les fichiers déjà présents dans l'historique (par défaut ils sont ignorés)
 - `--max_speed Mo/s` limite la vitesse d'envoi, pour toutes les connexions ensemble (0 : pas de limite) ; équivaut aux clés `limit_speed` et `max_speed` du fichier de configuration
-- `--gen_nfo` écrire un fichier NFO à côté du nzb ; `--nfo_in_post` le poster aussi ; `--nfo_password` y écrire le mot de passe de l'archive ; `--nfo_text file.txt` ajouter un texte à la fin ; `--no_nfo_media` omettre les informations médias (MediaInfo) ; `--mediainfo_path chemin` choisir le programme MediaInfo
+- `--gen_nfo` écrire un fichier NFO à côté du nzb ; `--nfo_in_post` le poster aussi ; `--nfo_password` y écrire le mot de passe de l'archive ; `--nfo_text file.txt` ajouter un texte à la fin ; `--no_nfo_media` omettre les informations médias (MediaInfo) ; `--mediainfo_path chemin` choisir le programme MediaInfo; `--nfo_style nom` choisir l'aspect (classic, clean, box, scene, elegant, retro) ; `--nfo_ascii` seulement des caractères ASCII
 - `--notify_discord URL`, `--notify_telegram_token T` avec `--notify_telegram_chat ID`, `--notify_webhook URL` et `--notify_when each|all_done` : notifications à la fin des envois (voir [Progression et journal](06-progress-and-log.md))
 - `--help` la liste complète
 

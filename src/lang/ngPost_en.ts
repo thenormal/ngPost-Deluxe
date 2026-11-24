@@ -3612,6 +3612,22 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Newsgroups, servers, NZB folder and name template of the last session (groups|servers|NZB folder|template, empty = the ones of the Settings)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>look of the NFO file: classic, clean, box, scene (default), elegant or retro</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>only ASCII characters in the NFO file (for old systems and viewers)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error: unknown value of the option --nfo_style: %1 (classic, clean, box, scene, elegant or retro)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>## Look of the NFO file (nfo_style: classic, clean, box, scene, elegant or retro) and nfo_ascii to use only ASCII characters</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -6520,6 +6536,88 @@ Example: {name} [{date}]. Empty: the name of the file or folder.</source>
     </message>
     <message>
         <source>%1 (not in the list)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NfoCard</name>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>See an example of each style and choose it (also the option for only ASCII characters).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The look of the NFO file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NfoPreview</name>
+    <message>
+        <source>NFO file: choose a style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The NFO file is a text file. Choose its look: the preview shows an example post. If the symbols look wrong in the program you open it with, use "Only ASCII characters".</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only ASCII characters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No blocks and no boxes: for old systems and programs that show wrong symbols.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The example shows:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Media information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text at the end</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File names hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>What the NFO looks like when the names of the files are hidden (obfuscation).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy the example</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copies the example to the clipboard, to look at it in Notepad or in another program.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

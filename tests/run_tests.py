@@ -860,7 +860,7 @@ def test_nfo_file(work):
 
         # 1. next to the nzb, not in the post, with the free text
         nzb = os.path.join(work, "one.nzb")
-        r = run_ngpost(stub, work, [single, folder], nzb, extra=["--gen_nfo", "--nfo_text", text])
+        r = run_ngpost(stub, work, [single, folder], nzb, extra=["--nfo_style", "classic", "--gen_nfo", "--nfo_text", text])
         check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
         nfo = os.path.join(work, "one.nfo")
         check(os.path.exists(nfo), "no NFO next to the nzb\n" + LAST_OUTPUT)
@@ -873,14 +873,14 @@ def test_nfo_file(work):
 
         # 2. in the post: the nzb lists it and more articles are posted
         nzb2 = os.path.join(work, "two.nzb")
-        r = run_ngpost(stub, work, [single], nzb2, extra=["--nfo_in_post"])
+        r = run_ngpost(stub, work, [single], nzb2, extra=["--nfo_style", "classic", "--nfo_in_post"])
         check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
         check(os.path.exists(os.path.join(work, "two.nfo")), "no NFO next to the nzb (nfo_in_post)")
         check("two.nfo" in open(nzb2, encoding="utf-8").read(), "the NFO is not in the nzb")
 
         # 3. file names hidden: the NFO in the post must not list them
         nzb3 = os.path.join(work, "three.nzb")
-        r = run_ngpost(stub, work, [single], nzb3, extra=["--nfo_in_post", "--obfuscate"])
+        r = run_ngpost(stub, work, [single], nzb3, extra=["--nfo_style", "classic", "--nfo_in_post", "--obfuscate"])
         check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
         hidden = open(os.path.join(work, "three.nfo"), encoding="utf-8").read()
         check("movie.bin" not in hidden and "hidden" in hidden, "names are shown in a post that hides them:\n" + hidden)
@@ -894,7 +894,7 @@ def test_nfo_file(work):
             for flag, expected in (([], False), (["--nfo_password"], True)):
                 nzb4 = os.path.join(work, "pw%d.nzb" % expected)
                 r = run_ngpost_conf([stub], work, [single], nzb4, conns=1, threads=1, conf_extra=conf_extra,
-                                    extra=["--compress", "--rar_name", "nfoarch", "--rar_pass", "topsecret", "--gen_nfo"] + flag)
+                                    extra=["--nfo_style", "classic", "--compress", "--rar_name", "nfoarch", "--rar_pass", "topsecret", "--gen_nfo"] + flag)
                 check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
                 c = open(os.path.join(work, "pw%d.nfo" % expected), encoding="utf-8").read()
                 check(("topsecret" in c) == expected, "password in the NFO: %s (expected %s)\n%s" % ("topsecret" in c, expected, c))
@@ -932,7 +932,7 @@ print(json.dumps({"media": {"@ref": sys.argv[-1], "track": tracks}}))
 
         # 1. layout
         nzb = os.path.join(work, "m1.nzb")
-        r = run_ngpost(stub, work, [movie, other], nzb, extra=["--gen_nfo", "--mediainfo_path", fake])
+        r = run_ngpost(stub, work, [movie, other], nzb, extra=["--nfo_style", "classic", "--gen_nfo", "--mediainfo_path", fake])
         check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
         c = open(os.path.join(work, "m1.nfo"), encoding="utf-8").read()
         for needle in ("Media information", "movie.mkv - 01:42:10, 8.20 GB", "Video     : HEVC Main 10, 3840x2160, 23.976 fps, HDR10",
@@ -949,7 +949,7 @@ print(json.dumps({"media": {"@ref": sys.argv[-1], "track": tracks}}))
         for i in range(22):
             make_file(os.path.join(many, "e%02d.mkv" % i), 5_000, 40 + i)
         nzb = os.path.join(work, "m2.nzb")
-        r = run_ngpost(stub, work, [many], nzb, extra=["--gen_nfo", "--mediainfo_path", fake])
+        r = run_ngpost(stub, work, [many], nzb, extra=["--nfo_style", "classic", "--gen_nfo", "--mediainfo_path", fake])
         check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
         c = open(os.path.join(work, "m2.nfo"), encoding="utf-8").read()
         check(c.count("Video     :") == 20, "20 files should be described, got %d" % c.count("Video     :"))
@@ -958,7 +958,7 @@ print(json.dumps({"media": {"@ref": sys.argv[-1], "track": tracks}}))
         # 3. names hidden: not written, MediaInfo not even run
         os.remove(marker)
         nzb = os.path.join(work, "m3.nzb")
-        r = run_ngpost(stub, work, [movie], nzb, extra=["--nfo_in_post", "--obfuscate", "--mediainfo_path", fake])
+        r = run_ngpost(stub, work, [movie], nzb, extra=["--nfo_style", "classic", "--nfo_in_post", "--obfuscate", "--mediainfo_path", fake])
         check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
         c = open(os.path.join(work, "m3.nfo"), encoding="utf-8").read()
         check("movie.mkv" not in c and "HEVC" not in c and "not written" in c, "media information with hidden names:\n" + c)
@@ -966,7 +966,7 @@ print(json.dumps({"media": {"@ref": sys.argv[-1], "track": tracks}}))
 
         # 4. switched off
         nzb = os.path.join(work, "m4.nzb")
-        r = run_ngpost(stub, work, [movie], nzb, extra=["--gen_nfo", "--no_nfo_media", "--mediainfo_path", fake])
+        r = run_ngpost(stub, work, [movie], nzb, extra=["--nfo_style", "classic", "--gen_nfo", "--no_nfo_media", "--mediainfo_path", fake])
         check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
         c = open(os.path.join(work, "m4.nfo"), encoding="utf-8").read()
         check("Media information" not in c, "media information although --no_nfo_media:\n" + c)
@@ -974,7 +974,7 @@ print(json.dumps({"media": {"@ref": sys.argv[-1], "track": tracks}}))
 
         # 5. program not found: the post works, the NFO has no media section, one line in the log
         nzb = os.path.join(work, "m5.nzb")
-        r = run_ngpost(stub, work, [movie], nzb, extra=["--gen_nfo", "--mediainfo_path", os.path.join(work, "nothing_here")])
+        r = run_ngpost(stub, work, [movie], nzb, extra=["--nfo_style", "classic", "--gen_nfo", "--mediainfo_path", os.path.join(work, "nothing_here")])
         check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
         c = open(os.path.join(work, "m5.nfo"), encoding="utf-8").read()
         check("movie.mkv" in c and "Media information" not in c, "unexpected NFO without MediaInfo:\n" + c)
@@ -988,7 +988,7 @@ print(json.dumps({"media": {"@ref": sys.argv[-1], "track": tracks}}))
                             "-f", "lavfi", "-i", "sine=d=1", "-c:v", "mpeg4", "-c:a", "mp3",
                             "-metadata:s:a:0", "language=ita", video], check=True)
             nzb = os.path.join(work, "m6.nzb")
-            r = run_ngpost(stub, work, [video], nzb, extra=["--gen_nfo"])
+            r = run_ngpost(stub, work, [video], nzb, extra=["--nfo_style", "classic", "--gen_nfo"])
             check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
             c = open(os.path.join(work, "m6.nfo"), encoding="utf-8").read()
             for needle in ("clip.mkv - 00:00:01", "320x240", "25 fps", "Italian"):
@@ -1522,6 +1522,77 @@ def test_post_profile_unit(work):
     check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
 
 
+def test_nfo_styles(work):
+    # the six styles of the NFO file (and the ASCII version): same facts in each, 80 columns, hidden names, wrong style
+    stub = NntpStub().start()
+    try:
+        folder = os.path.join(work, "album")
+        os.makedirs(folder)
+        make_file(os.path.join(folder, "track1.dat"), 60_000, 81)
+        single = os.path.join(work, "movie.bin")
+        make_file(single, 50_000, 82)
+        text = os.path.join(work, "note.txt")
+        with open(text, "w") as f:
+            f.write("Hello from the poster")
+        check(NGPOST_STYLES_DEFAULT_IS_SCENE(work, stub, single), "the default style is not Scene")
+        for style in ("classic", "clean", "box", "scene", "elegant", "retro"):
+            for ascii_only in (False, True):
+                tag = "%s%s" % (style, " (ascii)" if ascii_only else "")
+                name = "st_%s%d" % (style, ascii_only)
+                nzb = os.path.join(work, name + ".nzb")
+                extra = ["--gen_nfo", "--nfo_text", text, "--nfo_style", style] + (["--nfo_ascii"] if ascii_only else [])
+                r = run_ngpost(stub, work, [single, folder], nzb, extra=extra)
+                check(r.returncode == 0, "%s: exit code %d\n%s" % (tag, r.returncode, LAST_OUTPUT))
+                raw = open(os.path.join(work, name + ".nfo"), "rb").read()
+                content = raw.decode("utf-8-sig")
+                for needle in (name, "movie.bin", "track1.dat", "Hello from the poster"):
+                    check(needle in content, "%s: '%s' is missing in the NFO:\n%s" % (tag, needle, content))
+                check(max(len(l) for l in content.splitlines()) <= 80, "%s: a line is wider than 80 columns" % tag)
+                check(raw.startswith(b"\xef\xbb\xbf") == any(ord(c) > 127 for c in content), "%s: BOM" % tag)
+                if ascii_only:
+                    check(all(ord(c) < 128 for c in content), "%s: characters out of ASCII" % tag)
+                check("Password" not in content, "%s: a password is in the NFO" % tag)
+
+        # names hidden in the posted NFO
+        for style in ("clean", "scene"):
+            nzb = os.path.join(work, "hid_%s.nzb" % style)
+            r = run_ngpost(stub, work, [single], nzb, extra=["--nfo_in_post", "--obfuscate", "--nfo_style", style])
+            check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
+            hidden = open(os.path.join(work, "hid_%s.nfo" % style), encoding="utf-8-sig").read()
+            check("movie.bin" not in hidden and "hidden" in hidden, "%s: names are shown in a post that hides them:\n%s" % (style, hidden))
+
+        # a style that does not exist: error, nothing is posted
+        r = run_ngpost(stub, work, [single], os.path.join(work, "bad.nzb"), extra=["--gen_nfo", "--nfo_style", "fancy"])
+        check(r.returncode != 0 and "nfo_style" in LAST_OUTPUT, "a wrong style should be an error\n" + LAST_OUTPUT)
+        check(not os.path.exists(os.path.join(work, "bad.nfo")), "an NFO was written with a wrong style")
+    finally:
+        stub.stop()
+
+
+def NGPOST_STYLES_DEFAULT_IS_SCENE(work, stub, single):
+    nzb = os.path.join(work, "dflt.nzb")
+    r = run_ngpost(stub, work, [single], nzb, extra=["--gen_nfo"])
+    content = open(os.path.join(work, "dflt.nfo"), encoding="utf-8-sig").read()
+    return r.returncode == 0 and "RELEASE" in content and "\u2590" in content
+
+
+def test_nfo_writer_unit(work):
+    # NfoWriter: six styles, ASCII, widths, long names, hidden names
+    qmake = shutil.which("qmake") or shutil.which("qmake-qt5")
+    if not qmake:
+        print("      (qmake not found: this test is skipped)")
+        return
+    here = os.path.dirname(os.path.abspath(__file__))
+    build = os.path.join(work, "unit_nfo_writer")
+    os.makedirs(build)
+    r = subprocess.run([qmake, os.path.join(here, "unit", "nfo_writer_test.pro")], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "qmake failed\n" + r.stdout + r.stderr)
+    r = subprocess.run(["make", "-j4"], cwd=build, capture_output=True, text=True)
+    check(r.returncode == 0, "build failed\n" + r.stdout[-2000:] + r.stderr[-2000:])
+    r = subprocess.run([os.path.join(build, "nfo_writer_test")], capture_output=True, text=True)
+    check(r.returncode == 0, "unit test failed\n" + r.stdout + r.stderr)
+
+
 def test_queue_post_uses_its_servers(work):
     # a post that has its own servers (profile) keeps them in the queue file and only uses them;
     # servers that are not in the configuration anymore: the enabled servers are used
@@ -1581,7 +1652,7 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_notification_when_all_done, test_version_number_unit, test_post_request_unit, test_translations_compiled,
          test_speed_limiter_unit, test_speed_limit, test_process_text_unit,
          test_7z_folder_without_recursion, test_post_list, test_post_list_unit,
-         test_queue_order_unit, test_queue_keeps_order_priority_pause, test_post_profile_unit,
+         test_queue_order_unit, test_queue_keeps_order_priority_pause, test_post_profile_unit, test_nfo_writer_unit, test_nfo_styles,
          test_queue_post_uses_its_servers]
 
 

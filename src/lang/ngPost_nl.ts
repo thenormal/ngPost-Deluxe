@@ -3646,6 +3646,22 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
         <source>Newsgroups, servers, NZB folder and name template of the last session (groups|servers|NZB folder|template, empty = the ones of the Settings)</source>
         <translation>Nieuwsgroepen, servers, NZB-map en naamsjabloon van de laatste sessie (groepen|servers|NZB-map|sjabloon, leeg = die van de Instellingen)</translation>
     </message>
+    <message>
+        <source>look of the NFO file: classic, clean, box, scene (default), elegant or retro</source>
+        <translation>uiterlijk van het NFO-bestand: classic, clean, box, scene (standaard), elegant of retro</translation>
+    </message>
+    <message>
+        <source>only ASCII characters in the NFO file (for old systems and viewers)</source>
+        <translation>alleen ASCII-tekens in het NFO-bestand (voor oude systemen en viewers)</translation>
+    </message>
+    <message>
+        <source>Error: unknown value of the option --nfo_style: %1 (classic, clean, box, scene, elegant or retro)</source>
+        <translation>Fout: onbekende waarde van de optie --nfo_style: %1 (classic, clean, box, scene, elegant of retro)</translation>
+    </message>
+    <message>
+        <source>## Look of the NFO file (nfo_style: classic, clean, box, scene, elegant or retro) and nfo_ascii to use only ASCII characters</source>
+        <translation>## Uiterlijk van het NFO-bestand (nfo_style: classic, clean, box, scene, elegant of retro) en nfo_ascii voor alleen ASCII-tekens</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -6577,6 +6593,88 @@ Voorbeeld: {name} [{date}]. Leeg: de naam van het bestand of de map.</translatio
     <message>
         <source>%1 (not in the list)</source>
         <translation>%1 (niet in de lijst)</translation>
+    </message>
+</context>
+<context>
+    <name>NfoCard</name>
+    <message>
+        <source>Style:</source>
+        <translation>Stijl:</translation>
+    </message>
+    <message>
+        <source>Preview...</source>
+        <translation>Voorbeeld...</translation>
+    </message>
+    <message>
+        <source>See an example of each style and choose it (also the option for only ASCII characters).</source>
+        <translation>Een voorbeeld van elke stijl bekijken en kiezen (ook de optie voor alleen ASCII-tekens).</translation>
+    </message>
+    <message>
+        <source>The look of the NFO file</source>
+        <translation>Het uiterlijk van het NFO-bestand</translation>
+    </message>
+</context>
+<context>
+    <name>NfoPreview</name>
+    <message>
+        <source>NFO file: choose a style</source>
+        <translation>NFO-bestand: kies een stijl</translation>
+    </message>
+    <message>
+        <source>The NFO file is a text file. Choose its look: the preview shows an example post. If the symbols look wrong in the program you open it with, use "Only ASCII characters".</source>
+        <translation>Het NFO-bestand is een tekstbestand. Kies het uiterlijk: het voorbeeld toont een voorbeeldpost. Als de symbolen in het programma waarmee je het opent er verkeerd uitzien, gebruik dan "Alleen ASCII-tekens".</translation>
+    </message>
+    <message>
+        <source>Style:</source>
+        <translation>Stijl:</translation>
+    </message>
+    <message>
+        <source>Only ASCII characters</source>
+        <translation>Alleen ASCII-tekens</translation>
+    </message>
+    <message>
+        <source>No blocks and no boxes: for old systems and programs that show wrong symbols.</source>
+        <translation>Geen blokken en geen kaders: voor oude systemen en programma's die symbolen verkeerd tonen.</translation>
+    </message>
+    <message>
+        <source>The example shows:</source>
+        <translation>Het voorbeeld toont:</translation>
+    </message>
+    <message>
+        <source>Media information</source>
+        <translation>Media-informatie</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Wachtwoord</translation>
+    </message>
+    <message>
+        <source>Text at the end</source>
+        <translation>Tekst aan het einde</translation>
+    </message>
+    <message>
+        <source>File names hidden</source>
+        <translation>Bestandsnamen verborgen</translation>
+    </message>
+    <message>
+        <source>What the NFO looks like when the names of the files are hidden (obfuscation).</source>
+        <translation>Hoe de NFO eruitziet als de namen van de bestanden verborgen zijn (versluiering).</translation>
+    </message>
+    <message>
+        <source>Use this style</source>
+        <translation>Deze stijl gebruiken</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Copy the example</source>
+        <translation>Voorbeeld kopiëren</translation>
+    </message>
+    <message>
+        <source>Copies the example to the clipboard, to look at it in Notepad or in another program.</source>
+        <translation>Kopieert het voorbeeld naar het klembord, om het in Kladblok of een ander programma te bekijken.</translation>
     </message>
 </context>
 </TS>

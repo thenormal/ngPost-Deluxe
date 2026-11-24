@@ -18,8 +18,11 @@
 
 #include "NfoCard.h"
 #include "NgPost.h"
+#include "NfoPreviewDialog.h"
+#include "utils/NfoWriter.h"
 #include "utils/MediaInfoReader.h"
 #include <QCheckBox>
+#include <QComboBox>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFileDialog>
@@ -57,6 +60,11 @@ NfoCard::NfoCard(NgPost *ngPost, QWidget *parent) :
     _mediaCB   = new QCheckBox(this);
     _mediaPath = new QLineEdit(this);
     _mediaButton = new QPushButton(" ... ", this);
+    _styleLbl  = new QLabel(this);
+    _style     = new QComboBox(this);
+    for (const QString &key : NfoWriter::styleKeys())
+        _style->addItem(NfoWriter::styleName(NfoWriter::styleFromKey(key)), key);
+    _previewBtn = new QPushButton(this);
     _textLbl   = new QLabel(this);
     _text      = new QPlainTextEdit(this);
     _text->setMaximumHeight(48);
@@ -70,8 +78,14 @@ NfoCard::NfoCard(NgPost *ngPost, QWidget *parent) :
     pathRow->addWidget(_mediaPath, 1);
     pathRow->addWidget(_mediaButton);
     g->addLayout(pathRow, 2, 0, 1, 3);
-    g->addWidget(_textLbl, 3, 0, Qt::AlignTop);
-    g->addWidget(_text, 3, 1, 1, 2);
+    g->addWidget(_styleLbl, 3, 0);
+    QHBoxLayout *styleRow = new QHBoxLayout();
+    styleRow->addWidget(_style);
+    styleRow->addWidget(_previewBtn);
+    styleRow->addStretch(1);
+    g->addLayout(styleRow, 3, 1, 1, 2);
+    g->addWidget(_textLbl, 4, 0, Qt::AlignTop);
+    g->addWidget(_text, 4, 1, 1, 2);
     g->setColumnStretch(1, 1);
     g->setColumnStretch(2, 1);
 
@@ -79,6 +93,14 @@ NfoCard::NfoCard(NgPost *ngPost, QWidget *parent) :
     connect(_inPostCB, &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_nfoInPost = on; emit _ngPost->nfoOptionsChanged(); });
     connect(_passCB,   &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_nfoPassword = on; emit _ngPost->nfoOptionsChanged(); });
     connect(_mediaCB,  &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_nfoMedia = on; _updateEnabled(); emit _ngPost->nfoOptionsChanged(); });
+    connect(_style, QOverload<int>::of(&QComboBox::activated), this, [this](int i){
+        _ngPost->_nfoStyle = _style->itemData(i).toString();
+        emit _ngPost->nfoOptionsChanged();
+    });
+    connect(_previewBtn, &QAbstractButton::clicked, this, [this](){
+        if (NfoPreviewDialog::run(this, _ngPost->appName(), NgPost::versionLabel(), _ngPost->_nfoStyle, _ngPost->_nfoAscii))
+            emit _ngPost->nfoOptionsChanged();
+    });
     connect(_mediaPath, &QLineEdit::editingFinished, this, [this](){
         _ngPost->_mediaInfoPath = QDir::fromNativeSeparators(_mediaPath->text().trimmed());
         _updateMediaStatus();
@@ -110,7 +132,8 @@ NfoCard::NfoCard(NgPost *ngPost, QWidget *parent) :
 void NfoCard::refresh()
 {
     // the options may have been changed by another card: no signal while the controls are updated
-    QSignalBlocker b1(_nfoCB), b2(_inPostCB), b3(_passCB), b4(_mediaCB), b5(_text), b6(_mediaPath);
+    QSignalBlocker b1(_nfoCB), b2(_inPostCB), b3(_passCB), b4(_mediaCB), b5(_text), b6(_mediaPath), b7(_style);
+    _style->setCurrentIndex(qMax(0, NfoWriter::styleKeys().indexOf(_ngPost->_nfoStyle)));
     _nfoCB->setChecked(_ngPost->_genNfo);
     _inPostCB->setChecked(_ngPost->_nfoInPost);
     _passCB->setChecked(_ngPost->_nfoPassword);
@@ -129,6 +152,7 @@ void NfoCard::_updateEnabled()
     bool on = _ngPost->_genNfo;
     for (QWidget *w : {static_cast<QWidget*>(_inPostCB), static_cast<QWidget*>(_passCB), static_cast<QWidget*>(_mediaCB),
                        static_cast<QWidget*>(_mediaPath), static_cast<QWidget*>(_mediaButton),
+                       static_cast<QWidget*>(_styleLbl), static_cast<QWidget*>(_style), static_cast<QWidget*>(_previewBtn),
                        static_cast<QWidget*>(_textLbl), static_cast<QWidget*>(_text)})
         w->setVisible(on);
     _inPostCB->setEnabled(on);
@@ -163,6 +187,10 @@ void NfoCard::retranslate()
     _mediaCB->setText(mw("Include media information (MediaInfo)"));
     _mediaCB->setToolTip(mw("Include media information (MediaInfo): duration, video, audio and subtitles"));
     _mediaButton->setToolTip(mw("Choose the MediaInfo program"));
+    _styleLbl->setText(QCoreApplication::translate("NfoCard", "Style:"));
+    _previewBtn->setText(QCoreApplication::translate("NfoCard", "Preview..."));
+    _previewBtn->setToolTip(QCoreApplication::translate("NfoCard", "See an example of each style and choose it (also the option for only ASCII characters)."));
+    _style->setToolTip(QCoreApplication::translate("NfoCard", "The look of the NFO file"));
     _textLbl->setText(mw("Text added at the end of the NFO file:"));
     _passCB->setToolTip(mw("Careful: a password in a posted NFO is readable by everyone who downloads the post."));
     _title->setToolTip(mw("When the names of the files are hidden (obfuscation) the NFO that is posted lists no file name."));
