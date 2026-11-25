@@ -4,6 +4,21 @@ What changed in each released version of ngPost Deluxe, in more detail than the 
 
 Newest first.
 
+## Version 1.5 - One list and profiles
+
+Goal: one place for all the posts, profiles that keep everything, and a program that is easy to move to another computer.
+
+- **One list of the posts**, a page Posts in the side bar (state, progress, size, speed, remaining time, NZB, password, details) instead of one tab for each post; Quick Post is a form that is empty again after each post
+- **Priority, reordering and pause for each post** (buttons, right click and drag and drop in the page Posts; "Add paused" in Quick Post and Auto Posting; kept in the saved queue after a restart)
+- **Complete profiles**: a profile can also keep the name template ({name}, {date}, {time}, {n}), the newsgroups, the servers and the NZB folder (each part is optional; old profiles work as before). **Newsgroups and servers for each post** in Quick Post and Auto Posting (also for the watched folders), **favorite newsgroups** (star)
+- **NFO file in six styles** (Scene, Clean, Box, Elegant, Retro and the old Classic) with a banner of the program, a preview of an example post in the program to choose the style, and an option for only ASCII characters (`--nfo_style`, `--nfo_ascii`)
+- **Watched folders are remembered**: if the program is closed while Auto Posting watches folders, the next start offers to watch them again (Watch again / Forget / Decide later)
+- **A progress bar and a graph of the speed for each post** (page Posts; the graph is kept until the program is closed)
+- **Log for each post** with the time of each line, filters by category (Debug hidden at first), search and copy
+- **More notifications**: email (SMTP with STARTTLS, SSL/TLS or no encryption), ntfy, Gotify, Pushover and Slack (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords; none of the addresses, tokens or passwords is exported with the settings
+- **Export and import of the settings and the profiles** (Settings, History and queue; `--export_settings`, `--import_settings`): settings, profiles, favorite newsgroups, notifications chosen and, if wanted, servers; never passwords, tokens, notification addresses or folders of the computer; imported servers stay off until the password is typed; the old config is kept as `.before-import`
+- Auto Posting, Watch mode: the page fits a 1280 px window (narrower number boxes in the Archive card)
+
 ## Version 1.4 - Guided and informed
 
 Goal: help the user to post step by step, and show what was posted.

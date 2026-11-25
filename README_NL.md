@@ -53,8 +53,10 @@ Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en
 
 **Makkelijk te gebruiken**
 -   **Begeleide post**: een assistent in de zijbalk die vraagt wat je wilt doen (één release, elk item, een map scannen, een map bewaken), wat je wilt posten, de opties en waar, en daarna de post voorbereidt met dezelfde controles als Quick Post en Auto Posting. Hij onthoudt je laatste keuzes en kan meerdere posts tegelijk starten
+-   **Eén lijst van de posts**: de pagina Posts toont alle posts samen (status, voortgangsbalk, snelheidsgrafiek, grootte, resterende tijd, NZB, wachtwoord en een log per post met filters en zoeken). Elke post heeft een prioriteit, kan worden gepauzeerd en herordend (knoppen, rechtsklik, slepen) en de wachtrij blijft na een herstart bewaard. Quick Post is nu een formulier dat na elke post weer leeg is
 -   **Auto Posting, opnieuw ontworpen**: drie duidelijke keuzes (post wat ik kies, scan een map eenmalig, bewaak een map en post wat binnenkomt), voorbeeld van wat gepost wordt met de groottes, de status van het bewaken van de map altijd zichtbaar (map, posts van vandaag, pauzeknop) en de keuze wat er daarna met de bestanden gebeurt: niets (standaard), verplaatsen naar een map "Posted" of verwijderen
 -   **Profielen**: een kant-en-klaar profiel "Aanbevolen" (compressie, willekeurige naam en wachtwoord, par2 10 %) en je eigen profielen, opgeslagen via het menu van Quick Post en Auto Posting
+-   **Volledige profielen**: een profiel bewaart ook het naamsjabloon (`{name}`, `{date}`, `{time}`, `{n}`), de newsgroups, de servers en de NZB-map. Newsgroups en servers kunnen per post worden gekozen, ook voor bewaakte mappen, en de meest gebruikte newsgroups kunnen als favoriet worden gemarkeerd
 -   **Controles voor het posten**: een venster in gewone woorden met een oplossing met één klik (geen server of groep, mappen zonder compressie, rar / 7z of par2 niet gevonden, leeg wachtwoord, NZB-map niet beschrijfbaar...)
 -   **Onthoudt je keuzes**: Quick Post en Auto Posting bewaren de laatste opties en het gekozen profiel voor de volgende start, en de knop Posten blijft altijd zichtbaar onder de scrollende pagina
 -   **Hulp bij de eerste start**: een balk zegt wat er ontbreekt (server, newsgroup) met een knop naar de juiste pagina; de **Instellingen** zijn nu in vijf categorieën
@@ -66,13 +68,16 @@ Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en
 -   **Statistieken** (pagina Geschiedenis, schakelaar Lijst / Statistieken): totalen en grafieken voor de gekozen periode (vandaag, 7 dagen, 30 dagen, 12 maanden, alles): geposte data, snelheid, resultaten, drukste dagen en uren, newsgroups, servers, hoe de posts zijn gestart en gebruikte opties, plus ranglijsten. Exporteren als PDF-document, webpagina, CSV-bestand of PNG-afbeeldingen van de grafieken
 -   **Pagina Geschiedenis**: elke upload wordt bewaard (`ngPost_history.csv` naast de configuratie, of `POST_HISTORY`) met status, aantal bestanden en duur. De pagina toont ze met zoeken, periodefilter, totalen, verborgen wachtwoorden, kopiëren, exporteren en de map van de NZB. Let op: het bestand bevat de archiefwachtwoorden in leesbare tekst
 -   **Meldingen** wanneer de posts klaar zijn of mislukken: systeemmelding, Discord, Telegram of een webhook, één bericht aan het eind of één per post
+-   **Meer meldingen**: e-mail, ntfy, Gotify, Pushover en Slack, naast de systeemmelding, Discord, Telegram en webhook (één bericht aan het einde of één per post, nooit de wachtwoorden)
 -   **NFO-bestand** naast het NZB-bestand (desgewenst mee gepost met de bestanden, desgewenst met het wachtwoord) en media-informatie met MediaInfo: duur, video, audio en ondertitels
+-   **NFO-bestand in zes stijlen** (Scene, Clean, Box, Elegant, Retro en het oude Classic) met een voorbeeld in het programma, een banner van het programma en een optie voor alleen ASCII-tekens
 -   **Al gepost?** Een waarschuwing toont de items die al in de geschiedenis staan, met een vakje "Opnieuw posten", in plaats van één vraag per post
 -   **Diagnose**: ngPost registreert de duur en snelheid van elke fase (compressie, par2, upload), de fouten en het vastlopen, en de knop **Diagnoserapport** slaat een rapport op om een probleem te analyseren. Wachtwoorden, gebruikersnamen en bestandsnamen worden gemaskeerd, er wordt niets verstuurd
 
 **Betrouwbaar**
 -   **Mislukte artikelen**: een artikel dat mislukt wordt opnieuw geprobeerd op een andere server en in een tweede ronde; de knop **Repost missing Articles** post alleen de ontbrekende artikelen en herstelt de NZB; de originele bestanden blijven bewaard als er artikelen mislukt zijn
 -   **Wachtrij**: posts die niet klaar zijn worden bewaard en bij de volgende start opnieuw aangeboden (`--resume_queue` op de opdrachtregel)
+-   **Bewaakte mappen worden onthouden**: als het programma wordt gesloten terwijl Auto Posting mappen bewaakt, stelt de volgende start voor ze opnieuw te bewaken
 -   **Verkeerd wachtwoord**: de post stopt, met een duidelijke melding, als de server het inloggen op alle verbindingen weigert
 -   **Duidelijkere problemen**: een waarschuwing als de tijdelijke map wordt gesynchroniseerd (OneDrive en vergelijkbaar), een melding als de bronbestanden traag te lezen zijn en een duidelijke fout met de naam van een bestand of map die vóór de compressie is verplaatst (7-Zip zoekt die niet meer op alle schijven)
 
@@ -92,6 +97,7 @@ Gebruik je al ngPost? Kopieer je `ngPost.conf` naar `%APPDATA%\ngPost Deluxe` en
 -   **Help in 8 talen**, een knop **Feedback** in het Over-venster (opent een nieuw, al ingevuld GitHub-issue) en de meldingen in het diagnoserapport
 
 **Instellingen en hulpmiddelen**
+-   **Instellingen exporteren en importeren**: neem instellingen, profielen, meldingen en servers mee naar een andere computer (Instellingen, Geschiedenis en wachtrij; `--export_settings` en `--import_settings`). Wachtwoorden, tokens en mappen van de computer staan nooit in het bestand
 -   **NZB_POST_CMD**: de plaatshouders mogen spaties bevatten (een pad zoals `C:\Mijn mappen\bestand.nzb` blijft ÉÉN argument) en het commando wordt op de achtergrond gestart (ngPost wacht er niet meer op, dus de exitcode wordt niet meer gelogd)
 -   **RAR_EXTRA en PAR2_ARGS**: worden verwerkt met respect voor dubbele aanhalingstekens. 7-Zip wordt herkend aan de programmanaam en niet aan het hele pad
 -   **Automatisch opslaan**: elke wijziging van de instellingen wordt automatisch opgeslagen (het vorige bestand blijft bewaard als `ngPost.conf.bak`)
