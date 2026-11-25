@@ -27,9 +27,9 @@ All the points are done and tested; the version is waiting to be published. Deta
 - Export and import of the settings and the profiles
 - Watched folders remembered between restarts
 
-## Before 1.6 - Split the biggest source file (not started)
+## Before 1.6 - Split the biggest source file (done)
 
-- **Split `NgPost.cpp`** (configuration, command line, notifications, export and import, watched folders are all in one file) into smaller files, **without changing what the program does**: easier and safer changes for the next versions. One change only, checked by the automated tests
+- **Split `NgPost.cpp`** (configuration, command line, list of the posts, watched folders, queue and history were all in one file) into smaller files (`NgPost_Config.cpp`, `NgPost_CommandLine.cpp`, `NgPost_PostList.cpp`, `NgPost_Monitoring.cpp`, `NgPost_QueueHistory.cpp`), **without changing what the program does**: easier and safer changes for the next versions. One change only, checked by the automated tests
 
 ## Version 1.6 - Verification and resume (not started)
 
