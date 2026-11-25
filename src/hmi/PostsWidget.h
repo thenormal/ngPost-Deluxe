@@ -93,6 +93,7 @@ private:
     int  _rowId(int row) const;
 protected:
     void changeEvent(QEvent *event) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
 private:
     void _updateEmpty();
     QString _logHtml(const PostEntry::LogLine &line) const;

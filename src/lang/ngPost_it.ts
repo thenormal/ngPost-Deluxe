@@ -6508,10 +6508,8 @@ Sarà irreversibile...</translation>
         <translation>Rimuovi dalla lista tutti i post finiti</translation>
     </message>
     <message>
-        <source>No post yet.
-Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
-        <translation>Ancora nessun post.
-Preparane uno in Post guidato, Quick Post o Post automatico: comparirà qui.</translation>
+        <source>No post yet. Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <translation>Ancora nessun post. Preparane uno in Post guidato, Quick Post o Post automatico: comparirà qui.</translation>
     </message>
     <message>
         <source>Details</source>
