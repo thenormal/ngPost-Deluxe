@@ -2094,6 +2094,94 @@ Décider plus tard : ils restent dans la file et seront proposés de nouveau au 
         <source>To change computer or to share a configuration: the file has the settings, the profiles, the notifications chosen and, if you want, the servers. It never has a password, a token, an address of a notification or a folder of this computer: the servers imported are switched off until you type their password.</source>
         <translation>Pour changer d&apos;ordinateur ou partager une configuration : le fichier contient les paramètres, les profils, les notifications choisies et, si vous le voulez, les serveurs. Il ne contient jamais de mot de passe, de jeton, d&apos;adresse de notification ni de dossier de cet ordinateur : les serveurs importés restent désactivés jusqu&apos;à la saisie de leur mot de passe.</translation>
     </message>
+    <message>
+        <source>More channels</source>
+        <translation>Autres canaux</translation>
+    </message>
+    <message>
+        <source>Slack webhook:</source>
+        <translation>Webhook Slack :</translation>
+    </message>
+    <message>
+        <source>ntfy address:</source>
+        <translation>Adresse ntfy :</translation>
+    </message>
+    <message>
+        <source>ntfy token (if needed):</source>
+        <translation>Jeton ntfy (si nécessaire) :</translation>
+    </message>
+    <message>
+        <source>Gotify server:</source>
+        <translation>Serveur Gotify :</translation>
+    </message>
+    <message>
+        <source>Gotify token:</source>
+        <translation>Jeton Gotify :</translation>
+    </message>
+    <message>
+        <source>Pushover app token:</source>
+        <translation>Jeton de l&apos;application Pushover :</translation>
+    </message>
+    <message>
+        <source>Pushover user key:</source>
+        <translation>Clé utilisateur Pushover :</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translation>E-mail</translation>
+    </message>
+    <message>
+        <source>Mail server (SMTP):</source>
+        <translation>Serveur de messagerie (SMTP) :</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation>Port :</translation>
+    </message>
+    <message>
+        <source>Security:</source>
+        <translation>Sécurité :</translation>
+    </message>
+    <message>
+        <source>User:</source>
+        <translation>Utilisateur :</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Mot de passe :</translation>
+    </message>
+    <message>
+        <source>From (address):</source>
+        <translation>De (adresse) :</translation>
+    </message>
+    <message>
+        <source>To (address):</source>
+        <translation>À (adresse) :</translation>
+    </message>
+    <message>
+        <source>STARTTLS (port 587)</source>
+        <translation>STARTTLS (port 587)</translation>
+    </message>
+    <message>
+        <source>SSL/TLS (port 465)</source>
+        <translation>SSL/TLS (port 465)</translation>
+    </message>
+    <message>
+        <source>None (not safe)</source>
+        <translation>Aucune (non sécurisé)</translation>
+    </message>
+    <message>
+        <source>one or more addresses, separated by a comma</source>
+        <translation>une ou plusieurs adresses, séparées par une virgule</translation>
+    </message>
+    <message>
+        <source>empty: the user, if it is an address</source>
+        <translation>vide : l&apos;utilisateur, si c&apos;est une adresse</translation>
+    </message>
+    <message>
+        <source>The message has the same text as the other channels (never the password or the names of the files). The password of the mail server is saved in clear text in the configuration file: with Gmail and similar use an application password.</source>
+        <translation>Le message a le même texte que les autres canaux (jamais le mot de passe ni les noms des fichiers). Le mot de passe du serveur de messagerie est enregistré en clair dans le fichier de configuration : avec Gmail et similaires, utilisez un mot de passe d&apos;application.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3785,6 +3873,66 @@ Soit utilisez --par2_pct, soit renseignez PAR2_PCT ou PAR2_ARGS dans le fichier 
         <source>Can&apos;t write the config file %1</source>
         <translation>Impossible d&apos;écrire le fichier de configuration %1</translation>
     </message>
+    <message>
+        <source>send a notification to this Slack incoming webhook address when the posts are done</source>
+        <translation>envoie une notification à cette adresse de webhook entrant Slack quand les posts sont terminés</translation>
+    </message>
+    <message>
+        <source>send a notification to this ntfy address (for example https://ntfy.sh/mytopic) when the posts are done</source>
+        <translation>envoie une notification à cette adresse ntfy (par exemple https://ntfy.sh/monsujet) quand les posts sont terminés</translation>
+    </message>
+    <message>
+        <source>access token of ntfy (only if the topic needs it)</source>
+        <translation>jeton d&apos;accès de ntfy (seulement si le sujet l&apos;exige)</translation>
+    </message>
+    <message>
+        <source>address of the Gotify server that sends the notifications (with --notify_gotify_token)</source>
+        <translation>adresse du serveur Gotify qui envoie les notifications (avec --notify_gotify_token)</translation>
+    </message>
+    <message>
+        <source>token of the Gotify application</source>
+        <translation>jeton de l&apos;application Gotify</translation>
+    </message>
+    <message>
+        <source>token of the Pushover application (with --notify_pushover_user)</source>
+        <translation>jeton de l&apos;application Pushover (avec --notify_pushover_user)</translation>
+    </message>
+    <message>
+        <source>user or group key of Pushover</source>
+        <translation>clé utilisateur ou groupe de Pushover</translation>
+    </message>
+    <message>
+        <source>SMTP server that sends the notifications by email (with --notify_email_from or user, and --notify_email_to)</source>
+        <translation>serveur SMTP qui envoie les notifications par e-mail (avec --notify_email_from ou l&apos;utilisateur, et --notify_email_to)</translation>
+    </message>
+    <message>
+        <source>port of the SMTP server (587 by default; 465 for ssl)</source>
+        <translation>port du serveur SMTP (587 par défaut ; 465 pour ssl)</translation>
+    </message>
+    <message>
+        <source>starttls (default), ssl or none</source>
+        <translation>starttls (par défaut), ssl ou none</translation>
+    </message>
+    <message>
+        <source>user of the SMTP server (empty: no login)</source>
+        <translation>utilisateur du serveur SMTP (vide : pas de connexion)</translation>
+    </message>
+    <message>
+        <source>password of the SMTP server</source>
+        <translation>mot de passe du serveur SMTP</translation>
+    </message>
+    <message>
+        <source>address of the sender (default: the user, if it is an address)</source>
+        <translation>adresse de l&apos;expéditeur (par défaut : l&apos;utilisateur, si c&apos;est une adresse)</translation>
+    </message>
+    <message>
+        <source>address that receives the notifications (several: separated by a comma)</source>
+        <translation>adresse qui reçoit les notifications (plusieurs : séparées par une virgule)</translation>
+    </message>
+    <message>
+        <source>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private</source>
+        <translation>## Les adresses, jetons et mots de passe de Discord / Telegram / Slack / ntfy / Gotify / Pushover / e-mail / webhook sont des secrets, comme les mots de passe : gardez ce fichier privé</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -5184,6 +5332,14 @@ Cliquez sur « Ajouter » pour configurer votre fournisseur Usenet.</translation
     <message>
         <source>Notification (%1) failed: no answer from the server</source>
         <translation>Notification (%1) échouée : pas de réponse du serveur</translation>
+    </message>
+    <message>
+        <source>email</source>
+        <translation>e-mail</translation>
+    </message>
+    <message>
+        <source>Notification (%1) not sent: %2</source>
+        <translation>Notification (%1) non envoyée : %2</translation>
     </message>
 </context>
 <context>
@@ -6795,6 +6951,65 @@ Exemple : {name} [{date}]. Vide : le nom du fichier ou du dossier.</translation>
     <message>
         <source>Copies the example to the clipboard, to look at it in Notepad or in another program.</source>
         <translation>Copie l'exemple dans le presse-papiers, pour le voir dans le Bloc-notes ou dans un autre programme.</translation>
+    </message>
+</context>
+<context>
+    <name>SmtpClient</name>
+    <message>
+        <source>can&apos;t connect to the mail server (%1)</source>
+        <translation>impossible de se connecter au serveur de messagerie (%1)</translation>
+    </message>
+    <message>
+        <source>secure connection refused</source>
+        <translation>connexion sécurisée refusée</translation>
+    </message>
+    <message>
+        <source>connection error</source>
+        <translation>erreur de connexion</translation>
+    </message>
+    <message>
+        <source>the mail server did not answer in time</source>
+        <translation>le serveur de messagerie n&apos;a pas répondu à temps</translation>
+    </message>
+    <message>
+        <source>the mail server answered something unexpected</source>
+        <translation>le serveur de messagerie a répondu de façon inattendue</translation>
+    </message>
+    <message>
+        <source>the mail server refused the connection</source>
+        <translation>le serveur de messagerie a refusé la connexion</translation>
+    </message>
+    <message>
+        <source>the mail server refused the greeting</source>
+        <translation>le serveur de messagerie a refusé le message d&apos;accueil</translation>
+    </message>
+    <message>
+        <source>the mail server does not offer a secure connection (STARTTLS)</source>
+        <translation>le serveur de messagerie ne propose pas de connexion sécurisée (STARTTLS)</translation>
+    </message>
+    <message>
+        <source>the mail server does not offer a login method that is supported</source>
+        <translation>le serveur de messagerie ne propose pas de méthode de connexion prise en charge</translation>
+    </message>
+    <message>
+        <source>the mail server refused the secure connection</source>
+        <translation>le serveur de messagerie a refusé la connexion sécurisée</translation>
+    </message>
+    <message>
+        <source>the mail server refused the login</source>
+        <translation>le serveur de messagerie a refusé la connexion au compte</translation>
+    </message>
+    <message>
+        <source>the mail server refused the sender</source>
+        <translation>le serveur de messagerie a refusé l&apos;expéditeur</translation>
+    </message>
+    <message>
+        <source>the mail server refused a recipient</source>
+        <translation>le serveur de messagerie a refusé un destinataire</translation>
+    </message>
+    <message>
+        <source>the mail server refused the message</source>
+        <translation>le serveur de messagerie a refusé le message</translation>
     </message>
 </context>
 </TS>

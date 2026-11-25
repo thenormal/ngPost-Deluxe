@@ -38,10 +38,15 @@ ngPost 可以在您的发布完成时通知您，这样您就不必一直盯着�
 - **系统通知**：从通知区域的图标发出的消息（仅桌面版；默认开启，可以关闭）。在 Windows 中，它与其他通知一样显示，并保留在通知中心；如果您没有看到，请检查 Windows 的通知和专注助手（“勿扰”）是否把它隐藏了。
 - **Discord**：粘贴 Discord webhook 的地址。
 - **Telegram**：您的机器人令牌（token）以及接收消息的聊天 ID。
+- **Slack**：粘贴 Slack 传入 webhook 的地址。
+- **ntfy**：您的主题地址（例如 `https://ntfy.sh/mytopic`，或您自己的服务器），仅在需要时填写访问令牌。
+- **Gotify**：您的服务器地址和应用的令牌。
+- **Pushover**：您的应用令牌和您的用户密钥。
+- **电子邮件**：邮件服务器（SMTP）、端口、安全性（587 端口用 STARTTLS，465 端口用 SSL/TLS）、用户和密码、发件人以及一个或多个收件人。使用 Gmail 等服务时请使用应用专用密码。
 - **其他 webhook**：任何接受带有 `title` 和 `text` 的 JSON POST 请求的地址（类似 Slack 的工具、ntfy、Home Assistant）。
 
 选择通知哪些内容（完成、错误或失败）以及方式：**所有发布完成后发送一条消息**（默认，最适合自动发布）或**每次发布后发送一条消息**。点击**发送测试消息**可以立即看到是否正常工作。
 
 消息包含发布的名称、结果、大小、用时和速度，但绝不包含密码或文件名。地址和令牌与其他密码一样，以明文保存在配置文件中：请妥善保密。如果某条消息无法发送，日志中会有一行提示，而发布本身不受影响。
 
-在命令行或 Docker 中，请使用选项 `--notify_discord`、`--notify_telegram_token`、`--notify_telegram_chat`、`--notify_webhook` 和 `--notify_when each|all_done`，或使用配置文件中的 `notify_*` 键。
+在命令行或 Docker 中，请使用选项 `--notify_discord`、`--notify_telegram_token`、`--notify_telegram_chat`、`--notify_webhook` 和 `--notify_when each|all_done`，或使用配置文件中的 `notify_*` 键。 其他渠道: `--notify_slack`, `--notify_ntfy` (+ `--notify_ntfy_token`), `--notify_gotify_url` 配合 `--notify_gotify_token`, `--notify_pushover_token` 配合 `--notify_pushover_user`, 电子邮件用 `--notify_email_host`, `--notify_email_port`, `--notify_email_security`, `--notify_email_user`, `--notify_email_pass`, `--notify_email_from`, `--notify_email_to`.

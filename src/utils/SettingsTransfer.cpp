@@ -118,6 +118,9 @@ bool SettingsTransfer::isSecretOrLocalKey(const QString &key)
     static const QSet<QString> keys = {
         "pass", "rar_pass", "proxy_socks5", "nzb_upload_url", "nzb_post_cmd", "shutdown_cmd",
         "notify_discord", "notify_telegram_token", "notify_telegram_chat", "notify_webhook",
+        "notify_slack", "notify_ntfy", "notify_ntfy_token", "notify_gotify_url", "notify_gotify_token", "notify_pushover_token",
+        "notify_pushover_user", "notify_email_host", "notify_email_port", "notify_email_security", "notify_email_user", "notify_email_pass",
+        "notify_email_from", "notify_email_to",
         "nzbpath", "tmp_dir", "tmp_ram", "tmp_ram_ratio", "rar_path", "par2_path", "mediainfo_path", "post_history", "history",
         "log_in_file", "name_counter", "update_last_check", "resume_queue", "from", "disp_progress"};
     return keys.contains(lower(key));

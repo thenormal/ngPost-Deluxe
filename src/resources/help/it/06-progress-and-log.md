@@ -38,10 +38,15 @@ ngPost può avvisarti quando i tuoi post sono finiti, così non devi guardare la
 - **Notifica di sistema**: un messaggio dall'icona nell'area di notifica (solo nella versione desktop; attiva per impostazione predefinita, puoi disattivarla). In Windows appare come qualsiasi altra notifica e resta nel centro notifiche; se non la vedi, controlla che le notifiche e l'assistente notifiche ("Non disturbare") di Windows non la nascondano.
 - **Discord**: incolla l'indirizzo di un webhook di Discord.
 - **Telegram**: il token del tuo bot e l'id della chat che riceve i messaggi.
-- **Altro webhook**: qualsiasi indirizzo che accetti un POST JSON con un `title` e un `text` (strumenti tipo Slack, ntfy, Home Assistant).
+- **Slack**: incolla l'indirizzo di un webhook in entrata di Slack.
+- **ntfy**: l'indirizzo del tuo argomento (ad esempio `https://ntfy.sh/mioargomento`, o il tuo server) e, solo se serve, il token di accesso.
+- **Gotify**: l'indirizzo del tuo server e il token dell'applicazione.
+- **Pushover**: il token della tua applicazione e la tua chiave utente.
+- **Email**: il server di posta (SMTP), la porta, la sicurezza (STARTTLS sulla porta 587 o SSL/TLS sulla porta 465), utente e password, il mittente e uno o più destinatari. Con Gmail e servizi simili usa una password per le app.
+- **Altro webhook**: qualsiasi indirizzo che accetti un POST JSON con un `title` e un `text` (Home Assistant).
 
 Scegli cosa viene notificato (terminati, errori o fallimenti) e come: **un messaggio quando tutti i post sono finiti** (predefinito, ideale per Post automatico) oppure **un messaggio dopo ogni post**. Il pulsante **Invia un messaggio di prova** mostra subito se funziona.
 
 Il messaggio contiene il nome del post, il risultato, la dimensione, il tempo e la velocità. Non contiene mai la password né i nomi dei file. Gli indirizzi e il token sono salvati in chiaro nel file di configurazione, come le altre password: tienilo privato. Se un messaggio non può essere inviato, una riga nel log lo segnala e il post non ne risente.
 
-Da riga di comando, o in Docker, usa le opzioni `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` e `--notify_when each|all_done`, oppure le chiavi `notify_*` del file di configurazione.
+Da riga di comando, o in Docker, usa le opzioni `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` e `--notify_when each|all_done`, oppure le chiavi `notify_*` del file di configurazione. Altri canali: `--notify_slack`, `--notify_ntfy` (+ `--notify_ntfy_token`), `--notify_gotify_url` con `--notify_gotify_token`, `--notify_pushover_token` con `--notify_pushover_user`, per l'email `--notify_email_host`, `--notify_email_port`, `--notify_email_security`, `--notify_email_user`, `--notify_email_pass`, `--notify_email_from`, `--notify_email_to`.

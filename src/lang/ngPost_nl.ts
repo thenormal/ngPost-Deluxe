@@ -2106,6 +2106,94 @@ Later beslissen: ze blijven in de wachtrij en worden bij de volgende start opnie
         <source>To change computer or to share a configuration: the file has the settings, the profiles, the notifications chosen and, if you want, the servers. It never has a password, a token, an address of a notification or a folder of this computer: the servers imported are switched off until you type their password.</source>
         <translation>Om van computer te wisselen of een configuratie te delen: het bestand bevat de instellingen, de profielen, de gekozen meldingen en, als je wilt, de servers. Het bevat nooit een wachtwoord, token, meldingsadres of map van deze computer: geïmporteerde servers blijven uit tot je hun wachtwoord invoert.</translation>
     </message>
+    <message>
+        <source>More channels</source>
+        <translation>Meer kanalen</translation>
+    </message>
+    <message>
+        <source>Slack webhook:</source>
+        <translation>Slack-webhook:</translation>
+    </message>
+    <message>
+        <source>ntfy address:</source>
+        <translation>ntfy-adres:</translation>
+    </message>
+    <message>
+        <source>ntfy token (if needed):</source>
+        <translation>ntfy-token (indien nodig):</translation>
+    </message>
+    <message>
+        <source>Gotify server:</source>
+        <translation>Gotify-server:</translation>
+    </message>
+    <message>
+        <source>Gotify token:</source>
+        <translation>Gotify-token:</translation>
+    </message>
+    <message>
+        <source>Pushover app token:</source>
+        <translation>Pushover-apptoken:</translation>
+    </message>
+    <message>
+        <source>Pushover user key:</source>
+        <translation>Pushover-gebruikerssleutel:</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translation>E-mail</translation>
+    </message>
+    <message>
+        <source>Mail server (SMTP):</source>
+        <translation>Mailserver (SMTP):</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation>Poort:</translation>
+    </message>
+    <message>
+        <source>Security:</source>
+        <translation>Beveiliging:</translation>
+    </message>
+    <message>
+        <source>User:</source>
+        <translation>Gebruiker:</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Wachtwoord:</translation>
+    </message>
+    <message>
+        <source>From (address):</source>
+        <translation>Van (adres):</translation>
+    </message>
+    <message>
+        <source>To (address):</source>
+        <translation>Aan (adres):</translation>
+    </message>
+    <message>
+        <source>STARTTLS (port 587)</source>
+        <translation>STARTTLS (poort 587)</translation>
+    </message>
+    <message>
+        <source>SSL/TLS (port 465)</source>
+        <translation>SSL/TLS (poort 465)</translation>
+    </message>
+    <message>
+        <source>None (not safe)</source>
+        <translation>Geen (niet veilig)</translation>
+    </message>
+    <message>
+        <source>one or more addresses, separated by a comma</source>
+        <translation>een of meer adressen, gescheiden door een komma</translation>
+    </message>
+    <message>
+        <source>empty: the user, if it is an address</source>
+        <translation>leeg: de gebruiker, als dat een adres is</translation>
+    </message>
+    <message>
+        <source>The message has the same text as the other channels (never the password or the names of the files). The password of the mail server is saved in clear text in the configuration file: with Gmail and similar use an application password.</source>
+        <translation>Het bericht heeft dezelfde tekst als bij de andere kanalen (nooit het wachtwoord of de bestandsnamen). Het wachtwoord van de mailserver wordt leesbaar opgeslagen in het configuratiebestand: gebruik bij Gmail en dergelijke een app-wachtwoord.</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3800,6 +3888,66 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
         <source>Can&apos;t write the config file %1</source>
         <translation>Kan het configuratiebestand %1 niet schrijven</translation>
     </message>
+    <message>
+        <source>send a notification to this Slack incoming webhook address when the posts are done</source>
+        <translation>stuurt een melding naar dit inkomende Slack-webhookadres als de posts klaar zijn</translation>
+    </message>
+    <message>
+        <source>send a notification to this ntfy address (for example https://ntfy.sh/mytopic) when the posts are done</source>
+        <translation>stuurt een melding naar dit ntfy-adres (bijvoorbeeld https://ntfy.sh/mijnonderwerp) als de posts klaar zijn</translation>
+    </message>
+    <message>
+        <source>access token of ntfy (only if the topic needs it)</source>
+        <translation>toegangstoken van ntfy (alleen als het onderwerp het vraagt)</translation>
+    </message>
+    <message>
+        <source>address of the Gotify server that sends the notifications (with --notify_gotify_token)</source>
+        <translation>adres van de Gotify-server die de meldingen verstuurt (met --notify_gotify_token)</translation>
+    </message>
+    <message>
+        <source>token of the Gotify application</source>
+        <translation>token van de Gotify-applicatie</translation>
+    </message>
+    <message>
+        <source>token of the Pushover application (with --notify_pushover_user)</source>
+        <translation>token van de Pushover-applicatie (met --notify_pushover_user)</translation>
+    </message>
+    <message>
+        <source>user or group key of Pushover</source>
+        <translation>gebruikers- of groepssleutel van Pushover</translation>
+    </message>
+    <message>
+        <source>SMTP server that sends the notifications by email (with --notify_email_from or user, and --notify_email_to)</source>
+        <translation>SMTP-server die de meldingen per e-mail verstuurt (met --notify_email_from of de gebruiker, en --notify_email_to)</translation>
+    </message>
+    <message>
+        <source>port of the SMTP server (587 by default; 465 for ssl)</source>
+        <translation>poort van de SMTP-server (standaard 587; 465 voor ssl)</translation>
+    </message>
+    <message>
+        <source>starttls (default), ssl or none</source>
+        <translation>starttls (standaard), ssl of none</translation>
+    </message>
+    <message>
+        <source>user of the SMTP server (empty: no login)</source>
+        <translation>gebruiker van de SMTP-server (leeg: geen aanmelding)</translation>
+    </message>
+    <message>
+        <source>password of the SMTP server</source>
+        <translation>wachtwoord van de SMTP-server</translation>
+    </message>
+    <message>
+        <source>address of the sender (default: the user, if it is an address)</source>
+        <translation>adres van de afzender (standaard: de gebruiker, als dat een adres is)</translation>
+    </message>
+    <message>
+        <source>address that receives the notifications (several: separated by a comma)</source>
+        <translation>adres dat de meldingen ontvangt (meerdere: gescheiden door een komma)</translation>
+    </message>
+    <message>
+        <source>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private</source>
+        <translation>## De adressen, tokens en wachtwoorden van Discord / Telegram / Slack / ntfy / Gotify / Pushover / e-mail / webhook zijn geheim, net als de wachtwoorden: houd dit bestand privé</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -5200,6 +5348,14 @@ Klik op ‘Toevoegen’ om je Usenet-provider in te stellen.</translation>
     <message>
         <source>Notification (%1) failed: no answer from the server</source>
         <translation>Melding (%1) mislukt: geen antwoord van de server</translation>
+    </message>
+    <message>
+        <source>email</source>
+        <translation>e-mail</translation>
+    </message>
+    <message>
+        <source>Notification (%1) not sent: %2</source>
+        <translation>Melding (%1) niet verzonden: %2</translation>
     </message>
 </context>
 <context>
@@ -6813,6 +6969,65 @@ Voorbeeld: {name} [{date}]. Leeg: de naam van het bestand of de map.</translatio
     <message>
         <source>Copies the example to the clipboard, to look at it in Notepad or in another program.</source>
         <translation>Kopieert het voorbeeld naar het klembord, om het in Kladblok of een ander programma te bekijken.</translation>
+    </message>
+</context>
+<context>
+    <name>SmtpClient</name>
+    <message>
+        <source>can&apos;t connect to the mail server (%1)</source>
+        <translation>kan geen verbinding maken met de mailserver (%1)</translation>
+    </message>
+    <message>
+        <source>secure connection refused</source>
+        <translation>beveiligde verbinding geweigerd</translation>
+    </message>
+    <message>
+        <source>connection error</source>
+        <translation>verbindingsfout</translation>
+    </message>
+    <message>
+        <source>the mail server did not answer in time</source>
+        <translation>de mailserver antwoordde niet op tijd</translation>
+    </message>
+    <message>
+        <source>the mail server answered something unexpected</source>
+        <translation>de mailserver gaf een onverwacht antwoord</translation>
+    </message>
+    <message>
+        <source>the mail server refused the connection</source>
+        <translation>de mailserver weigerde de verbinding</translation>
+    </message>
+    <message>
+        <source>the mail server refused the greeting</source>
+        <translation>de mailserver weigerde de begroeting</translation>
+    </message>
+    <message>
+        <source>the mail server does not offer a secure connection (STARTTLS)</source>
+        <translation>de mailserver biedt geen beveiligde verbinding aan (STARTTLS)</translation>
+    </message>
+    <message>
+        <source>the mail server does not offer a login method that is supported</source>
+        <translation>de mailserver biedt geen ondersteunde aanmeldmethode aan</translation>
+    </message>
+    <message>
+        <source>the mail server refused the secure connection</source>
+        <translation>de mailserver weigerde de beveiligde verbinding</translation>
+    </message>
+    <message>
+        <source>the mail server refused the login</source>
+        <translation>de mailserver weigerde de aanmelding</translation>
+    </message>
+    <message>
+        <source>the mail server refused the sender</source>
+        <translation>de mailserver weigerde de afzender</translation>
+    </message>
+    <message>
+        <source>the mail server refused a recipient</source>
+        <translation>de mailserver weigerde een ontvanger</translation>
+    </message>
+    <message>
+        <source>the mail server refused the message</source>
+        <translation>de mailserver weigerde het bericht</translation>
     </message>
 </context>
 </TS>

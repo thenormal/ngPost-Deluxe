@@ -27,9 +27,10 @@
 class QUrl;
 class QNetworkAccessManager;
 class QNetworkReply;
+class SmtpClient;
 
 /*!
- * \brief Notifications when posts end: system notification (GUI), Discord, Telegram and a generic webhook.
+ * \brief Notifications when posts end: system notification (GUI), Discord, Telegram, Slack, ntfy, Gotify, Pushover, email and a generic webhook.
  * The addresses and tokens are secrets: they are never written in the log. A failed sending only writes a line
  * in the log, it never stops a post.
  */
@@ -52,8 +53,27 @@ public:
         QString telegramToken;
         QString telegramChat;
         QString webhook;            //!< address that receives a JSON POST {"title", "text"}
+        QString slack;              //!< incoming webhook address of Slack
+        QString ntfy;               //!< address of the ntfy topic (https://ntfy.sh/mytopic or your own server)
+        QString ntfyToken;          //!< optional access token of ntfy
+        QString gotifyUrl;          //!< address of the Gotify server
+        QString gotifyToken;        //!< token of the Gotify application
+        QString pushoverToken;      //!< token of the Pushover application
+        QString pushoverUser;       //!< user (or group) key of Pushover
+        QString emailHost;          //!< SMTP server
+        quint16 emailPort = 587;
+        QString emailSecurity = "starttls"; //!< starttls (587), ssl (465) or none
+        QString emailUser, emailPass;
+        QString emailFrom;          //!< empty: the user, if it is an address
+        QString emailTo;            //!< one or more addresses separated by a comma
 
-        bool hasRemote() const { return !discord.isEmpty() || !webhook.isEmpty() || (!telegramToken.isEmpty() && !telegramChat.isEmpty()); }
+        bool hasTelegram() const { return !telegramToken.isEmpty() && !telegramChat.isEmpty(); }
+        bool hasGotify() const   { return !gotifyUrl.isEmpty() && !gotifyToken.isEmpty(); }
+        bool hasPushover() const { return !pushoverToken.isEmpty() && !pushoverUser.isEmpty(); }
+        QString effectiveEmailFrom() const { return !emailFrom.trimmed().isEmpty() ? emailFrom.trimmed() : (emailUser.contains('@') ? emailUser.trimmed() : QString()); }
+        bool hasEmail() const;
+        bool hasRemote() const { return !discord.isEmpty() || !webhook.isEmpty() || hasTelegram() || !slack.isEmpty() || !ntfy.isEmpty()
+                                        || hasGotify() || hasPushover() || hasEmail(); }
         bool isActive() const  { return tray || hasRemote(); }
     };
 
@@ -98,7 +118,10 @@ private slots:
 private:
     bool _wanted(State state) const;
     void _send(const QString &title, const QString &text);
-    void _post(const QString &channel, const QUrl &url, const QByteArray &json);
+    void _post(const QString &channel, const QUrl &url, const QByteArray &body, const QByteArray &contentType = "application/json",
+               const QList<QPair<QByteArray, QByteArray>> &headers = QList<QPair<QByteArray, QByteArray>>());
+    void _sendEmail(const QString &title, const QString &text);
+    void _failed(const QString &channel, const QString &why);
 
     Settings                _settings;
     QNetworkAccessManager  *_net;

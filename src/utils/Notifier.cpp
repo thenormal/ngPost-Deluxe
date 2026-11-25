@@ -17,6 +17,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>
 
 #include "Notifier.h"
+#include "SmtpClient.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNetworkAccessManager>
@@ -30,6 +31,13 @@
 Notifier::Notifier(QObject *parent) :
     QObject(parent), _net(new QNetworkAccessManager(this))
 {
+}
+
+static QByteArray headerText(const QString &s);
+
+bool Notifier::Settings::hasEmail() const
+{
+    return !emailHost.trimmed().isEmpty() && !effectiveEmailFrom().isEmpty() && !SmtpClient::splitAddresses(emailTo).isEmpty();
 }
 
 bool Notifier::_wanted(State state) const
@@ -136,7 +144,12 @@ QString Notifier::sendTest(const QString &appName)
     {
         _send(title, text);
         if (!_settings.discord.isEmpty()) done << "Discord";
-        if (!_settings.telegramToken.isEmpty() && !_settings.telegramChat.isEmpty()) done << "Telegram";
+        if (_settings.hasTelegram()) done << "Telegram";
+        if (!_settings.slack.isEmpty()) done << "Slack";
+        if (!_settings.ntfy.isEmpty()) done << "ntfy";
+        if (_settings.hasGotify()) done << "Gotify";
+        if (_settings.hasPushover()) done << "Pushover";
+        if (_settings.hasEmail()) done << tr("email");
         if (!_settings.webhook.isEmpty()) done << "webhook";
     }
     return done.isEmpty() ? tr("No notification channel is set.") : tr("Test message sent: %1 (a failure is written in the log).").arg(done.join(", "));
@@ -157,7 +170,47 @@ void Notifier::_send(const QString &title, const QString &text)
         o["text"]  = text;
         _post("webhook", QUrl(_settings.webhook), QJsonDocument(o).toJson(QJsonDocument::Compact));
     }
-    if (!_settings.telegramToken.isEmpty() && !_settings.telegramChat.isEmpty())
+    if (!_settings.slack.isEmpty())
+    {
+        QJsonObject o;
+        o["text"] = body;
+        _post("Slack", QUrl(_settings.slack), QJsonDocument(o).toJson(QJsonDocument::Compact));
+    }
+    if (!_settings.ntfy.isEmpty())
+    {
+        QList<QPair<QByteArray, QByteArray>> headers;
+        headers << qMakePair(QByteArray("Title"), headerText(title));
+        if (!_settings.ntfyToken.isEmpty())
+            headers << qMakePair(QByteArray("Authorization"), "Bearer " + _settings.ntfyToken.toUtf8());
+        _post("ntfy", QUrl(_settings.ntfy), text.toUtf8(), "text/plain; charset=utf-8", headers);
+    }
+    if (_settings.hasGotify())
+    {
+        QString base = _settings.gotifyUrl.trimmed();
+        while (base.endsWith('/'))
+            base.chop(1);
+        QJsonObject o;
+        o["title"]    = title;
+        o["message"]  = text;
+        o["priority"] = 5;
+        _post("Gotify", QUrl(base + "/message"), QJsonDocument(o).toJson(QJsonDocument::Compact), "application/json",
+              {qMakePair(QByteArray("X-Gotify-Key"), _settings.gotifyToken.toUtf8())});
+    }
+    if (_settings.hasPushover())
+    {
+        QString base = qEnvironmentVariable("NGPOST_PUSHOVER_API");
+        if (base.isEmpty())
+            base = "https://api.pushover.net";
+        QJsonObject o;
+        o["token"]   = _settings.pushoverToken;
+        o["user"]    = _settings.pushoverUser;
+        o["title"]   = title;
+        o["message"] = text;
+        _post("Pushover", QUrl(base + "/1/messages.json"), QJsonDocument(o).toJson(QJsonDocument::Compact));
+    }
+    if (_settings.hasEmail())
+        _sendEmail(title, text);
+    if (_settings.hasTelegram())
     {
         QString base = qEnvironmentVariable("NGPOST_TELEGRAM_API");
         if (base.isEmpty())
@@ -170,7 +223,51 @@ void Notifier::_send(const QString &title, const QString &text)
     }
 }
 
-void Notifier::_post(const QString &channel, const QUrl &url, const QByteArray &json)
+//! a header can only have ASCII: another text is sent as an encoded word
+static QByteArray headerText(const QString &s)
+{
+    bool ascii = true;
+    for (const QChar &c : s)
+        if (c.unicode() > 126 || c.unicode() < 32)
+            ascii = false;
+    return ascii ? s.toLatin1() : "=?UTF-8?B?" + s.toUtf8().toBase64() + "?=";
+}
+
+void Notifier::_failed(const QString &channel, const QString &why)
+{
+    emit log(tr("Notification (%1) not sent: %2").arg(channel, why));
+    ++_nbFailed;
+    _lastFailure = QString("%1: %2 (%3)").arg(channel, why, QTime::currentTime().toString("HH:mm:ss"));
+}
+
+void Notifier::_sendEmail(const QString &title, const QString &text)
+{
+    SmtpClient::Config c;
+    c.host     = _settings.emailHost.trimmed();
+    c.port     = _settings.emailPort;
+    c.security = SmtpClient::securityFromString(_settings.emailSecurity);
+    c.user     = _settings.emailUser;
+    c.pass     = _settings.emailPass;
+    c.from     = _settings.effectiveEmailFrom();
+    c.to       = SmtpClient::splitAddresses(_settings.emailTo);
+    SmtpClient *smtp = new SmtpClient(this);
+    ++_pending;
+    ++_nbSent;
+    connect(smtp, &SmtpClient::finished, this, [this, smtp](bool ok, const QString &error){
+        if (!ok)
+            _failed(tr("email"), error);
+        smtp->deleteLater();
+        if (--_pending <= 0)
+        {
+            _pending = 0;
+            emit allSent();
+        }
+    });
+    smtp->send(c, title, text);
+}
+
+void Notifier::_post(const QString &channel, const QUrl &url, const QByteArray &json, const QByteArray &contentType,
+                     const QList<QPair<QByteArray, QByteArray>> &headers)
 {
     if (!url.isValid() || (url.scheme() != "https" && url.scheme() != "http"))
     {
@@ -180,7 +277,9 @@ void Notifier::_post(const QString &channel, const QUrl &url, const QByteArray &
         return;
     }
     QNetworkRequest req(url);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    req.setHeader(QNetworkRequest::ContentTypeHeader, contentType);
+    for (const auto &h : headers)
+        req.setRawHeader(h.first, h.second);
     QNetworkReply *reply = _net->post(req, json);
     reply->setProperty("channel", channel);
     ++_pending;

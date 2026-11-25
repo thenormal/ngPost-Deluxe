@@ -2104,6 +2104,94 @@ Decide later: they stay in the queue and will be offered again at the next start
         <source>To change computer or to share a configuration: the file has the settings, the profiles, the notifications chosen and, if you want, the servers. It never has a password, a token, an address of a notification or a folder of this computer: the servers imported are switched off until you type their password.</source>
         <translation>用于更换电脑或分享配置：文件包含设置、配置文件、所选的通知，以及（如果您愿意）服务器。其中绝不包含密码、令牌、通知地址或本机的文件夹：导入的服务器在您输入密码之前保持关闭。</translation>
     </message>
+    <message>
+        <source>More channels</source>
+        <translation>更多渠道</translation>
+    </message>
+    <message>
+        <source>Slack webhook:</source>
+        <translation>Slack webhook：</translation>
+    </message>
+    <message>
+        <source>ntfy address:</source>
+        <translation>ntfy 地址：</translation>
+    </message>
+    <message>
+        <source>ntfy token (if needed):</source>
+        <translation>ntfy 令牌（如需要）：</translation>
+    </message>
+    <message>
+        <source>Gotify server:</source>
+        <translation>Gotify 服务器：</translation>
+    </message>
+    <message>
+        <source>Gotify token:</source>
+        <translation>Gotify 令牌：</translation>
+    </message>
+    <message>
+        <source>Pushover app token:</source>
+        <translation>Pushover 应用令牌：</translation>
+    </message>
+    <message>
+        <source>Pushover user key:</source>
+        <translation>Pushover 用户密钥：</translation>
+    </message>
+    <message>
+        <source>Email</source>
+        <translation>电子邮件</translation>
+    </message>
+    <message>
+        <source>Mail server (SMTP):</source>
+        <translation>邮件服务器（SMTP）：</translation>
+    </message>
+    <message>
+        <source>Port:</source>
+        <translation>端口：</translation>
+    </message>
+    <message>
+        <source>Security:</source>
+        <translation>安全性：</translation>
+    </message>
+    <message>
+        <source>User:</source>
+        <translation>用户：</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>密码：</translation>
+    </message>
+    <message>
+        <source>From (address):</source>
+        <translation>发件人（地址）：</translation>
+    </message>
+    <message>
+        <source>To (address):</source>
+        <translation>收件人（地址）：</translation>
+    </message>
+    <message>
+        <source>STARTTLS (port 587)</source>
+        <translation>STARTTLS（端口 587）</translation>
+    </message>
+    <message>
+        <source>SSL/TLS (port 465)</source>
+        <translation>SSL/TLS（端口 465）</translation>
+    </message>
+    <message>
+        <source>None (not safe)</source>
+        <translation>无（不安全）</translation>
+    </message>
+    <message>
+        <source>one or more addresses, separated by a comma</source>
+        <translation>一个或多个地址，用逗号分隔</translation>
+    </message>
+    <message>
+        <source>empty: the user, if it is an address</source>
+        <translation>留空：用户名（如果它是一个地址）</translation>
+    </message>
+    <message>
+        <source>The message has the same text as the other channels (never the password or the names of the files). The password of the mail server is saved in clear text in the configuration file: with Gmail and similar use an application password.</source>
+        <translation>消息的文字与其他渠道相同（绝不含密码或文件名）。邮件服务器的密码以明文保存在配置文件中：使用 Gmail 等服务时请使用应用专用密码。</translation>
+    </message>
 </context>
 <context>
     <name>NgPost</name>
@@ -3795,6 +3883,66 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
         <source>Can&apos;t write the config file %1</source>
         <translation>无法写入配置文件 %1</translation>
     </message>
+    <message>
+        <source>send a notification to this Slack incoming webhook address when the posts are done</source>
+        <translation>当发布完成时，向此 Slack 传入 webhook 地址发送通知</translation>
+    </message>
+    <message>
+        <source>send a notification to this ntfy address (for example https://ntfy.sh/mytopic) when the posts are done</source>
+        <translation>当发布完成时，向此 ntfy 地址（例如 https://ntfy.sh/mytopic）发送通知</translation>
+    </message>
+    <message>
+        <source>access token of ntfy (only if the topic needs it)</source>
+        <translation>ntfy 的访问令牌（仅当主题需要时）</translation>
+    </message>
+    <message>
+        <source>address of the Gotify server that sends the notifications (with --notify_gotify_token)</source>
+        <translation>发送通知的 Gotify 服务器地址（与 --notify_gotify_token 配合）</translation>
+    </message>
+    <message>
+        <source>token of the Gotify application</source>
+        <translation>Gotify 应用的令牌</translation>
+    </message>
+    <message>
+        <source>token of the Pushover application (with --notify_pushover_user)</source>
+        <translation>Pushover 应用的令牌（与 --notify_pushover_user 配合）</translation>
+    </message>
+    <message>
+        <source>user or group key of Pushover</source>
+        <translation>Pushover 的用户或群组密钥</translation>
+    </message>
+    <message>
+        <source>SMTP server that sends the notifications by email (with --notify_email_from or user, and --notify_email_to)</source>
+        <translation>通过电子邮件发送通知的 SMTP 服务器（与 --notify_email_from 或用户名，以及 --notify_email_to 配合）</translation>
+    </message>
+    <message>
+        <source>port of the SMTP server (587 by default; 465 for ssl)</source>
+        <translation>SMTP 服务器的端口（默认 587；ssl 为 465）</translation>
+    </message>
+    <message>
+        <source>starttls (default), ssl or none</source>
+        <translation>starttls（默认）、ssl 或 none</translation>
+    </message>
+    <message>
+        <source>user of the SMTP server (empty: no login)</source>
+        <translation>SMTP 服务器的用户（留空：不登录）</translation>
+    </message>
+    <message>
+        <source>password of the SMTP server</source>
+        <translation>SMTP 服务器的密码</translation>
+    </message>
+    <message>
+        <source>address of the sender (default: the user, if it is an address)</source>
+        <translation>发件人地址（默认：用户名，如果它是一个地址）</translation>
+    </message>
+    <message>
+        <source>address that receives the notifications (several: separated by a comma)</source>
+        <translation>接收通知的地址（多个地址用逗号分隔）</translation>
+    </message>
+    <message>
+        <source>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private</source>
+        <translation>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / 电子邮件 / webhook 的地址、令牌和密码属于机密，与密码一样：请妥善保管此文件</translation>
+    </message>
 </context>
 <context>
     <name>NntpCheckCon</name>
@@ -5195,6 +5343,14 @@ Click on &quot;Add&quot; to configure your Usenet provider.</source>
     <message>
         <source>Notification (%1) failed: no answer from the server</source>
         <translation>通知（%1）失败：服务器无响应</translation>
+    </message>
+    <message>
+        <source>email</source>
+        <translation>电子邮件</translation>
+    </message>
+    <message>
+        <source>Notification (%1) not sent: %2</source>
+        <translation>通知（%1）未发送：%2</translation>
     </message>
 </context>
 <context>
@@ -6808,6 +6964,65 @@ Example: {name} [{date}]. Empty: the name of the file or folder.</source>
     <message>
         <source>Copies the example to the clipboard, to look at it in Notepad or in another program.</source>
         <translation>将示例复制到剪贴板，以便在记事本或其他程序中查看。</translation>
+    </message>
+</context>
+<context>
+    <name>SmtpClient</name>
+    <message>
+        <source>can&apos;t connect to the mail server (%1)</source>
+        <translation>无法连接到邮件服务器（%1）</translation>
+    </message>
+    <message>
+        <source>secure connection refused</source>
+        <translation>安全连接被拒绝</translation>
+    </message>
+    <message>
+        <source>connection error</source>
+        <translation>连接错误</translation>
+    </message>
+    <message>
+        <source>the mail server did not answer in time</source>
+        <translation>邮件服务器未及时响应</translation>
+    </message>
+    <message>
+        <source>the mail server answered something unexpected</source>
+        <translation>邮件服务器返回了意外的响应</translation>
+    </message>
+    <message>
+        <source>the mail server refused the connection</source>
+        <translation>邮件服务器拒绝了连接</translation>
+    </message>
+    <message>
+        <source>the mail server refused the greeting</source>
+        <translation>邮件服务器拒绝了问候</translation>
+    </message>
+    <message>
+        <source>the mail server does not offer a secure connection (STARTTLS)</source>
+        <translation>邮件服务器不提供安全连接（STARTTLS）</translation>
+    </message>
+    <message>
+        <source>the mail server does not offer a login method that is supported</source>
+        <translation>邮件服务器不提供受支持的登录方式</translation>
+    </message>
+    <message>
+        <source>the mail server refused the secure connection</source>
+        <translation>邮件服务器拒绝了安全连接</translation>
+    </message>
+    <message>
+        <source>the mail server refused the login</source>
+        <translation>邮件服务器拒绝了登录</translation>
+    </message>
+    <message>
+        <source>the mail server refused the sender</source>
+        <translation>邮件服务器拒绝了发件人</translation>
+    </message>
+    <message>
+        <source>the mail server refused a recipient</source>
+        <translation>邮件服务器拒绝了收件人</translation>
+    </message>
+    <message>
+        <source>the mail server refused the message</source>
+        <translation>邮件服务器拒绝了邮件</translation>
     </message>
 </context>
 </TS>

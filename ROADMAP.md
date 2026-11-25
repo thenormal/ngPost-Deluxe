@@ -26,7 +26,7 @@ These are directions, not a list of promises.
 - Done: **NFO file in six styles** (Scene, Clean, Box, Elegant, Retro and the old Classic) with a banner of the program, a preview of an example post in the program to choose the style, and an option for only ASCII characters (`--nfo_style`, `--nfo_ascii`)
 - Done: **A progress bar and a graph of the speed for each post** (page Posts; the graph is kept until the program is closed)
 - Done: **Log for each post** with the time of each line, filters by category (Debug hidden at first), search and copy
-- Not started: **More notifications**: email, ntfy, Gotify, Pushover and Slack (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords
+- Done: **More notifications**: email (SMTP with STARTTLS, SSL/TLS or no encryption), ntfy, Gotify, Pushover and Slack (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords; none of the addresses, tokens or passwords is exported with the settings
 - Done: **Export and import of the settings and the profiles** (Settings, History and queue; `--export_settings`, `--import_settings`): settings, profiles, favorite newsgroups, notifications chosen and, if wanted, servers; never passwords, tokens, notification addresses or folders of the computer; imported servers stay off until the password is typed; the old config is kept as `.before-import`
 
 ## Version 1.6 - Verification and resume (not started)
