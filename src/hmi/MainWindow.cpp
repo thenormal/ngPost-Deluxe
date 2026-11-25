@@ -285,7 +285,10 @@ void MainWindow::init(NgPost *ngPost)
     connect(_importSettingsButton, &QAbstractButton::clicked, this, &MainWindow::onImportSettings);
     _queueCB->setChecked(_ngPost->_queueEnabled);
     connect(_queueCB,           &QAbstractButton::toggled, this, &MainWindow::onQueueToggled);
-    QTimer::singleShot(1500, this, &MainWindow::_offerQueue); // after the windows of the start
+    QTimer::singleShot(1500, this, [this](){ // after the windows of the start, one question after the other
+        _offerQueue();
+        _autoPostTab->offerResumeWatching();
+    });
     // new versions: only an announcement (button in the sidebar), once a day
     _updateCheckCB->setChecked(_ngPost->_checkUpdates);
     connect(_updateCheckCB, &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_checkUpdates = on; scheduleAutoSave(); });

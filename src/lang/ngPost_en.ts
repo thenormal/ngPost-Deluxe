@@ -879,6 +879,38 @@ Add files or folders, or scan a folder, and keep checked what you want to post.<
         <source>The folder %1 is empty.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 folder(s) were being watched the last time ngPost was closed.
+
+Watch again: the watching starts again with the options of this page.
+Forget: the list is removed.
+Decide later: it will be offered again at the next start.</source>
+        <translation>%1 folder(s) were being watched the last time ngPost was closed.
+
+Watch again: the watching starts again with the options of this page.
+Forget: the list is removed.
+Decide later: it will be offered again at the next start.</translation>
+    </message>
+    <message>
+        <source>%1 folder(s) of the list do not exist any more and are left out.</source>
+        <translation>%1 folder(s) of the list do not exist any more and are left out.</translation>
+    </message>
+    <message>
+        <source>Folders that were watched</source>
+        <translation>Folders that were watched</translation>
+    </message>
+    <message>
+        <source>Watch again</source>
+        <translation>Watch again</translation>
+    </message>
+    <message>
+        <source>Forget</source>
+        <translation>Forget</translation>
+    </message>
+    <message>
+        <source>Decide later</source>
+        <translation>Decide later</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3913,6 +3945,10 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     <message>
         <source>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private</source>
         <translation>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private</translation>
+    </message>
+    <message>
+        <source>Folders watched by Auto Posting when the program was closed (offered again at the next start), one line each</source>
+        <translation>Folders watched by Auto Posting when the program was closed (offered again at the next start), one line each</translation>
     </message>
 </context>
 <context>

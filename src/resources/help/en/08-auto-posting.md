@@ -16,6 +16,8 @@ Choose the folder and press **Start watching**: each new file or folder is poste
 
 While watching, a bar under the three choices always shows the watched folder, how many posts finished today (and how many had errors) and how many are in progress or waiting. **Pause watching** makes the new files wait: they are posted when you press **Resume watching**; the posts already started go on. Stopping the watching forgets the files that were waiting.
 
+The watched folders are remembered. If the program was closed while watching, the next start asks whether to **Watch again** them (with the options of the page), **Forget** them or **Decide later**; folders that do not exist any more are left out. The list is not exported with the settings, because the folders belong to the computer.
+
 ## The list
 
 Each item has a box and its size. Uncheck an item to leave it out; only the checked items are posted. To remove items from the list, select them and press DEL. The line under the list shows how many items are selected, their size, the size to upload and, after a first post, the upload time.

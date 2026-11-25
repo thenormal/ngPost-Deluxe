@@ -16,6 +16,8 @@ Escolha a pasta e carregue em **Começar a vigiar**: cada novo ficheiro ou pasta
 
 Enquanto vigia, uma barra por baixo das três escolhas mostra sempre a pasta vigiada, quantas publicações terminaram hoje (e quantas com erros) e quantas estão em curso ou em espera. **Pausar a vigilância** faz os ficheiros novos esperarem: são publicados quando carrega em **Retomar a vigilância**; as publicações já iniciadas continuam. Parar a vigilância esquece os ficheiros que estavam em espera.
 
+As pastas vigiadas ficam guardadas. Se o programa foi fechado durante a vigilância, no arranque seguinte pergunta se deve **Vigiar de novo** (com as opções da página), **Esquecer** ou **Decidir depois**; as pastas que já não existem são deixadas de fora. A lista não é exportada com as definições, porque as pastas pertencem ao computador.
+
 ## A lista
 
 Cada elemento tem uma caixa e o seu tamanho. Desmarque um elemento para o deixar de fora; só os elementos marcados são publicados. Para remover elementos da lista, selecione-os e carregue em DEL. A linha por baixo da lista mostra quantos elementos estão selecionados, o seu tamanho, o tamanho a enviar e, depois de uma primeira publicação, o tempo de envio.

@@ -16,6 +16,8 @@ Scegli la cartella e premi **Avvia il controllo**: ogni nuovo file o cartella vi
 
 Durante il controllo, una barra sotto le tre scelte mostra sempre la cartella controllata, quanti post sono finiti oggi (e quanti con errori) e quanti sono in corso o in attesa. **Metti in pausa** fa aspettare i nuovi file: vengono postati quando premi **Riprendi il monitoraggio**; i post già avviati continuano. Fermare il controllo dimentica i file che erano in attesa.
 
+Le cartelle controllate vengono ricordate. Se il programma è stato chiuso durante il controllo, al successivo avvio chiede se **Controllarle di nuovo** (con le opzioni della pagina), **Dimenticarle** o **Decidere dopo**; le cartelle che non esistono più vengono escluse. L'elenco non viene esportato con le impostazioni, perché le cartelle appartengono al computer.
+
 ## La lista
 
 Ogni elemento ha una casella e la sua dimensione. Togli la spunta a un elemento per escluderlo; vengono postati solo gli elementi selezionati. Per rimuovere elementi dalla lista, selezionali e premi CANC. La riga sotto la lista mostra quanti elementi sono selezionati, la loro dimensione, la dimensione da caricare e, dopo un primo post, il tempo di upload.

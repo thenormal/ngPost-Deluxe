@@ -880,6 +880,38 @@ Ajoutez des fichiers ou dossiers, ou analysez un dossier, et laissez coché ce q
         <source>The folder %1 is empty.</source>
         <translation>Le dossier %1 est vide.</translation>
     </message>
+    <message>
+        <source>%1 folder(s) were being watched the last time ngPost was closed.
+
+Watch again: the watching starts again with the options of this page.
+Forget: the list is removed.
+Decide later: it will be offered again at the next start.</source>
+        <translation>%1 dossier(s) étaient surveillés la dernière fois que ngPost a été fermé.
+
+Surveiller à nouveau : la surveillance repart avec les options de cette page.
+Oublier : la liste est supprimée.
+Décider plus tard : elle sera proposée à nouveau au prochain démarrage.</translation>
+    </message>
+    <message>
+        <source>%1 folder(s) of the list do not exist any more and are left out.</source>
+        <translation>%1 dossier(s) de la liste n&apos;existent plus et sont ignorés.</translation>
+    </message>
+    <message>
+        <source>Folders that were watched</source>
+        <translation>Dossiers qui étaient surveillés</translation>
+    </message>
+    <message>
+        <source>Watch again</source>
+        <translation>Surveiller à nouveau</translation>
+    </message>
+    <message>
+        <source>Forget</source>
+        <translation>Oublier</translation>
+    </message>
+    <message>
+        <source>Decide later</source>
+        <translation>Décider plus tard</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3932,6 +3964,10 @@ Soit utilisez --par2_pct, soit renseignez PAR2_PCT ou PAR2_ARGS dans le fichier 
     <message>
         <source>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private</source>
         <translation>## Les adresses, jetons et mots de passe de Discord / Telegram / Slack / ntfy / Gotify / Pushover / e-mail / webhook sont des secrets, comme les mots de passe : gardez ce fichier privé</translation>
+    </message>
+    <message>
+        <source>Folders watched by Auto Posting when the program was closed (offered again at the next start), one line each</source>
+        <translation>Dossiers surveillés par la Publication auto à la fermeture du programme (proposés à nouveau au prochain démarrage), une ligne chacun</translation>
     </message>
 </context>
 <context>

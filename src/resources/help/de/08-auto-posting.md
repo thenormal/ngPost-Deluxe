@@ -16,6 +16,8 @@ Wählen Sie den Ordner und klicken Sie auf **Überwachung starten**: Jede neue D
 
 Während der Überwachung zeigt eine Leiste unter den drei Auswahlmöglichkeiten immer den überwachten Ordner, wie viele Posts heute fertig wurden (und wie viele mit Fehlern) und wie viele laufen oder warten. **Überwachung pausieren** lässt neue Dateien warten: Sie werden gepostet, wenn Sie auf **Überwachung fortsetzen** klicken; bereits gestartete Posts laufen weiter. Beim Beenden der Überwachung werden die wartenden Dateien vergessen.
 
+Die überwachten Ordner werden gemerkt. Wurde das Programm während der Überwachung geschlossen, fragt es beim nächsten Start, ob sie **Erneut überwacht**, **Vergessen** oder **Später entschieden** werden sollen; Ordner, die nicht mehr existieren, werden ausgelassen. Die Liste wird nicht mit den Einstellungen exportiert, weil die Ordner zum Computer gehören.
+
 ## Die Liste
 
 Jedes Element hat ein Kästchen und seine Größe. Entfernen Sie das Häkchen eines Elements, um es auszulassen; nur markierte Elemente werden gepostet. Um Elemente aus der Liste zu entfernen, wählen Sie sie aus und drücken Sie ENTF. Die Zeile unter der Liste zeigt, wie viele Elemente ausgewählt sind, ihre Größe, die hochzuladende Größe und, nach einem ersten Post, die Upload-Dauer.

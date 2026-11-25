@@ -16,6 +16,8 @@ Elige la carpeta y pulsa **Empezar a vigilar**: cada archivo o carpeta nuevo se 
 
 Mientras vigila, una barra bajo las tres opciones muestra siempre la carpeta vigilada, cuántas publicaciones han terminado hoy (y cuántas con errores) y cuántas están en curso o en espera. **Pausar la vigilancia** hace que los archivos nuevos esperen: se publican cuando pulsas **Reanudar la vigilancia**; las publicaciones ya iniciadas continúan. Detener la vigilancia olvida los archivos que estaban en espera.
 
+Las carpetas vigiladas se recuerdan. Si el programa se cerró mientras vigilaba, al siguiente inicio pregunta si **Vigilarlas de nuevo** (con las opciones de la página), **Olvidarlas** o **Decidir más tarde**; las carpetas que ya no existen se omiten. La lista no se exporta con los ajustes, porque las carpetas pertenecen al ordenador.
+
 ## La lista
 
 Cada elemento tiene una casilla y su tamaño. Desmarca un elemento para dejarlo fuera; solo se publican los elementos marcados. Para quitar elementos de la lista, selecciónalos y pulsa SUPR. La línea bajo la lista muestra cuántos elementos están seleccionados, su tamaño, el tamaño que se va a subir y, tras una primera publicación, el tiempo de subida.

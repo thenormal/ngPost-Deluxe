@@ -890,6 +890,38 @@ Voeg bestanden of mappen toe, of scan een map, en laat aangevinkt wat je wilt po
         <source>The folder %1 is empty.</source>
         <translation>De map %1 is leeg.</translation>
     </message>
+    <message>
+        <source>%1 folder(s) were being watched the last time ngPost was closed.
+
+Watch again: the watching starts again with the options of this page.
+Forget: the list is removed.
+Decide later: it will be offered again at the next start.</source>
+        <translation>%1 map(pen) werden bewaakt toen ngPost voor het laatst werd gesloten.
+
+Opnieuw bewaken: het bewaken start opnieuw met de opties van deze pagina.
+Vergeten: de lijst wordt verwijderd.
+Later beslissen: ze wordt bij de volgende start opnieuw aangeboden.</translation>
+    </message>
+    <message>
+        <source>%1 folder(s) of the list do not exist any more and are left out.</source>
+        <translation>%1 map(pen) uit de lijst bestaan niet meer en worden overgeslagen.</translation>
+    </message>
+    <message>
+        <source>Folders that were watched</source>
+        <translation>Mappen die bewaakt werden</translation>
+    </message>
+    <message>
+        <source>Watch again</source>
+        <translation>Opnieuw bewaken</translation>
+    </message>
+    <message>
+        <source>Forget</source>
+        <translation>Vergeten</translation>
+    </message>
+    <message>
+        <source>Decide later</source>
+        <translation>Later beslissen</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3947,6 +3979,10 @@ Gebruik --par2_pct of stel PAR2_PCT of PAR2_ARGS in het configuratiebestand in.<
     <message>
         <source>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private</source>
         <translation>## De adressen, tokens en wachtwoorden van Discord / Telegram / Slack / ntfy / Gotify / Pushover / e-mail / webhook zijn geheim, net als de wachtwoorden: houd dit bestand privé</translation>
+    </message>
+    <message>
+        <source>Folders watched by Auto Posting when the program was closed (offered again at the next start), one line each</source>
+        <translation>Door Auto Posting bewaakte mappen bij het sluiten van het programma (bij de volgende start opnieuw aangeboden), elk op een regel</translation>
     </message>
 </context>
 <context>
