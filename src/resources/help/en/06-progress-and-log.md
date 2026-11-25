@@ -38,11 +38,16 @@ ngPost can tell you when your posts are done, so you do not have to watch the wi
 - **System notification**: a message from the icon in the notification area (desktop version only; on by default, you can turn it off). On Windows it appears like any other notification and stays in the notification center; if you do not see it, check that the notifications and the focus assist ("Do not disturb") of Windows do not hide it.
 - **Discord**: paste the address of a Discord webhook.
 - **Telegram**: the token of your bot and the id of the chat that receives the messages.
-- **Other webhook**: any address that accepts a JSON POST with a `title` and a `text` (Slack-like tools, ntfy, Home Assistant).
+- **Slack**: paste the address of an incoming webhook of Slack.
+- **ntfy**: the address of your topic (for example `https://ntfy.sh/mytopic`, or your own server) and, only if it needs it, the access token.
+- **Gotify**: the address of your server and the token of the application.
+- **Pushover**: the token of your application and your user key.
+- **Email**: the mail server (SMTP), the port, the security (STARTTLS on port 587 or SSL/TLS on port 465), the user and the password, the sender and one or more recipients. With Gmail and similar services use an application password.
+- **Other webhook**: any address that accepts a JSON POST with a `title` and a `text` (Home Assistant).
 
 Choose what is notified (finished, errors or failures) and how: **one message when all the posts are done** (default, best for Auto Posting) or **a message after each post**. The button **Send a test message** shows at once if it works.
 
 The message has the name of the post, the result, the size, the time and the speed. It never contains the password or the names of the files. The addresses and the token are saved in clear text in the configuration file, like the other passwords: keep it private. If a message cannot be sent, a line in the log says so and the post is not affected.
 
-On the command line, or in Docker, use the options `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` and `--notify_when each|all_done`, or the keys `notify_*` of the configuration file.
+On the command line, or in Docker, use the options `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` and `--notify_when each|all_done`, or the keys `notify_*` of the configuration file. Other channels: `--notify_slack`, `--notify_ntfy` (and `--notify_ntfy_token`), `--notify_gotify_url` with `--notify_gotify_token`, `--notify_pushover_token` with `--notify_pushover_user`, and for the email `--notify_email_host`, `--notify_email_port`, `--notify_email_security`, `--notify_email_user`, `--notify_email_pass`, `--notify_email_from`, `--notify_email_to`.
 

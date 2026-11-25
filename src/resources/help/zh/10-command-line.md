@@ -30,6 +30,7 @@
 - `--max_speed MB/s` 限制所有连接合计的上传速度（0：不限制）；相当于配置文件中的 `limit_speed` 和 `max_speed` 键
 - `--gen_nfo` 在 nzb 旁边写入 NFO 文件；`--nfo_in_post` 同时发布它；`--nfo_password` 在其中写入压缩包密码；`--nfo_text file.txt` 在末尾添加文字；`--no_nfo_media` 省略媒体信息（MediaInfo）；`--mediainfo_path 路径` 选择 MediaInfo 程序；`--nfo_style 名称` 选择外观（classic、clean、box、scene、elegant、retro）；`--nfo_ascii` 仅 ASCII 字符
 - `--notify_discord URL`、`--notify_telegram_token T` 配合 `--notify_telegram_chat ID`、`--notify_webhook URL` 和 `--notify_when each|all_done`：发布结束时的通知（参见[进度与日志](06-progress-and-log.md)）
+- `--notify_slack URL`, `--notify_ntfy URL`, `--notify_gotify_url URL` 配合 `--notify_gotify_token T`, `--notify_pushover_token T` 配合 `--notify_pushover_user K`, `--notify_email_host`, `--notify_email_port`, `--notify_email_security starttls|ssl|none`, `--notify_email_user`, `--notify_email_pass`, `--notify_email_from`, `--notify_email_to`：其他渠道
 - `--export_settings 文件` 将设置、配置文件、通知和服务器（绝不含密码）写入文件；`--import_settings 文件` 将此类文件添加到配置中（旧配置保存为 `.before-import`）；两者都在不发布的情况下退出
 - `--help` 完整列表
 

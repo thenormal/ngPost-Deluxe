@@ -30,6 +30,7 @@ Controlla una cartella e sposta i file in una cartella "Posted" una volta postat
 - `--max_speed MB/s` limita la velocità di upload, per tutte le connessioni insieme (0: nessun limite); equivale alle chiavi `limit_speed` e `max_speed` del file di configurazione
 - `--gen_nfo` scrive un file NFO accanto all'nzb; `--nfo_in_post` lo posta anche; `--nfo_password` vi scrive la password dell'archivio; `--nfo_text file.txt` aggiunge un testo alla fine; `--no_nfo_media` esclude le informazioni multimediali (MediaInfo); `--mediainfo_path percorso` sceglie il programma MediaInfo; `--nfo_style nome` sceglie l'aspetto (classic, clean, box, scene, elegant, retro); `--nfo_ascii` solo caratteri ASCII
 - `--notify_discord URL`, `--notify_telegram_token T` con `--notify_telegram_chat ID`, `--notify_webhook URL` e `--notify_when each|all_done`: notifiche alla fine dei post (vedi [Avanzamento e log](06-progress-and-log.md))
+- `--notify_slack URL`, `--notify_ntfy URL`, `--notify_gotify_url URL` con `--notify_gotify_token T`, `--notify_pushover_token T` con `--notify_pushover_user K`, `--notify_email_host`, `--notify_email_port`, `--notify_email_security starttls|ssl|none`, `--notify_email_user`, `--notify_email_pass`, `--notify_email_from`, `--notify_email_to`: gli altri canali
 - `--export_settings file` scrive le impostazioni, i profili, le notifiche e i server (mai le password) in un file; `--import_settings file` aggiunge questo file alla configurazione (la vecchia resta come `.before-import`); entrambi escono senza pubblicare
 - `--help` l'elenco completo
 

@@ -38,10 +38,15 @@ ngPost puede avisarte cuando tus publicaciones terminan, para que no tengas que 
 - **Notificación del sistema**: un mensaje desde el icono del área de notificaciones (solo en la versión de escritorio; activada de forma predeterminada, puedes desactivarla). En Windows aparece como cualquier otra notificación y se queda en el centro de notificaciones; si no la ves, comprueba que las notificaciones y la asistencia de concentración («No molestar») de Windows no la oculten.
 - **Discord**: pega la dirección de un webhook de Discord.
 - **Telegram**: el token de tu bot y el id del chat que recibe los mensajes.
-- **Otro webhook**: cualquier dirección que acepte un POST JSON con un `title` y un `text` (herramientas tipo Slack, ntfy, Home Assistant).
+- **Slack**: pega la dirección de un webhook entrante de Slack.
+- **ntfy**: la dirección de tu tema (por ejemplo `https://ntfy.sh/mitema`, o tu propio servidor) y, solo si hace falta, el token de acceso.
+- **Gotify**: la dirección de tu servidor y el token de la aplicación.
+- **Pushover**: el token de tu aplicación y tu clave de usuario.
+- **Correo electrónico**: el servidor de correo (SMTP), el puerto, la seguridad (STARTTLS en el puerto 587 o SSL/TLS en el puerto 465), el usuario y la contraseña, el remitente y uno o más destinatarios. Con Gmail y servicios similares usa una contraseña de aplicación.
+- **Otro webhook**: cualquier dirección que acepte un POST JSON con un `title` y un `text` (Home Assistant).
 
 Elige qué se notifica (terminadas, errores o fallos) y cómo: **un mensaje cuando todas las publicaciones han terminado** (predeterminado, lo mejor para Publicación Automática) o **un mensaje después de cada publicación**. El botón **Enviar un mensaje de prueba** muestra enseguida si funciona.
 
 El mensaje contiene el nombre de la publicación, el resultado, el tamaño, el tiempo y la velocidad. Nunca contiene la contraseña ni los nombres de los archivos. Las direcciones y el token se guardan en texto claro en el archivo de configuración, como las demás contraseñas: mantenlo privado. Si un mensaje no se puede enviar, una línea del registro lo indica y la publicación no se ve afectada.
 
-En la línea de comandos, o en Docker, usa las opciones `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` y `--notify_when each|all_done`, o las claves `notify_*` del archivo de configuración.
+En la línea de comandos, o en Docker, usa las opciones `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` y `--notify_when each|all_done`, o las claves `notify_*` del archivo de configuración. Otros canales: `--notify_slack`, `--notify_ntfy` (+ `--notify_ntfy_token`), `--notify_gotify_url` con `--notify_gotify_token`, `--notify_pushover_token` con `--notify_pushover_user`, para el correo `--notify_email_host`, `--notify_email_port`, `--notify_email_security`, `--notify_email_user`, `--notify_email_pass`, `--notify_email_from`, `--notify_email_to`.

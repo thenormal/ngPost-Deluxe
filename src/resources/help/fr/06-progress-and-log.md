@@ -38,10 +38,15 @@ ngPost peut vous prévenir quand vos envois sont terminés, pour que vous n'ayez
 - **Notification système** : un message depuis l'icône de la zone de notification (version bureau uniquement ; activée par défaut, vous pouvez la désactiver). Sous Windows, elle apparaît comme n'importe quelle autre notification et reste dans le centre de notifications ; si vous ne la voyez pas, vérifiez que les notifications et l'assistant de concentration (« Ne pas déranger ») de Windows ne la masquent pas.
 - **Discord** : collez l'adresse d'un webhook Discord.
 - **Telegram** : le jeton de votre bot et l'identifiant de la discussion qui reçoit les messages.
-- **Autre webhook** : toute adresse qui accepte un POST JSON avec un `title` et un `text` (outils de type Slack, ntfy, Home Assistant).
+- **Slack** : collez l'adresse d'un webhook entrant de Slack.
+- **ntfy** : l'adresse de votre sujet (par exemple `https://ntfy.sh/monsujet`, ou votre propre serveur) et, seulement si nécessaire, le jeton d'accès.
+- **Gotify** : l'adresse de votre serveur et le jeton de l'application.
+- **Pushover** : le jeton de votre application et votre clé utilisateur.
+- **E-mail** : le serveur de messagerie (SMTP), le port, la sécurité (STARTTLS sur le port 587 ou SSL/TLS sur le port 465), l'utilisateur et le mot de passe, l'expéditeur et un ou plusieurs destinataires. Avec Gmail et les services similaires, utilisez un mot de passe d'application.
+- **Autre webhook** : toute adresse qui accepte un POST JSON avec un `title` et un `text` (Home Assistant).
 
 Choisissez ce qui est notifié (terminés, erreurs ou échecs) et comment : **un message quand tous les envois sont terminés** (par défaut, idéal pour Post Auto) ou **un message après chaque envoi**. Le bouton **Envoyer un message de test** montre tout de suite si cela fonctionne.
 
 Le message contient le nom de l'envoi, le résultat, la taille, la durée et la vitesse. Il ne contient jamais le mot de passe ni les noms des fichiers. Les adresses et le jeton sont enregistrés en clair dans le fichier de configuration, comme les autres mots de passe : gardez-le privé. Si un message ne peut pas être envoyé, une ligne du journal l'indique et l'envoi n'est pas affecté.
 
-En ligne de commande, ou dans Docker, utilisez les options `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` et `--notify_when each|all_done`, ou les clés `notify_*` du fichier de configuration.
+En ligne de commande, ou dans Docker, utilisez les options `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` et `--notify_when each|all_done`, ou les clés `notify_*` du fichier de configuration. Autres canaux: `--notify_slack`, `--notify_ntfy` (+ `--notify_ntfy_token`), `--notify_gotify_url` avec `--notify_gotify_token`, `--notify_pushover_token` avec `--notify_pushover_user`, pour l'e-mail `--notify_email_host`, `--notify_email_port`, `--notify_email_security`, `--notify_email_user`, `--notify_email_pass`, `--notify_email_from`, `--notify_email_to`.

@@ -26,6 +26,7 @@
 #include <QMap>
 #include "utils/PostChecker.h"
 #include "utils/PostRequest.h"
+class QSpinBox;
 class QTimer;
 class ServersWidget;
 class NgPost;
@@ -116,6 +117,13 @@ private:
     QLabel         *_notifyDiscordLbl = nullptr, *_notifyTgTokenLbl = nullptr, *_notifyTgChatLbl = nullptr, *_notifyWebhookLbl = nullptr;
     QLineEdit      *_notifyDiscordEdit = nullptr, *_notifyTgTokenEdit = nullptr, *_notifyTgChatEdit = nullptr, *_notifyWebhookEdit = nullptr;
     QPushButton    *_notifyTestButton = nullptr;
+    QLabel         *_notifyMoreLbls[7] = {};      //!< Slack, ntfy, ntfy token, Gotify server, Gotify token, Pushover token, Pushover user
+    QLineEdit      *_notifyMoreEdits[7] = {};
+    QLabel         *_emailLbls[7] = {};           //!< server, port, security, user, password, from, to
+    QLineEdit      *_emailHostEdit = nullptr, *_emailUserEdit = nullptr, *_emailPassEdit = nullptr, *_emailFromEdit = nullptr, *_emailToEdit = nullptr;
+    QSpinBox       *_emailPortSB = nullptr;
+    QComboBox      *_emailSecurityCB = nullptr;
+    QLabel         *_emailHint = nullptr;
     QLabel         *_notifyHint = nullptr;
     QSystemTrayIcon *_tray = nullptr;   //!< created when the first system notification is shown
     QLabel         *_queueHint;

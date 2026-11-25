@@ -38,10 +38,15 @@ ngPost kan u laten weten wanneer uw posts klaar zijn, zodat u het venster niet h
 - **Systeemmelding**: een bericht vanaf het pictogram in het systeemvak (alleen de desktopversie; standaard aan, u kunt het uitzetten). In Windows verschijnt het als elke andere melding en blijft het in het actiecentrum; als u het niet ziet, controleer dan of de meldingen en de focushulp ("Niet storen") van Windows het niet verbergen.
 - **Discord**: plak het adres van een Discord-webhook.
 - **Telegram**: het token van uw bot en de id van de chat die de berichten ontvangt.
-- **Andere webhook**: elk adres dat een JSON-POST met een `title` en een `text` accepteert (Slack-achtige hulpmiddelen, ntfy, Home Assistant).
+- **Slack**: plak het adres van een inkomende webhook van Slack.
+- **ntfy**: het adres van uw onderwerp (bijvoorbeeld `https://ntfy.sh/mijnonderwerp`, of uw eigen server) en, alleen indien nodig, het toegangstoken.
+- **Gotify**: het adres van uw server en het token van de applicatie.
+- **Pushover**: het token van uw applicatie en uw gebruikerssleutel.
+- **E-mail**: de mailserver (SMTP), de poort, de beveiliging (STARTTLS op poort 587 of SSL/TLS op poort 465), gebruiker en wachtwoord, de afzender en een of meer ontvangers. Gebruik bij Gmail en vergelijkbare diensten een app-wachtwoord.
+- **Andere webhook**: elk adres dat een JSON-POST met een `title` en een `text` accepteert (Home Assistant).
 
 Kies wat er wordt gemeld (klaar, fouten of mislukkingen) en hoe: **één bericht als alle posts klaar zijn** (standaard, het best voor Auto Posting) of **een bericht na elke post**. De knop **Testbericht verzenden** laat meteen zien of het werkt.
 
 Het bericht bevat de naam van de post, het resultaat, de grootte, de tijd en de snelheid. Het bevat nooit het wachtwoord of de namen van de bestanden. De adressen en het token worden net als de andere wachtwoorden in leesbare tekst in het configuratiebestand opgeslagen: houd het privé. Als een bericht niet kan worden verstuurd, meldt een regel in het logboek dat en heeft de post er geen last van.
 
-Gebruik op de opdrachtregel, of in Docker, de opties `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` en `--notify_when each|all_done`, of de sleutels `notify_*` van het configuratiebestand.
+Gebruik op de opdrachtregel, of in Docker, de opties `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` en `--notify_when each|all_done`, of de sleutels `notify_*` van het configuratiebestand. Andere kanalen: `--notify_slack`, `--notify_ntfy` (+ `--notify_ntfy_token`), `--notify_gotify_url` met `--notify_gotify_token`, `--notify_pushover_token` met `--notify_pushover_user`, voor e-mail `--notify_email_host`, `--notify_email_port`, `--notify_email_security`, `--notify_email_user`, `--notify_email_pass`, `--notify_email_from`, `--notify_email_to`.

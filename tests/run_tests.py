@@ -1250,11 +1250,13 @@ class HttpSink:
         import http.server
         import threading
         self.requests = []
+        self.headers = []   # the headers of each request, same order as requests
         sink = self
 
         class Handler(http.server.BaseHTTPRequestHandler):
             def do_POST(self):
                 n = int(self.headers.get("Content-Length", 0))
+                sink.headers.append(dict(self.headers.items()))
                 sink.requests.append((self.path, self.rfile.read(n).decode("utf-8")))
                 self.send_response(200)
                 self.send_header("Content-Length", "0")
@@ -1270,6 +1272,142 @@ class HttpSink:
     def stop(self):
         self.server.shutdown()
         self.server.server_close()
+
+
+class SmtpStub:
+    """small SMTP server (no encryption) that keeps the messages and the logins it receives (for the notifications by email)"""
+    def __init__(self, plain=True, password="mailpass"):
+        import socketserver
+        import threading
+        self.mails = []     # {"from", "to", "data"}
+        self.logins = []    # (method, user, password)
+        stub = self
+
+        class Handler(socketserver.StreamRequestHandler):
+            def handle(self):
+                import base64
+                def send(t):
+                    self.wfile.write((t + "\r\n").encode())
+                send("220 stub ESMTP")
+                mail = {"from": None, "to": [], "data": ""}
+                while True:
+                    line = self.rfile.readline().decode("utf-8", "replace").rstrip("\r\n")
+                    if not line:
+                        return
+                    cmd = line.upper()
+                    if cmd.startswith("EHLO"):
+                        send("250-stub")
+                        send("250 AUTH " + ("PLAIN LOGIN" if plain else "LOGIN"))
+                    elif cmd.startswith("AUTH PLAIN"):
+                        parts = base64.b64decode(line.split(" ", 2)[2]).split(b"\0")
+                        stub.logins.append(("PLAIN", parts[1].decode(), parts[2].decode()))
+                        send("235 ok" if parts[2].decode() == password else "535 no")
+                    elif cmd.startswith("AUTH LOGIN"):
+                        send("334 VXNlcm5hbWU6")
+                        user = base64.b64decode(self.rfile.readline().strip()).decode()
+                        send("334 UGFzc3dvcmQ6")
+                        pw = base64.b64decode(self.rfile.readline().strip()).decode()
+                        stub.logins.append(("LOGIN", user, pw))
+                        send("235 ok" if pw == password else "535 no")
+                    elif cmd.startswith("MAIL FROM:"):
+                        mail = {"from": line[10:].strip(" <>"), "to": [], "data": ""}
+                        send("250 ok")
+                    elif cmd.startswith("RCPT TO:"):
+                        mail["to"].append(line[8:].strip(" <>"))
+                        send("250 ok")
+                    elif cmd == "DATA":
+                        send("354 go")
+                        data = b""
+                        while not data.endswith(b"\r\n.\r\n"):
+                            data += self.rfile.readline()
+                        mail["data"] = data.decode("utf-8", "replace")
+                        stub.mails.append(mail)
+                        send("250 queued")
+                    elif cmd == "QUIT":
+                        send("221 bye")
+                        return
+                    else:
+                        send("250 ok")
+
+        class Server(socketserver.ThreadingTCPServer):
+            allow_reuse_address = True
+            daemon_threads = True
+
+        self.server = Server(("127.0.0.1", 0), Handler)
+        self.port = self.server.server_address[1]
+        threading.Thread(target=self.server.serve_forever, daemon=True).start()
+
+    def stop(self):
+        self.server.shutdown()
+        self.server.server_close()
+
+
+def test_more_notifications(work):
+    # Slack, ntfy, Gotify, Pushover and email: the right request for each, the title/text, no password in the messages
+    import json, base64, email
+    stub = NntpStub().start()
+    sink = HttpSink()
+    smtp = SmtpStub(plain=True)
+    smtp_login = SmtpStub(plain=False)
+    try:
+        src = os.path.join(work, "more.bin")
+        make_file(src, 90_000, 33)
+        base = "http://127.0.0.1:%d" % sink.port
+        conf = ("notify_slack = %(b)s/slack\n"
+                "notify_ntfy = %(b)s/mytopic\nnotify_ntfy_token = tk_ntfy\n"
+                "notify_gotify_url = %(b)s/gotify/\nnotify_gotify_token = gotok\n"
+                "notify_pushover_token = pushtok\nnotify_pushover_user = pushuser\n"
+                "notify_email_host = 127.0.0.1\nnotify_email_port = %(p)d\nnotify_email_security = none\n"
+                "notify_email_user = pino@example.com\nnotify_email_pass = mailpass\nnotify_email_to = a@example.com, b@example.com\n"
+                % {"b": base, "p": smtp.port})
+        r = run_ngpost_conf([stub], work, [src], os.path.join(work, "m1.nzb"), conns=1, threads=1, conf_extra=conf,
+                            env_extra={"NGPOST_PUSHOVER_API": base + "/pushover"})
+        check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
+        got = {path: (body, hdr) for (path, body), hdr in zip(sink.requests, sink.headers)}
+        check(sorted(got) == ["/gotify/message".replace("/gotify/message", "/gotify/message"), "/mytopic", "/pushover/1/messages.json", "/slack"],
+              "requests: %s" % sorted(got))
+        check("m1.nzb" in json.loads(got["/slack"][0])["text"], "Slack: %s" % got["/slack"][0])
+        body, hdr = got["/mytopic"]
+        check("m1.nzb" in body and "finished" in hdr.get("Title", "") and hdr.get("Authorization") == "Bearer tk_ntfy", "ntfy: %s %s" % (body, hdr))
+        body, hdr = got["/gotify/message"]
+        check(hdr.get("X-Gotify-Key") == "gotok" and "m1.nzb" in json.loads(body)["message"], "Gotify: %s %s" % (body, hdr))
+        po = json.loads(got["/pushover/1/messages.json"][0])
+        check(po["token"] == "pushtok" and po["user"] == "pushuser" and "m1.nzb" in po["message"], "Pushover: %s" % po)
+
+        check(len(smtp.mails) == 1, "email: %d messages" % len(smtp.mails))
+        mail = smtp.mails[0]
+        check(mail["from"] == "pino@example.com" and mail["to"] == ["a@example.com", "b@example.com"], "email envelope: %s" % mail)
+        check(smtp.logins == [("PLAIN", "pino@example.com", "mailpass")], "email login: %s" % smtp.logins)
+        msg = email.message_from_string(mail["data"][:-5])
+        text = msg.get_payload(decode=True).decode("utf-8")
+        check("finished" in msg["Subject"] and "m1.nzb" in text, "email content: %s / %s" % (msg["Subject"], text))
+        for secret in ("mailpass", "tk_ntfy", "gotok", "pushtok"):
+            check(secret not in mail["data"] and secret not in text, "'%s' is in the email" % secret)
+        for path, (body, hdr) in got.items():
+            for secret in ("mailpass",):
+                check(secret not in body, "the mail password is in a message")
+
+        # a server that only knows AUTH LOGIN, a wrong password, from set explicitly
+        r = run_ngpost_conf([stub], work, [src], os.path.join(work, "m2.nzb"), conns=1, threads=1,
+                            conf_extra=("notify_email_host = 127.0.0.1\nnotify_email_port = %d\nnotify_email_security = none\n"
+                                        "notify_email_user = u1\nnotify_email_pass = mailpass\nnotify_email_from = sender@example.com\n"
+                                        "notify_email_to = dest@example.com\n" % smtp_login.port))
+        check(r.returncode == 0, "exit code %d\n%s" % (r.returncode, LAST_OUTPUT))
+        check(smtp_login.logins == [("LOGIN", "u1", "mailpass")] and len(smtp_login.mails) == 1, "AUTH LOGIN: %s %d" % (smtp_login.logins, len(smtp_login.mails)))
+        check(smtp_login.mails[0]["from"] == "sender@example.com", "from: %s" % smtp_login.mails[0])
+
+        r = run_ngpost_conf([stub], work, [src], os.path.join(work, "m3.nzb"), conns=1, threads=1,
+                            conf_extra=("notify_email_host = 127.0.0.1\nnotify_email_port = %d\nnotify_email_security = none\n"
+                                        "notify_email_user = u1\nnotify_email_pass = WRONGPASS\nnotify_email_from = sender@example.com\n"
+                                        "notify_email_to = dest@example.com\n" % smtp_login.port))
+        check(r.returncode == 0 and os.path.exists(os.path.join(work, "m3.nzb")), "the post failed because of the email\n" + LAST_OUTPUT)
+        check("WRONGPASS" not in LAST_OUTPUT, "the password is in the log")
+        check(len(smtp_login.mails) == 1, "a message was accepted with a wrong password")
+    finally:
+        sink.stop()
+        smtp.stop()
+        smtp_login.stop()
+        stub.stop()
 
 
 def test_notifications(work):
@@ -1617,7 +1755,7 @@ def test_export_import_settings(work):
     src = os.path.join(work, "a.conf")
     with open(src, "w") as f:
         f.write("lang = EN\nnzbPath = %s\nRAR_PASS = topsecretrar\nnfo_style = retro\nnotify_ok = ON\n"
-                "notify_discord = https://discord.com/api/webhooks/1/SECRETTOKEN\nprofile = Film|1|1|1|1|10|0\n\n"
+                "notify_discord = https://discord.com/api/webhooks/1/SECRETTOKEN\nnotify_email_pass = MAILSECRET\nnotify_ntfy = https://ntfy.sh/privatetopic\nnotify_slack = https://hooks.slack.com/SLACKSECRET\nprofile = Film|1|1|1|1|10|0\n\n"
                 "[server]\nhost = news.example.com\nport = 563\nssl = true\nuser = pino\npass = serverpass\nconnection = 20\nenabled = true\nnzbCheck = false\n" % nzbdir)
     exported = os.path.join(work, "exported.txt")
     r = subprocess.run([NGPOST, "--conf", src, "--export_settings", exported], capture_output=True, text=True,
@@ -1626,7 +1764,7 @@ def test_export_import_settings(work):
     content = open(exported).read()
     for needle in ("nfo_style = retro", "notify_ok = ON", "profile = Film|1|1|1|1|10|0", "host = news.example.com", "user = pino"):
         check(needle in content, "export: '%s' is missing" % needle)
-    for secret in ("topsecretrar", "SECRETTOKEN", "serverpass", nzbdir, "pass ="):
+    for secret in ("topsecretrar", "SECRETTOKEN", "serverpass", nzbdir, "pass =", "MAILSECRET", "privatetopic", "SLACKSECRET"):
         check(secret not in content, "export: '%s' must not be in the file" % secret)
 
     dst = os.path.join(work, "b.conf")
@@ -1711,7 +1849,7 @@ TESTS = [test_single_file, test_several_files_and_folder, test_obfuscation,
          test_speed_limiter_unit, test_speed_limit, test_process_text_unit,
          test_7z_folder_without_recursion, test_post_list, test_post_list_unit,
          test_queue_order_unit, test_queue_keeps_order_priority_pause, test_post_profile_unit, test_nfo_writer_unit, test_nfo_styles,
-         test_queue_post_uses_its_servers, test_settings_transfer_unit, test_export_import_settings]
+         test_queue_post_uses_its_servers, test_settings_transfer_unit, test_export_import_settings, test_more_notifications]
 
 
 def main():

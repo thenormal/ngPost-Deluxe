@@ -38,10 +38,15 @@ ngPost kann Ihnen mitteilen, wenn Ihre Posts fertig sind, damit Sie das Fenster 
 - **Systembenachrichtigung**: eine Nachricht vom Symbol im Infobereich (nur Desktop-Version; standardmäßig aktiv, Sie können sie abschalten). Unter Windows erscheint sie wie jede andere Benachrichtigung und bleibt im Benachrichtigungscenter; wenn Sie sie nicht sehen, prüfen Sie, dass die Benachrichtigungen und der Fokusassistent („Nicht stören“) von Windows sie nicht verbergen.
 - **Discord**: Fügen Sie die Adresse eines Discord-Webhooks ein.
 - **Telegram**: das Token Ihres Bots und die ID des Chats, der die Nachrichten erhält.
-- **Anderer Webhook**: jede Adresse, die einen JSON-POST mit `title` und `text` akzeptiert (Slack-ähnliche Werkzeuge, ntfy, Home Assistant).
+- **Slack**: die Adresse eines eingehenden Slack-Webhooks einfügen.
+- **ntfy**: die Adresse Ihres Themas (zum Beispiel `https://ntfy.sh/meinthema` oder Ihr eigener Server) und, nur wenn nötig, das Zugriffstoken.
+- **Gotify**: die Adresse Ihres Servers und das Token der Anwendung.
+- **Pushover**: das Token Ihrer Anwendung und Ihr Benutzerschlüssel.
+- **E-Mail**: der Mailserver (SMTP), der Port, die Sicherheit (STARTTLS auf Port 587 oder SSL/TLS auf Port 465), Benutzer und Passwort, der Absender und ein oder mehrere Empfänger. Verwenden Sie bei Gmail und ähnlichen Diensten ein App-Passwort.
+- **Anderer Webhook**: jede Adresse, die einen JSON-POST mit `title` und `text` akzeptiert (Home Assistant).
 
 Wählen Sie, was gemeldet wird (fertig, Fehler oder Fehlschläge) und wie: **eine Nachricht, wenn alle Posts fertig sind** (Standard, am besten für Auto Posting) oder **eine Nachricht nach jedem Post**. Die Schaltfläche **Testnachricht senden** zeigt sofort, ob es funktioniert.
 
 Die Nachricht enthält den Namen des Posts, das Ergebnis, die Größe, die Zeit und die Geschwindigkeit. Sie enthält nie das Passwort oder die Dateinamen. Die Adressen und das Token werden wie die anderen Passwörter im Klartext in der Konfigurationsdatei gespeichert: Halten Sie sie privat. Kann eine Nachricht nicht gesendet werden, sagt das eine Zeile im Protokoll, und der Post ist nicht betroffen.
 
-In der Kommandozeile oder in Docker verwenden Sie die Optionen `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` und `--notify_when each|all_done` oder die Schlüssel `notify_*` der Konfigurationsdatei.
+In der Kommandozeile oder in Docker verwenden Sie die Optionen `--notify_discord`, `--notify_telegram_token`, `--notify_telegram_chat`, `--notify_webhook` und `--notify_when each|all_done` oder die Schlüssel `notify_*` der Konfigurationsdatei. Weitere Kanäle: `--notify_slack`, `--notify_ntfy` (+ `--notify_ntfy_token`), `--notify_gotify_url` mit `--notify_gotify_token`, `--notify_pushover_token` mit `--notify_pushover_user`, für die E-Mail `--notify_email_host`, `--notify_email_port`, `--notify_email_security`, `--notify_email_user`, `--notify_email_pass`, `--notify_email_from`, `--notify_email_to`.

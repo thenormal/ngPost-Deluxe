@@ -204,6 +204,20 @@ const QList<QCommandLineOption> NgPost::sCmdOptions = {
     { "notify_telegram_token",                tr("token of the Telegram bot that sends the notifications (with --notify_telegram_chat)"), "notify_telegram_token"},
     { "notify_telegram_chat",                 tr("Telegram chat id that receives the notifications"), "notify_telegram_chat"},
     { "notify_webhook",                       tr("send a JSON POST {\"title\", \"text\"} to this address when the posts are done"), "notify_webhook"},
+    { "notify_slack", tr("send a notification to this Slack incoming webhook address when the posts are done"), "notify_slack"},
+    { "notify_ntfy", tr("send a notification to this ntfy address (for example https://ntfy.sh/mytopic) when the posts are done"), "notify_ntfy"},
+    { "notify_ntfy_token", tr("access token of ntfy (only if the topic needs it)"), "notify_ntfy_token"},
+    { "notify_gotify_url", tr("address of the Gotify server that sends the notifications (with --notify_gotify_token)"), "notify_gotify_url"},
+    { "notify_gotify_token", tr("token of the Gotify application"), "notify_gotify_token"},
+    { "notify_pushover_token", tr("token of the Pushover application (with --notify_pushover_user)"), "notify_pushover_token"},
+    { "notify_pushover_user", tr("user or group key of Pushover"), "notify_pushover_user"},
+    { "notify_email_host", tr("SMTP server that sends the notifications by email (with --notify_email_from or user, and --notify_email_to)"), "notify_email_host"},
+    { "notify_email_port", tr("port of the SMTP server (587 by default; 465 for ssl)"), "notify_email_port"},
+    { "notify_email_security", tr("starttls (default), ssl or none"), "notify_email_security"},
+    { "notify_email_user", tr("user of the SMTP server (empty: no login)"), "notify_email_user"},
+    { "notify_email_pass", tr("password of the SMTP server"), "notify_email_pass"},
+    { "notify_email_from", tr("address of the sender (default: the user, if it is an address)"), "notify_email_from"},
+    { "notify_email_to", tr("address that receives the notifications (several: separated by a comma)"), "notify_email_to"},
     { "notify_when",                          tr("notify \"each\" (after each post) or \"all_done\" (once, when all the posts are done, default)"), "notify_when"},
     { "gen_nfo",                              tr("write an NFO file (name, date, files, archive, par2) next to the nzb")},
     { "nfo_in_post",                          tr("also post the NFO file with the files (implies --gen_nfo)")},
@@ -2238,6 +2252,34 @@ bool NgPost::parseCommandLine(int argc, char *argv[])
         _notifier.settings().telegramChat = parser.value("notify_telegram_chat");
     if (parser.isSet("notify_webhook"))
         _notifier.settings().webhook = parser.value("notify_webhook");
+    if (parser.isSet("notify_slack"))
+        _notifier.settings().slack = parser.value("notify_slack");
+    if (parser.isSet("notify_ntfy"))
+        _notifier.settings().ntfy = parser.value("notify_ntfy");
+    if (parser.isSet("notify_ntfy_token"))
+        _notifier.settings().ntfyToken = parser.value("notify_ntfy_token");
+    if (parser.isSet("notify_gotify_url"))
+        _notifier.settings().gotifyUrl = parser.value("notify_gotify_url");
+    if (parser.isSet("notify_gotify_token"))
+        _notifier.settings().gotifyToken = parser.value("notify_gotify_token");
+    if (parser.isSet("notify_pushover_token"))
+        _notifier.settings().pushoverToken = parser.value("notify_pushover_token");
+    if (parser.isSet("notify_pushover_user"))
+        _notifier.settings().pushoverUser = parser.value("notify_pushover_user");
+    if (parser.isSet("notify_email_host"))
+        _notifier.settings().emailHost = parser.value("notify_email_host");
+    if (parser.isSet("notify_email_port"))
+        _notifier.settings().emailPort = static_cast<quint16>(parser.value("notify_email_port").toUInt());
+    if (parser.isSet("notify_email_security"))
+        _notifier.settings().emailSecurity = parser.value("notify_email_security");
+    if (parser.isSet("notify_email_user"))
+        _notifier.settings().emailUser = parser.value("notify_email_user");
+    if (parser.isSet("notify_email_pass"))
+        _notifier.settings().emailPass = parser.value("notify_email_pass");
+    if (parser.isSet("notify_email_from"))
+        _notifier.settings().emailFrom = parser.value("notify_email_from");
+    if (parser.isSet("notify_email_to"))
+        _notifier.settings().emailTo = parser.value("notify_email_to");
     if (parser.isSet("notify_when"))
         _notifier.settings().allDone = (parser.value("notify_when").toLower() != "each");
     if (parser.isSet("gen_nfo") || parser.isSet("nfo_in_post"))
@@ -3103,6 +3145,34 @@ QString NgPost::_parseConfig(const QString &configPath)
                         _notifier.settings().telegramChat = val.trimmed();
                     else if (opt == "notify_webhook")
                         _notifier.settings().webhook = val.trimmed();
+                    else if (opt == "notify_slack")
+                        _notifier.settings().slack = val.trimmed();
+                    else if (opt == "notify_ntfy")
+                        _notifier.settings().ntfy = val.trimmed();
+                    else if (opt == "notify_ntfy_token")
+                        _notifier.settings().ntfyToken = val.trimmed();
+                    else if (opt == "notify_gotify_url")
+                        _notifier.settings().gotifyUrl = val.trimmed();
+                    else if (opt == "notify_gotify_token")
+                        _notifier.settings().gotifyToken = val.trimmed();
+                    else if (opt == "notify_pushover_token")
+                        _notifier.settings().pushoverToken = val.trimmed();
+                    else if (opt == "notify_pushover_user")
+                        _notifier.settings().pushoverUser = val.trimmed();
+                    else if (opt == "notify_email_host")
+                        _notifier.settings().emailHost = val.trimmed();
+                    else if (opt == "notify_email_port")
+                        _notifier.settings().emailPort = static_cast<quint16>(val.trimmed().toUInt());
+                    else if (opt == "notify_email_security")
+                        _notifier.settings().emailSecurity = val.trimmed();
+                    else if (opt == "notify_email_user")
+                        _notifier.settings().emailUser = val.trimmed();
+                    else if (opt == "notify_email_pass")
+                        _notifier.settings().emailPass = val.trimmed();
+                    else if (opt == "notify_email_from")
+                        _notifier.settings().emailFrom = val.trimmed();
+                    else if (opt == "notify_email_to")
+                        _notifier.settings().emailTo = val.trimmed();
                     else if (opt == "move_posted")
                         _movePosted = val.trimmed();
                     else if (opt == "quick_options")
@@ -3866,7 +3936,7 @@ void NgPost::saveConfig(bool quiet)
                << "\n"
                << tr("## Notifications when the posts end: events (notify_ok, notify_errors), system notification (notify_tray, GUI only),") << "\n"
                << tr("## notify_when = all_done (one message when all the posts are done) or each (after each post)") << "\n"
-               << tr("## Discord / Telegram / webhook addresses and tokens are secrets, like the passwords: keep this file private") << "\n"
+               << tr("## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private") << "\n"
                << "notify_ok = " << (_notifier.settings().onSuccess ? "ON" : "OFF") << "\n"
                << "notify_errors = " << (_notifier.settings().onErrors ? "ON" : "OFF") << "\n"
                << "notify_tray = " << (_notifier.settings().tray ? "ON" : "OFF") << "\n"
@@ -3875,6 +3945,20 @@ void NgPost::saveConfig(bool quiet)
                << (_notifier.settings().telegramToken.isEmpty() ? "#" : "") << "notify_telegram_token = " << _notifier.settings().telegramToken << "\n"
                << (_notifier.settings().telegramChat.isEmpty() ? "#" : "") << "notify_telegram_chat = " << _notifier.settings().telegramChat << "\n"
                << (_notifier.settings().webhook.isEmpty() ? "#" : "") << "notify_webhook = " << _notifier.settings().webhook << "\n"
+               << (_notifier.settings().slack.isEmpty() ? "#" : "") << "notify_slack = " << _notifier.settings().slack << "\n"
+               << (_notifier.settings().ntfy.isEmpty() ? "#" : "") << "notify_ntfy = " << _notifier.settings().ntfy << "\n"
+               << (_notifier.settings().ntfyToken.isEmpty() ? "#" : "") << "notify_ntfy_token = " << _notifier.settings().ntfyToken << "\n"
+               << (_notifier.settings().gotifyUrl.isEmpty() ? "#" : "") << "notify_gotify_url = " << _notifier.settings().gotifyUrl << "\n"
+               << (_notifier.settings().gotifyToken.isEmpty() ? "#" : "") << "notify_gotify_token = " << _notifier.settings().gotifyToken << "\n"
+               << (_notifier.settings().pushoverToken.isEmpty() ? "#" : "") << "notify_pushover_token = " << _notifier.settings().pushoverToken << "\n"
+               << (_notifier.settings().pushoverUser.isEmpty() ? "#" : "") << "notify_pushover_user = " << _notifier.settings().pushoverUser << "\n"
+               << (_notifier.settings().emailHost.isEmpty() ? "#" : "") << "notify_email_host = " << _notifier.settings().emailHost << "\n"
+               << (_notifier.settings().emailHost.isEmpty() ? "#" : "") << "notify_email_port = " << _notifier.settings().emailPort << "\n"
+               << (_notifier.settings().emailHost.isEmpty() ? "#" : "") << "notify_email_security = " << _notifier.settings().emailSecurity << "\n"
+               << (_notifier.settings().emailUser.isEmpty() ? "#" : "") << "notify_email_user = " << _notifier.settings().emailUser << "\n"
+               << (_notifier.settings().emailPass.isEmpty() ? "#" : "") << "notify_email_pass = " << _notifier.settings().emailPass << "\n"
+               << (_notifier.settings().emailFrom.isEmpty() ? "#" : "") << "notify_email_from = " << _notifier.settings().emailFrom << "\n"
+               << (_notifier.settings().emailTo.isEmpty() ? "#" : "") << "notify_email_to = " << _notifier.settings().emailTo << "\n"
                << "\n"
                << tr("## New versions: the GUI looks once a day for a newer release on GitHub and only tells you (nothing is downloaded)") << "\n"
                << "check_updates = " << (_checkUpdates ? "ON" : "OFF") << "\n"

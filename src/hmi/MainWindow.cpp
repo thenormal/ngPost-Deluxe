@@ -239,6 +239,34 @@ void MainWindow::init(NgPost *ngPost)
         _notifyTgTokenEdit->setText(ns.telegramToken);
         _notifyTgChatEdit->setText(ns.telegramChat);
         _notifyWebhookEdit->setText(ns.webhook);
+        QString *more[7] = {&ns.slack, &ns.ntfy, &ns.ntfyToken, &ns.gotifyUrl, &ns.gotifyToken, &ns.pushoverToken, &ns.pushoverUser};
+        for (int i = 0; i < 7; ++i)
+        {
+            _notifyMoreEdits[i]->setText(*more[i]);
+            connect(_notifyMoreEdits[i], &QLineEdit::textChanged, this, [this, i](const QString &t){
+                Notifier::Settings &s = _ngPost->_notifier.settings();
+                QString *f[7] = {&s.slack, &s.ntfy, &s.ntfyToken, &s.gotifyUrl, &s.gotifyToken, &s.pushoverToken, &s.pushoverUser};
+                *f[i] = t.trimmed();
+            });
+        }
+        _emailHostEdit->setText(ns.emailHost);
+        _emailPortSB->setValue(ns.emailPort);
+        _emailSecurityCB->setCurrentIndex(ns.emailSecurity == "ssl" ? 1 : (ns.emailSecurity == "none" ? 2 : 0));
+        _emailUserEdit->setText(ns.emailUser);
+        _emailPassEdit->setText(ns.emailPass);
+        _emailFromEdit->setText(ns.emailFrom);
+        _emailToEdit->setText(ns.emailTo);
+        connect(_emailHostEdit, &QLineEdit::textChanged, this, [this](const QString &t){ _ngPost->_notifier.settings().emailHost = t.trimmed(); });
+        connect(_emailPortSB, QOverload<int>::of(&QSpinBox::valueChanged), this, [this](int v){ _ngPost->_notifier.settings().emailPort = static_cast<quint16>(v); });
+        connect(_emailSecurityCB, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](int idx){
+            _ngPost->_notifier.settings().emailSecurity = idx == 1 ? "ssl" : (idx == 2 ? "none" : "starttls");
+            if (idx == 1 && _emailPortSB->value() == 587) _emailPortSB->setValue(465);
+            else if (idx == 0 && _emailPortSB->value() == 465) _emailPortSB->setValue(587);
+        });
+        connect(_emailUserEdit, &QLineEdit::textChanged, this, [this](const QString &t){ _ngPost->_notifier.settings().emailUser = t.trimmed(); });
+        connect(_emailPassEdit, &QLineEdit::textChanged, this, [this](const QString &t){ _ngPost->_notifier.settings().emailPass = t; });
+        connect(_emailFromEdit, &QLineEdit::textChanged, this, [this](const QString &t){ _ngPost->_notifier.settings().emailFrom = t.trimmed(); });
+        connect(_emailToEdit,   &QLineEdit::textChanged, this, [this](const QString &t){ _ngPost->_notifier.settings().emailTo = t.trimmed(); });
         connect(_notifyOkCB,   &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_notifier.settings().onSuccess = on; });
         connect(_notifyErrCB,  &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_notifier.settings().onErrors = on; });
         connect(_notifyTrayCB, &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_notifier.settings().tray = on; });
@@ -1142,7 +1170,10 @@ QString MainWindow::_diagnosticReport() const
             << ", shown this session: " << _trayShown << ")\n"
             << "Discord: " << setOrNot(!ns.discord.isEmpty())
             << ", Telegram: " << setOrNot(!ns.telegramToken.isEmpty() && !ns.telegramChat.isEmpty())
-            << ", webhook: " << setOrNot(!ns.webhook.isEmpty()) << " (the addresses and tokens are never written here)\n"
+            << ", webhook: " << setOrNot(!ns.webhook.isEmpty()) << "\n"
+            << "Slack: " << setOrNot(!ns.slack.isEmpty()) << ", ntfy: " << setOrNot(!ns.ntfy.isEmpty()) << ", Gotify: " << setOrNot(ns.hasGotify())
+            << ", Pushover: " << setOrNot(ns.hasPushover()) << ", email: " << setOrNot(ns.hasEmail())
+            << " (the addresses, tokens and passwords are never written here)\n"
             << "messages sent to the addresses this session: " << _ngPost->_notifier.nbSent() << ", failed: " << _ngPost->_notifier.nbFailed() << "\n"
             << "last failure: " << (_ngPost->_notifier.lastFailure().isEmpty() ? "none" : _ngPost->_notifier.lastFailure()) << "\n";
         if (!ns.isActive())
@@ -1793,6 +1824,46 @@ QWidget *MainWindow::_buildSettingsPage()
     g->setColumnStretch(1, 1);
     put(CAT_NOTIFY, notif);
 
+    // more channels
+    QFrame *more = _card("notify_more", g);
+    for (int i = 0; i < 7; ++i)
+    {
+        _notifyMoreLbls[i]  = new QLabel(more);
+        _notifyMoreEdits[i] = new QLineEdit(more);
+        _notifyMoreEdits[i]->setEchoMode(QLineEdit::Password);
+        g->addWidget(_notifyMoreLbls[i], i, 0);
+        g->addWidget(_notifyMoreEdits[i], i, 1);
+    }
+    g->setColumnStretch(1, 1);
+    put(CAT_NOTIFY, more);
+
+    // email
+    QFrame *email = _card("notify_email", g);
+    for (QLabel **l : {&_emailLbls[0], &_emailLbls[1], &_emailLbls[2], &_emailLbls[3], &_emailLbls[4], &_emailLbls[5], &_emailLbls[6]})
+        *l = new QLabel(email);
+    _emailHostEdit = new QLineEdit(email);
+    _emailPortSB   = new QSpinBox(email);
+    _emailPortSB->setRange(1, 65535);
+    _emailPortSB->setValue(587);
+    _emailSecurityCB = new QComboBox(email);
+    _emailSecurityCB->addItems({QString(), QString(), QString()}); // texts set in retranslate()
+    _emailUserEdit = new QLineEdit(email);
+    _emailPassEdit = new QLineEdit(email);
+    _emailPassEdit->setEchoMode(QLineEdit::Password);
+    _emailFromEdit = new QLineEdit(email);
+    _emailToEdit   = new QLineEdit(email);
+    _emailHint = newLabel("hint", email);
+    _emailHint->setWordWrap(true);
+    QWidget *emailFields[7] = {_emailHostEdit, _emailPortSB, _emailSecurityCB, _emailUserEdit, _emailPassEdit, _emailFromEdit, _emailToEdit};
+    for (int i = 0; i < 7; ++i)
+    {
+        g->addWidget(_emailLbls[i], i, 0);
+        g->addWidget(emailFields[i], i, 1);
+    }
+    g->addWidget(_emailHint, 7, 0, 1, 2);
+    g->setColumnStretch(1, 1);
+    put(CAT_NOTIFY, email);
+
     // queue of the posts
     QFrame *queue = _card("queue", g);
     _queueCB = new QCheckBox(queue);
@@ -1911,6 +1982,24 @@ void MainWindow::_retranslateShell()
     _notifyTgChatLbl->setText(tr("Telegram chat id:"));
     _notifyWebhookLbl->setText(tr("Other webhook:"));
     _notifyTestButton->setText(tr("Send a test message"));
+    _cardTitles["notify_more"]->setText(tr("More channels"));
+    const QString moreLbl[7] = {tr("Slack webhook:"), tr("ntfy address:"), tr("ntfy token (if needed):"), tr("Gotify server:"), tr("Gotify token:"),
+                                tr("Pushover app token:"), tr("Pushover user key:")};
+    for (int i = 0; i < 7; ++i)
+        _notifyMoreLbls[i]->setText(moreLbl[i]);
+    _notifyMoreEdits[1]->setPlaceholderText("https://ntfy.sh/mytopic");
+    _notifyMoreEdits[3]->setPlaceholderText("https://gotify.example.com");
+    _cardTitles["notify_email"]->setText(tr("Email"));
+    const QString emailLbl[7] = {tr("Mail server (SMTP):"), tr("Port:"), tr("Security:"), tr("User:"), tr("Password:"), tr("From (address):"), tr("To (address):")};
+    for (int i = 0; i < 7; ++i)
+        _emailLbls[i]->setText(emailLbl[i]);
+    _emailSecurityCB->setItemText(0, tr("STARTTLS (port 587)"));
+    _emailSecurityCB->setItemText(1, tr("SSL/TLS (port 465)"));
+    _emailSecurityCB->setItemText(2, tr("None (not safe)"));
+    _emailToEdit->setPlaceholderText(tr("one or more addresses, separated by a comma"));
+    _emailFromEdit->setPlaceholderText(tr("empty: the user, if it is an address"));
+    _emailHint->setText(tr("The message has the same text as the other channels (never the password or the names of the files). "
+                           "The password of the mail server is saved in clear text in the configuration file: with Gmail and similar use an application password."));
     _notifyHint->setText(tr("The messages never contain the password or the names of the files. The addresses and the token are saved "
                             "in clear text in the configuration file (like the other passwords): keep it private."));
     _cardTitles["queue"]->setText(tr("Queue of the posts"));
