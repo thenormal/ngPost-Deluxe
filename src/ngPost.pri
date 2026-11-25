@@ -80,6 +80,11 @@ SOURCES += \
         FileUploader.cpp \
         FoldersMonitorForNewFiles.cpp \
         NgPost.cpp \
+        NgPost_CommandLine.cpp \
+        NgPost_Config.cpp \
+        NgPost_Monitoring.cpp \
+        NgPost_PostList.cpp \
+        NgPost_QueueHistory.cpp \
         NntpCheckCon.cpp \
         NntpConnection.cpp \
         NzbCheck.cpp \
