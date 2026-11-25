@@ -248,6 +248,7 @@ private:
     PostProfile _autoOptions;          //!< Auto Posting: options of the last session (key auto_options)
     bool        _autoOptionsSet = false;
     PostTargets _watchTargets;         //!< Auto Posting: newsgroups, servers, NZB folder and name of the posts of the watched folders
+    QStringList _watchFolders;         //!< folders being watched by Auto Posting (keys watch_folder, one line each): offered again at the next start
     QStringList _favoriteGroups;       //!< newsgroups marked with a star (key favorite_groups): first in the suggestions
     uint        _nameCounter = 0;      //!< last number used by {n} in a name template (key name_counter)
     QString     _autoMode     = "choose"; //!< last mode of the Auto Posting page: choose, scan or watch (key "auto_mode")
@@ -508,6 +509,7 @@ public:
 
     void saveConfig(bool quiet = false);
 
+    QString watchFoldersText() const; //!< the lines watch_folder = ... of the config file
     QString configFilePath() const; //!< the config file in use (--conf or the default one)
     //! writes the settings and profiles that can move to another computer (never a password nor a path), from the config file on disk
     bool exportSettings(const QString &path, const SettingsTransfer::ExportOptions &options, QString &err) const;

@@ -94,6 +94,7 @@ private:
     void _computeNextSize();
     void _updateSummary();
     void _updateWatchBar();
+    void _rememberWatchedFolders(); //!< keeps the list in the config (the next start offers to watch them again)
     void _onWatchPause();
     QFileInfoList _checkedFiles(bool *hasFolder = nullptr) const;
     bool _checkBeforeStart(const QFileInfoList &files, bool hasFolder);
@@ -136,6 +137,8 @@ public:
     QString movePostedTo() const;     //!< folder "Posted" (empty: the files are not moved)
 
     void retranslate();
+
+    void offerResumeWatching(); //!< at the start: the folders that were watched when the program was closed (Watch again / Forget / Decide later)
 
     void setPackingAuto(bool enabled, const QStringList &keys);
 

@@ -16,6 +16,8 @@ Choisissez le dossier et cliquez sur **Commencer la surveillance** : chaque nouv
 
 Pendant la surveillance, une barre sous les trois choix affiche toujours le dossier surveillé, combien d'envois sont terminés aujourd'hui (et combien avec des erreurs) et combien sont en cours ou en attente. **Mettre en pause** fait attendre les nouveaux fichiers : ils sont postés quand vous cliquez sur **Reprendre la surveillance** ; les envois déjà commencés continuent. Arrêter la surveillance oublie les fichiers qui attendaient.
 
+Les dossiers surveillés sont mémorisés. Si le programme a été fermé pendant la surveillance, au démarrage suivant il demande s'il faut les **Surveiller à nouveau** (avec les options de la page), les **Oublier** ou **Décider plus tard** ; les dossiers qui n'existent plus sont ignorés. La liste n'est pas exportée avec les paramètres, car les dossiers appartiennent à l'ordinateur.
+
 ## La liste
 
 Chaque élément a une case et sa taille. Décochez un élément pour l'écarter ; seuls les éléments cochés sont postés. Pour retirer des éléments de la liste, sélectionnez-les et appuyez sur SUPPR. La ligne sous la liste indique combien d'éléments sont sélectionnés, leur taille, la taille à téléverser et, après un premier envoi, la durée du téléversement.

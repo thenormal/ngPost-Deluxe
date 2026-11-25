@@ -16,6 +16,8 @@ Kies de map en klik op **Bewaking starten**: elk nieuw bestand of elke nieuwe ma
 
 Tijdens het bewaken toont een balk onder de drie keuzes altijd de bewaakte map, hoeveel posts er vandaag klaar zijn (en hoeveel met fouten) en hoeveel er bezig zijn of wachten. **Bewaking pauzeren** laat nieuwe bestanden wachten: ze worden gepost als u op **Bewaking hervatten** klikt; posts die al zijn gestart gaan door. Als u de bewaking stopt, worden de bestanden die wachtten vergeten.
 
+De bewaakte mappen worden onthouden. Als het programma tijdens het bewaken is gesloten, vraagt het bij de volgende start of ze **Opnieuw bewaakt**, **Vergeten** of **Later beslist** moeten worden; mappen die niet meer bestaan, worden overgeslagen. De lijst wordt niet met de instellingen geëxporteerd, omdat de mappen bij de computer horen.
+
 ## De lijst
 
 Elk item heeft een vakje en zijn grootte. Schakel een item uit om het weg te laten; alleen aangevinkte items worden gepost. Om items uit de lijst te verwijderen, selecteert u ze en drukt u op DEL. De regel onder de lijst toont hoeveel items zijn geselecteerd, hun grootte, de te uploaden grootte en, na een eerste post, de uploadtijd.

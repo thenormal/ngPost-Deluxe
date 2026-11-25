@@ -887,6 +887,38 @@ Adicione arquivos ou pastas, ou verifique uma pasta, e deixe marcado o que quise
         <source>The folder %1 is empty.</source>
         <translation>A pasta %1 está vazia.</translation>
     </message>
+    <message>
+        <source>%1 folder(s) were being watched the last time ngPost was closed.
+
+Watch again: the watching starts again with the options of this page.
+Forget: the list is removed.
+Decide later: it will be offered again at the next start.</source>
+        <translation>%1 pasta(s) estavam a ser vigiadas da última vez que o ngPost foi fechado.
+
+Vigiar de novo: a vigilância recomeça com as opções desta página.
+Esquecer: a lista é removida.
+Decidir depois: será proposta de novo no próximo arranque.</translation>
+    </message>
+    <message>
+        <source>%1 folder(s) of the list do not exist any more and are left out.</source>
+        <translation>%1 pasta(s) da lista já não existem e são deixadas de fora.</translation>
+    </message>
+    <message>
+        <source>Folders that were watched</source>
+        <translation>Pastas que estavam a ser vigiadas</translation>
+    </message>
+    <message>
+        <source>Watch again</source>
+        <translation>Vigiar de novo</translation>
+    </message>
+    <message>
+        <source>Forget</source>
+        <translation>Esquecer</translation>
+    </message>
+    <message>
+        <source>Decide later</source>
+        <translation>Decidir depois</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3941,6 +3973,10 @@ OU use --par2_pct ou coloque PAR2_PCT ou PAR2_ARGS na configuração de arquivo.
     <message>
         <source>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private</source>
         <translation>## Os endereços, tokens e palavras-passe de Discord / Telegram / Slack / ntfy / Gotify / Pushover / e-mail / webhook são segredos, como as palavras-passe: mantenha este ficheiro privado</translation>
+    </message>
+    <message>
+        <source>Folders watched by Auto Posting when the program was closed (offered again at the next start), one line each</source>
+        <translation>Pastas vigiadas pela Publicação automática quando o programa foi fechado (propostas de novo no próximo arranque), uma linha cada</translation>
     </message>
 </context>
 <context>

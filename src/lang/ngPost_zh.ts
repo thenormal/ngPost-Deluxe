@@ -887,6 +887,38 @@ Add files or folders, or scan a folder, and keep checked what you want to post.<
         <source>The folder %1 is empty.</source>
         <translation>文件夹 %1 是空的。</translation>
     </message>
+    <message>
+        <source>%1 folder(s) were being watched the last time ngPost was closed.
+
+Watch again: the watching starts again with the options of this page.
+Forget: the list is removed.
+Decide later: it will be offered again at the next start.</source>
+        <translation>上次关闭 ngPost 时有 %1 个文件夹正在被监视。
+
+重新监视：使用此页面的选项重新开始监视。
+忘记：移除该列表。
+稍后决定：下次启动时会再次提示。</translation>
+    </message>
+    <message>
+        <source>%1 folder(s) of the list do not exist any more and are left out.</source>
+        <translation>列表中有 %1 个文件夹已不存在，将被忽略。</translation>
+    </message>
+    <message>
+        <source>Folders that were watched</source>
+        <translation>曾被监视的文件夹</translation>
+    </message>
+    <message>
+        <source>Watch again</source>
+        <translation>重新监视</translation>
+    </message>
+    <message>
+        <source>Forget</source>
+        <translation>忘记</translation>
+    </message>
+    <message>
+        <source>Decide later</source>
+        <translation>稍后决定</translation>
+    </message>
 </context>
 <context>
     <name>FileUploader</name>
@@ -3942,6 +3974,10 @@ Either use --par2_pct or set PAR2_PCT or PAR2_ARGS in the config file.</source>
     <message>
         <source>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / email / webhook addresses, tokens and passwords are secrets, like the passwords: keep this file private</source>
         <translation>## Discord / Telegram / Slack / ntfy / Gotify / Pushover / 电子邮件 / webhook 的地址、令牌和密码属于机密，与密码一样：请妥善保管此文件</translation>
+    </message>
+    <message>
+        <source>Folders watched by Auto Posting when the program was closed (offered again at the next start), one line each</source>
+        <translation>程序关闭时自动发布所监视的文件夹（下次启动时再次提示），每行一个</translation>
     </message>
 </context>
 <context>

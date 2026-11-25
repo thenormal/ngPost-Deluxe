@@ -399,6 +399,7 @@ void AutoPostWidget::onMonitoringClicked()
         _ngPost->_stopMonitoring();
         _ngPost->clearPausedMonitoring();
         _watchedFolders.clear();
+        _rememberWatchedFolders();
         _ui->monitorButton->setText(tr("Start watching"));
     }
     else
@@ -426,6 +427,7 @@ void AutoPostWidget::onMonitoringClicked()
         _ui->filesList->addItem(new QListWidgetItem(QIcon(":/icons/monitor.png"), tr("Watching %1").arg(folderPath)));
         _ngPost->_startMonitoring(folderPath);
         _watchedFolders = QStringList(folderPath);
+        _rememberWatchedFolders();
         _ui->monitorButton->setText(tr("Stop watching"));
     }
 
@@ -467,6 +469,66 @@ void AutoPostWidget::onMonitoringClicked()
         _watchTimer->start();
     else
         _watchTimer->stop();
+    _updateWatchBar();
+}
+
+void AutoPostWidget::_rememberWatchedFolders()
+{
+    _ngPost->_watchFolders = _watchedFolders;
+    _hmi->scheduleAutoSave();
+}
+
+void AutoPostWidget::offerResumeWatching()
+{
+    if (_isMonitoring || _ngPost->_watchFolders.isEmpty())
+        return;
+    QStringList usable, gone;
+    for (const QString &f : _ngPost->_watchFolders)
+    {
+        QFileInfo fi(f);
+        (fi.exists() && fi.isDir() && fi.isReadable() ? usable : gone) << QDir::toNativeSeparators(f);
+    }
+    if (usable.isEmpty())
+    {
+        _ngPost->_watchFolders.clear(); // nothing to offer any more
+        _hmi->scheduleAutoSave();
+        return;
+    }
+    QString text = tr("%1 folder(s) were being watched the last time ngPost was closed.\n\n"
+                      "Watch again: the watching starts again with the options of this page.\n"
+                      "Forget: the list is removed.\n"
+                      "Decide later: it will be offered again at the next start.").arg(usable.size());
+    if (!gone.isEmpty())
+        text += "\n\n" + tr("%1 folder(s) of the list do not exist any more and are left out.").arg(gone.size());
+    QMessageBox box(QMessageBox::Question, tr("Folders that were watched"), text, QMessageBox::NoButton, this);
+    box.setDetailedText(usable.join("\n"));
+    QPushButton *again  = box.addButton(tr("Watch again"), QMessageBox::AcceptRole);
+    QPushButton *forget = box.addButton(tr("Forget"), QMessageBox::DestructiveRole);
+    box.addButton(tr("Decide later"), QMessageBox::RejectRole);
+    box.setDefaultButton(again);
+    box.exec();
+
+    if (box.clickedButton() == forget)
+    {
+        _ngPost->_watchFolders.clear();
+        _hmi->scheduleAutoSave();
+        return;
+    }
+    if (box.clickedButton() != again)
+        return;
+
+    _setMode(Mode::Watch);
+    _ui->autoDirEdit->setText(usable.first());
+    onMonitoringClicked();
+    if (!_isMonitoring) // the checks before watching refused: the list stays for the next start
+        return;
+    for (int i = 1; i < usable.size(); ++i)
+    {
+        _ui->filesList->addItem(new QListWidgetItem(QIcon(":/icons/monitor.png"), tr("Monitoring %1").arg(usable.at(i))));
+        _ngPost->addMonitoringFolder(usable.at(i));
+        _watchedFolders << usable.at(i);
+    }
+    _rememberWatchedFolders();
     _updateWatchBar();
 }
 
@@ -565,6 +627,7 @@ void AutoPostWidget::onAddMonitoringFolder()
             _ui->filesList->addItem(new QListWidgetItem(QIcon(":/icons/monitor.png"), tr("Monitoring %1").arg(newDir.absoluteFilePath())));
             _ngPost->addMonitoringFolder(newDir.absoluteFilePath());
             _watchedFolders << QDir::toNativeSeparators(newDir.absoluteFilePath());
+            _rememberWatchedFolders();
             _updateWatchBar();
         }
     }
@@ -815,6 +878,7 @@ bool AutoPostWidget::postRequest(const PostRequest &request)
             _ui->filesList->addItem(new QListWidgetItem(QIcon(":/icons/monitor.png"), tr("Monitoring %1").arg(path)));
             _ngPost->addMonitoringFolder(path);
             _watchedFolders << QDir::toNativeSeparators(path);
+            _rememberWatchedFolders();
             _updateWatchBar();
             _ngPost->_log(tr("%1 is also watched, with the options of the folders already watched").arg(QDir::toNativeSeparators(path)));
             return true;

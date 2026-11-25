@@ -3187,6 +3187,11 @@ QString NgPost::_parseConfig(const QString &configPath)
                         _quickOptions.targets = PostTargets::fromLine(val.trimmed());
                     else if (opt == "auto_targets")
                         _autoOptions.targets = PostTargets::fromLine(val.trimmed());
+                    else if (opt == "watch_folder")
+                    {
+                        if (!val.trimmed().isEmpty() && !_watchFolders.contains(val.trimmed()))
+                            _watchFolders << val.trimmed();
+                    }
                     else if (opt == "favorite_groups")
                     {
                         _favoriteGroups.clear();
@@ -3829,6 +3834,16 @@ bool NgPost::importSettings(const QString &path, const SettingsTransfer::ImportO
     return true;
 }
 
+QString NgPost::watchFoldersText() const
+{
+    QString out;
+    for (const QString &f : _watchFolders)
+        out += "watch_folder = " + f + "\n";
+    if (out.isEmpty())
+        out = "#watch_folder = \n";
+    return out;
+}
+
 void NgPost::saveConfig(bool quiet)
 {
     if (_settingsImported)
@@ -3979,6 +3994,8 @@ void NgPost::saveConfig(bool quiet)
                << (_autoOptions.targets.isEmpty() ? "#" : "") << "auto_targets = " << _autoOptions.targets.toLine() << "\n"
                << "## " << tr("Newsgroups marked as favorites (shown first in the suggestions)") << "\n"
                << (_favoriteGroups.isEmpty() ? "#" : "") << "favorite_groups = " << _favoriteGroups.join(",") << "\n"
+               << "## " << tr("Folders watched by Auto Posting when the program was closed (offered again at the next start), one line each") << "\n"
+               << watchFoldersText()
                << "## " << tr("Last number used by {n} in a name template") << "\n"
                << "name_counter = " << _nameCounter << "\n"
                << "\n"
