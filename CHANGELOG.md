@@ -1,10 +1,10 @@
 # Changelog
 
-What changed in each released version of ngPost Deluxe, in more detail than the [release notes](https://github.com/thenormal/ngPost-Deluxe/releases). What is planned is in the [roadmap](ROADMAP.md).
+What changed in each version of ngPost Deluxe, in more detail than the [release notes](https://github.com/thenormal/ngPost-Deluxe/releases). What is planned is in the [roadmap](ROADMAP.md).
 
 Newest first.
 
-## Version 1.5 - One list and profiles
+## Version 1.5 - One list and profiles (not released yet)
 
 Goal: one place for all the posts, profiles that keep everything, and a program that is easy to move to another computer.
 

@@ -10,12 +10,22 @@ Legend: **Done**, **In progress**, **Not started**.
 
 | Version | Theme |
 |---|---|
-| 1.5 | One list and profiles: one list of the posts, complete profiles, NFO in six styles, more notifications, export and import of the settings |
 | 1.4 | Guided and informed: Guided Post, statistics, speed limit, more history data |
 | 1.3 | Easier to use: Auto Posting redesigned, profiles, checks before posting, notifications, Help in 8 languages |
 | 1.2 | Reliability: tests, retry of failed Articles, persistent queue, colored log, Help section |
 
 Details of each version: [CHANGELOG.md](CHANGELOG.md).
+
+## Version 1.5 - One list and profiles (ready, not released yet)
+
+All the points are done and tested; the version is waiting to be published. Details: [CHANGELOG.md](CHANGELOG.md).
+
+- One list of the posts (page Posts), with priority, reordering and pause for each post
+- Complete profiles (name template, newsgroups, servers, NZB folder) and favorite newsgroups
+- NFO file in six styles, with a preview to choose
+- More notifications: email, ntfy, Gotify, Pushover and Slack
+- Export and import of the settings and the profiles
+- Watched folders remembered between restarts
 
 ## Version 1.6 - Verification and resume (not started)
 
