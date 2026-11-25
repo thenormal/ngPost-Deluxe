@@ -1153,6 +1153,11 @@ void AutoPostWidget::_buildLayout()
     g->addWidget(_ui->passLengthSB, 1, 3);
     _ui->redundancyLbl->hide();
     _ui->redundancySB->setSuffix(" %");
+    // the numbers are short: they must not stretch the card (with 3 cards in Watch mode the page was wider than a 1280 px window)
+    for (QSpinBox *sb : {_ui->nameLengthSB, _ui->passLengthSB})
+        sb->setMaximumWidth(64);
+    _ui->redundancySB->setMaximumWidth(80); // "10 %" needs a little more
+    g->setHorizontalSpacing(6);
     g->setColumnStretch(4, 1);
     cards->addWidget(archive, 3);
     root->addLayout(cards);
