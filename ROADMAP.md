@@ -27,6 +27,10 @@ All the points are done and tested; the version is waiting to be published. Deta
 - Export and import of the settings and the profiles
 - Watched folders remembered between restarts
 
+## Before 1.6 - Split the biggest source file (not started)
+
+- **Split `NgPost.cpp`** (configuration, command line, notifications, export and import, watched folders are all in one file) into smaller files, **without changing what the program does**: easier and safer changes for the next versions. One change only, checked by the automated tests
+
 ## Version 1.6 - Verification and resume (not started)
 
 - **A post is finished when it is verified**: check that the Articles are on the server (button, optional automatic), also **on a different server** from the one used for the upload, show the result in the history, and post again by itself what is missing
@@ -42,6 +46,7 @@ All the points are done and tested; the version is waiting to be published. Deta
 - **VPN guard**: pause the posts when the VPN connection drops (the real kill-switch stays in the firewall or in the VPN application)
 - **Schedule**: post only at some hours or days, with a speed limit by **time slots** (for example full speed at night, limited during the day) and a limit for each server or each post
 - **Rules for each folder** in Auto Posting: another profile or newsgroups for each folder or extension, wait until the file is complete
+- **Search of newsgroups on the server**: type a part of a name and the program asks the server only for the groups that match (no download of the whole list; if the provider does not support it, the program says so)
 - **After the post**: send the NZB to a folder, to an address (URL) or to SABnzbd / NZBGet
 - **Temporary files in RAM**: easier on Windows, and chosen automatically when there is room
 
@@ -51,11 +56,13 @@ All the points are done and tested; the version is waiting to be published. Deta
 - **More checks before posting**: free disk space, test of the archive, and a "simulate" that shows archive, parts and time
 - **Traffic counter** with a warning near the quota of the provider
 - **More languages**, with a simple way for the community to translate
+- **Contextual help and search** in the Help section (it works in every language)
 - **Digitally signed Windows installer** (Windows would stop warning about an unknown program)
 
-## Later, no version
+## Version 1.9 - Update from inside the program (not started)
 
-- Move to Qt 6 and split the biggest source file: a version of its own, because it changes the base of the program (it would also allow a newer OpenSSL on Windows)
-- Update from inside the program (the check for a new version exists since 1.3; this would download it, with a checksum, and ask before anything is installed): after the signed installer
-- Contextual help and search in the Help section
-- The list of the newsgroups of a server (download it and choose in it): slow and different from one provider to another
+- **Update from inside the program**: the check for a new version exists since 1.3; this would download the new version, check its checksum and ask before anything is installed. After the signed installer of 1.8
+
+## Version 2.0 - Qt 6 (not started)
+
+- **Move to Qt 6**, a version of its own because it changes the base of the program (it would also allow a newer OpenSSL on Windows). To decide when the time comes: Qt 6 may not support Windows 32 bit and older Windows versions, and for now the 32 bit version stays
