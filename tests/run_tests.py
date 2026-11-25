@@ -1251,13 +1251,16 @@ class HttpSink:
         import threading
         self.requests = []
         self.headers = []   # the headers of each request, same order as requests
+        self._lock = threading.Lock()   # the requests arrive together: both lists must be filled as one step
         sink = self
 
         class Handler(http.server.BaseHTTPRequestHandler):
             def do_POST(self):
                 n = int(self.headers.get("Content-Length", 0))
-                sink.headers.append(dict(self.headers.items()))
-                sink.requests.append((self.path, self.rfile.read(n).decode("utf-8")))
+                body = self.rfile.read(n).decode("utf-8")
+                with sink._lock:
+                    sink.headers.append(dict(self.headers.items()))
+                    sink.requests.append((self.path, body))
                 self.send_response(200)
                 self.send_header("Content-Length", "0")
                 self.end_headers()
