@@ -334,7 +334,8 @@ PostsWidget::PostsWidget(NgPost *ngPost, MainWindow *hmi, QWidget *parent) :
     _emptyLbl = new QLabel(_table->viewport());
     _emptyLbl->setObjectName("hint");
     _emptyLbl->setAlignment(Qt::AlignCenter);
-    _emptyLbl->setWordWrap(true);
+    _emptyLbl->setWordWrap(false);
+    _table->viewport()->installEventFilter(this); // the text stays centered when the table is resized
 
     // details and log of the selected post
     QWidget *bottom = new QWidget(_splitter);
@@ -513,7 +514,7 @@ void PostsWidget::retranslate()
     _removeButton->setToolTip(tr("Remove the selected post from the list (only a finished post)"));
     _clearButton->setText(tr("Remove finished"));
     _clearButton->setToolTip(tr("Remove all the finished posts from the list"));
-    _emptyLbl->setText(tr("No post yet.\nPrepare one in Guided Post, Quick Post or Auto Posting: it will appear here."));
+    _emptyLbl->setText(tr("No post yet. Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here."));
     _detailsTitle->setText(tr("Details"));
     _logTitle->setText(tr("Log of the post"));
     _speedTitle->setText(tr("Upload speed"));
@@ -664,6 +665,13 @@ void PostsWidget::_fillRow(int row, const PostEntry &e)
         eta = tr("took %1").arg(PostingJob::humanDuration(e.durationMs));
     _table->item(row, COL_ETA)->setText(eta);
     _table->item(row, COL_ORIGIN)->setText(originText(e.origin));
+}
+
+bool PostsWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (obj == _table->viewport() && event->type() == QEvent::Resize && _emptyLbl->isVisible())
+        _emptyLbl->setGeometry(_table->viewport()->rect().adjusted(20, 20, -20, -20));
+    return QWidget::eventFilter(obj, event);
 }
 
 void PostsWidget::_updateEmpty()

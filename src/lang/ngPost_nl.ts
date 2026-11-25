@@ -6512,10 +6512,8 @@ Bestanden worden definitief verwijderd...</translation>
         <translation>Alle voltooide posts uit de lijst verwijderen</translation>
     </message>
     <message>
-        <source>No post yet.
-Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
-        <translation>Nog geen post.
-Bereid er een voor in Begeleide post, Quick Post of Auto Posting: hij verschijnt hier.</translation>
+        <source>No post yet. Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <translation>Nog geen post. Bereid er een voor in Begeleide post, Quick Post of Auto Posting: hij verschijnt hier.</translation>
     </message>
     <message>
         <source>Details</source>

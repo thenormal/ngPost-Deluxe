@@ -6506,10 +6506,8 @@ Es wird nicht mehr rückgängig zu machen sein...</translation>
         <translation>Alle fertigen Posts aus der Liste entfernen</translation>
     </message>
     <message>
-        <source>No post yet.
-Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
-        <translation>Noch kein Post.
-Bereiten Sie einen in Geführter Post, Quick Post oder Auto Posting vor: er erscheint hier.</translation>
+        <source>No post yet. Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <translation>Noch kein Post. Bereiten Sie einen in Geführter Post, Quick Post oder Auto Posting vor: er erscheint hier.</translation>
     </message>
     <message>
         <source>Details</source>

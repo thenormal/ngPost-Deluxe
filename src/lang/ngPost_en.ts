@@ -6467,8 +6467,7 @@ It will be irreversible...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No post yet.
-Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <source>No post yet. Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

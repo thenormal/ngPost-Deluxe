@@ -6507,10 +6507,8 @@ It will be irreversible...</source>
         <translation>从列表中移除所有已结束的发布</translation>
     </message>
     <message>
-        <source>No post yet.
-Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
-        <translation>还没有发布。
-请在引导发布、Quick Post 或自动发布中准备一个：它会显示在这里。</translation>
+        <source>No post yet. Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <translation>还没有发布。 请在引导发布、Quick Post 或自动发布中准备一个：它会显示在这里。</translation>
     </message>
     <message>
         <source>Details</source>

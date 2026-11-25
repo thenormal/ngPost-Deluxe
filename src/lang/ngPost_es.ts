@@ -6507,10 +6507,8 @@ Será irreversible...</translation>
         <translation>Quitar de la lista todas las publicaciones terminadas</translation>
     </message>
     <message>
-        <source>No post yet.
-Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
-        <translation>Todavía no hay publicaciones.
-Prepara una en Publicación guiada, Quick Post o Auto Posting: aparecerá aquí.</translation>
+        <source>No post yet. Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <translation>Todavía no hay publicaciones. Prepara una en Publicación guiada, Quick Post o Auto Posting: aparecerá aquí.</translation>
     </message>
     <message>
         <source>Details</source>
