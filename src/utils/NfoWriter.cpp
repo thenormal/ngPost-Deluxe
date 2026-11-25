@@ -379,6 +379,7 @@ QStringList scene(const NfoWriter::NfoInfo &info)
     else
     {
         o += centerBlock(NfoBanners::kSceneNg());
+        o << "";
         o += centerBlock(NfoBanners::kSceneDl());
     }
     o << "" << center(QString::fromUtf16(u"░▒▓█  U S E N E T   P O S T E R  █▓▒░")) << ""

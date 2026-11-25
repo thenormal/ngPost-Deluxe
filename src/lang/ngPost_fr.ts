@@ -6494,10 +6494,8 @@ It will be irreversible...</source>
         <translation>Retirer de la liste tous les posts terminés</translation>
     </message>
     <message>
-        <source>No post yet.
-Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
-        <translation>Aucun post pour l'instant.
-Préparez-en un dans Post guidé, Quick Post ou Auto Posting : il apparaîtra ici.</translation>
+        <source>No post yet. Prepare one in Guided Post, Quick Post or Auto Posting: it will appear here.</source>
+        <translation>Aucun post pour l'instant. Préparez-en un dans Post guidé, Quick Post ou Auto Posting : il apparaîtra ici.</translation>
     </message>
     <message>
         <source>Details</source>
