@@ -53,8 +53,10 @@ Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and
 
 **Easy to use**
 -   **Guided Post**: a wizard in the side bar that asks what you want to do (one release, each item, scan a folder, watch a folder), what to post, the options and where, then prepares the post with the same checks as Quick Post and Auto Posting. It remembers your last choices and can start several posts together
+-   **One list of the posts**: the page Posts shows all the posts together (state, progress bar, speed graph, size, remaining time, NZB, password, and a log of each post with filters and search). Each post has a priority, can be paused and reordered (buttons, right click, drag and drop), and the queue is kept after a restart. Quick Post is now a form that is empty again after each post
 -   **Auto Posting, redesigned**: three clear choices (post what I choose, scan a folder once, watch a folder and post what arrives), a preview of what will be posted with the sizes, the state of the folder watching always visible (folder, posts of the day, pause button), and the choice of what happens to the files afterwards: nothing (default), move them to a "Posted" folder or delete them
 -   **Profiles**: a ready "Recommended" profile (compression, random name and password, par2 10 %) and your own profiles, saved from the menu of Quick Post and Auto Posting
+-   **Complete profiles**: a profile also keeps the name template (`{name}`, `{date}`, `{time}`, `{n}`), the newsgroups, the servers and the NZB folder. Newsgroups and servers can be chosen for each post, also for the watched folders, and the newsgroups you use most can be marked as favorites
 -   **Checks before posting**: a window in plain words with a one-click fix (no server or group, folders without compression, rar / 7z or par2 not found, empty password, NZB folder not writable...)
 -   **Remembers your choices**: Quick Post and Auto Posting keep the last options and the selected profile for the next start, and the Post button always stays visible under the scrolling page
 -   **First start help**: a bar tells what is missing (server, newsgroup) with a button to the right page; the **Settings** are now in five categories
@@ -66,13 +68,16 @@ Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and
 -   **Statistics** (History page, switch List / Statistics): totals and charts for the period you choose (today, 7 days, 30 days, 12 months, all): data posted, speed, results, busiest days and hours, newsgroups, servers, how the posts were started and options used, plus rankings. Export as a PDF document, a web page, a CSV file or PNG images of the charts
 -   **History page**: every upload is recorded (`ngPost_history.csv` next to the configuration, or `POST_HISTORY`) with its status, number of files and duration. The page lists them with search, period filter, totals, passwords hidden until asked, copy buttons, export and the folder of the NZB. Be careful: the file contains the archive passwords in clear text
 -   **Notifications** when the posts are done or fail: system notification, Discord, Telegram or a webhook, one message at the end or one for each post
+-   **More notifications**: email, ntfy, Gotify, Pushover and Slack, next to the system notification, Discord, Telegram and webhook (one message at the end or one for each post, never the passwords)
 -   **NFO file** written next to the NZB (optionally posted with the files, with the password if you want) and the media information from MediaInfo: duration, video, audio and subtitles
+-   **NFO file in six styles** (Scene, Clean, Box, Elegant, Retro and the old Classic) with a preview in the program, a banner of the program and an option for only ASCII characters
 -   **Already posted?** A warning lists the items that are already in the history, with a "Post again" box, instead of one question for each post
 -   **Diagnostics**: ngPost records the duration and speed of each phase (compression, par2, upload), the errors and the freezes, and the **Diagnostic report** button saves a report to analyse a problem. Passwords, usernames and file names are masked, nothing is sent anywhere
 
 **Reliable**
 -   **Failed Articles**: an Article that fails is tried again on another server and in a second round; the button **Repost missing Articles** posts only the missing ones and fixes the NZB; the original files are kept when Articles failed
 -   **Queue**: the posts that are not finished are saved and offered again at the next start (`--resume_queue` on the command line)
+-   **Watched folders are remembered**: if the program is closed while Auto Posting watches folders, the next start offers to watch them again
 -   **Wrong password**: the post stops, with a clear message, when the server refuses the login on every connection
 -   **Clearer problems**: a warning when the temporary folder is synchronized (OneDrive and similar), a message when the source files are slow to read, and a clear error naming a file or folder that was moved before the compression started (7-Zip no longer searches for it on all the drives)
 
@@ -92,6 +97,7 @@ Already using ngPost? Copy your `ngPost.conf` into `%APPDATA%\ngPost Deluxe` and
 -   **Help in 8 languages**, a **Feedback** button in the About window (opens a new GitHub issue already filled in) and the notifications in the diagnostic report
 
 **Settings and tools**
+-   **Export and import of the settings**: move your settings, profiles, notifications and servers to another computer (Settings, History and queue; `--export_settings` and `--import_settings`). Passwords, tokens and folders of the computer are never in the file
 -   **NZB_POST_CMD**: the placeholders can contain spaces (a path like `C:\My folder\file.nzb` stays ONE argument) and the command is started in background (ngPost doesn't wait for it anymore, so its exit code is no longer logged)
 -   **RAR_EXTRA and PAR2_ARGS**: parsed respecting the double quotes. 7-Zip is detected from the program name and not from the whole path
 -   **Autosave**: every change of the settings is saved automatically (the previous file is kept as `ngPost.conf.bak`)

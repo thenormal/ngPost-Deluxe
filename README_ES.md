@@ -53,8 +53,10 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 
 **Fácil de usar**
 -   **Publicación guiada**: un asistente en la barra lateral que pregunta qué quieres hacer (una release, cada elemento, analizar una carpeta, vigilar una carpeta), qué publicar, las opciones y dónde, y luego prepara la publicación con las mismas comprobaciones que Quick Post y la Publicación Automática. Recuerda tus últimas opciones y puede iniciar varias publicaciones a la vez
+-   **Una lista única de los posts**: la página Posts muestra todos los posts juntos (estado, barra de progreso, gráfico de velocidad, tamaño, tiempo restante, NZB, contraseña y un registro de cada post con filtros y búsqueda). Cada post tiene una prioridad, se puede pausar y reordenar (botones, clic derecho, arrastrar y soltar) y la cola se conserva tras un reinicio. Quick Post es ahora un formulario que vuelve a quedar vacío tras cada post
 -   **Publicación Automática, rediseñada**: tres opciones claras (publicar lo que elijo, escanear una carpeta una vez, vigilar una carpeta y publicar lo que llega), vista previa de lo que se publicará con los tamaños, estado de la vigilancia de la carpeta siempre visible (carpeta, publicaciones de hoy, botón de pausa) y elección de qué pasa con los archivos después: nada (por defecto), moverlos a una carpeta «Posted» o borrarlos
 -   **Perfiles**: un perfil «Recomendado» ya listo (compresión, nombre y contraseña aleatorios, par2 10 %) y tus propios perfiles, guardados desde el menú de Quick Post y Publicación Automática
+-   **Perfiles completos**: un perfil también guarda la plantilla del nombre (`{name}`, `{date}`, `{time}`, `{n}`), los grupos de noticias, los servidores y la carpeta de los NZB. Los grupos y servidores se pueden elegir para cada post, también para las carpetas vigiladas, y los grupos más usados se pueden marcar como favoritos
 -   **Comprobaciones antes de publicar**: una ventana en palabras sencillas con la corrección en un clic (sin servidor o grupo, carpetas sin compresión, rar / 7z o par2 no encontrados, contraseña vacía, carpeta NZB no escribible...)
 -   **Recuerda tus elecciones**: Quick Post y Auto Posting conservan las últimas opciones y el perfil seleccionado para el próximo inicio, y el botón Publicar queda siempre visible bajo la página con desplazamiento
 -   **Ayuda en el primer inicio**: una barra dice qué falta (servidor, newsgroup) con un botón a la página correcta; los **Ajustes** ahora están en cinco categorías
@@ -66,13 +68,16 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 -   **Estadísticas** (página Historial, selector Lista / Estadísticas): totales y gráficos del periodo elegido (hoy, 7 días, 30 días, 12 meses, todo): datos publicados, velocidad, resultados, días y horas más activos, grupos de noticias, servidores, cómo se iniciaron las publicaciones y opciones usadas, además de clasificaciones. Exportación a documento PDF, página web, archivo CSV o imágenes PNG de los gráficos
 -   **Página Historial**: cada subida se registra (`ngPost_history.csv` junto a la configuración, o `POST_HISTORY`) con su estado, número de archivos y duración. La página las muestra con búsqueda, filtro por periodo, totales, contraseñas ocultas hasta que se piden, copia, exportación y carpeta del NZB. Cuidado: el archivo contiene las contraseñas de los archivos comprimidos en texto claro
 -   **Notificaciones** cuando las publicaciones terminan o fallan: notificación del sistema, Discord, Telegram o un webhook, un mensaje al final o uno por cada publicación
+-   **Más notificaciones**: correo electrónico, ntfy, Gotify, Pushover y Slack, junto a la notificación del sistema, Discord, Telegram y webhook (un mensaje al final o uno por post, nunca las contraseñas)
 -   **Archivo NFO** escrito junto al NZB (se puede publicar con los archivos, con la contraseña si quieres) e información del vídeo con MediaInfo: duración, vídeo, audio y subtítulos
+-   **Archivo NFO en seis estilos** (Scene, Clean, Box, Elegant, Retro y el antiguo Classic) con una vista previa en el programa, un banner del programa y una opción de solo caracteres ASCII
 -   **¿Ya publicado?** Un aviso lista los elementos que ya están en el historial, con una casilla «Publicar de nuevo», en lugar de una pregunta por cada publicación
 -   **Diagnóstico**: ngPost registra la duración y la velocidad de cada fase (compresión, par2, subida), los errores y los bloqueos, y el botón **Informe de diagnóstico** guarda un informe para analizar un problema. Contraseñas, usuarios y nombres de archivo se ocultan, no se envía nada
 
 **Fiable**
 -   **Artículos fallidos**: un artículo que falla se vuelve a intentar en otro servidor y en una segunda ronda; el botón **Repost missing Articles** publica solo los que faltan y corrige el NZB; los archivos originales se conservan cuando hay artículos fallidos
 -   **Cola**: las publicaciones sin terminar se guardan y se ofrecen de nuevo en el siguiente inicio (`--resume_queue` en línea de comandos)
+-   **Carpetas vigiladas recordadas**: si el programa se cierra mientras la Publicación automática vigila carpetas, el siguiente inicio propone vigilarlas de nuevo
 -   **Contraseña incorrecta**: la publicación se detiene, con un mensaje claro, cuando el servidor rechaza el inicio de sesión en todas las conexiones
 -   **Problemas más claros**: un aviso cuando la carpeta temporal está sincronizada (OneDrive y similares), un mensaje cuando los archivos de origen se leen despacio y un error claro con el nombre del archivo o carpeta movidos antes de la compresión (7-Zip ya no los busca en todos los discos)
 
@@ -92,6 +97,7 @@ Es un fork de [mbruel/ngPost](https://github.com/mbruel/ngPost) (v4.16, licencia
 -   **Ayuda en 8 idiomas**, un botón **Feedback** en la ventana Acerca de (abre una nueva incidencia de GitHub ya rellenada) y las notificaciones en el informe de diagnóstico
 
 **Ajustes y herramientas**
+-   **Exportar e importar los ajustes**: lleva ajustes, perfiles, notificaciones y servidores a otro ordenador (Ajustes, Historial y cola; `--export_settings` y `--import_settings`). Las contraseñas, los tokens y las carpetas del ordenador nunca van en el archivo
 -   **NZB_POST_CMD**: los marcadores pueden contener espacios (una ruta como `C:\Mis carpetas\archivo.nzb` sigue siendo UN SOLO argumento) y el comando se lanza en segundo plano (ngPost ya no lo espera, así que su código de salida ya no se registra)
 -   **RAR_EXTRA y PAR2_ARGS**: se analizan respetando las comillas. 7-Zip se detecta por el nombre del programa y no por toda la ruta
 -   **Guardado automático**: cada cambio de los ajustes se guarda automáticamente (el archivo anterior se conserva como `ngPost.conf.bak`)

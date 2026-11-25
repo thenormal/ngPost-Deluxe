@@ -12,7 +12,7 @@ body:
     id: version
     attributes:
       label: Version of ngPost Deluxe
-      placeholder: "1.4"
+      placeholder: "1.5"
     validations:
       required: true
   - type: input

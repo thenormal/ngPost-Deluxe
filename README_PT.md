@@ -53,8 +53,10 @@ Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os 
 
 **Fácil de usar**
 -   **Postagem guiada**: um assistente na barra lateral que pergunta o que quer fazer (uma release, cada item, examinar uma pasta, vigiar uma pasta), o que postar, as opções e onde, e depois prepara a postagem com as mesmas verificações do Quick Post e da Postagem Automática. Lembra-se das últimas escolhas e pode iniciar várias postagens em conjunto
+-   **Uma lista única dos posts**: a página Posts mostra todos os posts juntos (estado, barra de progresso, gráfico da velocidade, tamanho, tempo restante, NZB, palavra-passe e um registo de cada post com filtros e pesquisa). Cada post tem uma prioridade, pode ser pausado e reordenado (botões, clique direito, arrastar e largar) e a fila é mantida após um reinício. O Quick Post é agora um formulário que volta a ficar vazio depois de cada post
 -   **Postagem Automática, redesenhada**: três escolhas claras (postar o que escolho, analisar uma pasta uma vez, vigiar uma pasta e postar o que chega), pré-visualização do que será postado com os tamanhos, estado da vigilância da pasta sempre visível (pasta, posts do dia, botão de pausa) e escolha do que acontece aos ficheiros depois: nada (por defeito), movê-los para uma pasta "Posted" ou apagá-los
 -   **Perfis**: um perfil "Recomendado" já pronto (compressão, nome e palavra-passe aleatórios, par2 10 %) e os seus próprios perfis, guardados a partir do menu de Quick Post e Postagem Automática
+-   **Perfis completos**: um perfil guarda também o modelo do nome (`{name}`, `{date}`, `{time}`, `{n}`), os newsgroups, os servidores e a pasta dos NZB. Os newsgroups e servidores podem ser escolhidos para cada post, também para as pastas vigiadas, e os newsgroups mais usados podem ser marcados como favoritos
 -   **Verificações antes de postar**: uma janela em palavras simples com a correção num clique (nenhum servidor ou grupo, pastas sem compressão, rar / 7z ou par2 não encontrados, palavra-passe vazia, pasta NZB sem permissão de escrita...)
 -   **Lembra as suas escolhas**: o Quick Post e o Auto Posting guardam as últimas opções e o perfil selecionado para o próximo arranque, e o botão Publicar fica sempre visível sob a página com deslocamento
 -   **Ajuda no primeiro arranque**: uma barra diz o que falta (servidor, newsgroup) com um botão para a página certa; as **Definições** estão agora em cinco categorias
@@ -66,13 +68,16 @@ Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os 
 -   **Estatísticas** (página Histórico, alternador Lista / Estatísticas): totais e gráficos do período escolhido (hoje, 7 dias, 30 dias, 12 meses, tudo): dados postados, velocidade, resultados, dias e horas mais ativos, grupos de notícias, servidores, como as postagens foram iniciadas e opções usadas, além de classificações. Exportação em documento PDF, página web, ficheiro CSV ou imagens PNG dos gráficos
 -   **Página Histórico**: cada upload é registado (`ngPost_history.csv` ao lado da configuração, ou `POST_HISTORY`) com o estado, o número de ficheiros e a duração. A página lista-os com pesquisa, filtro por período, totais, palavras-passe ocultas até serem pedidas, cópia, exportação e pasta do NZB. Atenção: o ficheiro contém as palavras-passe dos arquivos em texto simples
 -   **Notificações** quando os posts terminam ou falham: notificação do sistema, Discord, Telegram ou um webhook, uma mensagem no fim ou uma por cada post
+-   **Mais notificações**: e-mail, ntfy, Gotify, Pushover e Slack, ao lado da notificação do sistema, Discord, Telegram e webhook (uma mensagem no fim ou uma por post, nunca as palavras-passe)
 -   **Ficheiro NFO** escrito junto ao NZB (pode ser postado com os ficheiros, com a palavra-passe se quiser) e informações do vídeo com MediaInfo: duração, vídeo, áudio e legendas
+-   **Ficheiro NFO em seis estilos** (Scene, Clean, Box, Elegant, Retro e o antigo Classic) com uma pré-visualização no programa, um banner do programa e uma opção só com caracteres ASCII
 -   **Já postado?** Um aviso lista os itens que já estão no histórico, com uma caixa "Postar de novo", em vez de uma pergunta por cada post
 -   **Diagnóstico**: o ngPost regista a duração e a velocidade de cada fase (compressão, par2, envio), os erros e os bloqueios, e o botão **Relatório de diagnóstico** guarda um relatório para analisar um problema. Palavras-passe, utilizadores e nomes de ficheiros são ocultados, nada é enviado
 
 **Fiável**
 -   **Artigos que falharam**: um artigo que falha é tentado de novo em outro servidor e numa segunda rodada; o botão **Repost missing Articles** posta só os que faltam e corrige o NZB; os arquivos originais são mantidos quando há artigos que falharam
 -   **Fila**: os posts que não terminaram são guardados e oferecidos de novo no próximo início (`--resume_queue` na linha de comandos)
+-   **Pastas vigiadas lembradas**: se o programa for fechado enquanto a Publicação automática vigia pastas, o arranque seguinte propõe vigiá-las de novo
 -   **Senha errada**: o post para, com uma mensagem clara, quando o servidor recusa o login em todas as conexões
 -   **Problemas mais claros**: um aviso quando a pasta temporária está sincronizada (OneDrive e semelhantes), uma mensagem quando os ficheiros de origem são lentos a ler e um erro claro com o nome do ficheiro ou pasta movidos antes da compressão (o 7-Zip já não os procura em todos os discos)
 
@@ -92,6 +97,7 @@ Já usa o ngPost? Copie o seu `ngPost.conf` para `%APPDATA%\ngPost Deluxe` e os 
 -   **Ajuda em 8 idiomas**, um botão **Feedback** na janela Sobre (abre um novo problema no GitHub já preenchido) e as notificações no relatório de diagnóstico
 
 **Definições e ferramentas**
+-   **Exportar e importar as definições**: leve definições, perfis, notificações e servidores para outro computador (Definições, Histórico e fila; `--export_settings` e `--import_settings`). As palavras-passe, os tokens e as pastas do computador nunca estão no ficheiro
 -   **NZB_POST_CMD**: os marcadores podem conter espaços (um caminho como `C:\Minhas pastas\arquivo.nzb` continua sendo UM argumento) e o comando é iniciado em segundo plano (o ngPost não espera mais por ele, então o código de saída deixa de ser registrado)
 -   **RAR_EXTRA e PAR2_ARGS**: são interpretados respeitando as aspas duplas. O 7-Zip é reconhecido pelo nome do programa e não pelo caminho completo
 -   **Gravação automática**: cada alteração das definições é gravada automaticamente (o ficheiro anterior é mantido como `ngPost.conf.bak`)
