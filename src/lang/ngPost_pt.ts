@@ -6920,6 +6920,14 @@ Exemplo: {name} [{date}]. Vazio: o nome do ficheiro ou pasta.</translation>
 <context>
     <name>NfoCard</name>
     <message>
+        <source>on, style %1</source>
+        <translation>ativado, estilo %1</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>desativado</translation>
+    </message>
+    <message>
         <source>Style:</source>
         <translation>Estilo:</translation>
     </message>

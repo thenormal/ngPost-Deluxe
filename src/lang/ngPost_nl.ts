@@ -6926,6 +6926,14 @@ Voorbeeld: {name} [{date}]. Leeg: de naam van het bestand of de map.</translatio
 <context>
     <name>NfoCard</name>
     <message>
+        <source>on, style %1</source>
+        <translation>aan, stijl %1</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>uit</translation>
+    </message>
+    <message>
         <source>Style:</source>
         <translation>Stijl:</translation>
     </message>

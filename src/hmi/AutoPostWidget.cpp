@@ -1099,7 +1099,7 @@ void AutoPostWidget::_buildLayout()
     head->addWidget(_ui->removeAllButton);
     head->addWidget(_ui->closeTabsButton);
     root->addLayout(head);
-    _ui->filesList->setMinimumHeight(115); // small windows: the list shrinks before the page has to scroll
+    _ui->filesList->setMinimumHeight(100); // small windows: the list shrinks before the page has to scroll
     _ui->filesList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
     root->addWidget(_ui->filesList, 1);
     _summary = new QLabel(page);
