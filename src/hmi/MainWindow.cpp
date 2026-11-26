@@ -454,8 +454,11 @@ void MainWindow::_setLogOpen(bool open)
     else
     {
         // one line: the options of the post get all the room
-        _logHost->setFixedHeight(_logToggle->sizeHint().height() + 6);
+        const int h = _logToggle->sizeHint().height() + 6;
+        _logHost->setFixedHeight(h);
         sp->setStretchFactor(1, 0);
+        // the splitter keeps the sizes of the open Log: tell it that the line is h pixels and the rest is for the post
+        sp->setSizes({QWIDGETSIZE_MAX, h});
     }
 }
 
