@@ -8,6 +8,7 @@
 Comprimi, aggiungi i par2, offusca e posta i tuoi file da un'interfaccia pulita (temi chiaro e scuro) o da riga di comando.
 
 [![Latest release](https://img.shields.io/github/v/release/thenormal/ngPost-Deluxe)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/thenormal/ngPost-Deluxe/total)](https://github.com/thenormal/ngPost-Deluxe/releases)
 [![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml)
 [![Tests](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml)
 [![Docker](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml)

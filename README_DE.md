@@ -8,6 +8,7 @@
 Komprimieren, par2 hinzufügen, verschleiern und Dateien posten: über eine übersichtliche Oberfläche (helles und dunkles Design) oder über die Kommandozeile.
 
 [![Latest release](https://img.shields.io/github/v/release/thenormal/ngPost-Deluxe)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/thenormal/ngPost-Deluxe/total)](https://github.com/thenormal/ngPost-Deluxe/releases)
 [![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml)
 [![Tests](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml)
 [![Docker](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml)

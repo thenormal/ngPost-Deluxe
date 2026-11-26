@@ -8,6 +8,7 @@
 通过简洁的界面（浅色和深色主题）或命令行，压缩、添加 par2、混淆并发布你的文件。
 
 [![Latest release](https://img.shields.io/github/v/release/thenormal/ngPost-Deluxe)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/thenormal/ngPost-Deluxe/total)](https://github.com/thenormal/ngPost-Deluxe/releases)
 [![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml)
 [![Tests](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml)
 [![Docker](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml)

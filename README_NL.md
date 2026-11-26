@@ -8,6 +8,7 @@
 Comprimeer, voeg par2 toe, versluier en post je bestanden via een overzichtelijke interface (licht en donker thema) of via de opdrachtregel.
 
 [![Latest release](https://img.shields.io/github/v/release/thenormal/ngPost-Deluxe)](https://github.com/thenormal/ngPost-Deluxe/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/thenormal/ngPost-Deluxe/total)](https://github.com/thenormal/ngPost-Deluxe/releases)
 [![Build](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/build-windows.yml)
 [![Tests](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/tests.yml)
 [![Docker](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml/badge.svg)](https://github.com/thenormal/ngPost-Deluxe/actions/workflows/docker.yml)
