@@ -6920,6 +6920,14 @@ Beispiel: {name} [{date}]. Leer: der Name der Datei oder des Ordners.</translati
 <context>
     <name>NfoCard</name>
     <message>
+        <source>on, style %1</source>
+        <translation>an, Stil %1</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>aus</translation>
+    </message>
+    <message>
         <source>Style:</source>
         <translation>Stil:</translation>
     </message>

@@ -6922,6 +6922,14 @@ Esempio: {name} [{date}]. Vuoto: il nome del file o della cartella.</translation
 <context>
     <name>NfoCard</name>
     <message>
+        <source>on, style %1</source>
+        <translation>acceso, stile %1</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>spento</translation>
+    </message>
+    <message>
         <source>Style:</source>
         <translation>Stile:</translation>
     </message>

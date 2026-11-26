@@ -865,7 +865,7 @@ void PostingWidget::_buildLayout()
     head->addWidget(_ui->selectFolderButton);
     head->addWidget(_ui->clearFilesButton);
     root->addLayout(head);
-    _ui->filesList->setMinimumHeight(115); // small windows: the list gets smaller before the page has to scroll
+    _ui->filesList->setMinimumHeight(100); // small windows: the list gets smaller before the page has to scroll
     _ui->filesList->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Ignored);
     root->addWidget(_ui->filesList, 1);
 

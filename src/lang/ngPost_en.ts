@@ -6871,6 +6871,14 @@ Example: {name} [{date}]. Empty: the name of the file or folder.</source>
 <context>
     <name>NfoCard</name>
     <message>
+        <source>on, style %1</source>
+        <translation>on, style %1</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>off</translation>
+    </message>
+    <message>
         <source>Style:</source>
         <translation type="unfinished"></translation>
     </message>

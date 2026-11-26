@@ -6908,6 +6908,14 @@ Exemple : {name} [{date}]. Vide : le nom du fichier ou du dossier.</translation>
 <context>
     <name>NfoCard</name>
     <message>
+        <source>on, style %1</source>
+        <translation>activé, style %1</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>désactivé</translation>
+    </message>
+    <message>
         <source>Style:</source>
         <translation>Style :</translation>
     </message>

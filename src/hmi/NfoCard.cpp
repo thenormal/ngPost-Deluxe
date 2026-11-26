@@ -37,6 +37,8 @@
 // the texts keep the context "MainWindow": they were written there (Settings) and are already translated
 static QString mw(const char *text) { return QCoreApplication::translate("MainWindow", text); }
 
+bool NfoCard::sOpen = false;
+
 NfoCard::NfoCard(NgPost *ngPost, QWidget *parent) :
     QFrame(parent), _ngPost(ngPost)
 {
@@ -45,14 +47,19 @@ NfoCard::NfoCard(NgPost *ngPost, QWidget *parent) :
     QVBoxLayout *v = new QVBoxLayout(this);
     v->setContentsMargins(16, 12, 16, 14);
     v->setSpacing(10);
-    _title = new QLabel(this);
-    _title->setObjectName("cardTitle");
-    v->addWidget(_title);
+    // one line (what is chosen) that opens the options: the pages Quick Post and Auto Posting
+    // have to fit in a small window without scrolling
+    _toggle = new QPushButton(this);
+    _toggle->setObjectName("linkButton");
+    _toggle->setCursor(Qt::PointingHandCursor);
+    v->addWidget(_toggle, 0, Qt::AlignLeft);
 
-    QGridLayout *g = new QGridLayout();
+    _body = new QWidget(this);
+    QGridLayout *g = new QGridLayout(_body);
+    g->setContentsMargins(0, 0, 0, 0);
     g->setHorizontalSpacing(10);
     g->setVerticalSpacing(8);
-    v->addLayout(g);
+    v->addWidget(_body);
 
     _nfoCB     = new QCheckBox(this);
     _inPostCB  = new QCheckBox(this);
@@ -89,6 +96,7 @@ NfoCard::NfoCard(NgPost *ngPost, QWidget *parent) :
     g->setColumnStretch(1, 1);
     g->setColumnStretch(2, 1);
 
+    connect(_toggle, &QAbstractButton::clicked, this, [this](){ _setOpen(!sOpen); });
     connect(_nfoCB,    &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_genNfo = on; _updateEnabled(); emit _ngPost->nfoOptionsChanged(); });
     connect(_inPostCB, &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_nfoInPost = on; emit _ngPost->nfoOptionsChanged(); });
     connect(_passCB,   &QAbstractButton::toggled, this, [this](bool on){ _ngPost->_nfoPassword = on; emit _ngPost->nfoOptionsChanged(); });
@@ -144,11 +152,27 @@ void NfoCard::refresh()
         _text->setPlainText(_ngPost->_nfoText);
     _updateEnabled();
     _updateMediaStatus();
+    _updateSummary();
+}
+
+void NfoCard::_setOpen(bool open)
+{
+    sOpen = open;
+    emit _ngPost->nfoOptionsChanged(); // all the cards (Quick Post, Auto Posting) follow
+}
+
+void NfoCard::_updateSummary()
+{
+    QString state = _ngPost->_genNfo
+        ? QCoreApplication::translate("NfoCard", "on, style %1").arg(NfoWriter::styleName(NfoWriter::styleFromKey(_ngPost->_nfoStyle)))
+        : QCoreApplication::translate("NfoCard", "off");
+    _toggle->setText(QString(sOpen ? "▾ " : "▸ ") + mw("NFO file") + (sOpen ? QString() : QString(": %1").arg(state)));
 }
 
 void NfoCard::_updateEnabled()
 {
     // the details are only shown when the NFO is on: the card stays small (it is under the other options)
+    _body->setVisible(sOpen);
     bool on = _ngPost->_genNfo;
     for (QWidget *w : {static_cast<QWidget*>(_inPostCB), static_cast<QWidget*>(_passCB), static_cast<QWidget*>(_mediaCB),
                        static_cast<QWidget*>(_mediaPath), static_cast<QWidget*>(_mediaButton),
@@ -180,7 +204,6 @@ void NfoCard::_updateMediaStatus()
 
 void NfoCard::retranslate()
 {
-    _title->setText(mw("NFO file"));
     _nfoCB->setText(mw("Write an NFO file next to the nzb (name, date, files, archive, par2)"));
     _inPostCB->setText(mw("Also post the NFO file with the files"));
     _passCB->setText(mw("Write the password of the archive in the NFO file"));
@@ -193,6 +216,7 @@ void NfoCard::retranslate()
     _style->setToolTip(QCoreApplication::translate("NfoCard", "The look of the NFO file"));
     _textLbl->setText(mw("Text added at the end of the NFO file:"));
     _passCB->setToolTip(mw("Careful: a password in a posted NFO is readable by everyone who downloads the post."));
-    _title->setToolTip(mw("When the names of the files are hidden (obfuscation) the NFO that is posted lists no file name."));
+    _toggle->setToolTip(mw("When the names of the files are hidden (obfuscation) the NFO that is posted lists no file name."));
     _updateMediaStatus();
+    _updateSummary();
 }

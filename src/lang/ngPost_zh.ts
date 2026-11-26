@@ -6921,6 +6921,14 @@ Example: {name} [{date}]. Empty: the name of the file or folder.</source>
 <context>
     <name>NfoCard</name>
     <message>
+        <source>on, style %1</source>
+        <translation>开启，样式 %1</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
         <source>Style:</source>
         <translation>样式：</translation>
     </message>

@@ -18,6 +18,7 @@ Goal: one place for all the posts, profiles that keep everything, and a program 
 - **More notifications**: email (SMTP with STARTTLS, SSL/TLS or no encryption), ntfy, Gotify, Pushover and Slack (next to system, Discord, Telegram and webhook), with the same rules: one message at the end or one for each post, never the passwords; none of the addresses, tokens or passwords is exported with the settings
 - **Export and import of the settings and the profiles** (Settings, History and queue; `--export_settings`, `--import_settings`): settings, profiles, favorite newsgroups, notifications chosen and, if wanted, servers; never passwords, tokens, notification addresses or folders of the computer; imported servers stay off until the password is typed; the old config is kept as `.before-import`
 - **Log on one line**: the Log box under Quick Post and Auto Posting is now a single line ("▸ Log") that opens with a click, and opens by itself when an error arrives; all the options are visible without scrolling
+- **NFO card on one line** in Quick Post and Auto Posting ("▸ NFO file: on, style Scene"): it opens with a click, closed at each start; the empty box of the files is lower, so the pages fit in the window with less scrolling
 - Auto Posting, Watch mode: the page fits a 1280 px window (narrower number boxes in the Archive card)
 
 ## Version 1.4 - Guided and informed

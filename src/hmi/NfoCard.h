@@ -45,7 +45,8 @@ private slots:
 
 private:
     NgPost         *_ngPost;
-    QLabel         *_title;
+    QPushButton    *_toggle;       //!< the header line: opens and closes the options
+    QWidget        *_body;         //!< all the options
     QCheckBox      *_nfoCB;
     QCheckBox      *_inPostCB;
     QCheckBox      *_passCB;
@@ -58,6 +59,9 @@ private:
     QLabel         *_textLbl;
     QPlainTextEdit *_text;
 
+    static bool sOpen;             //!< session only: closed at each start (like the Log)
+    void _setOpen(bool open);
+    void _updateSummary();
     void _updateEnabled();
     void _updateMediaStatus();
 };
