@@ -328,7 +328,21 @@ void MainWindow::init(NgPost *ngPost)
     _retranslateShell();
     onThemeApplied();
     _fixIconButtons();
-    _ui->postSplitter->setSizes({3000, 1000}); // 3/4 for the post, 1/4 for the log
+    // the log is closed by default: a line "Log" under the page, opened with a click (and by itself on an error)
+    _logHost = new QWidget();
+    QVBoxLayout *logHostLayout = new QVBoxLayout(_logHost);
+    logHostLayout->setContentsMargins(0, 0, 0, 0);
+    logHostLayout->setSpacing(2);
+    _logToggle = new QPushButton(_logHost);
+    _logToggle->setObjectName("linkButton");
+    _logToggle->setCursor(Qt::PointingHandCursor);
+    connect(_logToggle, &QAbstractButton::clicked, this, [this](){ _setLogOpen(!_logOpen); });
+    logHostLayout->addWidget(_logToggle, 0, Qt::AlignLeft);
+    _ui->postSplitter->replaceWidget(1, _logHost);
+    _ui->postSplitter->setCollapsible(1, false); // the line "Log" never disappears
+    _logHost->show();   // a widget that changes parent is hidden
+    logHostLayout->addWidget(_ui->logBox);
+    _setLogOpen(false);
 //    connect(_ui->goCmdButton, &QAbstractButton::clicked, _ngPost, &NgPost::onGoCMD, Qt::QueuedConnection);
 
     updateProgress(ProgressInfo());
@@ -415,9 +429,34 @@ void MainWindow::log(const QString &aMsg, bool newline, int level) const
     }
 }
 
-void MainWindow::logError(const QString &error) const
+void MainWindow::logError(const QString &error)
 {
     _ui->logBrowser->append(QString("<font color='red'>%1</font><br/>\n").arg(error));
+    _setLogOpen(true); // an error must not stay hidden
+}
+
+void MainWindow::_setLogOpen(bool open)
+{
+    if (!_logHost)
+        return;
+    _logOpen = open;
+    _ui->logBox->setVisible(open);
+    _logToggle->setText((open ? QString::fromUtf8("\u25be ") : QString::fromUtf8("\u25b8 ")) + tr("Log"));
+    QSplitter *sp = _ui->postSplitter;
+    sp->handle(1)->setEnabled(open);
+    if (open)
+    {
+        _logHost->setMinimumHeight(0);
+        _logHost->setMaximumHeight(QWIDGETSIZE_MAX);
+        sp->setStretchFactor(1, 1);
+        sp->setSizes({3000, 1000}); // 3/4 for the post, 1/4 for the log
+    }
+    else
+    {
+        // one line: the options of the post get all the room
+        _logHost->setFixedHeight(_logToggle->sizeHint().height() + 6);
+        sp->setStretchFactor(1, 0);
+    }
 }
 
 bool MainWindow::useFixedPassword() const
@@ -509,7 +548,7 @@ void MainWindow::changeEvent(QEvent *event)
                                             _ngPost->_shutdownCmd));
 
             _ui->fileBox->setTitle(QString());
-            _ui->logBox->setTitle(tr("Log"));
+            _ui->logBox->setTitle(QString()); // the line "Log" above is its title
             _retranslateShell();
 
             tabBar->setTabText(0, _ngPost->quickJobName());
@@ -2044,7 +2083,9 @@ void MainWindow::_retranslateShell()
     _themeCB->setItemText(2, tr("Dark"));
     _autoSaveHint->setText(tr("The settings are saved automatically after each change."));
     _ui->saveButton->setText(tr("Save now"));
-    _ui->logBox->setTitle(tr("Log"));
+    _ui->logBox->setTitle(QString());
+    if (_logToggle)
+        _logToggle->setText((_logOpen ? QString::fromUtf8("\u25be ") : QString::fromUtf8("\u25b8 ")) + tr("Log"));
     setJobLabel(_jobName);
 }
 
