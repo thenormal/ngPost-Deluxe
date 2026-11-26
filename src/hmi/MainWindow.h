@@ -104,6 +104,9 @@ private:
     QComboBox      *_notifyWhenCB = nullptr;
     QPushButton    *_settingsCats[5] = {nullptr, nullptr, nullptr, nullptr, nullptr}; //!< categories of the Settings page
     QStackedWidget *_settingsStack = nullptr;
+    QWidget        *_logHost = nullptr;          //!< the log of Quick Post and Auto Posting under the page: one line, opened with a click
+    QPushButton    *_logToggle = nullptr;
+    bool            _logOpen = false;            //!< closed at each start, so that the options have the room (opens by itself on an error)
     QFrame         *_firstSteps = nullptr;       //!< banner of the posts page: what to do before the first post
     QLabel         *_firstStepsText = nullptr;
     QPushButton    *_firstStepsButton = nullptr;
@@ -197,7 +200,7 @@ public:
     void setJobLabel(const QString &postName); //!< name of the post in the bottom bar (empty: "Ready")
 
     void log(const QString &aMsg, bool newline = true, int level = 0) const; //!< log function for QString (level: NgPost::LOG_LEVEL)
-    void logError(const QString &error) const; //!< log function for QString
+    void logError(const QString &error); //!< log function for QString (opens the log if it is closed)
 
     bool useFixedPassword() const;
     bool hasAutoCompress() const;
@@ -287,6 +290,7 @@ private:
     QString _diagnosticReport() const;
 
     void _buildShell();          //!< side bar + pages (replaces the splitters of the original window)
+    void _setLogOpen(bool open); //!< show or hide the log under Quick Post and Auto Posting
     QWidget *_buildSettingsPage();
     QFrame *_card(const QString &key, QGridLayout *&grid);
     void _retranslateShell();
