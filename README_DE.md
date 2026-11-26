@@ -53,10 +53,8 @@ Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Delu
 
 **Einfach zu bedienen**
 -   **Geführter Post**: ein Assistent in der Seitenleiste, der fragt, was Sie tun möchten (ein Release, jedes Element, einen Ordner durchsuchen, einen Ordner überwachen), was gepostet wird, die Optionen und wohin, und dann den Post mit denselben Prüfungen wie Quick Post und Auto Posting vorbereitet. Er merkt sich Ihre letzte Auswahl und kann mehrere Posts gemeinsam starten
--   **Eine Liste aller Posts**: Die Seite Posts zeigt alle Posts zusammen (Status, Fortschrittsbalken, Geschwindigkeitsdiagramm, Größe, Restzeit, NZB, Passwort und ein Protokoll je Post mit Filtern und Suche). Jeder Post hat eine Priorität, kann pausiert und umsortiert werden (Schaltflächen, Rechtsklick, Drag and Drop), und die Warteschlange bleibt nach einem Neustart erhalten. Quick Post ist jetzt ein Formular, das nach jedem Post wieder leer ist
 -   **Auto Posting, neu gestaltet**: drei klare Möglichkeiten (posten, was ich auswähle; einen Ordner einmal durchsuchen; einen Ordner überwachen und posten, was ankommt), Vorschau dessen, was gepostet wird, mit den Größen, der Zustand der Ordnerüberwachung immer sichtbar (Ordner, Posts des Tages, Pause-Schaltfläche) und die Wahl, was danach mit den Dateien geschieht: nichts (Standard), in einen Ordner "Posted" verschieben oder löschen
 -   **Profile**: ein fertiges Profil "Empfohlen" (Komprimierung, zufälliger Name und Passwort, par2 10 %) und eigene Profile, gespeichert über das Menü von Quick Post und Auto Posting
--   **Vollständige Profile**: Ein Profil merkt sich auch die Namensvorlage (`{name}`, `{date}`, `{time}`, `{n}`), die Newsgroups, die Server und den NZB-Ordner. Newsgroups und Server lassen sich für jeden Post wählen, auch für überwachte Ordner, und die am häufigsten genutzten Newsgroups können als Favoriten markiert werden
 -   **Prüfungen vor dem Posten**: ein Fenster in einfachen Worten mit Korrektur per Klick (kein Server oder keine Gruppe, Ordner ohne Komprimierung, rar / 7z oder par2 nicht gefunden, leeres Passwort, NZB-Ordner nicht beschreibbar...)
 -   **Merkt sich Ihre Auswahl**: Quick Post und Auto Posting behalten die letzten Optionen und das gewählte Profil für den nächsten Start, und die Schaltfläche Posten bleibt unter der scrollenden Seite immer sichtbar
 -   **Hilfe beim ersten Start**: eine Leiste sagt, was fehlt (Server, Newsgroup), mit einer Schaltfläche zur richtigen Seite; die **Einstellungen** sind jetzt in fünf Kategorien
@@ -68,16 +66,13 @@ Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Delu
 -   **Statistik** (Seite Verlauf, Umschalter Liste / Statistik): Summen und Diagramme für den gewählten Zeitraum (heute, 7 Tage, 30 Tage, 12 Monate, alles): geposteter Datenumfang, Geschwindigkeit, Ergebnisse, aktivste Tage und Uhrzeiten, Newsgroups, Server, Art des Starts der Posts und verwendete Optionen, dazu Ranglisten. Export als PDF-Dokument, Webseite, CSV-Datei oder PNG-Bilder der Diagramme
 -   **Seite Verlauf**: jeder Upload wird gespeichert (`ngPost_history.csv` neben der Konfiguration oder `POST_HISTORY`) mit Status, Anzahl der Dateien und Dauer. Die Seite listet sie mit Suche, Zeitraumfilter, Summen, ausgeblendeten Passwörtern, Kopieren, Export und dem Ordner der NZB auf. Achtung: die Datei enthält die Archivpasswörter im Klartext
 -   **Benachrichtigungen**, wenn Posts fertig sind oder fehlschlagen: Systembenachrichtigung, Discord, Telegram oder ein Webhook, eine Nachricht am Ende oder eine pro Post
--   **Mehr Benachrichtigungen**: E-Mail, ntfy, Gotify, Pushover und Slack, neben der Systembenachrichtigung, Discord, Telegram und Webhook (eine Nachricht am Ende oder eine je Post, nie die Passwörter)
 -   **NFO-Datei** neben der NZB-Datei (auf Wunsch mit den Dateien gepostet, auf Wunsch mit Passwort) und Medieninformationen mit MediaInfo: Dauer, Video, Audio und Untertitel
--   **NFO-Datei in sechs Stilen** (Scene, Clean, Box, Elegant, Retro und das alte Classic) mit Vorschau im Programm, einem Banner des Programms und einer Option für nur ASCII-Zeichen
 -   **Schon gepostet?** Eine Warnung listet die Einträge auf, die schon im Verlauf stehen, mit einem Kästchen "Erneut posten", statt einer Frage pro Post
 -   **Diagnose**: ngPost zeichnet Dauer und Geschwindigkeit jeder Phase (Kompression, par2, Upload), Fehler und Hänger auf, und die Schaltfläche **Diagnosebericht** speichert einen Bericht zur Fehleranalyse. Passwörter, Benutzernamen und Dateinamen werden maskiert, nichts wird versendet
 
 **Zuverlässig**
 -   **Fehlgeschlagene Artikel**: ein fehlgeschlagener Artikel wird auf einem anderen Server und in einer zweiten Runde erneut versucht; die Schaltfläche **Repost missing Articles** postet nur die fehlenden und korrigiert die NZB; die Originaldateien bleiben erhalten, wenn Artikel fehlgeschlagen sind
 -   **Warteschlange**: nicht beendete Posts werden gespeichert und beim nächsten Start wieder angeboten (`--resume_queue` in der Kommandozeile)
--   **Überwachte Ordner werden gemerkt**: Wird das Programm geschlossen, während Auto Posting Ordner überwacht, bietet der nächste Start an, sie erneut zu überwachen
 -   **Falsches Passwort**: der Post wird mit einer klaren Meldung gestoppt, wenn der Server den Login auf allen Verbindungen ablehnt
 -   **Klarere Probleme**: eine Warnung bei synchronisiertem temporärem Ordner (OneDrive und ähnliche), eine Meldung, wenn die Quelldateien langsam gelesen werden, und ein klarer Fehler mit dem Namen einer Datei oder eines Ordners, die vor der Komprimierung verschoben wurden (7-Zip sucht sie nicht mehr auf allen Laufwerken)
 
@@ -97,7 +92,6 @@ Du benutzt schon ngPost? Kopiere deine `ngPost.conf` nach `%APPDATA%\ngPost Delu
 -   **Hilfe in 8 Sprachen**, eine **Feedback**-Schaltfläche im Über-Fenster (öffnet ein neues, schon ausgefülltes GitHub-Issue) und die Benachrichtigungen im Diagnosebericht
 
 **Einstellungen und Werkzeuge**
--   **Export und Import der Einstellungen**: Einstellungen, Profile, Benachrichtigungen und Server auf einen anderen Computer mitnehmen (Einstellungen, Verlauf und Warteschlange; `--export_settings` und `--import_settings`). Passwörter, Token und Ordner des Computers sind nie in der Datei
 -   **NZB_POST_CMD**: die Platzhalter dürfen Leerzeichen enthalten (ein Pfad wie `C:\Meine Ordner\datei.nzb` bleibt EIN Argument) und der Befehl wird im Hintergrund gestartet (ngPost wartet nicht mehr darauf, daher wird sein Exit-Code nicht mehr protokolliert)
 -   **RAR_EXTRA und PAR2_ARGS**: werden unter Beachtung der Anführungszeichen ausgewertet. 7-Zip wird am Programmnamen erkannt und nicht am gesamten Pfad
 -   **Automatisches Speichern**: jede Änderung der Einstellungen wird automatisch gespeichert (die vorherige Datei bleibt als `ngPost.conf.bak` erhalten)
